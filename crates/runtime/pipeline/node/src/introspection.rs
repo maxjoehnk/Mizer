@@ -111,6 +111,7 @@ node_type_name! {
         Sequencer,
         Group,
         GroupControl,
+        GroupMaster,
         Preset,
         Envelope,
         StepSequencer,

@@ -28,6 +28,7 @@ pub struct Fixture {
     /// Contains values for all dmx channels including sub-fixtures
     pub(crate) channel_values: ChannelsWithValues,
     pub configuration: FixtureConfiguration,
+    pub sub_master: f64,
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
@@ -140,6 +141,7 @@ impl Fixture {
             universe: universe.unwrap_or(1),
             channel_values: Default::default(),
             configuration,
+            sub_master: 1.0
         }
     }
 
@@ -287,6 +289,7 @@ impl Fixture {
                 }
             }
         }
+        self.apply_submaster();
         self.channel_values.flush();
 
         let buffer = self.get_dmx_values();
@@ -365,6 +368,33 @@ impl Fixture {
             self.current_mode.controls.color_mixer.as_ref(),
             |channel, value| self.channel_values.write(channel, value),
         );
+    }
+
+    fn apply_submaster(&mut self) {
+        match self.current_mode.controls.intensity.as_ref() {
+            Some(FixtureControlChannel::Channel(channel)) => {
+                self.channel_values.apply_master(channel, self.sub_master);
+            }
+            Some(FixtureControlChannel::VirtualDimmer) => {
+                if let Some(color_mixer) = self.current_mode.color_mixer.as_mut() {
+                    color_mixer.apply_master(self.sub_master);
+                }
+            }
+            _ => {}
+        }
+        for sub_fixture in self.current_mode.sub_fixtures.iter_mut() {
+            match sub_fixture.controls.intensity.as_ref() {
+                Some(SubFixtureControlChannel::Channel(channel)) => {
+                    self.channel_values.apply_master(channel, self.sub_master);
+                }
+                Some(SubFixtureControlChannel::VirtualDimmer) => {
+                    if let Some(color_mixer) = sub_fixture.color_mixer.as_mut() {
+                        color_mixer.apply_master(self.sub_master);
+                    }
+                }
+                _ => {}
+            }
+        }
     }
 }
 

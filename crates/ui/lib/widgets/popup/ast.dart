@@ -76,7 +76,7 @@ class Value implements ValueAstNode {
   }
 
   double get val {
-    return double.parse(toDisplay()) / 100.0;
+    return double.parse(toDisplay());
   }
 
   @override

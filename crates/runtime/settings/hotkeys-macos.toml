@@ -28,19 +28,19 @@ save_as = "cmd+shift+s"
 add_layout = "alt+a"
 
 [hotkeys.plan]
-store = "insert"
-highlight = "home"
+store = "cmd+r"
+highlight = "cmd+h"
 clear = "backspace"
 
 [hotkeys.programmer]
 select_all = "cmd+a"
 clear = "backspace"
-store = "insert"
-highlight = "home"
+store = "cmd+r"
+highlight = "cmd+h"
 assign_group = "cmd+g"
 next = "right"
 prev = "left"
-shuffle = "cmd+r"
+shuffle = "cmd+shift+r"
 
 [hotkeys.patch]
 add_fixture = "alt+a"

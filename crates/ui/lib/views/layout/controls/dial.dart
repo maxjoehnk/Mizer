@@ -20,6 +20,9 @@ class DialControl extends StatefulWidget {
 
 class _DialControlState extends State<DialControl> with SingleTickerProviderStateMixin {
   double value = 0;
+  double min = 0;
+  double max = 1;
+  bool isPercentage = true;
   late Ticker ticker;
 
   @override
@@ -30,7 +33,12 @@ class _DialControlState extends State<DialControl> with SingleTickerProviderStat
       if (!this.mounted) {
         return;
       }
-      setState(() => value = v);
+      setState(() {
+        value = v.value;
+        min = v.min;
+        max = v.max;
+        isPercentage = v.is_percentage == 1;
+      });
     });
     this.ticker.start();
   }
@@ -49,6 +57,8 @@ class _DialControlState extends State<DialControl> with SingleTickerProviderStat
       label: widget.control.label,
       color: widget.color,
       value: value,
+      maxValue: max,
+      percentage: isPercentage,
       onValue: (value) =>
           apiClient.writeControlValue(path: widget.control.node.path, port: "Input", value: value),
     );

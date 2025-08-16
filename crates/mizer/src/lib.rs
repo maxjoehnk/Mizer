@@ -9,3 +9,4 @@ mod flags;
 mod mizer;
 mod module_context;
 mod runtime_builder;
+pub mod logger;

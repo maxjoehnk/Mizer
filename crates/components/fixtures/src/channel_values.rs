@@ -11,6 +11,7 @@ pub(crate) struct ChannelsWithValues {
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub(crate) struct ChannelValues {
+    master: Option<f64>,
     pub(crate) values: Vec<ChannelValue>,
     pub(crate) previous_values: Vec<ChannelValue>,
     // TODO: This should probably support multiple fades but to reduce complexity we will always replace the last one for now
@@ -74,6 +75,7 @@ pub(crate) struct ChannelValue {
 impl Default for ChannelValues {
     fn default() -> Self {
         ChannelValues {
+            master: None,
             values: Vec::with_capacity(10),
             previous_values: Vec::with_capacity(10),
             active_fade: Default::default(),
@@ -98,6 +100,10 @@ impl ChannelValues {
             source,
             fade_timings,
         });
+    }
+
+    pub(crate) fn set_master(&mut self, master: f64) {
+        self.master = Some(master.clamp(0., 1.));
     }
 
     pub(crate) fn flush(&mut self) {
@@ -156,23 +162,29 @@ impl ChannelValues {
             &format!("values: {}", self.values.len())
         );
 
-        if let Some(ChannelValue { value, .. }) = self
-            .values
-            .iter()
-            .find(|value| value.priority.is_highlight())
-        {
-            return Some(*value);
-        }
+        let target_value = {
+            if let Some(ChannelValue { value, .. }) = self
+                .values
+                .iter()
+                .find(|value| value.priority.is_highlight())
+            {
+                return Some(*value);
+            }
 
-        if let Some(ChannelValue { value, .. }) = self
-            .values
-            .iter()
-            .find(|value| value.priority.is_programmer())
-        {
-            return Some(*value);
-        }
+            if let Some(ChannelValue { value, .. }) = self
+                .values
+                .iter()
+                .find(|value| value.priority.is_programmer())
+            {
+                return Some(*value);
+            }
 
-        self.value
+            self.value
+        };
+
+        self.master
+            .and_then(|master| target_value.map(|value| value * master.clamp(0., 1.)))
+            .or(target_value)
     }
 
     fn get_value(&self) -> Option<ChannelValue> {
@@ -221,6 +233,12 @@ impl ChannelsWithValues {
     pub(crate) fn flush(&mut self) {
         for value in self.values.values_mut() {
             value.flush();
+        }
+    }
+
+    pub(crate) fn apply_master(&mut self, channel: &str, value: f64) {
+        if let Some(channel) = self.values.get_mut(channel) {
+            channel.set_master(value);
         }
     }
 

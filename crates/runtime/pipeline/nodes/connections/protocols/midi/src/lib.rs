@@ -32,16 +32,6 @@ impl Display for NoteMode {
     }
 }
 
-fn get_devices(injector: &Injector) -> Vec<SelectVariant> {
-    let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
-    let devices = connection_manager.list_available_devices();
-
-    devices
-        .into_iter()
-        .map(|device| SelectVariant::from(device.name))
-        .collect()
-}
-
 fn get_pages_and_controls(
     injector: &Injector,
     device: &str,

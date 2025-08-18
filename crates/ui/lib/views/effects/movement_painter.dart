@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
+import 'dart:math' as math;
 
 class MovementPainter extends CustomPainter {
   final EffectChannel? pan;
@@ -59,30 +60,87 @@ class MovementPainter extends CustomPainter {
     Paint linePaint = Paint()
       ..color = Color(0xffffffff)
       ..style = PaintingStyle.stroke;
+    
+    if (pan.steps.isEmpty || tilt.steps.isEmpty) return;
+    
     var path = Path();
-    for (var i = 0; i < pan.steps.length; i++) {
-      var panStep = pan.steps[i];
-      var tiltStep = tilt.steps[i];
-      double x = panStep.value.direct;
-      double y = tiltStep.value.direct;
-      if (i == 0) {
+    
+    // Sample the movement path over time to create accurate 2D movement
+    const int totalSamples = 100;
+    
+    for (var sample = 0; sample <= totalSamples; sample++) {
+      double t = sample / totalSamples.toDouble();
+      double timePosition = t * (pan.steps.length - 1);
+      
+      double x = _sampleChannelAtTime(pan, timePosition);
+      double y = _sampleChannelAtTime(tilt, timePosition);
+      
+      if (sample == 0) {
         path.moveTo(x, y);
-      }
-      if (panStep.hasSimple()) {
+      } else {
         path.lineTo(x, y);
-      } else if (panStep.hasCubic()) {
-        double x1 = (panStep.cubic.c0a + tiltStep.cubic.c0a) / 2;
-        double y1 = (panStep.cubic.c0b + tiltStep.cubic.c0b) / 2;
-        double x2 = (panStep.cubic.c1a + tiltStep.cubic.c1a) / 2;
-        double y2 = (panStep.cubic.c1b + tiltStep.cubic.c1b) / 2;
-        path.cubicTo(x1, y1, x2, y2, x, y);
       }
     }
+    
     canvas.drawPath(path, linePaint);
   }
+  
+  /// Sample a channel's value at a specific time position
+  double _sampleChannelAtTime(EffectChannel channel, double timePosition) {
+    if (channel.steps.isEmpty) return 0.0;
+    if (timePosition <= 0) return channel.steps.first.value.direct;
+    if (timePosition >= channel.steps.length - 1) return channel.steps.last.value.direct;
+    
+    int stepIndex = timePosition.floor();
+    double localT = timePosition - stepIndex;
+    
+    if (stepIndex >= channel.steps.length - 1) {
+      return channel.steps.last.value.direct;
+    }
+    
+    var currentStep = channel.steps[stepIndex];
+    var nextStep = channel.steps[stepIndex + 1];
+    
+    double startValue = currentStep.value.direct;
+    double endValue = nextStep.value.direct;
+    
+    // Handle different curve types
+    if (nextStep.hasCubic()) {
+      // Use cubic bezier interpolation with control points
+      double p0 = startValue;
+      double p1 = nextStep.cubic.c0b;
+      double p2 = nextStep.cubic.c1b;
+      double p3 = endValue;
+      
+      return _cubicBezier(p0, p1, p2, p3, localT);
+    } else if (nextStep.hasQuadratic()) {
+      // Use quadratic bezier interpolation
+      double p0 = startValue;
+      double p1 = nextStep.quadratic.c0b;
+      double p2 = endValue;
+      
+      return _quadraticBezier(p0, p1, p2, localT);
+    } else {
+      // Linear interpolation
+      return startValue + (endValue - startValue) * localT;
+    }
+  }
+  
+  /// Cubic bezier curve evaluation
+  double _cubicBezier(double p0, double p1, double p2, double p3, double t) {
+    double u = 1.0 - t;
+    return u * u * u * p0 + 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t * p3;
+  }
+  
+  /// Quadratic bezier curve evaluation
+  double _quadraticBezier(double p0, double p1, double p2, double t) {
+    double u = 1.0 - t;
+    return u * u * p0 + 2 * u * t * p1 + t * t * p2;
+  }
+
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+  bool shouldRepaint(MovementPainter oldDelegate) {
+    return oldDelegate.pan != pan || oldDelegate.tilt != tilt;
   }
 }

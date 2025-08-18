@@ -11,7 +11,7 @@ use tracing_subscriber::prelude::*;
 use tracing_subscriber::registry::LookupSpan;
 use tracing_subscriber::Layer;
 
-use mizer::Flags;
+use crate::Flags;
 
 pub fn init(flags: &Flags) -> anyhow::Result<LoggingGuard> {
     let (logging_guard, file_layer) = file_layer();

@@ -10,8 +10,8 @@ class PanelSizing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = columns == null ? null : (columns! * GRID_4_SIZE) + (columns! - 1);
-    var height = rows == null ? null : rows! * GRID_4_SIZE + (rows! - 1);
+    var width = columns == null ? null : (columns! * GRID_4_SIZE) + (columns! - 1) * GRID_GAP_SIZE + 2 * GRID_GAP_SIZE;
+    var height = rows == null ? null : rows! * GRID_4_SIZE + (rows! - 1) * GRID_GAP_SIZE + PANEL_HEADER_HEIGHT + 2 * GRID_GAP_SIZE;
 
     return SizedBox(
       width: width,

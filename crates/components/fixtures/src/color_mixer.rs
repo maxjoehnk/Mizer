@@ -11,6 +11,7 @@ pub struct ColorMixer {
     pub(crate) green: ChannelValues,
     pub(crate) blue: ChannelValues,
     virtual_dimmer: Option<ChannelValues>,
+    master: Option<f64>,
 }
 
 impl ColorMixer {
@@ -28,6 +29,12 @@ impl ColorMixer {
                 value
             }),
             ..Default::default()
+        }
+    }
+
+    pub(crate) fn apply_master(&mut self, master: f64) {
+        if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
+            virtual_dimmer.set_master(master);
         }
     }
 

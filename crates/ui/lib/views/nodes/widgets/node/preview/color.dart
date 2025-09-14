@@ -21,8 +21,6 @@ class _ColorRendererState extends State<ColorRenderer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 300,
-        height: 200,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(2)),
         clipBehavior: Clip.antiAlias,
         child: FutureBuilder(
@@ -77,9 +75,9 @@ class _ColorPreviewState extends State<ColorPreview> with SingleTickerProviderSt
     if (color == null) {
       return Container();
     }
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: _color),
-      margin: const EdgeInsets.all(8),
+    return Container(color: _color
+        // decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: _color),
+      // margin: const EdgeInsets.all(8),
     );
   }
 

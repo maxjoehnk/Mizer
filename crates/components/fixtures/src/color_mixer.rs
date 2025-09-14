@@ -4,6 +4,7 @@ use crate::manager::{FadeTimings, FixtureValueSource};
 use crate::FixturePriority;
 use palette::{FromColor, Hsv, Srgb};
 use serde::Serialize;
+use crate::channel_values::RawChannelValue;
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize)]
 pub struct ColorMixer {
@@ -57,9 +58,9 @@ impl ColorMixer {
         }
     }
 
-    pub fn set_red(
+    pub fn set_red<TValue: Into<RawChannelValue>>(
         &mut self,
-        red: f64,
+        red: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
@@ -67,9 +68,9 @@ impl ColorMixer {
         self.red.insert(red, priority, source, fade_timings);
     }
 
-    pub fn set_green(
+    pub fn set_green<TValue: Into<RawChannelValue>>(
         &mut self,
-        green: f64,
+        green: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
@@ -77,9 +78,9 @@ impl ColorMixer {
         self.green.insert(green, priority, source, fade_timings);
     }
 
-    pub fn set_blue(
+    pub fn set_blue<TValue: Into<RawChannelValue>>(
         &mut self,
-        blue: f64,
+        blue: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
@@ -87,9 +88,9 @@ impl ColorMixer {
         self.blue.insert(blue, priority, source, fade_timings);
     }
 
-    pub fn set_virtual_dimmer(
+    pub fn set_virtual_dimmer<TValue: Into<RawChannelValue>>(
         &mut self,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,

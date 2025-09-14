@@ -1,3 +1,4 @@
+use crate::channel_values::RawChannelValue;
 use crate::color_mixer::{update_color_mixer, ColorMixer};
 use crate::definition::{
     ColorChannel, FixtureFaderControl, SubFixtureControlChannel, SubFixtureDefinition,
@@ -37,10 +38,10 @@ pub struct SubFixture<'a> {
 }
 
 impl<'a> IFixtureMut for SubFixtureMut<'a> {
-    fn write_fader_control_with_timings(
+    fn write_fader_control_with_timings<TValue: Into<RawChannelValue>>(
         &mut self,
         control: FixtureFaderControl,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,

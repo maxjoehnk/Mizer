@@ -17,6 +17,7 @@ use std::hash::{DefaultHasher, Hash, Hasher};
 use std::ops::{Deref, DerefMut};
 use std::sync::{Arc, Mutex, MutexGuard};
 use std::time::Duration;
+use crate::channel_values::RawChannelValue;
 
 #[derive(Clone)]
 pub struct FixtureManager {
@@ -217,11 +218,11 @@ impl FixtureManager {
         )
     }
 
-    pub fn write_fixture_control_with_timings(
+    pub fn write_fixture_control_with_timings<TValue: Into<RawChannelValue> + Copy>(
         &self,
         fixture_id: FixtureId,
         control: FixtureFaderControl,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
@@ -315,11 +316,11 @@ impl FixtureManager {
         }
     }
 
-    pub fn write_group_control_with_timings(
+    pub fn write_group_control_with_timings<TValue: Into<RawChannelValue> + Copy>(
         &self,
         group_id: GroupId,
         control: FixtureFaderControl,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,

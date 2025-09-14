@@ -1,16 +1,20 @@
+use std::fmt::{Display, Formatter};
 use mizer_fixtures::definition::{ColorChannel, FixtureControl, FixtureFaderControl};
 use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 use serde::{Deserialize, Serialize};
 use std::time::Duration;
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 
 use crate::contracts::FixtureController;
 use mizer_fixtures::manager::{FadeTimings, FixtureManager, FixtureValueSource};
-use mizer_fixtures::{FixtureId, FixturePriority, GroupId};
+use mizer_fixtures::{FixtureId, FixturePriority, GroupId, RawChannelValue};
 use mizer_node::*;
 
 const GROUP_SETTING: &str = "Group";
 const CONTROL_SETTING: &str = "Control";
 const PRIORITY_SETTING: &str = "Priority";
+const MODE_SETTING: &str = "Mode";
 const SEND_ZERO_SETTING: &str = "Send Zero";
 const PHASE_SETTING: &str = "Phase";
 const FAN_SETTING: &str = "Fan";
@@ -40,6 +44,26 @@ pub struct GroupControlNode {
     pub asymmetrical: bool,
     #[serde(default)]
     pub fade_out_seconds: f64,
+    #[serde(default)]
+    pub mode: WriteMode,
+}
+
+#[derive(Debug, Default, Clone, Copy, Deserialize, Serialize, PartialEq, Eq,
+    Sequence,
+    TryFromPrimitive,
+    IntoPrimitive,
+)]
+#[repr(u8)]
+pub enum WriteMode {
+    #[default]
+    Absolute,
+    Relative
+}
+
+impl Display for WriteMode {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
+    }
 }
 
 impl Default for GroupControlNode {
@@ -53,6 +77,7 @@ impl Default for GroupControlNode {
             fan: Default::default(),
             asymmetrical: false,
             fade_out_seconds: Default::default(),
+            mode: Default::default(),
         }
     }
 }
@@ -96,6 +121,7 @@ impl ConfigurableNode for GroupControlNode {
             setting!(id GROUP_SETTING, self.group_id, groups),
             setting!(select CONTROL_SETTING, self.control.to_string(), controls),
             setting!(enum PRIORITY_SETTING, self.priority),
+            setting!(enum MODE_SETTING, self.mode),
             setting!(SEND_ZERO_SETTING, self.send_zero),
             setting!(PHASE_SETTING, self.phase)
                 .category("Spread")
@@ -117,6 +143,7 @@ impl ConfigurableNode for GroupControlNode {
         update!(id setting, GROUP_SETTING, self.group_id);
         update!(select setting, CONTROL_SETTING, self.control);
         update!(enum setting, PRIORITY_SETTING, self.priority);
+        update!(enum setting, MODE_SETTING, self.mode);
         update!(bool setting, SEND_ZERO_SETTING, self.send_zero);
         update!(int setting, PHASE_SETTING, self.phase);
         update!(float setting, FAN_SETTING, self.fan);
@@ -308,7 +335,7 @@ impl GroupControlNode {
                     manager.write_group_control(
                         self.group_id,
                         control,
-                        value,
+                        self.adapt_value(value),
                         self.priority,
                         Some(source),
                         fade_timings,
@@ -457,7 +484,7 @@ impl GroupControlNode {
                         manager.write_fixture_control(
                             *id,
                             control.clone(),
-                            value,
+                            self.adapt_value(value),
                             self.priority,
                             Some(source.clone()),
                             fade_timings,
@@ -487,7 +514,7 @@ impl GroupControlNode {
                             manager.write_fixture_control(
                                 *id,
                                 control.clone(),
-                                value,
+                                self.adapt_value(value),
                                 self.priority,
                                 Some(source.clone()),
                                 fade_timings,
@@ -516,7 +543,7 @@ impl GroupControlNode {
                             manager.write_fixture_control(
                                 *id,
                                 control.clone(),
-                                value - fan,
+                                self.adapt_value(value - fan),
                                 self.priority,
                                 Some(source.clone()),
                                 fade_timings,
@@ -568,7 +595,7 @@ impl GroupControlNode {
                         manager.write_fixture_control(
                             *id,
                             control.clone(),
-                            value,
+                            self.adapt_value(value),
                             self.priority,
                             Some(source.clone()),
                             fade_timings,
@@ -596,12 +623,19 @@ impl GroupControlNode {
                 manager.write_fixture_control(
                     *id,
                     control.clone(),
-                    value,
+                    self.adapt_value(value),
                     self.priority,
                     Some(source.clone()),
                     fade_timings,
                 );
             }
+        }
+    }
+
+    fn adapt_value(&self, value: f64) -> RawChannelValue {
+        match self.mode {
+            WriteMode::Absolute => RawChannelValue::Absolute(value),
+            WriteMode::Relative => RawChannelValue::Relative(value),
         }
     }
 }

@@ -5733,6 +5733,7 @@ dependencies = [
  "mizer-util",
  "serde",
  "test-case",
+ "tracing",
 ]
 
 [[package]]
@@ -5772,10 +5773,12 @@ name = "mizer-fixture-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "enum-iterator",
  "mizer-fixtures",
  "mizer-node",
  "mockall",
  "mockall_double",
+ "num_enum",
  "predicates",
  "profiling",
  "ringbuffer",

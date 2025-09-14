@@ -1,23 +1,23 @@
 use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::manager::{FadeTimings, FixtureManager, FixtureValueSource};
-use mizer_fixtures::{FixtureId, FixturePriority, GroupId};
+use mizer_fixtures::{FixtureId, FixturePriority, GroupId, RawChannelValue};
 
 #[cfg_attr(test, mockall::automock)]
 pub(crate) trait FixtureController {
-    fn write_group_control(
+    fn write_group_control<TValue: Into<RawChannelValue> + Copy>(
         &self,
         group_id: GroupId,
         control: FixtureFaderControl,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
     );
-    fn write_fixture_control(
+    fn write_fixture_control<TValue: Into<RawChannelValue> + Copy>(
         &self,
         fixture_id: FixtureId,
         control: FixtureFaderControl,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
@@ -27,11 +27,11 @@ pub(crate) trait FixtureController {
 }
 
 impl FixtureController for FixtureManager {
-    fn write_group_control(
+    fn write_group_control<TValue: Into<RawChannelValue> + Copy>(
         &self,
         group_id: GroupId,
         control: FixtureFaderControl,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
@@ -46,11 +46,11 @@ impl FixtureController for FixtureManager {
         );
     }
 
-    fn write_fixture_control(
+    fn write_fixture_control<TValue: Into<RawChannelValue> + Copy>(
         &self,
         fixture_id: FixtureId,
         control: FixtureFaderControl,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,

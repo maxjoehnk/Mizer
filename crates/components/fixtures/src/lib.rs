@@ -9,6 +9,7 @@ use serde::{Deserialize, Serialize};
 use crate::fixture::Fixture;
 pub use crate::module::*;
 pub use crate::priority::*;
+pub use crate::channel_values::RawChannelValue;
 use crate::programmer::Color;
 
 mod channel_values;
@@ -25,6 +26,7 @@ mod color_mixer;
 mod debug_ui_pane;
 mod module;
 mod priority;
+mod fixture_configuration;
 pub mod programmer;
 pub mod selection;
 

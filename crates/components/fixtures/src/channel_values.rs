@@ -1,7 +1,9 @@
 use crate::manager::{FadeTimings, FixtureValueSource};
 use crate::FixturePriority;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
+use std::fmt;
+use std::ops::Add;
 use std::time::{Duration, Instant};
 
 #[derive(Debug, Default, Clone)]
@@ -26,7 +28,7 @@ pub(crate) struct FadeState {
     #[serde(skip)]
     pub start_time: Instant,
     pub duration: Duration,
-    pub start_value: f64,
+    pub start_value: RawChannelValue,
 }
 
 impl FadeState {
@@ -50,7 +52,10 @@ impl FadeState {
         }
 
         let progress = elapsed.as_secs_f64() / self.duration.as_secs_f64();
-        let value = self.start_value + (target_value - self.start_value) * progress;
+        let value = match self.start_value {
+            RawChannelValue::Absolute(start_value) => start_value + (target_value - start_value) * progress,
+            RawChannelValue::Relative(start_value) => target_value + (start_value - (start_value * progress)),
+        };
         Some(value.clamp(0., 1.))
     }
 
@@ -65,11 +70,81 @@ impl FadeState {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
-pub(crate) struct ChannelValue {
+pub(crate) struct ChannelValue<TValue = RawChannelValue> {
     pub priority: FixturePriority,
-    pub value: f64,
+    pub value: TValue,
     pub source: Option<FixtureValueSource>,
     pub fade_timings: FadeTimings,
+}
+
+impl ChannelValue {
+    fn try_to_absolute(&self) -> Option<ChannelValue<f64>> {
+        match self.value {
+            RawChannelValue::Absolute(value) => Some(ChannelValue {
+                priority: self.priority,
+                value,
+                source: self.source.clone(),
+                fade_timings: self.fade_timings,
+            }),
+            RawChannelValue::Relative(_) => None,
+        }
+    }
+
+    fn try_to_relative(&self) -> Option<ChannelValue<f64>> {
+        match self.value {
+            RawChannelValue::Relative(value) => Some(ChannelValue {
+                priority: self.priority,
+                value,
+                source: self.source.clone(),
+                fade_timings: self.fade_timings,
+            }),
+            RawChannelValue::Absolute(_) => None,
+        }
+    }
+}
+
+// TODO: Find a better name for ChannelValue and RawChannelValue
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
+pub enum RawChannelValue {
+    Absolute(f64),
+    Relative(f64),
+}
+
+impl fmt::Display for RawChannelValue {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Absolute(value) => write!(f, "{:.2}", value),
+            Self::Relative(value) if value.is_sign_positive() => write!(f, "+{:.2}", value),
+            Self::Relative(value) => write!(f, "-{:.2}", value),
+        }
+    }
+}
+
+impl Add for RawChannelValue {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self::Output {
+        match (self, other) {
+            (RawChannelValue::Absolute(a), RawChannelValue::Absolute(b)) => {
+                RawChannelValue::Absolute(a + b)
+            }
+            (RawChannelValue::Relative(a), RawChannelValue::Relative(b)) => {
+                RawChannelValue::Relative(a + b)
+            }
+            (RawChannelValue::Absolute(a), RawChannelValue::Relative(b)) => {
+                RawChannelValue::Absolute(a + b)
+            }
+            (RawChannelValue::Relative(a), RawChannelValue::Absolute(b)) => {
+                RawChannelValue::Absolute(a + b)
+            }
+        }
+    }
+}
+
+impl From<f64> for RawChannelValue {
+    fn from(value: f64) -> Self {
+        Self::Absolute(value)
+    }
 }
 
 impl Default for ChannelValues {
@@ -86,9 +161,9 @@ impl Default for ChannelValues {
 }
 
 impl ChannelValues {
-    pub fn insert(
+    pub fn insert<TValue: Into<RawChannelValue>>(
         &mut self,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
@@ -96,7 +171,7 @@ impl ChannelValues {
         self.is_flushed = false;
         self.values.push(ChannelValue {
             priority,
-            value,
+            value: value.into(),
             source,
             fade_timings,
         });
@@ -106,6 +181,7 @@ impl ChannelValues {
         self.master = Some(master.clamp(0., 1.));
     }
 
+    // TODO: pretty sure this needs to be reworked for the relative values to work properly
     pub(crate) fn flush(&mut self) {
         profiling::scope!("ChannelValues::flush");
         if self.is_flushed {
@@ -166,9 +242,10 @@ impl ChannelValues {
             if let Some(ChannelValue { value, .. }) = self
                 .values
                 .iter()
+                .filter_map(|value| value.try_to_absolute())
                 .find(|value| value.priority.is_highlight())
             {
-                return Some(*value);
+                return Some(value);
             }
 
             if let Some(ChannelValue { value, .. }) = self
@@ -176,7 +253,10 @@ impl ChannelValues {
                 .iter()
                 .find(|value| value.priority.is_programmer())
             {
-                return Some(*value);
+                return match value {
+                    RawChannelValue::Absolute(value) => Some(*value),
+                    RawChannelValue::Relative(value) => Some(self.value.unwrap_or(0.) + *value),
+                }
             }
 
             self.value
@@ -187,10 +267,11 @@ impl ChannelValues {
             .or(target_value)
     }
 
-    fn get_value(&self) -> Option<ChannelValue> {
+    fn get_mapped_value<TMap: Fn(&ChannelValue) -> Option<ChannelValue<f64>>>(&self, map: TMap) -> Option<ChannelValue<f64>> {
         let ltp_highest = self
             .values
             .iter()
+            .filter_map(&map)
             .filter(|value| value.priority.is_ltp())
             .max_by_key(|value| value.priority)
             .map(|channel_value| ChannelValue {
@@ -202,6 +283,7 @@ impl ChannelValues {
         let htp_highest = self
             .values
             .iter()
+            .filter_map(map)
             .filter(|ChannelValue { priority, .. }| priority.is_htp())
             .map(|channel_value| ChannelValue {
                 value: channel_value.value.clamp(0., 1.),
@@ -217,6 +299,30 @@ impl ChannelValues {
             (Some(ltp), Some(htp)) if ltp.value > htp.value => Some(ltp),
             (Some(_), Some(htp)) => Some(htp),
             (None, None) => None,
+        }
+    }
+
+    fn get_absolute_value(&self) -> Option<ChannelValue<f64>> {
+        self.get_mapped_value(|value| value.try_to_absolute())
+    }
+
+    fn get_relative_value(&self) -> Option<ChannelValue<f64>> {
+        self.get_mapped_value(|value| value.try_to_relative())
+    }
+
+    fn get_value(&self) -> Option<ChannelValue<f64>> {
+        let absolute_value = self.get_absolute_value()?;
+        let relative_value = self.get_relative_value();
+
+        if let Some(relative_value) = relative_value {
+            Some(ChannelValue {
+                value: absolute_value.value + relative_value.value,
+                priority: relative_value.priority,
+                source: relative_value.source.clone(),
+                fade_timings: relative_value.fade_timings,
+            })
+        } else {
+            Some(absolute_value)
         }
     }
 
@@ -242,10 +348,10 @@ impl ChannelsWithValues {
         }
     }
 
-    pub fn insert(
+    pub fn insert<TValue: Into<RawChannelValue>>(
         &mut self,
         channel: &String,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
@@ -296,14 +402,15 @@ impl ChannelsWithValues {
         );
     }
 
-    pub(crate) fn write_priority_with_timings(
+    pub(crate) fn write_priority_with_timings<TValue: Into<RawChannelValue>>(
         &mut self,
         name: &String,
-        value: f64,
+        value: TValue,
         priority: FixturePriority,
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
     ) {
+        let value = value.into();
         tracing::trace!("write {name} -> {value} ({priority:?}, {source:?}, {fade_timings:?})");
         self.insert(name, value, priority, source, fade_timings);
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
@@ -73,7 +74,13 @@ class NodePort extends StatelessWidget {
   List<Widget> _expanded(GlobalKey? portKey) {
     if (!input) {
       return [
-        Text(port.name),
+        Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              color: Grey800,
+            ),
+            padding: const EdgeInsets.only(bottom: 2, right: 4, left: 4),
+            child: Text(port.name)),
         Container(width: 8),
         PortDot(port, input: this.input, key: portKey, node: node),
       ];
@@ -81,7 +88,13 @@ class NodePort extends StatelessWidget {
     return [
       PortDot(port, input: this.input, key: portKey, node: node),
       Container(width: 8),
-      Text(port.name),
+      Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            color: Grey800,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Text(port.name)),
     ];
   }
 }

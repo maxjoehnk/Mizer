@@ -55,8 +55,8 @@ class _HistoryRendererState extends State<HistoryRenderer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 300,
-        height: 200,
+        // width: 300,
+        // height: 200,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(2)),
         clipBehavior: Clip.antiAlias,
         child: pointer == null ? Container() : HistoryPaint(pointer: pointer!));
@@ -91,7 +91,11 @@ class _HistoryPaintState extends State<HistoryPaint> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(painter: HistoryPainter(history), size: Size(300, 200), willChange: true);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return CustomPaint(painter: HistoryPainter(history), size: constraints.biggest, willChange: true);
+      }
+    );
   }
 
   @override

@@ -132,6 +132,7 @@ class BaseNodeState extends State<BaseNode> {
                           collapsed: widget.collapsed),
                       if (!widget.collapsed)
                         Stack(children: [
+                          if (selectedTab == NodeTab.Ports) _portPreviewBackground(),
                           _portsView(),
                           if (selectedTab == NodeTab.Preview) _previewView(),
                           if (selectedTab == NodeTab.ContainerEditor) _containerEditor(context),
@@ -170,8 +171,16 @@ class BaseNodeState extends State<BaseNode> {
   }
 
   Widget _previewView() {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(8.0),
+      width: 300,
+      height: 200,
+      child: RepaintBoundary(child: NodePreview(this.node)),
+    );
+  }
+
+  Widget _portPreviewBackground() {
+    return Positioned.fill(
       child: RepaintBoundary(child: NodePreview(this.node)),
     );
   }

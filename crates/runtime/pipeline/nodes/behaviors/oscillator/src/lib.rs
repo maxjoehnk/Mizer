@@ -144,6 +144,13 @@ impl ProcessingNode for OscillatorNode {
                 },
             },
             NodeTemplate {
+                name: "Cosine".into(),
+                config: OscillatorNode {
+                    oscillator_type: OscillatorType::Cosine,
+                    ..Default::default()
+                },
+            },
+            NodeTemplate {
                 name: "Square".into(),
                 config: OscillatorNode {
                     oscillator_type: OscillatorType::Square,
@@ -265,6 +272,26 @@ impl OscillatorContext {
                 );
                 value
             }
+            OscillatorType::Cosine => {
+                let min = self.min;
+                let max = self.max;
+                let offset = (max - min) / 2f64;
+                let value = f64::cos(
+                    (3f64 / 2f64) * PI
+                        + PI * ((beat + self.offset) * 2f64) * (1f64 / self.interval),
+                ) * offset
+                    + offset
+                    + min;
+                let value = value.clamp(min, max);
+                tracing::trace!(
+                    "min: {}, max: {}, offset: {}, result: {}",
+                    min,
+                    max,
+                    offset,
+                    value
+                );
+                value
+            }
             OscillatorType::Triangle => {
                 let base = self.interval / 2f64;
                 let frame = self.get_frame(beat);
@@ -318,6 +345,7 @@ pub enum OscillatorType {
     Square,
     #[default]
     Sine,
+    Cosine,
     Saw,
     Triangle,
 }

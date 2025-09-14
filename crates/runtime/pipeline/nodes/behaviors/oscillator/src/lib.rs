@@ -70,7 +70,7 @@ fn default_ratio() -> f64 {
 
 impl ConfigurableNode for OscillatorNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
-        vec![
+        let mut settings = vec![
             setting!(enum TYPE_SETTING, self.oscillator_type),
             setting!(INTERVAL_SETTING, self.interval)
                 .min(0.)
@@ -86,9 +86,12 @@ impl ConfigurableNode for OscillatorNode {
             setting!(OFFSET_SETTING, self.offset)
                 .min_hint(0.)
                 .max_hint(1.),
-            setting!(RATIO_SETTING, self.ratio).min(0.).max(1.),
-            setting!(REVERSE_SETTING, self.reverse),
-        ]
+        ];
+        if matches!(self.oscillator_type, OscillatorType::Square) {
+            settings.push(setting!(RATIO_SETTING, self.ratio).min(0.).max(1.));
+        }
+
+        settings
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {

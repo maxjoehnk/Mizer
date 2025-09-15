@@ -21,7 +21,6 @@ import 'package:provider/provider.dart';
 
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
 import 'package:mizer/views/nodes/models/node_model.dart';
-import 'package:mizer/views/nodes/widgets/editor_layers/canvas_drop_layer.dart';
 import 'package:mizer/views/nodes/widgets/editor_layers/drag_selection_layer.dart';
 import 'package:mizer/views/nodes/widgets/editor_layers/graph_paint_layer.dart';
 import 'package:mizer/views/nodes/widgets/editor_layers/nodes_layer.dart';
@@ -115,7 +114,6 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                                   onUpdateSelection: (selection) =>
                                       setState(() => _selectionState = selection)),
                             ),
-                            CanvasDropLayer(),
                             NodesTarget(),
                             if (_selectionState != null) SelectionIndicator(_selectionState!),
                             Positioned(bottom: 8 + PathBreadcrumbHeight, right: 8, child: Minimap(transformationController: model.transformationController)),

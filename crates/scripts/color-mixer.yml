@@ -1,0 +1,37 @@
+color_mixer:
+  - name: X5
+    group: 1
+    colors:
+      from: 1
+      to: 13
+    layout:
+      view: Default
+      row: 0
+      column: 0
+    osc:
+      connection: osc-0
+      in: /grid1/{{ i + 1 }}/value
+      out:
+        value: /grid1/{{ i + 1 }}/value
+        color:
+          red: /grid1/{{ i + 1 }}/color/red
+          green: /grid1/{{ i + 1 }}/color/green
+          blue: /grid1/{{ i + 1 }}/color/blue
+  - name: PixelBar
+    group: 2
+    colors:
+      from: 1
+      to: 13
+    layout:
+      view: Default
+      row: 1
+      column: 0
+    osc:
+      connection: osc-0
+      in: /grid1/{{ i + 14 }}/value
+      out:
+        value: /grid1/{{ i + 14 }}/value
+        color:
+          red: /grid1/{{ i + 14 }}/color/red
+          green: /grid1/{{ i + 14 }}/color/green
+          blue: /grid1/{{ i + 14 }}/color/blue

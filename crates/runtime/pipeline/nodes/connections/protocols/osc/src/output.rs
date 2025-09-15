@@ -104,6 +104,7 @@ impl ProcessingNode for OscOutputNode {
         let output = output.unwrap();
 
         if self.argument_type.is_numeric() {
+            // FIXME: only_emit_changes is implemented inversely here, as we want to emit the value only if it has changed
             let value = if self.only_emit_changes {
                 context.read_port::<_, f64>(self.argument_type.get_port_id())
             } else {

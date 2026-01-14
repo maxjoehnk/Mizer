@@ -4,6 +4,10 @@ version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
+[features]
+default = ["std"]
+std = []
+
 [dependencies]
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
@@ -16,7 +20,7 @@ tracing = "0.1"
 dashmap = "6.0"
 mizer-util = { path = "../../util" }
 mizer-message-bus = { path = "../../util/bus" }
-splines = "4.3"
+splines = "5"
 
 [dev-dependencies]
 test-case = "3.3"

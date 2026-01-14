@@ -5733,6 +5733,7 @@ dependencies = [
  "mizer-util",
  "serde",
  "test-case",
+ "tracing",
 ]
 
 [[package]]
@@ -7270,7 +7271,7 @@ dependencies = [
 [[package]]
 name = "nativeshell"
 version = "0.1.16"
-source = "git+https://github.com/maxjoehnk/nativeshell?rev=f8eff1c#f8eff1c9709274437dce42c788170b2032c25508"
+source = "git+https://github.com/maxjoehnk/nativeshell?rev=82d8361#82d8361e599da01026ba2481e0b01864a48ab8bc"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -7318,7 +7319,7 @@ dependencies = [
 [[package]]
 name = "nativeshell_build"
 version = "0.1.16"
-source = "git+https://github.com/maxjoehnk/nativeshell?rev=f8eff1c#f8eff1c9709274437dce42c788170b2032c25508"
+source = "git+https://github.com/maxjoehnk/nativeshell?rev=82d8361#82d8361e599da01026ba2481e0b01864a48ab8bc"
 dependencies = [
  "base64 0.13.1",
  "cargo-emit",
@@ -9942,9 +9943,9 @@ dependencies = [
 
 [[package]]
 name = "splines"
-version = "4.4.1"
+version = "4.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4ef39a4cf041b421dd2b4dd2da7f30bb7059be7a1872fb4f56114b53303d0e1e"
+checksum = "3278aafb315f972aa58d958e3f6b8ef60ceb7723bfedfbd00399c73ed0570583"
 
 [[package]]
 name = "stable_deref_trait"

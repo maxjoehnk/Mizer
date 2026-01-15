@@ -1,4 +1,4 @@
-FROM rust:1.85 as base
+FROM rust:1.92 as base
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -84,7 +84,7 @@ RUN apt-get update && \
       libcdio-paranoia-dev \
       libcdio-cdda-dev \
       libsrt-gnutls-dev \
-      libmfx-dev \
+      libmfx-gen-dev \
       libvorbis-dev \
       libwavpack-dev \
       yasm \

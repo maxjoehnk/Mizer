@@ -8,7 +8,7 @@ edition = "2021"
 anyhow = "1"
 tracing = "0.1"
 mizer-api = { path = "../api" }
-nativeshell = { git = "https://github.com/maxjoehnk/nativeshell", rev = "82d8361" }
+nativeshell = { git = "https://github.com/maxjoehnk/nativeshell", rev = "231f9d1f7785e2eb4cf951d013596d83679fcbca" }
 mizer-util = { path = "../util" }
 mizer-ui-ffi = { path = "ffi" }
 futures = "0.3"

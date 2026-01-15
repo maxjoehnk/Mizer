@@ -7098,7 +7098,7 @@ dependencies = [
  "mizer-ui-ffi",
  "mizer-util",
  "nativeshell",
- "nativeshell_build",
+ "nativeshell_build 0.1.16 (git+https://github.com/maxjoehnk/nativeshell?rev=82d8361)",
  "pinboard",
  "profiling",
  "system_shutdown",
@@ -7450,7 +7450,7 @@ dependencies = [
 [[package]]
 name = "nativeshell"
 version = "0.1.16"
-source = "git+https://github.com/maxjoehnk/nativeshell?rev=82d8361#82d8361e599da01026ba2481e0b01864a48ab8bc"
+source = "git+https://github.com/maxjoehnk/nativeshell?rev=231f9d1f7785e2eb4cf951d013596d83679fcbca#231f9d1f7785e2eb4cf951d013596d83679fcbca"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -7480,7 +7480,7 @@ dependencies = [
  "gtk-sys",
  "libc",
  "log",
- "nativeshell_build",
+ "nativeshell_build 0.1.16 (git+https://github.com/maxjoehnk/nativeshell?rev=231f9d1f7785e2eb4cf951d013596d83679fcbca)",
  "objc",
  "once_cell",
  "percent-encoding",
@@ -7493,6 +7493,25 @@ dependencies = [
  "velcro",
  "widestring 0.5.1",
  "windows 0.28.0",
+]
+
+[[package]]
+name = "nativeshell_build"
+version = "0.1.16"
+source = "git+https://github.com/maxjoehnk/nativeshell?rev=231f9d1f7785e2eb4cf951d013596d83679fcbca#231f9d1f7785e2eb4cf951d013596d83679fcbca"
+dependencies = [
+ "base64 0.13.1",
+ "cargo-emit",
+ "cmake",
+ "convert_case",
+ "copy_dir",
+ "dunce",
+ "path-slash",
+ "pathdiff",
+ "serde",
+ "serde_json",
+ "tar",
+ "yaml-rust",
 ]
 
 [[package]]

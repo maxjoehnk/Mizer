@@ -50,6 +50,7 @@ pub use mizer_port_operation_nodes::{
 pub use mizer_pro_dj_link_nodes::{PioneerCdjNode, ProDjLinkClockNode};
 pub use mizer_screen_capture_nodes::ScreenCaptureNode;
 pub use mizer_scripting_nodes::ScriptingNode;
+pub use mizer_sequencer_nodes::IsCueActiveNode;
 pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_step_sequencer_nodes::StepSequencerNode;
 pub use mizer_surface_nodes::SurfaceMappingNode;
@@ -248,6 +249,7 @@ node_impl! {
     FixtureControl(FixtureControlNode),
     Programmer(ProgrammerNode),
     Sequencer(SequencerNode),
+    IsCueActive(IsCueActiveNode),
     Group(GroupNode),
     GroupControl(GroupControlNode),
     GroupMaster(GroupMasterNode),

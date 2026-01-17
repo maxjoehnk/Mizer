@@ -102,7 +102,7 @@ coremidi-hotplug-notification = "0.1"
 
 [target.'cfg(target_os = "windows")'.build-dependencies]
 winresource = "0.1"
-winapi = "0.3"
+winapi = { version = "0.3", features = ["winnt"] }
 
 [package.metadata.winresource]
 ProductName = "Mizer"

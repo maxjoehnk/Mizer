@@ -106,6 +106,9 @@ jobs:
             libvorbis-dev \
             libwavpack-dev \
             libzimg-dev \
+            libdvdnav-dev \
+            libdvdread-dev \
+            libvpl-dev \
             yasm
       - uses: taiki-e/install-action@protoc
       - name: Install cbindgen
@@ -185,7 +188,7 @@ jobs:
         run: nm mizer | grep ff_mpeg
 
   build-macos:
-    runs-on: macos-14
+    runs-on: macos-latest
     env:
       SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:

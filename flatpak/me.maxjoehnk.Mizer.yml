@@ -1,6 +1,6 @@
 app-id: me.maxjoehnk.Mizer
 runtime: org.freedesktop.Platform
-runtime-version: '22.08'
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 base-extensions:
   - org.freedesktop.Platform.ffmpeg-full
@@ -63,7 +63,6 @@ modules:
         url: https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
         sha512: 083f5e675d73f3233c7930ebe20425a533feedeaaa9d8cc86831312a6581cefbe6ed0d08d2fa89be81082f2a5abdabca8b3c080bf97218a1bd59dc118a30b9f3
   - shared-modules/libcanberra/libcanberra.json
-  - shared-modules/libusb/libusb.json
   - shared-modules/intltool/intltool-0.51.json
   - name: avahi
     cleanup:

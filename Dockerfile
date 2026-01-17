@@ -94,6 +94,9 @@ RUN apt-get update && \
       libjxl-dev \
       librist-dev \
       librav1e-dev \
+      libdvdnav-dev \
+      libdvdread-dev \
+      libvpl-dev \
       libsvtav1enc-dev
 
 FROM base as build

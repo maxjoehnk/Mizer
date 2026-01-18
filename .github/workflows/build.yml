@@ -109,7 +109,7 @@ jobs:
             libdvdnav-dev \
             libdvdread-dev \
             libvpl-dev \
-            yasm
+            nasm
       - uses: taiki-e/install-action@protoc
       - name: Install cbindgen
         run: cargo install --force cbindgen
@@ -193,7 +193,7 @@ jobs:
       SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:
       - name: Install build dependencies
-        run: brew install protobuf ffmpeg yasm cbindgen create-dmg
+        run: brew install protobuf ffmpeg nasm cbindgen create-dmg
       - uses: actions/checkout@v4
         with:
           submodules: recursive

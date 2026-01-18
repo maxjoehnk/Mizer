@@ -87,7 +87,7 @@ RUN apt-get update && \
       libmfx-gen-dev \
       libvorbis-dev \
       libwavpack-dev \
-      yasm \
+      nasm \
       glslang-dev \
       libzimg-dev \
       libplacebo-dev \

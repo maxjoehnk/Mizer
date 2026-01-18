@@ -11,16 +11,15 @@ const DECAY_INPUT: &str = "Decay";
 const SUSTAIN_INPUT: &str = "Sustain";
 const RELEASE_INPUT: &str = "Release";
 
-const ATTACK_SETTING: &str = "Attack";
-const DECAY_SETTING: &str = "Decay";
-const SUSTAIN_SETTING: &str = "Sustain";
-const RELEASE_SETTING: &str = "Release";
-
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Node)]
 pub struct EnvelopeNode {
+    #[setting(min = 0.0, max_hint = 1.0)]
     pub attack: f64,
+    #[setting(min = 0.0, max_hint = 1.0)]
     pub decay: f64,
+    #[setting(min = 0.0, max = 1.0)]
     pub sustain: f64,
+    #[setting(min = 0.0, max_hint = 1.0)]
     pub release: f64,
 }
 
@@ -32,33 +31,6 @@ impl Default for EnvelopeNode {
             sustain: 0.5,
             release: 1.0,
         }
-    }
-}
-
-impl ConfigurableNode for EnvelopeNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
-        vec![
-            setting!(ATTACK_SETTING, self.attack)
-                .min(0f64)
-                .max_hint(1f64),
-            setting!(DECAY_SETTING, self.decay).min(0f64).max_hint(1f64),
-            setting!(SUSTAIN_SETTING, self.sustain).min(0f64).max(1f64),
-            setting!(RELEASE_SETTING, self.release)
-                .min(0f64)
-                .max_hint(1f64),
-        ]
-    }
-
-    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        match (setting.id.as_ref(), &setting.value) {
-            (ATTACK_SETTING, NodeSettingValue::Float { value, .. }) => self.attack = *value,
-            (DECAY_SETTING, NodeSettingValue::Float { value, .. }) => self.decay = *value,
-            (RELEASE_SETTING, NodeSettingValue::Float { value, .. }) => self.release = *value,
-            (SUSTAIN_SETTING, NodeSettingValue::Float { value, .. }) => self.sustain = *value,
-            _ => return Err(anyhow::anyhow!("Invalid setting {setting:?}")),
-        }
-
-        Ok(())
     }
 }
 

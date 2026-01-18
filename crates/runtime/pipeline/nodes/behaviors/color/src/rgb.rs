@@ -7,10 +7,8 @@ const GREEN_INPUT: &str = "Green";
 const BLUE_INPUT: &str = "Blue";
 const COLOR_OUTPUT: &str = "Color";
 
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Node)]
 pub struct RgbColorNode;
-
-impl ConfigurableNode for RgbColorNode {}
 
 impl PipelineNode for RgbColorNode {
     fn details(&self) -> NodeDetails {

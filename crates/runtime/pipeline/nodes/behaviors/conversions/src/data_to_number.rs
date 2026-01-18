@@ -6,10 +6,8 @@ use mizer_util::*;
 const VALUE_INPUT: &str = "Input";
 const VALUE_OUTPUT: &str = "Output";
 
-#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq, Node)]
 pub struct DataToNumberNode;
-
-impl ConfigurableNode for DataToNumberNode {}
 
 impl PipelineNode for DataToNumberNode {
     fn details(&self) -> NodeDetails {

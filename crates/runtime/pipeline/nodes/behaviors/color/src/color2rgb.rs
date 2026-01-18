@@ -9,10 +9,8 @@ const RED_OUTPUT: &str = "Red";
 const GREEN_OUTPUT: &str = "Green";
 const BLUE_OUTPUT: &str = "Blue";
 
-#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq, Node)]
 pub struct ColorToRgbNode;
-
-impl ConfigurableNode for ColorToRgbNode {}
 
 impl PipelineNode for ColorToRgbNode {
     fn details(&self) -> NodeDetails {

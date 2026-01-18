@@ -6,10 +6,8 @@ const BRIGHTNESS_INPUT: &str = "Brightness";
 const COLOR_INPUT: &str = "Input";
 const COLOR_OUTPUT: &str = "Output";
 
-#[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, Node)]
 pub struct ColorBrightnessNode;
-
-impl ConfigurableNode for ColorBrightnessNode {}
 
 impl PipelineNode for ColorBrightnessNode {
     fn details(&self) -> NodeDetails {

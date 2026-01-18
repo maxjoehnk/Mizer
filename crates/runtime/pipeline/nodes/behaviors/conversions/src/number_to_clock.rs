@@ -8,10 +8,8 @@ use mizer_node::*;
 const VALUE_INPUT: &str = "Input";
 const VALUE_OUTPUT: &str = "Output";
 
-#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq, Node)]
 pub struct NumberToClockNode;
-
-impl ConfigurableNode for NumberToClockNode {}
 
 impl PipelineNode for NumberToClockNode {
     fn details(&self) -> NodeDetails {

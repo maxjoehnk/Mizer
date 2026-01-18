@@ -2,7 +2,6 @@ use std::borrow::Cow;
 use std::fmt::Debug;
 
 use downcast::*;
-
 pub use mizer_debug_ui::DebugUiDrawHandle;
 pub use mizer_injector::Injector;
 pub use mizer_ports::{port_types, Color, PortId, PortType};
@@ -13,6 +12,7 @@ pub use self::path::*;
 pub use self::ports::*;
 pub use self::preview::*;
 pub use self::settings::*;
+pub use mizer_node_derive::Node;
 
 mod context;
 mod path;
@@ -104,4 +104,10 @@ pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
     fn create_state(&self) -> Self::State;
 
     fn debug_ui<'a>(&self, _ui: &mut impl DebugUiDrawHandle<'a>, _state: &Self::State) {}
+}
+
+pub fn setting_label(name: &str) -> String {
+    use heck::ToTitleCase;
+
+    name.to_title_case()
 }

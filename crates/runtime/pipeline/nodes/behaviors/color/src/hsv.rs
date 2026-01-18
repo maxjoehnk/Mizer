@@ -8,10 +8,8 @@ const SATURATION_INPUT: &str = "Saturation";
 const VALUE_INPUT: &str = "Value";
 const COLOR_OUTPUT: &str = "Color";
 
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Node)]
 pub struct HsvColorNode;
-
-impl ConfigurableNode for HsvColorNode {}
 
 impl PipelineNode for HsvColorNode {
     fn details(&self) -> NodeDetails {

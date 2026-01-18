@@ -144,20 +144,26 @@ class _PanelState extends State<Panel> {
                   child:
                       Text(widget.label!, textAlign: TextAlign.start, style: textTheme.titleMedium),
                 ),
-              ...(this.widget.tabs ?? []).mapEnumerated((e, i) => Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  PanelHeaderDivider(),
-                  e.header(
-                        this.activeIndex == i,
-                        () => _onSelectTab(i),
-                      ),
-                ],
-              )),
-              if (this.widget.tabs != null) PanelHeaderDivider(),
-              if (widget.canAdd) tab.AddTabButton(onClick: widget.onAdd!),
-              if (widget.canAdd) PanelHeaderDivider(),
-              Spacer(),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    ...(this.widget.tabs ?? []).mapEnumerated((e, i) => Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        PanelHeaderDivider(),
+                        e.header(
+                          this.activeIndex == i,
+                              () => _onSelectTab(i),
+                        ),
+                      ],
+                    )),
+                    if (this.widget.tabs != null) PanelHeaderDivider(),
+                    if (widget.canAdd) tab.AddTabButton(onClick: widget.onAdd!),
+                    if (widget.canAdd) PanelHeaderDivider(),
+                  ]),
+                ),
+              ),
               ...(widget.trailingHeader ?? []),
               if (widget.onSearch != null) SizedBox(width: PANEL_GAP_SIZE, child: PanelHeaderDivider()),
               if (widget.onSearch != null && searchExpanded)

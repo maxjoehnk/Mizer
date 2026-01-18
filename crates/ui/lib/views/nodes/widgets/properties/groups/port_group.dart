@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
@@ -16,14 +17,17 @@ class NodeInputsPane extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NodesBloc, PipelineState>(builder: (context, state) {
       List<NodeConnection> inputs = state.getInputs(node.path);
-      return PropertyGroup(title: "Inputs".i18n, children: node.inputs.map((port) {
-        List<String> connections = inputs
-            .where((c) => c.targetPort.name == port.name)
-            .map((c) => c.sourceNode)
-            .toList();
+      return Padding(
+        padding: const EdgeInsets.all(PANEL_GAP_SIZE),
+        child: Column(spacing: PANEL_GAP_SIZE, children: node.inputs.map((port) {
+          List<String> connections = inputs
+              .where((c) => c.targetPort.name == port.name)
+              .map((c) => c.sourceNode)
+              .toList();
 
-          return PortField(port: port.name, connections: connections);
-      }).toList());
+            return PortField(port: port.name, connections: connections);
+        }).toList()),
+      );
     });
   }
 }
@@ -37,14 +41,17 @@ class NodeOutputsPane extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NodesBloc, PipelineState>(builder: (context, state) {
       List<NodeConnection> outputs = state.getOutputs(node.path);
-      return PropertyGroup(title: "Outputs".i18n, children: node.outputs.map((port) {
-        List<String> connections = outputs
-            .where((c) => c.sourcePort.name == port.name)
-            .map((c) => c.targetNode)
-            .toList();
+      return Padding(
+        padding: const EdgeInsets.all(PANEL_GAP_SIZE),
+        child: Column(spacing: PANEL_GAP_SIZE, children: node.outputs.map((port) {
+          List<String> connections = outputs
+              .where((c) => c.sourcePort.name == port.name)
+              .map((c) => c.targetNode)
+              .toList();
 
-        return PortField(port: port.name, connections: connections);
-      }).toList());
+          return PortField(port: port.name, connections: connections);
+        }).toList()),
+      );
     });
   }
 }

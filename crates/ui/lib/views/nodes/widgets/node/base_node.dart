@@ -9,27 +9,26 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/views/nodes/consts.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
+import 'package:mizer/views/nodes/models/node_model.dart';
+import 'package:mizer/views/nodes/widgets/node/container.dart';
+import 'package:mizer/views/nodes/widgets/node/footer.dart';
+import 'package:mizer/views/nodes/widgets/node/header.dart';
+import 'package:mizer/views/nodes/widgets/node/tabs.dart';
 import 'package:mizer/views/nodes/widgets/node_preview.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mizer/views/nodes/consts.dart';
-import 'package:mizer/views/nodes/models/node_model.dart';
-import 'package:mizer/views/nodes/widgets/node/container.dart';
-import 'package:mizer/views/nodes/widgets/node/footer.dart';
-import 'package:mizer/views/nodes/widgets/node/header.dart';
 import 'ports.dart';
 import 'preview.dart';
-import 'package:mizer/views/nodes/widgets/node/tabs.dart';
 
 class BaseNode extends StatefulWidget {
   final NodeModel nodeModel;
   final Widget child;
   final bool selected;
   final bool selectedAdditionally;
-  final bool collapsed;
   final bool connected;
   final Function() onSelect;
   final Function() onSelectAdditional;
@@ -40,7 +39,6 @@ class BaseNode extends StatefulWidget {
       this.selected = false,
       required this.onSelect,
       required this.onSelectAdditional,
-      this.collapsed = false,
       this.connected = false,
       List<CustomNodeTab>? tabs,
       Key? key,
@@ -71,7 +69,6 @@ class BaseNode extends StatefulWidget {
       selected: selected,
       selectedAdditionally: selectedAdditionally,
       connected: connected,
-      collapsed: collapsed,
       key: key,
       tabs: tabs,
     );
@@ -127,23 +124,25 @@ class BaseNodeState extends State<BaseNode> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      NodeHeader(
-                          this.node.path, this.node.details.displayName, this.node.details.category,
-                          collapsed: widget.collapsed),
-                      if (!widget.collapsed)
-                        Stack(children: [
+                      NodeHeader(this.node.path, this.node.details.displayName,
+                          this.node.details.category),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: NODE_BASE_HEIGHT,
+                        ),
+                        child: Stack(children: [
                           if (selectedTab == NodeTab.Ports) _portPreviewBackground(),
                           _portsView(),
                           if (selectedTab == NodeTab.Preview) _previewView(),
                           if (selectedTab == NodeTab.ContainerEditor) _containerEditor(context),
                         ]),
-                      if (!widget.collapsed)
-                        NodeFooter(
-                          node: node,
-                          tabs: widget.tabs,
-                          selectedTab: selectedTab,
-                          onSelectTab: (tab) => widget.nodeModel.selectTab(tab),
-                        )
+                      ),
+                      NodeFooter(
+                        node: node,
+                        tabs: widget.tabs,
+                        selectedTab: selectedTab,
+                        onSelectTab: (tab) => widget.nodeModel.selectTab(tab),
+                      )
                     ]),
               ),
               selected: !_screenshotMode && widget.selected,
@@ -181,7 +180,10 @@ class BaseNodeState extends State<BaseNode> {
 
   Widget _portPreviewBackground() {
     return Positioned.fill(
-      child: RepaintBoundary(child: NodePreview(this.node)),
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: RepaintBoundary(child: NodePreview(this.node)),
+      ),
     );
   }
 
@@ -245,13 +247,7 @@ class BaseNodeState extends State<BaseNode> {
   }
 }
 
-const NON_DUPLICATABLE_NODE_TYPES = [
-  "programmer",
-  "transport",
-  "fixture",
-  "group",
-  "container"
-];
+const NON_DUPLICATABLE_NODE_TYPES = ["programmer", "transport", "fixture", "group", "container"];
 
 const NON_RENAMEABLE_NODE_TYPES = ["programmer", "transport"];
 

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Tab;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/consts.dart';
@@ -9,6 +9,8 @@ import 'package:mizer/views/nodes/widgets/properties/groups/help_group.dart';
 import 'package:mizer/views/nodes/widgets/properties/groups/node_group.dart';
 import 'package:mizer/views/nodes/widgets/properties/groups/port_group.dart';
 import 'package:mizer/views/nodes/widgets/properties/groups/settings_group.dart';
+import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/tabs.dart';
 
 class NodePropertiesPane extends StatefulWidget {
   final Node? node;
@@ -63,16 +65,61 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
   @override
   Widget build(BuildContext context) {
     if (this.widget.node == null) {
-      return Container();
+      return Panel.tabs(label: "Properties".i18n, tabs: [], padding: false);
     }
     Node node = this.widget.node!;
     var nodesApi = context.read<NodesApi>();
 
-    return Container(
-        padding: EdgeInsets.all(PANEL_GAP_SIZE),
-        child: ListView(
-          children: _getPropertyPanes(node, nodesApi),
-        ));
+    return Column(spacing: PANEL_GAP_SIZE, children: [
+      Expanded(
+          child: Panel.tabs(
+              label: "Properties".i18n,
+              padding: false,
+              tabs: _getPropertyTabs(node, nodesApi)
+          )),
+      SizedBox(height: 200, child: HelpGroup(nodeType: node.type, hoveredSetting: hoveredSetting)),
+    ]);
+  }
+
+  List<Tab> _getPropertyTabs(Node node, NodesApi nodesApi) {
+    return [
+      Tab(
+        label: "Node".i18n,
+        child: NodeProperties(
+            node: node,
+            onUpdateColor: (color) {
+              nodesApi.updateNodeColor(UpdateNodeColorRequest(path: node.path, color: color));
+              widget.onUpdate();
+            })
+      ),
+      if (_settings$ != null)
+        Tab(label: node.details.nodeTypeName, child: StreamBuilder(
+            stream: _settings$,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Container();
+              }
+              if (snapshot.requireData.path != node.path) {
+                return Container();
+              }
+              return NodeSettingsPane(
+                  nodePath: snapshot.requireData.path,
+                  type: node.type,
+                  settings: snapshot.requireData.settings,
+                  onUpdate: (updated) {
+                    nodesApi.updateNodeSetting(
+                        UpdateNodeSettingRequest(path: snapshot.requireData.path, setting: updated));
+                    widget.onUpdate();
+                  },
+                  onHover: (setting) => setState(() {
+                    hoveredSetting = setting?.id;
+                  }));
+            })),
+      if (node.inputs.isNotEmpty)
+        Tab(label: "Inputs".i18n, child: NodeInputsPane(node: node)),
+      if (node.outputs.isNotEmpty)
+        Tab(label: "Outputs".i18n, child: NodeOutputsPane(node: node)),
+    ];
   }
 
   List<Widget> _getPropertyPanes(Node node, NodesApi nodesApi) {
@@ -95,7 +142,6 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
               }
               return NodeSettingsPane(
                   nodePath: snapshot.requireData.path,
-                  title: "Settings".i18n,
                   type: node.type,
                   settings: snapshot.requireData.settings,
                   onUpdate: (updated) {

@@ -10,7 +10,6 @@ class PropertyGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(2),
       decoration: BoxDecoration(color: Grey800, borderRadius: BorderRadius.circular(BORDER_RADIUS)),
       clipBehavior: Clip.antiAlias,
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

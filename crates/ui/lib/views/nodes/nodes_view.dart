@@ -173,26 +173,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
           ),
           Container(
             width: SidebarWidth,
-            child: Column(
-              spacing: PANEL_GAP_SIZE,
-              children: [
-                Expanded(
-                  child: Panel(
-                    padding: false,
-                    label: "Properties".i18n,
-                    child: NodePropertiesPane(node: model.selectedNode?.node, onUpdate: _refresh)),
-                ),
-                SizedBox(
-                  height: 180,
-                  child: Panel(
-                    label: "Preview".i18n,
-                    child: model.selectedNode == null
-                        ? Container()
-                        : NodePreview(model.selectedNode!.node),
-                  ),
-                )
-              ],
-            ),
+            child: NodePropertiesPane(node: model.selectedNode?.node, onUpdate: _refresh),
           )
         ],
       ),

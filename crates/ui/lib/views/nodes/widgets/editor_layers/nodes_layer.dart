@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/widgets.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/consts.dart';
@@ -43,6 +45,7 @@ class _NodesTargetState extends State<NodesTarget> {
                 transform: model.transformationController.value *
                     Matrix4.translation(Vector3(offset.dx, offset.dy, 0)),
                 child: GestureDetector(
+                    supportedDevices: {PointerDeviceKind.mouse},
                     onPanStart: (e) {
                       setState(() {
                         startOffset = e.localPosition;

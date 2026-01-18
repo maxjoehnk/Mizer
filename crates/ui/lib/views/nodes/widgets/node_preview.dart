@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 import 'package:mizer/views/nodes/consts.dart';
 
-const double NODE_PREVIEW_WIDTH = 10;
-const double NODE_PREVIEW_HEIGHT = 5;
+const double NODE_PREVIEW_WIDTH = 4;
+const double NODE_PREVIEW_HEIGHT = 2;
 
 var i = 0;
 
@@ -42,40 +42,42 @@ class NodesPreviewPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final boundingBox = getBoundingBox().inflate(4);
-    var scale = 1.0;
-    if (boundingBox.width - size.width > boundingBox.height - size.height) {
-      scale = boundingBox.width / size.width;
-    } else {
-      scale = boundingBox.height / size.height;
+    var visibleNodes = nodes.where((n) => !n.designer.hidden).toList();
+
+    if (visibleNodes.isEmpty) {
+      return;
     }
-    var offset = Offset.zero - boundingBox.topLeft;
-    offset = offset / scale;
-    _drawChannels(size, canvas, scale, offset);
-    _drawNodes(size, canvas, scale, offset);
+
+    var boundingBox = _getBoundingBox(visibleNodes);
+    double scale = _getScale(size, boundingBox);
+    Offset offset = _getOffset(size, boundingBox, scale);
+
+    _drawChannels(size, canvas, offset, scale);
+    _drawNodes(size, canvas, offset, scale);
   }
 
-  void _drawNodes(Size size, Canvas canvas, double scale, Offset offset) {
+  void _drawNodes(Size size, Canvas canvas, Offset offset, double scale) {
     nodes.where((n) => !n.designer.hidden).forEach((node) {
-      var rect = Rect.fromLTWH(node.designer.position.x / scale, node.designer.position.y / scale,
-          NODE_PREVIEW_WIDTH, NODE_PREVIEW_HEIGHT);
+      var rect = Rect.fromLTWH(node.designer.position.x * scale, node.designer.position.y * scale,
+          NODE_PREVIEW_WIDTH * scale, NODE_PREVIEW_HEIGHT * scale);
       rect = rect.shift(offset);
+
       final paint = Paint()
         ..color = CATEGORY_COLORS[node.details.category] ?? Colors.black
         ..style = PaintingStyle.fill;
-      canvas.drawRRect(RRect.fromRectAndRadius(rect, Radius.circular(2)), paint);
+      canvas.drawRRect(RRect.fromRectAndRadius(rect, Radius.circular(scale.clamp(1, 5))), paint);
     });
   }
 
-  void _drawChannels(Size size, Canvas canvas, double scale, Offset offset) {
+  void _drawChannels(Size size, Canvas canvas, Offset offset, double scale) {
     connections.forEach((connection) {
       var startNode = nodes.firstWhere((node) => node.path == connection.sourceNode);
       var endNode = nodes.firstWhere((node) => node.path == connection.targetNode);
-      var start = Offset(startNode.designer.position.x / scale + (NODE_PREVIEW_WIDTH / 2), startNode.designer.position.y / scale + (NODE_PREVIEW_HEIGHT / 2)) + offset;
-      var end = Offset(endNode.designer.position.x / scale + (NODE_PREVIEW_WIDTH / 2), endNode.designer.position.y / scale + (NODE_PREVIEW_HEIGHT / 2)) + offset;
+      var start = Offset(startNode.designer.position.x + NODE_PREVIEW_WIDTH / 2, startNode.designer.position.y + NODE_PREVIEW_HEIGHT / 2).scale(scale, scale).translate(offset.dx, offset.dy);
+      var end = Offset(endNode.designer.position.x + NODE_PREVIEW_WIDTH / 2, endNode.designer.position.y + NODE_PREVIEW_HEIGHT / 2).scale(scale, scale).translate(offset.dx, offset.dy);
       final paint = Paint()
         ..color = getColorForProtocol(connection.protocol)
-        ..strokeWidth = 1
+        ..strokeWidth = scale.clamp(1, 3) * 0.6
         ..style = PaintingStyle.stroke;
       Path path = Path()
         ..moveTo(start.dx, start.dy)
@@ -89,22 +91,42 @@ class NodesPreviewPainter extends CustomPainter {
   bool shouldRepaint(covariant NodesPreviewPainter oldDelegate) {
     return oldDelegate.nodes != nodes;
   }
+}
 
-  Rect getBoundingBox() {
-    double minX = 0;
-    double minY = 0;
-    double maxX = 0;
-    double maxY = 0;
-    nodes.where((n) => !n.designer.hidden).forEach((node) {
-      var left = node.designer.position.x;
-      var right = left + NODE_PREVIEW_WIDTH;
-      var top = node.designer.position.y;
-      var bottom = top + NODE_PREVIEW_HEIGHT;
-      minX = minX < left ? minX : left;
-      minY = minY < top ? minY : top;
-      maxX = maxX > right ? maxX : right;
-      maxY = maxY > bottom ? maxY : bottom;
-    });
-    return Rect.fromLTRB(minX, minY, maxX, maxY);
+Rect _getBoundingBox(List<Node> visibleNodes) {
+  double minX = double.infinity;
+  double minY = double.infinity;
+  double maxX = double.negativeInfinity;
+  double maxY = double.negativeInfinity;
+
+  for (var node in visibleNodes) {
+    var x = node.designer.position.x;
+    var y = node.designer.position.y;
+    minX = minX < x ? minX : x;
+    minY = minY < y ? minY : y;
+    maxX = maxX > x ? maxX : x;
+    maxY = maxY > y ? maxY : y;
   }
+
+  maxX += NODE_PREVIEW_WIDTH;
+  maxY += NODE_PREVIEW_HEIGHT;
+
+  return Rect.fromLTRB(minX, minY, maxX, maxY);
+}
+
+double _getScale(Size size, Rect boundingBox) {
+  const double padding = 10.0;
+  double scaleX = (size.width - padding * 2) / boundingBox.width;
+  double scaleY = (size.height - padding * 2) / boundingBox.height;
+  double scale = (scaleX < scaleY ? scaleX : scaleY).clamp(0, 10);
+  return scale;
+}
+
+Offset _getOffset(Size size, Rect boundingBox, double scale) {
+  double scaledWidth = boundingBox.width * scale;
+  double scaledHeight = boundingBox.height * scale;
+  double offsetX = (size.width - scaledWidth) / 2 - boundingBox.left * scale;
+  double offsetY = (size.height - scaledHeight) / 2 - boundingBox.top * scale;
+
+  return Offset(offsetX, offsetY);
 }

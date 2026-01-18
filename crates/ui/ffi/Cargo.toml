@@ -9,6 +9,7 @@ crate-type = ["cdylib", "lib"]
 
 [features]
 build-ffmpeg = ["ffmpeg-the-third/build"]
+static-link-ffmpeg = ["ffmpeg-the-third/static"]
 
 [dependencies]
 pinboard = "2.2"
@@ -26,4 +27,4 @@ mizer-api = { path = "../../api" }
 lazy_static = "1.4"
 parking_lot = "0.12"
 bitflags = "2.5"
-ffmpeg-the-third = "3.0"
+ffmpeg-the-third = "4.0"

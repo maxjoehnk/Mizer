@@ -3239,9 +3239,8 @@ dependencies = [
 
 [[package]]
 name = "ffmpeg-sys-the-third"
-version = "3.0.0+ffmpeg-7.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b8ac7541c97a452897b3b85648e2e6fcd862c272ea0085ee3cbd7c7e2cfed95b"
+version = "4.0.0+ffmpeg-8.0"
+source = "git+https://github.com/maxjoehnk/ffmpeg-the-third.git?branch=feature%2Fremove-libpostproc#8708c22aa359c2e97c3789e1a963face5839bed8"
 dependencies = [
  "bindgen 0.69.5",
  "cc",
@@ -3253,9 +3252,9 @@ dependencies = [
 
 [[package]]
 name = "ffmpeg-the-third"
-version = "3.0.1+ffmpeg-7.1"
+version = "4.0.0+ffmpeg-8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "79adca4fd8d80989bd449a19afdf31235849384ea5a6ef64489f155794e3be7f"
+checksum = "3839654c07a1447e03e920bf33e6fca1de1a97f4df72c17c8765c47e89fd0ef9"
 dependencies = [
  "bitflags 2.10.0",
  "ffmpeg-sys-the-third",
@@ -5902,6 +5901,7 @@ dependencies = [
  "mizer-util",
  "serde",
  "test-case",
+ "tracing",
 ]
 
 [[package]]

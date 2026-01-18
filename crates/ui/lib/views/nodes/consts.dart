@@ -7,6 +7,7 @@ const double CANVAS_SIZE = 20000;
 const double MULTIPLIER = GRID_4_SIZE;
 
 const double NODE_BASE_WIDTH = GRID_4_SIZE * 4;
+const double NODE_BASE_HEIGHT = GRID_4_SIZE;
 
 const double OUTER_RADIUS = 4;
 const double INNER_RADIUS = 2;

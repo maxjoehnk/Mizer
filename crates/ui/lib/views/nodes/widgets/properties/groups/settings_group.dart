@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/map_extensions.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
@@ -14,10 +15,8 @@ import 'package:mizer/views/nodes/widgets/properties/fields/spline_field.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/text_field.dart';
 import 'package:mizer/views/nodes/widgets/properties/previews/envelope_preview.dart';
 import 'package:mizer/views/nodes/widgets/properties/previews/surface_mapping_preview.dart';
-import 'property_group.dart';
 
 class NodeSettingsPane extends StatelessWidget {
-  final String title;
   final String nodePath;
   final String type;
   final List<NodeSetting> settings;
@@ -25,8 +24,7 @@ class NodeSettingsPane extends StatelessWidget {
   final Function(NodeSetting?) onHover;
 
   NodeSettingsPane(
-      {required this.title,
-      required this.type,
+      {required this.type,
       required this.settings,
       required this.onUpdate,
       required this.onHover,
@@ -42,7 +40,10 @@ class NodeSettingsPane extends StatelessWidget {
     if (children.isEmpty) {
       return Container();
     }
-    return PropertyGroup(title: title, children: children);
+    return Padding(
+      padding: const EdgeInsets.all(PANEL_GAP_SIZE),
+      child: Column(spacing: PANEL_GAP_SIZE, crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
+    );
   }
 
   Iterable<Widget> getSettings(BuildContext context) {

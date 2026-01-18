@@ -8,9 +8,8 @@ class NodeHeader extends StatelessWidget {
   final String path;
   final String name;
   final NodeCategory category;
-  final bool collapsed;
 
-  NodeHeader(this.path, this.name, this.category, {this.collapsed = false});
+  NodeHeader(this.path, this.name, this.category);
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +18,7 @@ class NodeHeader extends StatelessWidget {
     return Container(
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-            borderRadius: collapsed
-                ? BorderRadius.circular(INNER_RADIUS)
-                : BorderRadius.vertical(top: Radius.circular(INNER_RADIUS))),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(INNER_RADIUS))),
         color: CATEGORY_COLORS[category] ?? Colors.grey.shade800,
       ),
       clipBehavior: Clip.none,

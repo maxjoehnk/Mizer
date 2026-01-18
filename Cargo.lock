@@ -3240,8 +3240,7 @@ dependencies = [
 [[package]]
 name = "ffmpeg-sys-the-third"
 version = "4.0.0+ffmpeg-8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7fc211d0448e9ba775923b7cac39c19d350b47b4994b658f096cd0232d09ef97"
+source = "git+https://github.com/maxjoehnk/ffmpeg-the-third.git?branch=feature%2Fremove-libpostproc#8708c22aa359c2e97c3789e1a963face5839bed8"
 dependencies = [
  "bindgen 0.69.5",
  "cc",

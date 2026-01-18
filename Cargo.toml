@@ -122,3 +122,5 @@ opt-level = 3
 citp = { git = "https://github.com/maxjoehnk/citp.git", branch = "master" }
 # https://github.com/grievouz/egui_tracing/pull/37
 egui_tracing = { git = "https://github.com/maxjoehnk/egui_tracing.git", rev = "38245ee" }
+# https://github.com/shssoichiro/ffmpeg-the-third/pull/120
+ffmpeg-sys-the-third = { git = "https://github.com/maxjoehnk/ffmpeg-the-third.git", branch = "feature/remove-libpostproc" }

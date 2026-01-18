@@ -15,7 +15,7 @@ fixtures_benchmarks:
 	cargo bench --no-default-features -p mizer-fixtures --bench fixtures
 
 build-headless:
-	cargo build --release --no-default-features --features build-ffmpeg -p mizer
+	cargo build --release --no-default-features --features static-link-ffmpeg -p mizer
 
 build:
 	cd crates/ui && make
@@ -23,7 +23,7 @@ build:
 
 build-release:
 	cd crates/ui && make release
-	cargo build --no-default-features --features ui --features build-ffmpeg --release -p mizer
+	cargo build --no-default-features --features ui --features static-link-ffmpeg --release -p mizer
 
 run: build
 	cargo run -p mizer

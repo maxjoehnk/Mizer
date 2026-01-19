@@ -26,7 +26,7 @@ impl LayoutRef {
 pub extern "C" fn read_fader_value(ptr: *const LayoutRef, path: *const c_char) -> f64 {
     let path = unsafe { CStr::from_ptr(path) };
     let path = path.to_str().unwrap();
-    let node_path = NodePath(path.to_string());
+    let node_path = NodePath::from(path);
     let ffi = Arc::from_pointer(ptr);
 
     let value = ffi.view.get_fader_value(&node_path).unwrap_or_default();
@@ -40,7 +40,7 @@ pub extern "C" fn read_fader_value(ptr: *const LayoutRef, path: *const c_char) -
 pub extern "C" fn read_dial_value(ptr: *const LayoutRef, path: *const c_char) -> FFIDialValue {
     let path = unsafe { CStr::from_ptr(path) };
     let path = path.to_str().unwrap();
-    let node_path = NodePath(path.to_string());
+    let node_path = NodePath::from(path);
     let ffi = Arc::from_pointer(ptr);
 
     let value = ffi.view.get_dial_value(&node_path).unwrap_or_default();
@@ -60,7 +60,7 @@ pub extern "C" fn read_dial_value(ptr: *const LayoutRef, path: *const c_char) ->
 pub extern "C" fn read_button_value(ptr: *const LayoutRef, path: *const c_char) -> u8 {
     let path = unsafe { CStr::from_ptr(path) };
     let path = path.to_str().unwrap();
-    let node_path = NodePath(path.to_string());
+    let node_path = NodePath::from(path);
     let ffi = Arc::from_pointer(ptr);
 
     let value = ffi.view.get_button_value(&node_path).unwrap_or_default();
@@ -74,7 +74,7 @@ pub extern "C" fn read_button_value(ptr: *const LayoutRef, path: *const c_char) 
 pub extern "C" fn read_label_value(ptr: *const LayoutRef, path: *const c_char) -> *const c_char {
     let path = unsafe { CStr::from_ptr(path) };
     let path = path.to_str().unwrap();
-    let node_path = NodePath(path.to_string());
+    let node_path = NodePath::from(path);
     let ffi = Arc::from_pointer(ptr);
 
     let value = ffi.view.get_label_value(&node_path).unwrap_or_default();
@@ -95,7 +95,7 @@ pub extern "C" fn read_label_value(ptr: *const LayoutRef, path: *const c_char) -
 pub extern "C" fn read_clock_value(ptr: *const LayoutRef, path: *const c_char) -> Timecode {
     let path = unsafe { CStr::from_ptr(path) };
     let path = path.to_str().unwrap();
-    let node_path = NodePath(path.to_string());
+    let node_path = NodePath::from(path);
     let ffi = Arc::from_pointer(ptr);
 
     let value = ffi.view.get_clock_value(&node_path).unwrap_or_default();
@@ -112,7 +112,7 @@ pub extern "C" fn read_control_color(
 ) -> FFIControlColor {
     let path = unsafe { CStr::from_ptr(path) };
     let path = path.to_str().unwrap();
-    let node_path = NodePath(path.to_string());
+    let node_path = NodePath::from(path);
     let ffi = Arc::from_pointer(ptr);
 
     let value = if let Some(value) = ffi.view.get_control_color(&node_path) {

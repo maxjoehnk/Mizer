@@ -136,7 +136,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         let node = self
             .runtime
             .execute_query(GetNodeQuery {
-                path: NodePath(path),
+                path: NodePath::from(path),
             })
             .unwrap()?;
 

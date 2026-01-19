@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Hash, PartialOrd, Ord, PartialEq, Eq, Deserialize, Serialize)]
 #[repr(transparent)]
 #[serde(transparent)]
-pub struct NodePath(pub String);
+pub struct NodePath(String);
 
 impl std::fmt::Display for NodePath {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -15,7 +15,11 @@ impl std::fmt::Display for NodePath {
 
 impl From<String> for NodePath {
     fn from(path: String) -> Self {
-        Self(path)
+        if !path.starts_with('/') {
+            Self(format!("/{path}"))
+        } else {
+            Self(path)
+        }
     }
 }
 
@@ -27,7 +31,7 @@ impl From<NodePath> for String {
 
 impl From<&str> for NodePath {
     fn from(path: &str) -> Self {
-        Self(path.to_string())
+        Self::from(path.to_string())
     }
 }
 
@@ -48,5 +52,21 @@ impl PartialEq<String> for NodePath {
 impl PartialEq<&str> for NodePath {
     fn eq(&self, other: &&str) -> bool {
         &self.0 == other
+    }
+}
+
+impl Default for NodePath {
+    fn default() -> Self {
+        Self(String::new())
+    }
+}
+
+impl NodePath {
+    pub fn join(&self, other: &NodePath) -> Self {
+        if other.starts_with("/") || self.ends_with("/") {
+            format!("{}{}", self, other).into()
+        } else {
+            format!("{}/{}", self, other).into()
+        }
     }
 }

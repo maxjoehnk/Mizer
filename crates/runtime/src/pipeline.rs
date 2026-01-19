@@ -4,10 +4,7 @@ use anyhow::Context;
 use indexmap::IndexMap;
 use mizer_clock::{BoxedClock, ClockFrame};
 use mizer_debug_ui_impl::{Injector, NodeStateAccess};
-use mizer_node::{
-    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode,
-    PortDirection, PortMetadata, ProcessingNode,
-};
+use mizer_node::{NodeDesigner, NodeLink, NodeMetadata, NodePath, NodePosition, NodeSetting, NodeType, PipelineNode, PortDirection, PortMetadata, ProcessingNode};
 use mizer_nodes::{ContainerNode, Node, NodeDowncast, NodeExt};
 use mizer_pipeline::{NodePortReader, NodePreviewRef, PipelineWorker, ProcessingNodeExt};
 use mizer_ports::PortId;
@@ -17,9 +14,10 @@ use pinboard::NonEmptyPinboard;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::io::Write;
-use std::ops::DerefMut;
+use std::ops::{Deref, DerefMut};
 use std::str::FromStr;
 use std::sync::Arc;
+use regex::Regex;
 
 pub struct Pipeline {
     nodes: IndexMap<NodePath, NodeState>,
@@ -53,7 +51,7 @@ impl Pipeline {
         parent: Option<&NodePath>,
     ) -> anyhow::Result<StaticNodeDescriptor> {
         let node = node.unwrap_or_else(|| node_type.into());
-        let path = self.new_node_path(node_type);
+        let path = self.new_node_path(node_type, parent);
 
         self.add_node_with_path(injector, path, designer, node, parent)
     }
@@ -118,7 +116,7 @@ impl Pipeline {
             .ok_or_else(|| anyhow::anyhow!("Node not found: {}", path))?;
         let node_config: Node = NodeDowncast::downcast(&state.node);
         let node_type = node_config.node_type();
-        let new_path = self.new_node_path(node_type);
+        let new_path = self.new_node_path(node_type, None);
         // add_dyn_node inlined because of borrow checker
         let node = {
             let mut registration = PipelineNodeRegistration {
@@ -163,11 +161,16 @@ impl Pipeline {
         Ok(())
     }
 
-    fn new_node_path(&self, node_type: NodeType) -> NodePath {
+    fn new_node_path(&self, node_type: NodeType, parent: Option<&NodePath>) -> NodePath {
         let node_type_name = node_type.get_name();
         let id = self.get_next_id(node_type);
-        let path: NodePath = format!("/{}-{}", node_type_name, id).into();
-        path
+        let node_name = format!("{}-{}", node_type_name, id).into();
+
+        if let Some(parent) = parent {
+            parent.join(&node_name)
+        }else {
+            node_name
+        }
     }
 
     pub(crate) fn delete_node(&mut self, path: &NodePath) -> Option<(NodeState, Vec<NodeLink>)> {
@@ -440,16 +443,18 @@ impl Pipeline {
     }
 
     fn get_next_id(&self, node_type: NodeType) -> u32 {
-        let node_type_prefix = format!("/{}-", node_type.get_name());
-        let mut ids = self
+        let node_type_prefix = format!("/{}-(\\d+)$", node_type.get_name());
+        let regex = Regex::new(&node_type_prefix).unwrap();
+        let next_id = self
             .nodes
             .keys()
-            .filter_map(|path| path.0.strip_prefix(&node_type_prefix))
-            .filter_map(|suffix| u32::from_str(suffix).ok())
-            .collect::<Vec<_>>();
-        tracing::trace!("found ids for prefix {}: {:?}", node_type_prefix, ids);
-        ids.sort_unstable();
-        ids.last().map(|last_id| last_id + 1).unwrap_or_default()
+            .filter_map(|path| regex.captures(path.as_str()))
+            .map(|captures| captures[1].parse::<u32>().unwrap())
+            .max()
+            .map(|id| id + 1)
+            .unwrap_or(0);
+
+        next_id
     }
 
     #[profiling::function]
@@ -559,6 +564,12 @@ impl Pipeline {
 
     pub fn read_state<TValue: 'static>(&self, path: &NodePath) -> Option<&TValue> {
         self.worker.get_state(path)
+    }
+
+    pub fn get_positions(&self, paths: &[NodePath]) -> Vec<NodePosition> {
+        paths.iter()
+            .filter_map(|path| self.nodes.get(path).map(|state| state.designer.position))
+            .collect()
     }
 }
 

@@ -30,7 +30,7 @@ impl NodeContextMock {
             read_port_fn: Default::default(),
             clock_fn: Default::default(),
             history: Default::default(),
-            path: NodePath(Default::default()),
+            path: Default::default(),
         }
     }
 }

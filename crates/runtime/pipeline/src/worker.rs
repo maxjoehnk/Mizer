@@ -123,7 +123,7 @@ pub struct PipelineWorker {
 
 impl NodeStateAccess for PipelineWorker {
     fn get(&self, path: &str) -> Option<&Box<dyn Any>> {
-        let path = NodePath(path.to_string());
+        let path = NodePath::from(path.to_string());
 
         self.states.get(&path)
     }

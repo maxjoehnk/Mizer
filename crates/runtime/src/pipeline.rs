@@ -33,6 +33,12 @@ pub struct NodeState {
     ports: Vec<(PortId, PortMetadata)>,
 }
 
+impl NodeState {
+    pub fn as_node<T: ProcessingNode>(&self) -> Option<&T> {
+        self.node.downcast_ref::<T>().ok()
+    }
+}
+
 impl Pipeline {
     pub fn new() -> Self {
         Self {

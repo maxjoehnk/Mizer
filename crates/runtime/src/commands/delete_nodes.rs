@@ -1,4 +1,5 @@
 use crate::pipeline::{NodeState, Pipeline};
+use itertools::{multizip, MultiUnzip};
 use mizer_commander::{Command, Ref, RefMut};
 use mizer_layouts::{ControlConfig, ControlType, LayoutStorage};
 use mizer_node::{NodeLink, NodePath};
@@ -18,6 +19,15 @@ impl<'a> Command<'a> for DeleteNodesCommand {
         Vec<NodeLink>,
         HashMap<String, Vec<ControlConfig>>,
         Vec<(NodePath, Node)>,
+        Option<(
+            DeleteNodesCommand,
+            Vec<(
+                NodeState,
+                Vec<NodeLink>,
+                HashMap<String, Vec<ControlConfig>>,
+                Vec<(NodePath, Node)>,
+            )>,
+        )>,
     )>;
     type Result = ();
 
@@ -47,8 +57,16 @@ impl<'a> Command<'a> for DeleteNodesCommand {
             }
             layout_storage.set(layouts);
             let update_node_commands = self.remove_node_from_containers(pipeline, path)?;
+            let remove_children_command =
+                self.remove_children_nodes(pipeline, layout_storage, &node_state)?;
 
-            let entry = (node_state, links, controls, update_node_commands);
+            let entry = (
+                node_state,
+                links,
+                controls,
+                update_node_commands,
+                remove_children_command,
+            );
             state.push(entry);
         }
 
@@ -60,13 +78,28 @@ impl<'a> Command<'a> for DeleteNodesCommand {
         (pipeline, layout_storage): (&mut Pipeline, &LayoutStorage),
         state: Self::State,
     ) -> anyhow::Result<()> {
-        for (path, (node_state, links, mut controls, container_commands)) in
-            self.paths.iter().zip(state)
+        let (states, links, controls, parent_commands, children_commands): (
+            Vec<NodeState>,
+            Vec<Vec<NodeLink>>,
+            Vec<HashMap<String, Vec<ControlConfig>>>,
+            Vec<Vec<(NodePath, Node)>>,
+            Vec<
+                Option<(
+                    DeleteNodesCommand,
+                    Vec<(
+                        NodeState,
+                        Vec<NodeLink>,
+                        HashMap<String, Vec<ControlConfig>>,
+                        Vec<(NodePath, Node)>,
+                    )>,
+                )>,
+            >,
+        ) = state.into_iter().multiunzip();
+        let states = multizip((states, controls, parent_commands, children_commands));
+        for (path, (node_state, mut controls, container_commands, remove_children_command)) in
+            self.paths.iter().zip(states)
         {
             pipeline.reinsert_node(path.clone(), node_state);
-            for link in links {
-                pipeline.add_link(link.clone())?;
-            }
             let mut layouts = layout_storage.read();
             for layout in &mut layouts {
                 let mut controls = controls.remove(&layout.id).unwrap_or_default();
@@ -76,6 +109,18 @@ impl<'a> Command<'a> for DeleteNodesCommand {
             for (path, container) in container_commands {
                 pipeline.update_node(&path, container)?;
             }
+            if let Some((remove_command, states)) = remove_children_command {
+                let states = states
+                    .into_iter()
+                    .map(|(state, links, controls, parents)| {
+                        (state, links, controls, parents, None)
+                    })
+                    .collect::<Vec<_>>();
+                remove_command.revert((pipeline, layout_storage), states)?;
+            }
+        }
+        for link in links.into_iter().flatten() {
+            pipeline.add_link(link)?;
         }
 
         Ok(())
@@ -111,6 +156,37 @@ impl DeleteNodesCommand {
                 previous.map(|previous| (path, previous))
             })
             .collect()
+    }
+
+    fn remove_children_nodes(
+        &self,
+        pipeline: &mut Pipeline,
+        layout_storage: &LayoutStorage,
+        node_state: &NodeState,
+    ) -> anyhow::Result<
+        Option<(
+            DeleteNodesCommand,
+            Vec<(
+                NodeState,
+                Vec<NodeLink>,
+                HashMap<String, Vec<ControlConfig>>,
+                Vec<(NodePath, Node)>,
+            )>,
+        )>,
+    > {
+        let Some(container) = node_state.as_node::<ContainerNode>() else {
+            return Ok(None);
+        };
+        let remove_command = DeleteNodesCommand {
+            paths: container.nodes.clone(),
+        };
+        let ((), states) = remove_command.apply((pipeline, layout_storage))?;
+        let states = states
+            .into_iter()
+            .map(|(state, links, controls, parents, children)| (state, links, controls, parents))
+            .collect::<Vec<_>>();
+
+        Ok(Some((remove_command, states)))
     }
 }
 

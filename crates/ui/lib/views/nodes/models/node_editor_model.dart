@@ -62,12 +62,18 @@ class NodeEditorModel extends ChangeNotifier {
     }).toList();
     this.rootNodes.sortBy((element) => element.node.path);
     this._channels = nodes.channels;
-    var parent =
-        this.rootNodes.firstWhereOrNull((element) => element.node.path == this.parent?.node.path);
-    if (parent != null) {
-      this.parent = parent;
-      List<NodeModel> nodeModels = parent.node.children.map(_createModel).toList();
-      this.currentNodes = nodeModels;
+    if (this.parent != null) {
+      var parent =
+      this.rootNodes.firstWhereOrNull((element) => element.node.path == this.parent?.node.path);
+      if (parent != null) {
+        this.parent = parent;
+        List<NodeModel> nodeModels = parent.node.children.map(_createModel).toList();
+        this.currentNodes = nodeModels;
+      }else {
+        this.parent = null;
+        this.currentNodes = null;
+        this.path = [];
+      }
     }
     this.updateNodes();
     this.update();

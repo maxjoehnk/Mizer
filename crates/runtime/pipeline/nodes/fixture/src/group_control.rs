@@ -1,3 +1,4 @@
+use std::ops::Deref;
 use mizer_fixtures::definition::{ColorChannel, FixtureControl, FixtureFaderControl};
 use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 use serde::{Deserialize, Serialize};
@@ -294,7 +295,7 @@ impl GroupControlNode {
         fan: f64,
     ) {
         profiling::scope!("GroupControlNode::write");
-        let source = FixtureValueSource::new(context.path(), &context.path().0);
+        let source = FixtureValueSource::new(context.path(), &context.path().deref());
         let fade_timings = FadeTimings {
             fade_out: if self.fade_out_seconds == 0. {
                 None

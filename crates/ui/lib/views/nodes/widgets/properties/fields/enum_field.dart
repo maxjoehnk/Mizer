@@ -11,6 +11,8 @@ class EnumField<TValue> extends StatelessWidget {
   final Function(TValue) onUpdate;
   final bool disabled;
   final bool vertical;
+  final bool resetToDefault;
+  final Function()? onResetToDefault;
 
   EnumField(
       {required this.label,
@@ -19,7 +21,9 @@ class EnumField<TValue> extends StatelessWidget {
       this.disabled = false,
       this.vertical = false,
       this.initialValue,
-      required this.onUpdate});
+      required this.onUpdate,
+      this.resetToDefault = false,
+      this.onResetToDefault});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,8 @@ class EnumField<TValue> extends StatelessWidget {
       label: label,
       labelWidth: labelWidth,
       vertical: vertical,
+      resetToDefault: resetToDefault,
+      onResetToDefault: onResetToDefault,
       child: Container(
         height: INPUT_FIELD_HEIGHT,
         decoration: BoxDecoration(),

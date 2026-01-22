@@ -1,65 +1,70 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Tab;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/i18n.dart';
+import 'package:mizer/protos/settings.pb.dart'
+    show SettingsCategory, Settings, Setting, SettingsGroup, Setting_Value, UpdateSetting, PathListSetting;
 import 'package:mizer/state/settings_bloc.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/boolean_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/enum_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/path_field.dart';
+import 'package:mizer/views/preferences/file_paths.dart';
+import 'package:mizer/views/preferences/hotkeys.dart';
+import 'package:mizer/widgets/controls/select.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
-
-import 'package:mizer/views/preferences/file_paths.dart';
-import 'package:mizer/views/preferences/general.dart';
-import 'package:mizer/views/preferences/hotkeys.dart';
 
 class PreferencesView extends StatelessWidget {
   const PreferencesView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Panel(
-            label: "Preferences".i18n,
-            padding: false,
-            tabs: [
-              Tab(label: "General".i18n, child: GeneralSettings()),
-              Tab(label: "File Paths".i18n, child: PathSettings()),
-              Tab(label: "Hotkeys".i18n, child: HotkeySettings()),
-            ],
-            actions: [
-              PanelActionModel(
-                  label: "Save".i18n,
-                  onClick: () => context.read<SettingsBloc>().add(SaveSettings())),
-            ],
-          ),
-        ),
-      ],
+    return BlocBuilder<SettingsBloc, Settings>(
+      builder: (context, settings) {
+        return Column(
+          children: [
+            Expanded(
+              child: Panel(
+                label: "Preferences".i18n,
+                padding: false,
+                tabs: settings.categories
+                    .map((c) => Tab(
+                          label: c.title,
+                          child: PreferencesCategory(category: c),
+                        ))
+                    .toList(),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
 
 class PreferencesCategory extends StatelessWidget {
-  final String label;
-  final bool subcategory;
-  final List<Widget> children;
+  final SettingsCategory category;
 
-  const PreferencesCategory(
-      {required this.label, required this.children, this.subcategory = false, Key? key})
-      : super(key: key);
+  const PreferencesCategory({required this.category, Key? key}) : super(key: key);
 
-  factory PreferencesCategory.hotkeys(
-      String label, Map<String, String> hotkeys, Function(String, String?) update) {
-    return PreferencesCategory(
-        label: label,
-        children: hotkeys.entries
-            .sortedBy((e) => e.key)
-            .map((e) => HotkeySetting(
-                  label: _title(e.key),
-                  combination: e.value,
-                  update: (combination) => update(e.key, combination),
-                ))
-            .toList());
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: SingleChildScrollView(
+        child: Column(
+            spacing: 4,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: category.groups.map((g) => PreferencesGroup(group: g)).toList()),
+      ),
+    );
   }
+}
+
+class PreferencesGroup extends StatelessWidget {
+  final SettingsGroup group;
+
+  const PreferencesGroup({required this.group, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,35 +74,78 @@ class PreferencesCategory extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text(label, style: subcategory ? textTheme.titleSmall : textTheme.titleLarge),
-          ),
-          ...children
+          if (group.hasTitle())
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(group.title, style: textTheme.titleLarge),
+            ),
+          ...group.settings.map((s) => Preference(
+                s,
+                onUpdate: (UpdateSetting update) {
+                  context.read<SettingsBloc>().add(ApplyUpdate(update));
+                },
+              )),
         ]);
   }
 }
 
-class SettingsRow extends StatelessWidget {
-  final String label;
-  final List<Widget> children;
+class Preference extends StatelessWidget {
+  final Setting setting;
+  final Function(UpdateSetting) onUpdate;
 
-  const SettingsRow(this.label, this.children, {Key? key}) : super(key: key);
+  const Preference(this.setting, {super.key, required this.onUpdate});
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      Expanded(
-          flex: 1,
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Text(label),
-          )),
-      ...children
-    ]);
-  }
-}
+    if (setting.whichValue() == Setting_Value.boolean) {
+      return BooleanField(
+          label: setting.title,
+          labelWidth: 200,
+          value: setting.boolean.value,
+          resetToDefault: !setting.defaultValue,
+          onResetToDefault: () => onUpdate(UpdateSetting(key: setting.key)),
+          onUpdate: (value) => onUpdate(UpdateSetting(key: setting.key, boolean: value)));
+    }
+    if (setting.whichValue() == Setting_Value.select) {
+      return EnumField(
+        label: setting.title,
+        labelWidth: 200,
+        initialValue: setting.select.selected,
+        items: setting.select.values
+            .map((option) => SelectOption(value: option.value, label: option.title))
+            .toList(),
+        resetToDefault: !setting.defaultValue,
+        onResetToDefault: () => onUpdate(UpdateSetting(key: setting.key)),
+        onUpdate: (value) => onUpdate(UpdateSetting(key: setting.key, select: value)),
+      );
+    }
+    if (setting.whichValue() == Setting_Value.hotkey) {
+      return HotkeySetting(
+          label: setting.title,
+          combination: setting.hotkey.combination,
+          resetToDefault: !setting.defaultValue,
+          onResetToDefault: () => onUpdate(UpdateSetting(key: setting.key)),
+          update: (hotkey) => onUpdate(UpdateSetting(key: setting.key, hotkey: hotkey)));
+    }
+    if (setting.whichValue() == Setting_Value.path) {
+      return PathField(
+          label: setting.title,
+          labelWidth: 200,
+          value: setting.path.path,
+          resetToDefault: !setting.defaultValue,
+          onResetToDefault: () => onUpdate(UpdateSetting(key: setting.key)),
+          onUpdate: (value) => onUpdate(UpdateSetting(key: setting.key, path: value)));
+    }
+    if (setting.whichValue() == Setting_Value.pathList) {
+      return PathsSetting(
+          label: setting.title,
+          paths: setting.pathList.paths,
+          resetToDefault: !setting.defaultValue,
+          onResetToDefault: () => onUpdate(UpdateSetting(key: setting.key)),
+          onUpdate: (paths) =>
+              onUpdate(UpdateSetting(key: setting.key, pathList: PathListSetting(paths: paths))));
+    }
 
-String _title(String key) {
-  return key.split("_").map((e) => "${e[0].toUpperCase()}${e.substring(1)}").join(" ");
+    return Container();
+  }
 }

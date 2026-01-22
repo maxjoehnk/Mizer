@@ -33,9 +33,9 @@ class LanguageSwitcher extends StatelessWidget {
     return BlocBuilder<SettingsBloc, Settings>(
       builder: (context, settings) {
         var i18n = I18n.of(context);
-        if (settings.hasGeneral() && i18n.locale.languageCode != settings.general.language) {
+        if (settings.hasUi() && i18n.locale.languageCode != settings.ui.language) {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            i18n.locale = Locale(settings.general.language);
+            i18n.locale = Locale(settings.ui.language);
           });
         }
         return child;

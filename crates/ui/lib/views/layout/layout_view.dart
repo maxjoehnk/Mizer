@@ -81,7 +81,7 @@ class LayoutView extends StatelessWidget {
       log("${state.layouts}", name: "LayoutView");
       context.read<NodesBloc>().add(FetchNodes());
       return HotkeyConfiguration(
-        hotkeySelector: (hotkeys) => hotkeys.layouts,
+        hotkeyGroupSelector: (hotkeys) => hotkeys["layouts"],
         hotkeyMap: {
           "add_layout": () => _addLayout(context, layoutsBloc),
         },

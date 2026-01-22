@@ -83,7 +83,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
         backgroundColor: Black,
         body: HotkeyConfiguration(
-          hotkeySelector: (hotkeys) => hotkeys.global,
+          hotkeyGroupSelector: (hotkeys) => hotkeys["global"],
           hotkeyMap: _getShortcuts(routes),
           child: Column(
             children: [

@@ -42,7 +42,7 @@ class _FixturePatchViewState extends State<FixturePatchView> {
     var fixturesApi = context.read<FixturesApi>();
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return HotkeyConfiguration(
-        hotkeySelector: (hotkeys) => hotkeys.patch,
+        hotkeyGroupSelector: (hotkeys) => hotkeys["patch"],
         hotkeyMap: {
           "add_fixture": () => _addFixture(context, fixturesApi, fixturesBloc),
           "select_all": () => _selectAll(fixtures.fixtures),

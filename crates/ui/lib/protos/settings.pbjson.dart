@@ -1,241 +1,224 @@
-//
+///
 //  Generated code. Do not modify.
 //  source: settings.proto
 //
 // @dart = 2.12
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
-// ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
-
-import 'dart:convert' as $convert;
 import 'dart:core' as $core;
+import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-
 @$core.Deprecated('Use settingsDescriptor instead')
-const Settings$json = {
+const Settings$json = const {
   '1': 'Settings',
-  '2': [
-    {'1': 'hotkeys', '3': 1, '4': 1, '5': 11, '6': '.mizer.settings.Hotkeys', '10': 'hotkeys'},
-    {'1': 'paths', '3': 2, '4': 1, '5': 11, '6': '.mizer.settings.PathSettings', '10': 'paths'},
-    {'1': 'general', '3': 3, '4': 1, '5': 11, '6': '.mizer.settings.General', '10': 'general'},
+  '2': const [
+    const {'1': 'categories', '3': 1, '4': 3, '5': 11, '6': '.mizer.settings.SettingsCategory', '10': 'categories'},
+    const {'1': 'ui', '3': 2, '4': 1, '5': 11, '6': '.mizer.settings.UiSettings', '10': 'ui'},
   ],
 };
 
 /// Descriptor for `Settings`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List settingsDescriptor = $convert.base64Decode(
-    'CghTZXR0aW5ncxIxCgdob3RrZXlzGAEgASgLMhcubWl6ZXIuc2V0dGluZ3MuSG90a2V5c1IHaG'
-    '90a2V5cxIyCgVwYXRocxgCIAEoCzIcLm1pemVyLnNldHRpbmdzLlBhdGhTZXR0aW5nc1IFcGF0'
-    'aHMSMQoHZ2VuZXJhbBgDIAEoCzIXLm1pemVyLnNldHRpbmdzLkdlbmVyYWxSB2dlbmVyYWw=');
+final $typed_data.Uint8List settingsDescriptor = $convert.base64Decode('CghTZXR0aW5ncxJACgpjYXRlZ29yaWVzGAEgAygLMiAubWl6ZXIuc2V0dGluZ3MuU2V0dGluZ3NDYXRlZ29yeVIKY2F0ZWdvcmllcxIqCgJ1aRgCIAEoCzIaLm1pemVyLnNldHRpbmdzLlVpU2V0dGluZ3NSAnVp');
+@$core.Deprecated('Use uiSettingsDescriptor instead')
+const UiSettings$json = const {
+  '1': 'UiSettings',
+  '2': const [
+    const {'1': 'language', '3': 1, '4': 1, '5': 9, '10': 'language'},
+    const {'1': 'hotkeys', '3': 2, '4': 3, '5': 11, '6': '.mizer.settings.UiSettings.HotkeysEntry', '10': 'hotkeys'},
+  ],
+  '3': const [UiSettings_HotkeysEntry$json],
+};
 
-@$core.Deprecated('Use pathSettingsDescriptor instead')
-const PathSettings$json = {
-  '1': 'PathSettings',
-  '2': [
-    {'1': 'media_storage', '3': 1, '4': 1, '5': 9, '10': 'mediaStorage'},
-    {'1': 'midi_device_profiles', '3': 2, '4': 3, '5': 9, '10': 'midiDeviceProfiles'},
-    {'1': 'open_fixture_library', '3': 3, '4': 3, '5': 9, '10': 'openFixtureLibrary'},
-    {'1': 'qlcplus', '3': 4, '4': 3, '5': 9, '10': 'qlcplus'},
-    {'1': 'gdtf', '3': 5, '4': 3, '5': 9, '10': 'gdtf'},
-    {'1': 'mizer', '3': 6, '4': 3, '5': 9, '10': 'mizer'},
+@$core.Deprecated('Use uiSettingsDescriptor instead')
+const UiSettings_HotkeysEntry$json = const {
+  '1': 'HotkeysEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.mizer.settings.Hotkeys', '10': 'value'},
+  ],
+  '7': const {'7': true},
+};
+
+/// Descriptor for `UiSettings`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List uiSettingsDescriptor = $convert.base64Decode('CgpVaVNldHRpbmdzEhoKCGxhbmd1YWdlGAEgASgJUghsYW5ndWFnZRJBCgdob3RrZXlzGAIgAygLMicubWl6ZXIuc2V0dGluZ3MuVWlTZXR0aW5ncy5Ib3RrZXlzRW50cnlSB2hvdGtleXMaUwoMSG90a2V5c0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5Ei0KBXZhbHVlGAIgASgLMhcubWl6ZXIuc2V0dGluZ3MuSG90a2V5c1IFdmFsdWU6AjgB');
+@$core.Deprecated('Use settingsCategoryDescriptor instead')
+const SettingsCategory$json = const {
+  '1': 'SettingsCategory',
+  '2': const [
+    const {'1': 'title', '3': 1, '4': 1, '5': 9, '10': 'title'},
+    const {'1': 'groups', '3': 2, '4': 3, '5': 11, '6': '.mizer.settings.SettingsGroup', '10': 'groups'},
   ],
 };
 
-/// Descriptor for `PathSettings`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pathSettingsDescriptor = $convert.base64Decode(
-    'CgxQYXRoU2V0dGluZ3MSIwoNbWVkaWFfc3RvcmFnZRgBIAEoCVIMbWVkaWFTdG9yYWdlEjAKFG'
-    '1pZGlfZGV2aWNlX3Byb2ZpbGVzGAIgAygJUhJtaWRpRGV2aWNlUHJvZmlsZXMSMAoUb3Blbl9m'
-    'aXh0dXJlX2xpYnJhcnkYAyADKAlSEm9wZW5GaXh0dXJlTGlicmFyeRIYCgdxbGNwbHVzGAQgAy'
-    'gJUgdxbGNwbHVzEhIKBGdkdGYYBSADKAlSBGdkdGYSFAoFbWl6ZXIYBiADKAlSBW1pemVy');
+/// Descriptor for `SettingsCategory`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List settingsCategoryDescriptor = $convert.base64Decode('ChBTZXR0aW5nc0NhdGVnb3J5EhQKBXRpdGxlGAEgASgJUgV0aXRsZRI1CgZncm91cHMYAiADKAsyHS5taXplci5zZXR0aW5ncy5TZXR0aW5nc0dyb3VwUgZncm91cHM=');
+@$core.Deprecated('Use settingsGroupDescriptor instead')
+const SettingsGroup$json = const {
+  '1': 'SettingsGroup',
+  '2': const [
+    const {'1': 'title', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'title', '17': true},
+    const {'1': 'settings', '3': 2, '4': 3, '5': 11, '6': '.mizer.settings.Setting', '10': 'settings'},
+  ],
+  '8': const [
+    const {'1': '_title'},
+  ],
+};
 
+/// Descriptor for `SettingsGroup`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List settingsGroupDescriptor = $convert.base64Decode('Cg1TZXR0aW5nc0dyb3VwEhkKBXRpdGxlGAEgASgJSABSBXRpdGxliAEBEjMKCHNldHRpbmdzGAIgAygLMhcubWl6ZXIuc2V0dGluZ3MuU2V0dGluZ1IIc2V0dGluZ3NCCAoGX3RpdGxl');
+@$core.Deprecated('Use settingDescriptor instead')
+const Setting$json = const {
+  '1': 'Setting',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'title', '3': 2, '4': 1, '5': 9, '10': 'title'},
+    const {'1': 'default_value', '3': 3, '4': 1, '5': 8, '10': 'defaultValue'},
+    const {'1': 'select', '3': 4, '4': 1, '5': 11, '6': '.mizer.settings.SelectSetting', '9': 0, '10': 'select'},
+    const {'1': 'boolean', '3': 5, '4': 1, '5': 11, '6': '.mizer.settings.BoolSetting', '9': 0, '10': 'boolean'},
+    const {'1': 'path', '3': 6, '4': 1, '5': 11, '6': '.mizer.settings.PathSetting', '9': 0, '10': 'path'},
+    const {'1': 'path_list', '3': 7, '4': 1, '5': 11, '6': '.mizer.settings.PathListSetting', '9': 0, '10': 'pathList'},
+    const {'1': 'hotkey', '3': 8, '4': 1, '5': 11, '6': '.mizer.settings.HotkeySetting', '9': 0, '10': 'hotkey'},
+  ],
+  '8': const [
+    const {'1': 'value'},
+  ],
+};
+
+/// Descriptor for `Setting`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List settingDescriptor = $convert.base64Decode('CgdTZXR0aW5nEhAKA2tleRgBIAEoCVIDa2V5EhQKBXRpdGxlGAIgASgJUgV0aXRsZRIjCg1kZWZhdWx0X3ZhbHVlGAMgASgIUgxkZWZhdWx0VmFsdWUSNwoGc2VsZWN0GAQgASgLMh0ubWl6ZXIuc2V0dGluZ3MuU2VsZWN0U2V0dGluZ0gAUgZzZWxlY3QSNwoHYm9vbGVhbhgFIAEoCzIbLm1pemVyLnNldHRpbmdzLkJvb2xTZXR0aW5nSABSB2Jvb2xlYW4SMQoEcGF0aBgGIAEoCzIbLm1pemVyLnNldHRpbmdzLlBhdGhTZXR0aW5nSABSBHBhdGgSPgoJcGF0aF9saXN0GAcgASgLMh8ubWl6ZXIuc2V0dGluZ3MuUGF0aExpc3RTZXR0aW5nSABSCHBhdGhMaXN0EjcKBmhvdGtleRgIIAEoCzIdLm1pemVyLnNldHRpbmdzLkhvdGtleVNldHRpbmdIAFIGaG90a2V5QgcKBXZhbHVl');
+@$core.Deprecated('Use updateSettingDescriptor instead')
+const UpdateSetting$json = const {
+  '1': 'UpdateSetting',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'select', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'select'},
+    const {'1': 'boolean', '3': 3, '4': 1, '5': 8, '9': 0, '10': 'boolean'},
+    const {'1': 'path', '3': 4, '4': 1, '5': 9, '9': 0, '10': 'path'},
+    const {'1': 'path_list', '3': 5, '4': 1, '5': 11, '6': '.mizer.settings.PathListSetting', '9': 0, '10': 'pathList'},
+    const {'1': 'hotkey', '3': 6, '4': 1, '5': 9, '9': 0, '10': 'hotkey'},
+  ],
+  '8': const [
+    const {'1': 'value'},
+  ],
+};
+
+/// Descriptor for `UpdateSetting`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List updateSettingDescriptor = $convert.base64Decode('Cg1VcGRhdGVTZXR0aW5nEhAKA2tleRgBIAEoCVIDa2V5EhgKBnNlbGVjdBgCIAEoCUgAUgZzZWxlY3QSGgoHYm9vbGVhbhgDIAEoCEgAUgdib29sZWFuEhQKBHBhdGgYBCABKAlIAFIEcGF0aBI+CglwYXRoX2xpc3QYBSABKAsyHy5taXplci5zZXR0aW5ncy5QYXRoTGlzdFNldHRpbmdIAFIIcGF0aExpc3QSGAoGaG90a2V5GAYgASgJSABSBmhvdGtleUIHCgV2YWx1ZQ==');
+@$core.Deprecated('Use selectSettingDescriptor instead')
+const SelectSetting$json = const {
+  '1': 'SelectSetting',
+  '2': const [
+    const {'1': 'selected', '3': 1, '4': 1, '5': 9, '10': 'selected'},
+    const {'1': 'values', '3': 2, '4': 3, '5': 11, '6': '.mizer.settings.SelectOption', '10': 'values'},
+  ],
+};
+
+/// Descriptor for `SelectSetting`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List selectSettingDescriptor = $convert.base64Decode('Cg1TZWxlY3RTZXR0aW5nEhoKCHNlbGVjdGVkGAEgASgJUghzZWxlY3RlZBI0CgZ2YWx1ZXMYAiADKAsyHC5taXplci5zZXR0aW5ncy5TZWxlY3RPcHRpb25SBnZhbHVlcw==');
+@$core.Deprecated('Use selectOptionDescriptor instead')
+const SelectOption$json = const {
+  '1': 'SelectOption',
+  '2': const [
+    const {'1': 'value', '3': 1, '4': 1, '5': 9, '10': 'value'},
+    const {'1': 'title', '3': 2, '4': 1, '5': 9, '10': 'title'},
+  ],
+};
+
+/// Descriptor for `SelectOption`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List selectOptionDescriptor = $convert.base64Decode('CgxTZWxlY3RPcHRpb24SFAoFdmFsdWUYASABKAlSBXZhbHVlEhQKBXRpdGxlGAIgASgJUgV0aXRsZQ==');
+@$core.Deprecated('Use boolSettingDescriptor instead')
+const BoolSetting$json = const {
+  '1': 'BoolSetting',
+  '2': const [
+    const {'1': 'value', '3': 1, '4': 1, '5': 8, '10': 'value'},
+  ],
+};
+
+/// Descriptor for `BoolSetting`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List boolSettingDescriptor = $convert.base64Decode('CgtCb29sU2V0dGluZxIUCgV2YWx1ZRgBIAEoCFIFdmFsdWU=');
+@$core.Deprecated('Use pathSettingDescriptor instead')
+const PathSetting$json = const {
+  '1': 'PathSetting',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+  ],
+};
+
+/// Descriptor for `PathSetting`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pathSettingDescriptor = $convert.base64Decode('CgtQYXRoU2V0dGluZxISCgRwYXRoGAEgASgJUgRwYXRo');
+@$core.Deprecated('Use pathListSettingDescriptor instead')
+const PathListSetting$json = const {
+  '1': 'PathListSetting',
+  '2': const [
+    const {'1': 'paths', '3': 1, '4': 3, '5': 9, '10': 'paths'},
+  ],
+};
+
+/// Descriptor for `PathListSetting`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pathListSettingDescriptor = $convert.base64Decode('Cg9QYXRoTGlzdFNldHRpbmcSFAoFcGF0aHMYASADKAlSBXBhdGhz');
+@$core.Deprecated('Use hotkeySettingDescriptor instead')
+const HotkeySetting$json = const {
+  '1': 'HotkeySetting',
+  '2': const [
+    const {'1': 'combination', '3': 1, '4': 1, '5': 9, '10': 'combination'},
+  ],
+};
+
+/// Descriptor for `HotkeySetting`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List hotkeySettingDescriptor = $convert.base64Decode('Cg1Ib3RrZXlTZXR0aW5nEiAKC2NvbWJpbmF0aW9uGAEgASgJUgtjb21iaW5hdGlvbg==');
 @$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys$json = {
+const Hotkeys$json = const {
   '1': 'Hotkeys',
-  '2': [
-    {'1': 'global', '3': 1, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.GlobalEntry', '10': 'global'},
-    {'1': 'layouts', '3': 2, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.LayoutsEntry', '10': 'layouts'},
-    {'1': 'programmer', '3': 3, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.ProgrammerEntry', '10': 'programmer'},
-    {'1': 'nodes', '3': 4, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.NodesEntry', '10': 'nodes'},
-    {'1': 'patch', '3': 5, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.PatchEntry', '10': 'patch'},
-    {'1': 'sequencer', '3': 6, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.SequencerEntry', '10': 'sequencer'},
-    {'1': 'plan', '3': 7, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.PlanEntry', '10': 'plan'},
-    {'1': 'effects', '3': 8, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.EffectsEntry', '10': 'effects'},
-    {'1': 'media', '3': 9, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.MediaEntry', '10': 'media'},
+  '2': const [
+    const {'1': 'keys', '3': 1, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.KeysEntry', '10': 'keys'},
   ],
-  '3': [Hotkeys_GlobalEntry$json, Hotkeys_LayoutsEntry$json, Hotkeys_ProgrammerEntry$json, Hotkeys_NodesEntry$json, Hotkeys_PatchEntry$json, Hotkeys_SequencerEntry$json, Hotkeys_PlanEntry$json, Hotkeys_EffectsEntry$json, Hotkeys_MediaEntry$json],
+  '3': const [Hotkeys_KeysEntry$json],
 };
 
 @$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys_GlobalEntry$json = {
-  '1': 'GlobalEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
+const Hotkeys_KeysEntry$json = const {
+  '1': 'KeysEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
   ],
-  '7': {'7': true},
-};
-
-@$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys_LayoutsEntry$json = {
-  '1': 'LayoutsEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': {'7': true},
-};
-
-@$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys_ProgrammerEntry$json = {
-  '1': 'ProgrammerEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': {'7': true},
-};
-
-@$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys_NodesEntry$json = {
-  '1': 'NodesEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': {'7': true},
-};
-
-@$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys_PatchEntry$json = {
-  '1': 'PatchEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': {'7': true},
-};
-
-@$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys_SequencerEntry$json = {
-  '1': 'SequencerEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': {'7': true},
-};
-
-@$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys_PlanEntry$json = {
-  '1': 'PlanEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': {'7': true},
-};
-
-@$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys_EffectsEntry$json = {
-  '1': 'EffectsEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': {'7': true},
-};
-
-@$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys_MediaEntry$json = {
-  '1': 'MediaEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': {'7': true},
+  '7': const {'7': true},
 };
 
 /// Descriptor for `Hotkeys`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List hotkeysDescriptor = $convert.base64Decode(
-    'CgdIb3RrZXlzEjsKBmdsb2JhbBgBIAMoCzIjLm1pemVyLnNldHRpbmdzLkhvdGtleXMuR2xvYm'
-    'FsRW50cnlSBmdsb2JhbBI+CgdsYXlvdXRzGAIgAygLMiQubWl6ZXIuc2V0dGluZ3MuSG90a2V5'
-    'cy5MYXlvdXRzRW50cnlSB2xheW91dHMSRwoKcHJvZ3JhbW1lchgDIAMoCzInLm1pemVyLnNldH'
-    'RpbmdzLkhvdGtleXMuUHJvZ3JhbW1lckVudHJ5Ugpwcm9ncmFtbWVyEjgKBW5vZGVzGAQgAygL'
-    'MiIubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5Ob2Rlc0VudHJ5UgVub2RlcxI4CgVwYXRjaBgFIA'
-    'MoCzIiLm1pemVyLnNldHRpbmdzLkhvdGtleXMuUGF0Y2hFbnRyeVIFcGF0Y2gSRAoJc2VxdWVu'
-    'Y2VyGAYgAygLMiYubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5TZXF1ZW5jZXJFbnRyeVIJc2VxdW'
-    'VuY2VyEjUKBHBsYW4YByADKAsyIS5taXplci5zZXR0aW5ncy5Ib3RrZXlzLlBsYW5FbnRyeVIE'
-    'cGxhbhI+CgdlZmZlY3RzGAggAygLMiQubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5FZmZlY3RzRW'
-    '50cnlSB2VmZmVjdHMSOAoFbWVkaWEYCSADKAsyIi5taXplci5zZXR0aW5ncy5Ib3RrZXlzLk1l'
-    'ZGlhRW50cnlSBW1lZGlhGjkKC0dsb2JhbEVudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbH'
-    'VlGAIgASgJUgV2YWx1ZToCOAEaOgoMTGF5b3V0c0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQK'
-    'BXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaPQoPUHJvZ3JhbW1lckVudHJ5EhAKA2tleRgBIAEoCV'
-    'IDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaOAoKTm9kZXNFbnRyeRIQCgNrZXkYASAB'
-    'KAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjgKClBhdGNoRW50cnkSEAoDa2V5GA'
-    'EgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo8Cg5TZXF1ZW5jZXJFbnRyeRIQ'
-    'CgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjcKCVBsYW5FbnRyeR'
-    'IQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjoKDEVmZmVjdHNF'
-    'bnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjgKCk1lZG'
-    'lhRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AQ==');
-
-@$core.Deprecated('Use generalDescriptor instead')
-const General$json = {
-  '1': 'General',
-  '2': [
-    {'1': 'language', '3': 1, '4': 1, '5': 9, '10': 'language'},
-    {'1': 'auto_load_last_project', '3': 2, '4': 1, '5': 8, '10': 'autoLoadLastProject'},
-  ],
-};
-
-/// Descriptor for `General`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List generalDescriptor = $convert.base64Decode(
-    'CgdHZW5lcmFsEhoKCGxhbmd1YWdlGAEgASgJUghsYW5ndWFnZRIzChZhdXRvX2xvYWRfbGFzdF'
-    '9wcm9qZWN0GAIgASgIUhNhdXRvTG9hZExhc3RQcm9qZWN0');
-
+final $typed_data.Uint8List hotkeysDescriptor = $convert.base64Decode('CgdIb3RrZXlzEjUKBGtleXMYASADKAsyIS5taXplci5zZXR0aW5ncy5Ib3RrZXlzLktleXNFbnRyeVIEa2V5cxo3CglLZXlzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AQ==');
 @$core.Deprecated('Use midiDeviceProfilesDescriptor instead')
-const MidiDeviceProfiles$json = {
+const MidiDeviceProfiles$json = const {
   '1': 'MidiDeviceProfiles',
-  '2': [
-    {'1': 'profiles', '3': 1, '4': 3, '5': 11, '6': '.mizer.settings.MidiDeviceProfile', '10': 'profiles'},
+  '2': const [
+    const {'1': 'profiles', '3': 1, '4': 3, '5': 11, '6': '.mizer.settings.MidiDeviceProfile', '10': 'profiles'},
   ],
 };
 
 /// Descriptor for `MidiDeviceProfiles`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List midiDeviceProfilesDescriptor = $convert.base64Decode(
-    'ChJNaWRpRGV2aWNlUHJvZmlsZXMSPQoIcHJvZmlsZXMYASADKAsyIS5taXplci5zZXR0aW5ncy'
-    '5NaWRpRGV2aWNlUHJvZmlsZVIIcHJvZmlsZXM=');
-
+final $typed_data.Uint8List midiDeviceProfilesDescriptor = $convert.base64Decode('ChJNaWRpRGV2aWNlUHJvZmlsZXMSPQoIcHJvZmlsZXMYASADKAsyIS5taXplci5zZXR0aW5ncy5NaWRpRGV2aWNlUHJvZmlsZVIIcHJvZmlsZXM=');
 @$core.Deprecated('Use midiDeviceProfileDescriptor instead')
-const MidiDeviceProfile$json = {
+const MidiDeviceProfile$json = const {
   '1': 'MidiDeviceProfile',
-  '2': [
-    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    {'1': 'manufacturer', '3': 2, '4': 1, '5': 9, '10': 'manufacturer'},
-    {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'file_path', '3': 4, '4': 1, '5': 9, '10': 'filePath'},
-    {'1': 'errors', '3': 5, '4': 3, '5': 11, '6': '.mizer.settings.Error', '10': 'errors'},
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'manufacturer', '3': 2, '4': 1, '5': 9, '10': 'manufacturer'},
+    const {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'file_path', '3': 4, '4': 1, '5': 9, '10': 'filePath'},
+    const {'1': 'errors', '3': 5, '4': 3, '5': 11, '6': '.mizer.settings.Error', '10': 'errors'},
   ],
 };
 
 /// Descriptor for `MidiDeviceProfile`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List midiDeviceProfileDescriptor = $convert.base64Decode(
-    'ChFNaWRpRGV2aWNlUHJvZmlsZRIOCgJpZBgBIAEoCVICaWQSIgoMbWFudWZhY3R1cmVyGAIgAS'
-    'gJUgxtYW51ZmFjdHVyZXISEgoEbmFtZRgDIAEoCVIEbmFtZRIbCglmaWxlX3BhdGgYBCABKAlS'
-    'CGZpbGVQYXRoEi0KBmVycm9ycxgFIAMoCzIVLm1pemVyLnNldHRpbmdzLkVycm9yUgZlcnJvcn'
-    'M=');
-
+final $typed_data.Uint8List midiDeviceProfileDescriptor = $convert.base64Decode('ChFNaWRpRGV2aWNlUHJvZmlsZRIOCgJpZBgBIAEoCVICaWQSIgoMbWFudWZhY3R1cmVyGAIgASgJUgxtYW51ZmFjdHVyZXISEgoEbmFtZRgDIAEoCVIEbmFtZRIbCglmaWxlX3BhdGgYBCABKAlSCGZpbGVQYXRoEi0KBmVycm9ycxgFIAMoCzIVLm1pemVyLnNldHRpbmdzLkVycm9yUgZlcnJvcnM=');
 @$core.Deprecated('Use errorDescriptor instead')
-const Error$json = {
+const Error$json = const {
   '1': 'Error',
-  '2': [
-    {'1': 'timestamp', '3': 1, '4': 1, '5': 9, '10': 'timestamp'},
-    {'1': 'message', '3': 2, '4': 1, '5': 9, '10': 'message'},
+  '2': const [
+    const {'1': 'timestamp', '3': 1, '4': 1, '5': 9, '10': 'timestamp'},
+    const {'1': 'message', '3': 2, '4': 1, '5': 9, '10': 'message'},
   ],
 };
 
 /// Descriptor for `Error`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List errorDescriptor = $convert.base64Decode(
-    'CgVFcnJvchIcCgl0aW1lc3RhbXAYASABKAlSCXRpbWVzdGFtcBIYCgdtZXNzYWdlGAIgASgJUg'
-    'dtZXNzYWdl');
-
+final $typed_data.Uint8List errorDescriptor = $convert.base64Decode('CgVFcnJvchIcCgl0aW1lc3RhbXAYASABKAlSCXRpbWVzdGFtcBIYCgdtZXNzYWdlGAIgASgJUgdtZXNzYWdl');

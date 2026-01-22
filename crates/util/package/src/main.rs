@@ -1,9 +1,7 @@
 use anyhow::Context;
 use std::fs;
-use std::fs::{DirEntry, File};
+use std::fs::DirEntry;
 use std::path::{Path, PathBuf};
-
-use mizer_settings::Settings;
 
 #[cfg(target_os = "linux")]
 fn main() -> anyhow::Result<()> {
@@ -32,34 +30,32 @@ fn main() -> anyhow::Result<()> {
         "crates/components/connections/protocols/midi/device-profiles/profiles",
         "device-profiles/midi",
     )?;
-    artifact.copy_settings("settings.toml", |settings| {
-        settings.paths.media_storage = PathBuf::from("~/.mizer-media");
-        settings.paths.midi_device_profiles = vec![
-            PathBuf::from("device-profiles/midi"),
-            PathBuf::from("~/Documents/Mizer/Midi Device Profiles"),
-        ]
-        .into();
-        settings.paths.fixture_libraries.open_fixture_library = vec![
-            PathBuf::from("fixtures/open-fixture-library"),
-            PathBuf::from("~/Documents/Mizer/Fixture Definitions/Open Fixture Library"),
-        ]
-        .into();
-        settings.paths.fixture_libraries.qlcplus = vec![
-            PathBuf::from("fixtures/qlcplus"),
-            PathBuf::from("~/Documents/Mizer/Fixture Definitions/QLC+"),
-        ]
-        .into();
-        settings.paths.fixture_libraries.gdtf = vec![
-            PathBuf::from("fixtures/gdtf"),
-            PathBuf::from("~/Documents/Mizer/Fixture Definitions/GDTF"),
-        ]
-        .into();
-        settings.paths.fixture_libraries.mizer = vec![
-            PathBuf::from("fixtures/mizer"),
-            PathBuf::from("~/Documents/Mizer/Fixture Definitions/Mizer"),
-        ]
-        .into();
-    })?;
+    // settings.paths.media_storage = PathBuf::from("~/.mizer-media");
+    // settings.paths.midi_device_profiles = vec![
+    //     PathBuf::from("device-profiles/midi"),
+    //     PathBuf::from("~/Documents/Mizer/Midi Device Profiles"),
+    // ]
+    // .into();
+    // settings.paths.fixture_libraries.open_fixture_library = vec![
+    //     PathBuf::from("fixtures/open-fixture-library"),
+    //     PathBuf::from("~/Documents/Mizer/Fixture Definitions/Open Fixture Library"),
+    // ]
+    // .into();
+    // settings.paths.fixture_libraries.qlcplus = vec![
+    //     PathBuf::from("fixtures/qlcplus"),
+    //     PathBuf::from("~/Documents/Mizer/Fixture Definitions/QLC+"),
+    // ]
+    // .into();
+    // settings.paths.fixture_libraries.gdtf = vec![
+    //     PathBuf::from("fixtures/gdtf"),
+    //     PathBuf::from("~/Documents/Mizer/Fixture Definitions/GDTF"),
+    // ]
+    // .into();
+    // settings.paths.fixture_libraries.mizer = vec![
+    //     PathBuf::from("fixtures/mizer"),
+    //     PathBuf::from("~/Documents/Mizer/Fixture Definitions/Mizer"),
+    // ]
+    // .into();
 
     Ok(())
 }
@@ -385,19 +381,6 @@ impl Artifact {
             .filter_map(|file: anyhow::Result<_>| file.ok().flatten())
             .collect::<Vec<_>>();
         Ok(files)
-    }
-
-    fn copy_settings<P: AsRef<Path>, F: FnOnce(&mut Settings)>(
-        &self,
-        to: P,
-        editor: F,
-    ) -> anyhow::Result<()> {
-        let to = self.artifact_dir.join(to);
-        let mut settings = Settings::load_defaults()?;
-        editor(&mut settings);
-        settings.save_to(to)?;
-
-        Ok(())
     }
 }
 

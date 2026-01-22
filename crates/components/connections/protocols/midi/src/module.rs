@@ -16,7 +16,7 @@ impl Module for MidiModule {
         let background_discovery = MidiBackgroundDiscovery::new(&provider);
         let mut connection_manager = MidiConnectionManager::new(provider);
         background_discovery.start()?;
-        let device_profile_path = &context.settings().paths.midi_device_profiles;
+        let device_profile_path = &context.settings().paths.device_profiles.midi;
         tracing::info!(
             "Loading MIDI device profiles from {}",
             device_profile_path

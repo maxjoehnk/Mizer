@@ -15,7 +15,7 @@ use mizer_message_bus::Subscriber;
 use mizer_node::{NodePath, NodeSetting, PortId};
 use mizer_runtime::{LayoutsView, NodeMetadataRef, NodePreviewRef};
 use mizer_session::SessionState;
-use mizer_settings::Settings;
+use mizer_settings::{Preference, Settings, UpdateSettingValue};
 
 use crate::handlers::Handlers;
 use crate::proto::fixtures::fixtures_api_server::FixturesApiServer;
@@ -81,9 +81,11 @@ pub trait RuntimeApi: Clone + Send + Sync + ICommandExecutor {
 
     fn read_fader_value(&self, path: NodePath) -> anyhow::Result<f64>;
 
-    fn read_settings(&self) -> Settings;
-    fn save_settings(&self, settings: Settings) -> anyhow::Result<()>;
-    fn observe_settings(&self) -> Subscriber<Settings>;
+    // TODO: it should be possible to replace or at least split up this duplicate settings object
+    fn read_settings(&self) -> (Settings, Vec<Preference>);
+    fn update_setting(&self, key: String, setting: UpdateSettingValue) -> anyhow::Result<()>;
+    fn reset_setting(&self, key: String) -> anyhow::Result<()>;
+    fn observe_settings(&self) -> Subscriber<(Settings, Vec<Preference>)>;
     #[deprecated(
         note = "this is only used for ffi access but imposes the risk of bypassing the query layer"
     )]

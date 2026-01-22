@@ -68,7 +68,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
     });
 
     return HotkeyConfiguration(
-      hotkeySelector: (hotkeys) => hotkeys.nodes,
+      hotkeyGroupSelector: (hotkeys) => hotkeys["nodes"],
       hotkeyMap: {
         // TODO: determine position for new node
         "add_node": () => {},

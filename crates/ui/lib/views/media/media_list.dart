@@ -42,7 +42,7 @@ class _MediaListState extends State<MediaList> {
   @override
   Widget build(BuildContext context) {
     return HotkeyConfiguration(
-      hotkeySelector: (hotkeys) => hotkeys.media,
+      hotkeyGroupSelector: (hotkeys) => hotkeys["media"],
       hotkeyMap: {
         "add_media": () => _addFiles(context),
         "delete": () {

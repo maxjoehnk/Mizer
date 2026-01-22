@@ -103,7 +103,7 @@ class NavigationRouteItem extends StatelessWidget {
   final Route route;
   final bool selected;
   final void Function() onSelect;
-  final Map<String, String> hotkeys;
+  final Map<String, String>? hotkeys;
 
   NavigationRouteItem(this.route, this.selected, this.onSelect, this.hotkeys);
 
@@ -118,6 +118,6 @@ class NavigationRouteItem extends StatelessWidget {
   }
 
   String? get hotkeyLabel {
-    return hotkeys[route.viewKey.toHotkeyString()];
+    return hotkeys?[route.viewKey.toHotkeyString()];
   }
 }

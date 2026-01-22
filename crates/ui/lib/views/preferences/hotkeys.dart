@@ -1,65 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/api/contracts/settings.dart';
-import 'package:mizer/i18n.dart';
-import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/widgets/field/field.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/text_field.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
-
-import 'preferences.dart';
-
-class HotkeySettings extends StatelessWidget {
-  const HotkeySettings({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
-      return Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: SingleChildScrollView(
-          child: Column(
-            spacing: 4,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _category(context, settings, "Global".i18n, (hotkeys) => hotkeys.global),
-              _category(context, settings, "Layouts".i18n, (hotkeys) => hotkeys.layouts),
-              _category(context, settings, "Plan".i18n, (hotkeys) => hotkeys.plan),
-              _category(context, settings, "Nodes".i18n, (hotkeys) => hotkeys.nodes),
-              _category(context, settings, "Sequencer".i18n, (hotkeys) => hotkeys.sequencer),
-              _category(context, settings, "Effects".i18n, (hotkeys) => hotkeys.effects),
-              _category(context, settings, "Media".i18n, (hotkeys) => hotkeys.media),
-              _category(context, settings, "Patch".i18n, (hotkeys) => hotkeys.patch),
-              _category(context, settings, "Programmer".i18n, (hotkeys) => hotkeys.programmer),
-            ],
-          ),
-        ),
-      );
-    });
-  }
-
-  Widget _category(BuildContext context, Settings settings, String label, Map<String, String> Function(Hotkeys) selector) {
-    return PreferencesCategory.hotkeys(label, selector(settings.hotkeys), update(context, selector));
-  }
-
-  Function(String, String?) update(BuildContext context, Map<String, String> Function(Hotkeys) getHotkeys) {
-    return (key, combination) {
-      SettingsBloc bloc = context.read();
-      bloc.add(UpdateSettings((settings) {
-        getHotkeys(settings.hotkeys)[key] = combination ?? "";
-
-        return settings;
-      }));
-    };
-  }
-}
+import 'package:mizer/widgets/hotkey_selector/hotkey_selector.dart';
 
 class HotkeySetting extends StatelessWidget {
   final String label;
   final String combination;
   final Function(String?) update;
+  final bool resetToDefault;
+  final Function()? onResetToDefault;
 
-  const HotkeySetting({required this.label, required this.combination, Key? key, required this.update}) : super(key: key);
+  const HotkeySetting({required this.label, required this.combination, Key? key, required this.update, this.resetToDefault = false, this.onResetToDefault}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,13 +20,24 @@ class HotkeySetting extends StatelessWidget {
       labelWidth: 200,
       value: formatHotkey(combination),
       readOnly: true,
+      resetToDefault: resetToDefault,
+      onResetToDefault: onResetToDefault,
       actions: [
         FieldAction(
+            child: Text("..."),
+            onTap: () async {
+              var hotkey = await showDialog(context: context, builder: (context) => HotkeySelectorDialog());
+
+              if (hotkey != null) {
+                update(hotkey);
+              }
+            }),
+        if (combination.isNotEmpty) FieldAction(
             child: Icon(
               Icons.clear,
               size: 15,
             ),
-            onTap: () => this.update(null))
+            onTap: () => this.update(""))
       ]
     );
   }

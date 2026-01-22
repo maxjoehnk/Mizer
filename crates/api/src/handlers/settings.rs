@@ -25,8 +25,14 @@ impl<R: RuntimeApi> SettingsHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn save_settings(&self, settings: models::Settings) -> anyhow::Result<()> {
-        self.runtime.save_settings(settings.into())
+    pub fn update_setting(&self, update: models::UpdateSetting) -> anyhow::Result<()> {
+        if let Some(value) = update.value {
+            self.runtime.update_setting(update.key, value.into())?;
+        }else {
+            self.runtime.reset_setting(update.key)?;
+        }
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]

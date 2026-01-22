@@ -1,179 +1,106 @@
-use std::collections::HashMap;
 use std::io::{Read, Write};
-use std::ops::Deref;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use directories_next::ProjectDirs;
-use serde::{Deserialize, Serialize};
+use crate::defaults::get_default_settings;
+pub use crate::settings::*;
+pub use crate::hotkeys::*;
+pub use crate::update::*;
+use crate::user_settings::UserSettings;
+pub use crate::preferences::*;
 
-const DEFAULT_SETTINGS: &str = include_str!("../settings.toml");
-#[cfg(target_os = "linux")]
-const DEFAULT_HOTKEYS: &str = include_str!("../hotkeys-linux.toml");
-#[cfg(target_os = "macos")]
-const DEFAULT_HOTKEYS: &str = include_str!("../hotkeys-macos.toml");
-#[cfg(target_os = "windows")]
-const DEFAULT_HOTKEYS: &str = include_str!("../hotkeys-windows.toml");
-
-#[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct Settings {
-    pub general: General,
-    pub hotkeys: Hotkeys,
-    pub paths: FilePaths,
-}
+mod defaults;
+mod settings;
+mod hotkeys;
+mod update;
+mod user_settings;
+mod preferences;
+mod migrate;
 
 #[derive(Debug, Clone)]
 pub struct SettingsManager {
+    defaults: Settings,
     pub settings: Settings,
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct General {
-    pub language: String,
-    #[serde(default)]
-    pub auto_load_last_project: bool,
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct FilePaths {
-    pub midi_device_profiles: PathList,
-    pub fixture_libraries: FixtureLibraryPaths,
-    #[serde(default = "default_media_storage")]
-    pub media_storage: PathBuf,
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
-#[serde(from = "BackwardCompatibility")]
-#[repr(transparent)]
-pub struct PathList(Vec<PathBuf>);
-
-impl FromIterator<PathBuf> for PathList {
-    fn from_iter<T: IntoIterator<Item = PathBuf>>(iter: T) -> Self {
-        PathList(iter.into_iter().collect())
-    }
-}
-
-impl From<Vec<PathBuf>> for PathList {
-    fn from(value: Vec<PathBuf>) -> Self {
-        PathList(value)
-    }
-}
-
-impl IntoIterator for PathList {
-    type Item = PathBuf;
-    type IntoIter = std::vec::IntoIter<PathBuf>;
-
-    fn into_iter(self) -> Self::IntoIter {
-        self.0.into_iter()
-    }
-}
-
-impl Deref for PathList {
-    type Target = Vec<PathBuf>;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize)]
-#[serde(untagged)]
-pub enum BackwardCompatibility {
-    SinglePath(PathBuf),
-    MultiplePaths(Vec<PathBuf>),
-}
-
-impl From<BackwardCompatibility> for PathList {
-    fn from(value: BackwardCompatibility) -> Self {
-        match value {
-            BackwardCompatibility::SinglePath(path) => PathList(vec![path]),
-            BackwardCompatibility::MultiplePaths(paths) => PathList(paths),
-        }
-    }
-}
-
-fn default_media_storage() -> PathBuf {
-    PathBuf::from(".storage")
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
-pub struct FixtureLibraryPaths {
-    pub open_fixture_library: PathList,
-    pub qlcplus: PathList,
-    pub gdtf: PathList,
-    pub mizer: PathList,
-}
-
-impl Settings {
-    pub fn load_defaults() -> anyhow::Result<Self> {
-        let buffer = [DEFAULT_SETTINGS, DEFAULT_HOTKEYS].concat();
-        let settings = toml::from_str(&buffer)?;
-
-        Ok(settings)
-    }
-
-    pub fn save_to<P: AsRef<Path>>(&self, path: P) -> anyhow::Result<()> {
-        std::fs::create_dir_all(
-            path.as_ref()
-                .parent()
-                .ok_or_else(|| anyhow::anyhow!("Invalid config path"))?,
-        )?;
-        let mut file = std::fs::File::create(path)?;
-        let file_contents = toml::to_string(self)?;
-        file.write_all(file_contents.as_bytes())?;
-
-        Ok(())
-    }
+    pub user_settings: UserSettings,
 }
 
 impl SettingsManager {
     pub fn new() -> anyhow::Result<Self> {
-        let settings = toml::from_str(&[DEFAULT_SETTINGS, DEFAULT_HOTKEYS].concat())?;
+        tracing::trace!("Loading default settings");
+        let settings = get_default_settings();
 
-        Ok(Self { settings })
+        Ok(Self { defaults: settings.clone(), settings, user_settings: Default::default() })
+    }
+
+    pub fn read(&self) -> Vec<Preference> {
+        let changed = self.user_settings.get_changed_settings();
+        let preferences = self.settings.as_preferences(changed);
+
+        preferences
+    }
+
+    pub fn update(&mut self, path: String, value: UpdateSettingValue) -> anyhow::Result<()> {
+        self.user_settings.set(path.clone(), value.clone());
+        self.settings.update_setting(path, value)?;
+
+        Ok(())
+    }
+
+    pub fn reset(&mut self, path: String) -> anyhow::Result<()> {
+        self.settings.reset_setting(&path, &self.defaults)?;
+        self.user_settings.reset_to_default(&path);
+
+        Ok(())
     }
 
     pub fn load(&mut self) -> anyhow::Result<()> {
-        let mut paths = vec![PathBuf::from("settings.toml")];
-        if let Some(path) = Self::get_config_path() {
-            paths.push(path);
-        }
-        #[cfg(any(target_os = "linux", target_os = "windows"))]
-        if let Some(path) = std::env::current_exe()
-            .ok()
-            .and_then(|executable| executable.parent().map(|path| path.to_path_buf()))
-            .map(|path| path.join("settings.toml"))
-        {
-            paths.push(path);
-        }
-        #[cfg(target_os = "macos")]
-        if let Some(path) = dbg!(std::env::current_exe())
-            .ok()
-            .and_then(|executable| executable.parent().map(|path| path.to_path_buf()))
-            .and_then(|path| path.parent().map(|path| path.to_path_buf()))
-            .map(|executable| executable.join("Resources/settings.toml"))
-        {
-            paths.push(path);
-        }
-        tracing::trace!("Settings paths: {:?}", paths);
-        if let Some(path) = paths.iter().find(|path| path.exists()) {
+        let Some(path) = Self::get_config_path() else {
+            return Ok(());
+        };
+        tracing::trace!("Settings path: {path:?}");
+        if path.exists() {
             tracing::debug!("Loading settings from {path:?}");
-            let mut file = std::fs::File::open(path)?;
+            let mut file = std::fs::File::open(&path)?;
             let mut buffer = String::new();
             file.read_to_string(&mut buffer)?;
+            let mut migrated = false;
 
-            self.settings = toml::from_str(&buffer)?;
-        } else {
-            tracing::trace!("Loading default settings");
+            match toml::from_str(&buffer) {
+                Ok(user_settings) => self.user_settings = user_settings,
+                Err(err) => {
+                    tracing::warn!(?err, "Failed to parse settings file. This might be because of an old format, trying to migrate...");
+
+                    migrate::migrate_settings(&path, &mut self.user_settings)?;
+                    migrated = true;
+                }
+            }
+            for (path, value) in self.user_settings.get_settings() {
+                if let Err(err) = self.settings.update_setting(path.clone(), value.clone()) {
+                    tracing::error!("Failed to update setting {path}: {err}");
+                    self.user_settings.reset_to_default(&path);
+                }
+            }
+            if migrated {
+                self.save()?;
+            }
         }
 
         Ok(())
     }
 
     pub fn save(&self) -> anyhow::Result<()> {
-        let file_path =
+        let path =
             Self::get_config_path().ok_or_else(|| anyhow::anyhow!("No config path found"))?;
 
-        self.settings.save_to(file_path)
+        std::fs::create_dir_all(
+            path.parent()
+                .ok_or_else(|| anyhow::anyhow!("Invalid config path"))?,
+        )?;
+        let mut file = std::fs::File::create(path)?;
+        let file_contents = toml::to_string(&self.user_settings)?;
+        file.write_all(file_contents.as_bytes())?;
+
+        Ok(())
     }
 
     fn get_config_path() -> Option<PathBuf> {
@@ -181,18 +108,3 @@ impl SettingsManager {
             .map(|dirs| dirs.config_dir().join("settings.toml"))
     }
 }
-
-#[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct Hotkeys {
-    pub global: HotkeyGroup,
-    pub layouts: HotkeyGroup,
-    pub plan: HotkeyGroup,
-    pub programmer: HotkeyGroup,
-    pub nodes: HotkeyGroup,
-    pub patch: HotkeyGroup,
-    pub sequencer: HotkeyGroup,
-    pub effects: HotkeyGroup,
-    pub media: HotkeyGroup,
-}
-
-pub type HotkeyGroup = HashMap<String, String>;

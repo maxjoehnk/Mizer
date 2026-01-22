@@ -16,7 +16,7 @@ class _HistoryViewState extends State<HistoryView> {
   @override
   Widget build(BuildContext context) {
     return HotkeyConfiguration(
-      hotkeySelector: (hotkeys) => hotkeys.global,
+      hotkeyGroupSelector: (hotkeys) => hotkeys["global"],
       hotkeyMap: {
         "undo": () => _undo(),
         "redo": () => _redo(),

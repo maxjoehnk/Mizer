@@ -8,5 +8,9 @@ edition = "2021"
 anyhow = "1"
 tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
-toml = "0.8"
+toml = "0.9"
 directories-next = "2.0"
+enum-iterator = "2.0"
+facet = { version = "0.43", features = ["reflect"] }
+heck = "0.5"
+itertools = "0.14"

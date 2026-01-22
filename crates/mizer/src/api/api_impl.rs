@@ -19,7 +19,7 @@ use mizer_protocol_midi::{MidiDeviceProfileRegistry, MidiEvent};
 use mizer_protocol_osc::OscMessage;
 use mizer_runtime::{DefaultRuntime, LayoutsView, NodeMetadataRef, NodePreviewRef, RuntimeAccess};
 use mizer_session::SessionState;
-use mizer_settings::{Settings, SettingsManager};
+use mizer_settings::{Preference, Settings, SettingsManager, UpdateSettingValue};
 use mizer_status_bus::StatusHandle;
 
 #[derive(Clone)]
@@ -28,7 +28,7 @@ pub struct Api {
     command_executor_api: CommandExecutorApi,
     sender: flume::Sender<ApiCommand>,
     settings: Arc<NonEmptyPinboard<SettingsManager>>,
-    settings_bus: MessageBus<Settings>,
+    settings_bus: MessageBus<(Settings, Vec<Preference>)>,
     history_bus: MessageBus<(Vec<(String, u128)>, usize)>,
     device_manager: DeviceManager,
     api_injector: ApiInjector,
@@ -237,32 +237,25 @@ impl RuntimeApi for Api {
     }
 
     #[profiling::function]
-    fn read_settings(&self) -> Settings {
-        self.settings.read().settings
+    fn read_settings(&self) -> (Settings, Vec<Preference>) {
+        let settings_manager = self.settings.read();
+        let settings = settings_manager.settings.clone();
+        let preferences = settings_manager.read();
+
+        (settings, preferences)
     }
 
     #[profiling::function]
-    fn save_settings(&self, settings: Settings) -> anyhow::Result<()> {
-        let mut settings_manager = self.settings.read();
-        let refresh_fixture_libraries =
-            settings_manager.settings.paths.fixture_libraries != settings.paths.fixture_libraries;
-        settings_manager.settings = settings;
-        self.settings_bus.send(settings_manager.settings.clone());
-        settings_manager.save()?;
-        if refresh_fixture_libraries {
-            let (tx, rx) = flume::bounded(1);
-            self.sender.send(ApiCommand::ReloadFixtureLibraries(
-                settings_manager.settings.paths.fixture_libraries,
-                tx,
-            ))?;
-
-            rx.recv()?
-        } else {
-            Ok(())
-        }
+    fn update_setting(&self, key: String, setting: UpdateSettingValue) -> anyhow::Result<()> {
+        self.change_settings(|settings| settings.update(key, setting))
     }
 
-    fn observe_settings(&self) -> Subscriber<Settings> {
+    #[profiling::function]
+    fn reset_setting(&self, key: String) -> anyhow::Result<()> {
+        self.change_settings(|settings| settings.reset(key))
+    }
+
+    fn observe_settings(&self) -> Subscriber<(Settings, Vec<Preference>)> {
         self.settings_bus.subscribe()
     }
 
@@ -277,7 +270,7 @@ impl RuntimeApi for Api {
             .api_injector
             .require_service::<MidiDeviceProfileRegistry>();
         let loaded_profiles = registry
-            .load_device_profiles(&self.settings.read().settings.paths.midi_device_profiles)?;
+            .load_device_profiles(&self.settings.read().settings.paths.device_profiles.midi)?;
         status_handle.add_message(
             format!("Loaded {loaded_profiles} MIDI Device Profiles"),
             None,
@@ -350,6 +343,29 @@ impl Api {
                 open_node_views: Arc::new(AtomicU8::new(0)),
             },
         )
+    }
+
+    fn change_settings<T: FnOnce(&mut SettingsManager) -> anyhow::Result<()>>(&self, update: T) -> anyhow::Result<()> {
+        let mut settings_manager = self.settings.read();
+        let fixture_paths_before = settings_manager.settings.paths.fixture_libraries.clone();
+        update(&mut settings_manager)?;
+        let fixture_paths_after = settings_manager.settings.paths.fixture_libraries.clone();
+        let preferences = settings_manager.read();
+        self.settings_bus.send((settings_manager.settings.clone(), preferences));
+        settings_manager.save()?;
+        self.settings.set(settings_manager);
+
+        if fixture_paths_before != fixture_paths_after {
+            let (tx, rx) = flume::bounded(1);
+            self.sender.send(ApiCommand::ReloadFixtureLibraries(
+                fixture_paths_after,
+                tx,
+            ))?;
+
+            let _ = rx.recv()??;
+        }
+
+        Ok(())
     }
 
     fn emit_history(&self) -> anyhow::Result<()> {

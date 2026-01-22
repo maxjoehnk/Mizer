@@ -2,18 +2,15 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
-import 'package:protobuf/protobuf.dart';
 
 abstract class SettingsEvent {}
 
 class LoadSettings implements SettingsEvent {}
 
-class SaveSettings implements SettingsEvent {}
+class ApplyUpdate implements SettingsEvent {
+  final UpdateSetting update;
 
-class UpdateSettings implements SettingsEvent {
-  final Settings Function(Settings) update;
-
-  UpdateSettings(this.update);
+  ApplyUpdate(this.update);
 }
 
 class _EmitSettings implements SettingsEvent {
@@ -28,10 +25,9 @@ class SettingsBloc extends Bloc<SettingsEvent, Settings> {
 
   SettingsBloc(this.settingsApi) : super(Settings()) {
     on<LoadSettings>((event, emit) async => emit(await settingsApi.loadSettings()));
-    on<SaveSettings>((event, emit) async {
-      await settingsApi.saveSettings(state);
+    on<ApplyUpdate>((event, emit) async {
+      await settingsApi.updateSetting(event.update);
     });
-    on<UpdateSettings>((event, emit) => emit(event.update(state.deepCopy())));
     on<_EmitSettings>((event, emit) => emit(event.settings));
     this.add(LoadSettings());
     this.subscription =

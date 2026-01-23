@@ -16,6 +16,7 @@ mod update;
 mod user_settings;
 mod preferences;
 mod migrate;
+mod system_locale;
 
 #[derive(Debug, Clone)]
 pub struct SettingsManager {

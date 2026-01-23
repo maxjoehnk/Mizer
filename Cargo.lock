@@ -7035,6 +7035,7 @@ dependencies = [
  "serde",
  "toml 0.9.11+spec-1.1.0",
  "tracing",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]

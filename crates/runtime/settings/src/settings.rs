@@ -1,6 +1,5 @@
 use std::fmt;
 use std::fmt::Formatter;
-use std::ops::Deref;
 use std::path::PathBuf;
 use facet::{Facet};
 use serde::{Deserialize, Serialize};
@@ -21,10 +20,11 @@ pub struct General {
     pub auto_load_last_project: bool,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, Copy, PartialEq, Eq, Facet)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, Copy, PartialEq, Eq, Facet)]
 #[repr(C)]
 #[facet(rename_all = "kebab-case")]
 pub enum Languages {
+    #[default]
     #[serde(rename = "en")]
     #[facet(rename = "en")]
     English,

@@ -1,6 +1,6 @@
 use anyhow::Context;
 use std::fs;
-use std::fs::DirEntry;
+use std::fs::{DirEntry, File};
 use std::path::{Path, PathBuf};
 
 #[cfg(target_os = "linux")]

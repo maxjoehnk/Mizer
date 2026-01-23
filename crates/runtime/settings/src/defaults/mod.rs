@@ -14,7 +14,7 @@ pub fn get_default_settings() -> Settings {
             media: Media {
                 #[cfg(debug_assertions)]
                 storage: PathBuf::from(".storage"),
-                #[cfg(not(any(debug_assertions, target_os = "windows")))]
+                #[cfg(all(not(debug_assertions), target_os = "windows"))]
                 storage: PathBuf::from("~\\.mizer-media"),
                 #[cfg(all(not(debug_assertions), not(target_os = "windows")))]
                 storage: PathBuf::from("~/.mizer-media"),

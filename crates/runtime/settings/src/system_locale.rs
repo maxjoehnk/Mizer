@@ -16,7 +16,7 @@ pub fn get_system_locale() -> Option<Languages> {
             let slice = &locale_name[..null_pos];
             String::from_utf16(slice).ok()
         } else {
-            String::from_utf16(locale_name).ok()
+            String::from_utf16(&locale_name).ok()
         }
     }?;
 

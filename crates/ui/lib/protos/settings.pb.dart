@@ -1,47 +1,37 @@
-//
+///
 //  Generated code. Do not modify.
 //  source: settings.proto
 //
 // @dart = 2.12
-
-// ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class Settings extends $pb.GeneratedMessage {
-  factory Settings({
-    Hotkeys? hotkeys,
-    PathSettings? paths,
-    General? general,
-  }) {
-    final $result = create();
-    if (hotkeys != null) {
-      $result.hotkeys = hotkeys;
-    }
-    if (paths != null) {
-      $result.paths = paths;
-    }
-    if (general != null) {
-      $result.general = general;
-    }
-    return $result;
-  }
-  Settings._() : super();
-  factory Settings.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Settings.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Settings', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
-    ..aOM<Hotkeys>(1, _omitFieldNames ? '' : 'hotkeys', subBuilder: Hotkeys.create)
-    ..aOM<PathSettings>(2, _omitFieldNames ? '' : 'paths', subBuilder: PathSettings.create)
-    ..aOM<General>(3, _omitFieldNames ? '' : 'general', subBuilder: General.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Settings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..pc<SettingsCategory>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'categories', $pb.PbFieldType.PM, subBuilder: SettingsCategory.create)
+    ..aOM<UiSettings>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ui', subBuilder: UiSettings.create)
     ..hasRequiredFields = false
   ;
 
+  Settings._() : super();
+  factory Settings({
+    $core.Iterable<SettingsCategory>? categories,
+    UiSettings? ui,
+  }) {
+    final _result = create();
+    if (categories != null) {
+      _result.categories.addAll(categories);
+    }
+    if (ui != null) {
+      _result.ui = ui;
+    }
+    return _result;
+  }
+  factory Settings.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Settings.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -51,10 +41,8 @@ class Settings extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Settings copyWith(void Function(Settings) updates) => super.copyWith((message) => updates(message as Settings)) as Settings;
-
+  Settings copyWith(void Function(Settings) updates) => super.copyWith((message) => updates(message as Settings)) as Settings; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Settings create() => Settings._();
   Settings createEmptyInstance() => create();
@@ -64,281 +52,61 @@ class Settings extends $pb.GeneratedMessage {
   static Settings? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Hotkeys get hotkeys => $_getN(0);
-  @$pb.TagNumber(1)
-  set hotkeys(Hotkeys v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasHotkeys() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearHotkeys() => clearField(1);
-  @$pb.TagNumber(1)
-  Hotkeys ensureHotkeys() => $_ensure(0);
+  $core.List<SettingsCategory> get categories => $_getList(0);
 
   @$pb.TagNumber(2)
-  PathSettings get paths => $_getN(1);
+  UiSettings get ui => $_getN(1);
   @$pb.TagNumber(2)
-  set paths(PathSettings v) { setField(2, v); }
+  set ui(UiSettings v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasPaths() => $_has(1);
+  $core.bool hasUi() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPaths() => clearField(2);
+  void clearUi() => clearField(2);
   @$pb.TagNumber(2)
-  PathSettings ensurePaths() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  General get general => $_getN(2);
-  @$pb.TagNumber(3)
-  set general(General v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasGeneral() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearGeneral() => clearField(3);
-  @$pb.TagNumber(3)
-  General ensureGeneral() => $_ensure(2);
+  UiSettings ensureUi() => $_ensure(1);
 }
 
-class PathSettings extends $pb.GeneratedMessage {
-  factory PathSettings({
-    $core.String? mediaStorage,
-    $core.Iterable<$core.String>? midiDeviceProfiles,
-    $core.Iterable<$core.String>? openFixtureLibrary,
-    $core.Iterable<$core.String>? qlcplus,
-    $core.Iterable<$core.String>? gdtf,
-    $core.Iterable<$core.String>? mizer,
-  }) {
-    final $result = create();
-    if (mediaStorage != null) {
-      $result.mediaStorage = mediaStorage;
-    }
-    if (midiDeviceProfiles != null) {
-      $result.midiDeviceProfiles.addAll(midiDeviceProfiles);
-    }
-    if (openFixtureLibrary != null) {
-      $result.openFixtureLibrary.addAll(openFixtureLibrary);
-    }
-    if (qlcplus != null) {
-      $result.qlcplus.addAll(qlcplus);
-    }
-    if (gdtf != null) {
-      $result.gdtf.addAll(gdtf);
-    }
-    if (mizer != null) {
-      $result.mizer.addAll(mizer);
-    }
-    return $result;
-  }
-  PathSettings._() : super();
-  factory PathSettings.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PathSettings.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PathSettings', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'mediaStorage')
-    ..pPS(2, _omitFieldNames ? '' : 'midiDeviceProfiles')
-    ..pPS(3, _omitFieldNames ? '' : 'openFixtureLibrary')
-    ..pPS(4, _omitFieldNames ? '' : 'qlcplus')
-    ..pPS(5, _omitFieldNames ? '' : 'gdtf')
-    ..pPS(6, _omitFieldNames ? '' : 'mizer')
+class UiSettings extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UiSettings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'language')
+    ..m<$core.String, Hotkeys>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hotkeys', entryClassName: 'UiSettings.HotkeysEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OM, valueCreator: Hotkeys.create, packageName: const $pb.PackageName('mizer.settings'))
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  PathSettings clone() => PathSettings()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  PathSettings copyWith(void Function(PathSettings) updates) => super.copyWith((message) => updates(message as PathSettings)) as PathSettings;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static PathSettings create() => PathSettings._();
-  PathSettings createEmptyInstance() => create();
-  static $pb.PbList<PathSettings> createRepeated() => $pb.PbList<PathSettings>();
-  @$core.pragma('dart2js:noInline')
-  static PathSettings getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PathSettings>(create);
-  static PathSettings? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get mediaStorage => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set mediaStorage($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasMediaStorage() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearMediaStorage() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.List<$core.String> get midiDeviceProfiles => $_getList(1);
-
-  @$pb.TagNumber(3)
-  $core.List<$core.String> get openFixtureLibrary => $_getList(2);
-
-  @$pb.TagNumber(4)
-  $core.List<$core.String> get qlcplus => $_getList(3);
-
-  @$pb.TagNumber(5)
-  $core.List<$core.String> get gdtf => $_getList(4);
-
-  @$pb.TagNumber(6)
-  $core.List<$core.String> get mizer => $_getList(5);
-}
-
-class Hotkeys extends $pb.GeneratedMessage {
-  factory Hotkeys({
-    $core.Map<$core.String, $core.String>? global,
-    $core.Map<$core.String, $core.String>? layouts,
-    $core.Map<$core.String, $core.String>? programmer,
-    $core.Map<$core.String, $core.String>? nodes,
-    $core.Map<$core.String, $core.String>? patch,
-    $core.Map<$core.String, $core.String>? sequencer,
-    $core.Map<$core.String, $core.String>? plan,
-    $core.Map<$core.String, $core.String>? effects,
-    $core.Map<$core.String, $core.String>? media,
-  }) {
-    final $result = create();
-    if (global != null) {
-      $result.global.addAll(global);
-    }
-    if (layouts != null) {
-      $result.layouts.addAll(layouts);
-    }
-    if (programmer != null) {
-      $result.programmer.addAll(programmer);
-    }
-    if (nodes != null) {
-      $result.nodes.addAll(nodes);
-    }
-    if (patch != null) {
-      $result.patch.addAll(patch);
-    }
-    if (sequencer != null) {
-      $result.sequencer.addAll(sequencer);
-    }
-    if (plan != null) {
-      $result.plan.addAll(plan);
-    }
-    if (effects != null) {
-      $result.effects.addAll(effects);
-    }
-    if (media != null) {
-      $result.media.addAll(media);
-    }
-    return $result;
-  }
-  Hotkeys._() : super();
-  factory Hotkeys.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Hotkeys.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Hotkeys', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
-    ..m<$core.String, $core.String>(1, _omitFieldNames ? '' : 'global', entryClassName: 'Hotkeys.GlobalEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
-    ..m<$core.String, $core.String>(2, _omitFieldNames ? '' : 'layouts', entryClassName: 'Hotkeys.LayoutsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
-    ..m<$core.String, $core.String>(3, _omitFieldNames ? '' : 'programmer', entryClassName: 'Hotkeys.ProgrammerEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
-    ..m<$core.String, $core.String>(4, _omitFieldNames ? '' : 'nodes', entryClassName: 'Hotkeys.NodesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
-    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'patch', entryClassName: 'Hotkeys.PatchEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
-    ..m<$core.String, $core.String>(6, _omitFieldNames ? '' : 'sequencer', entryClassName: 'Hotkeys.SequencerEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
-    ..m<$core.String, $core.String>(7, _omitFieldNames ? '' : 'plan', entryClassName: 'Hotkeys.PlanEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
-    ..m<$core.String, $core.String>(8, _omitFieldNames ? '' : 'effects', entryClassName: 'Hotkeys.EffectsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
-    ..m<$core.String, $core.String>(9, _omitFieldNames ? '' : 'media', entryClassName: 'Hotkeys.MediaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  Hotkeys clone() => Hotkeys()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  Hotkeys copyWith(void Function(Hotkeys) updates) => super.copyWith((message) => updates(message as Hotkeys)) as Hotkeys;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static Hotkeys create() => Hotkeys._();
-  Hotkeys createEmptyInstance() => create();
-  static $pb.PbList<Hotkeys> createRepeated() => $pb.PbList<Hotkeys>();
-  @$core.pragma('dart2js:noInline')
-  static Hotkeys getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Hotkeys>(create);
-  static Hotkeys? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.Map<$core.String, $core.String> get global => $_getMap(0);
-
-  @$pb.TagNumber(2)
-  $core.Map<$core.String, $core.String> get layouts => $_getMap(1);
-
-  @$pb.TagNumber(3)
-  $core.Map<$core.String, $core.String> get programmer => $_getMap(2);
-
-  @$pb.TagNumber(4)
-  $core.Map<$core.String, $core.String> get nodes => $_getMap(3);
-
-  @$pb.TagNumber(5)
-  $core.Map<$core.String, $core.String> get patch => $_getMap(4);
-
-  @$pb.TagNumber(6)
-  $core.Map<$core.String, $core.String> get sequencer => $_getMap(5);
-
-  @$pb.TagNumber(7)
-  $core.Map<$core.String, $core.String> get plan => $_getMap(6);
-
-  @$pb.TagNumber(8)
-  $core.Map<$core.String, $core.String> get effects => $_getMap(7);
-
-  @$pb.TagNumber(9)
-  $core.Map<$core.String, $core.String> get media => $_getMap(8);
-}
-
-class General extends $pb.GeneratedMessage {
-  factory General({
+  UiSettings._() : super();
+  factory UiSettings({
     $core.String? language,
-    $core.bool? autoLoadLastProject,
+    $core.Map<$core.String, Hotkeys>? hotkeys,
   }) {
-    final $result = create();
+    final _result = create();
     if (language != null) {
-      $result.language = language;
+      _result.language = language;
     }
-    if (autoLoadLastProject != null) {
-      $result.autoLoadLastProject = autoLoadLastProject;
+    if (hotkeys != null) {
+      _result.hotkeys.addAll(hotkeys);
     }
-    return $result;
+    return _result;
   }
-  General._() : super();
-  factory General.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory General.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'General', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'language')
-    ..aOB(2, _omitFieldNames ? '' : 'autoLoadLastProject')
-    ..hasRequiredFields = false
-  ;
-
+  factory UiSettings.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UiSettings.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  General clone() => General()..mergeFromMessage(this);
+  UiSettings clone() => UiSettings()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  General copyWith(void Function(General) updates) => super.copyWith((message) => updates(message as General)) as General;
-
+  UiSettings copyWith(void Function(UiSettings) updates) => super.copyWith((message) => updates(message as UiSettings)) as UiSettings; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
-  static General create() => General._();
-  General createEmptyInstance() => create();
-  static $pb.PbList<General> createRepeated() => $pb.PbList<General>();
+  static UiSettings create() => UiSettings._();
+  UiSettings createEmptyInstance() => create();
+  static $pb.PbList<UiSettings> createRepeated() => $pb.PbList<UiSettings>();
   @$core.pragma('dart2js:noInline')
-  static General getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<General>(create);
-  static General? _defaultInstance;
+  static UiSettings getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UiSettings>(create);
+  static UiSettings? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get language => $_getSZ(0);
@@ -350,34 +118,792 @@ class General extends $pb.GeneratedMessage {
   void clearLanguage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.bool get autoLoadLastProject => $_getBF(1);
-  @$pb.TagNumber(2)
-  set autoLoadLastProject($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasAutoLoadLastProject() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearAutoLoadLastProject() => clearField(2);
+  $core.Map<$core.String, Hotkeys> get hotkeys => $_getMap(1);
 }
 
-class MidiDeviceProfiles extends $pb.GeneratedMessage {
-  factory MidiDeviceProfiles({
-    $core.Iterable<MidiDeviceProfile>? profiles,
-  }) {
-    final $result = create();
-    if (profiles != null) {
-      $result.profiles.addAll(profiles);
-    }
-    return $result;
-  }
-  MidiDeviceProfiles._() : super();
-  factory MidiDeviceProfiles.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MidiDeviceProfiles.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiDeviceProfiles', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
-    ..pc<MidiDeviceProfile>(1, _omitFieldNames ? '' : 'profiles', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile.create)
+class SettingsCategory extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SettingsCategory', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..pc<SettingsGroup>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.PM, subBuilder: SettingsGroup.create)
     ..hasRequiredFields = false
   ;
 
+  SettingsCategory._() : super();
+  factory SettingsCategory({
+    $core.String? title,
+    $core.Iterable<SettingsGroup>? groups,
+  }) {
+    final _result = create();
+    if (title != null) {
+      _result.title = title;
+    }
+    if (groups != null) {
+      _result.groups.addAll(groups);
+    }
+    return _result;
+  }
+  factory SettingsCategory.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SettingsCategory.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SettingsCategory clone() => SettingsCategory()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SettingsCategory copyWith(void Function(SettingsCategory) updates) => super.copyWith((message) => updates(message as SettingsCategory)) as SettingsCategory; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SettingsCategory create() => SettingsCategory._();
+  SettingsCategory createEmptyInstance() => create();
+  static $pb.PbList<SettingsCategory> createRepeated() => $pb.PbList<SettingsCategory>();
+  @$core.pragma('dart2js:noInline')
+  static SettingsCategory getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SettingsCategory>(create);
+  static SettingsCategory? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get title => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set title($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTitle() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTitle() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<SettingsGroup> get groups => $_getList(1);
+}
+
+class SettingsGroup extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SettingsGroup', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..pc<Setting>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'settings', $pb.PbFieldType.PM, subBuilder: Setting.create)
+    ..hasRequiredFields = false
+  ;
+
+  SettingsGroup._() : super();
+  factory SettingsGroup({
+    $core.String? title,
+    $core.Iterable<Setting>? settings,
+  }) {
+    final _result = create();
+    if (title != null) {
+      _result.title = title;
+    }
+    if (settings != null) {
+      _result.settings.addAll(settings);
+    }
+    return _result;
+  }
+  factory SettingsGroup.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SettingsGroup.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SettingsGroup clone() => SettingsGroup()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SettingsGroup copyWith(void Function(SettingsGroup) updates) => super.copyWith((message) => updates(message as SettingsGroup)) as SettingsGroup; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SettingsGroup create() => SettingsGroup._();
+  SettingsGroup createEmptyInstance() => create();
+  static $pb.PbList<SettingsGroup> createRepeated() => $pb.PbList<SettingsGroup>();
+  @$core.pragma('dart2js:noInline')
+  static SettingsGroup getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SettingsGroup>(create);
+  static SettingsGroup? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get title => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set title($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTitle() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTitle() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<Setting> get settings => $_getList(1);
+}
+
+enum Setting_Value {
+  select, 
+  boolean, 
+  path, 
+  pathList, 
+  hotkey, 
+  notSet
+}
+
+class Setting extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, Setting_Value> _Setting_ValueByTag = {
+    4 : Setting_Value.select,
+    5 : Setting_Value.boolean,
+    6 : Setting_Value.path,
+    7 : Setting_Value.pathList,
+    8 : Setting_Value.hotkey,
+    0 : Setting_Value.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Setting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..oo(0, [4, 5, 6, 7, 8])
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'defaultValue')
+    ..aOM<SelectSetting>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'select', subBuilder: SelectSetting.create)
+    ..aOM<BoolSetting>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'boolean', subBuilder: BoolSetting.create)
+    ..aOM<PathSetting>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path', subBuilder: PathSetting.create)
+    ..aOM<PathListSetting>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pathList', subBuilder: PathListSetting.create)
+    ..aOM<HotkeySetting>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hotkey', subBuilder: HotkeySetting.create)
+    ..hasRequiredFields = false
+  ;
+
+  Setting._() : super();
+  factory Setting({
+    $core.String? key,
+    $core.String? title,
+    $core.bool? defaultValue,
+    SelectSetting? select,
+    BoolSetting? boolean,
+    PathSetting? path,
+    PathListSetting? pathList,
+    HotkeySetting? hotkey,
+  }) {
+    final _result = create();
+    if (key != null) {
+      _result.key = key;
+    }
+    if (title != null) {
+      _result.title = title;
+    }
+    if (defaultValue != null) {
+      _result.defaultValue = defaultValue;
+    }
+    if (select != null) {
+      _result.select = select;
+    }
+    if (boolean != null) {
+      _result.boolean = boolean;
+    }
+    if (path != null) {
+      _result.path = path;
+    }
+    if (pathList != null) {
+      _result.pathList = pathList;
+    }
+    if (hotkey != null) {
+      _result.hotkey = hotkey;
+    }
+    return _result;
+  }
+  factory Setting.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Setting.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Setting clone() => Setting()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Setting copyWith(void Function(Setting) updates) => super.copyWith((message) => updates(message as Setting)) as Setting; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Setting create() => Setting._();
+  Setting createEmptyInstance() => create();
+  static $pb.PbList<Setting> createRepeated() => $pb.PbList<Setting>();
+  @$core.pragma('dart2js:noInline')
+  static Setting getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Setting>(create);
+  static Setting? _defaultInstance;
+
+  Setting_Value whichValue() => _Setting_ValueByTag[$_whichOneof(0)]!;
+  void clearValue() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $core.String get key => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set key($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasKey() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearKey() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get title => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set title($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTitle() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTitle() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get defaultValue => $_getBF(2);
+  @$pb.TagNumber(3)
+  set defaultValue($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDefaultValue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDefaultValue() => clearField(3);
+
+  @$pb.TagNumber(4)
+  SelectSetting get select => $_getN(3);
+  @$pb.TagNumber(4)
+  set select(SelectSetting v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSelect() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSelect() => clearField(4);
+  @$pb.TagNumber(4)
+  SelectSetting ensureSelect() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  BoolSetting get boolean => $_getN(4);
+  @$pb.TagNumber(5)
+  set boolean(BoolSetting v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasBoolean() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearBoolean() => clearField(5);
+  @$pb.TagNumber(5)
+  BoolSetting ensureBoolean() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  PathSetting get path => $_getN(5);
+  @$pb.TagNumber(6)
+  set path(PathSetting v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPath() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearPath() => clearField(6);
+  @$pb.TagNumber(6)
+  PathSetting ensurePath() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  PathListSetting get pathList => $_getN(6);
+  @$pb.TagNumber(7)
+  set pathList(PathListSetting v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasPathList() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearPathList() => clearField(7);
+  @$pb.TagNumber(7)
+  PathListSetting ensurePathList() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  HotkeySetting get hotkey => $_getN(7);
+  @$pb.TagNumber(8)
+  set hotkey(HotkeySetting v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasHotkey() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearHotkey() => clearField(8);
+  @$pb.TagNumber(8)
+  HotkeySetting ensureHotkey() => $_ensure(7);
+}
+
+enum UpdateSetting_Value {
+  select, 
+  boolean, 
+  path, 
+  pathList, 
+  hotkey, 
+  notSet
+}
+
+class UpdateSetting extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, UpdateSetting_Value> _UpdateSetting_ValueByTag = {
+    2 : UpdateSetting_Value.select,
+    3 : UpdateSetting_Value.boolean,
+    4 : UpdateSetting_Value.path,
+    5 : UpdateSetting_Value.pathList,
+    6 : UpdateSetting_Value.hotkey,
+    0 : UpdateSetting_Value.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateSetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..oo(0, [2, 3, 4, 5, 6])
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'select')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'boolean')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..aOM<PathListSetting>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pathList', subBuilder: PathListSetting.create)
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hotkey')
+    ..hasRequiredFields = false
+  ;
+
+  UpdateSetting._() : super();
+  factory UpdateSetting({
+    $core.String? key,
+    $core.String? select,
+    $core.bool? boolean,
+    $core.String? path,
+    PathListSetting? pathList,
+    $core.String? hotkey,
+  }) {
+    final _result = create();
+    if (key != null) {
+      _result.key = key;
+    }
+    if (select != null) {
+      _result.select = select;
+    }
+    if (boolean != null) {
+      _result.boolean = boolean;
+    }
+    if (path != null) {
+      _result.path = path;
+    }
+    if (pathList != null) {
+      _result.pathList = pathList;
+    }
+    if (hotkey != null) {
+      _result.hotkey = hotkey;
+    }
+    return _result;
+  }
+  factory UpdateSetting.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UpdateSetting.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UpdateSetting clone() => UpdateSetting()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UpdateSetting copyWith(void Function(UpdateSetting) updates) => super.copyWith((message) => updates(message as UpdateSetting)) as UpdateSetting; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UpdateSetting create() => UpdateSetting._();
+  UpdateSetting createEmptyInstance() => create();
+  static $pb.PbList<UpdateSetting> createRepeated() => $pb.PbList<UpdateSetting>();
+  @$core.pragma('dart2js:noInline')
+  static UpdateSetting getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateSetting>(create);
+  static UpdateSetting? _defaultInstance;
+
+  UpdateSetting_Value whichValue() => _UpdateSetting_ValueByTag[$_whichOneof(0)]!;
+  void clearValue() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $core.String get key => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set key($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasKey() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearKey() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get select => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set select($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSelect() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSelect() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get boolean => $_getBF(2);
+  @$pb.TagNumber(3)
+  set boolean($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasBoolean() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBoolean() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get path => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set path($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPath() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPath() => clearField(4);
+
+  @$pb.TagNumber(5)
+  PathListSetting get pathList => $_getN(4);
+  @$pb.TagNumber(5)
+  set pathList(PathListSetting v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasPathList() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPathList() => clearField(5);
+  @$pb.TagNumber(5)
+  PathListSetting ensurePathList() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  $core.String get hotkey => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set hotkey($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasHotkey() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearHotkey() => clearField(6);
+}
+
+class SelectSetting extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectSetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'selected')
+    ..pc<SelectOption>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'values', $pb.PbFieldType.PM, subBuilder: SelectOption.create)
+    ..hasRequiredFields = false
+  ;
+
+  SelectSetting._() : super();
+  factory SelectSetting({
+    $core.String? selected,
+    $core.Iterable<SelectOption>? values,
+  }) {
+    final _result = create();
+    if (selected != null) {
+      _result.selected = selected;
+    }
+    if (values != null) {
+      _result.values.addAll(values);
+    }
+    return _result;
+  }
+  factory SelectSetting.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SelectSetting.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SelectSetting clone() => SelectSetting()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SelectSetting copyWith(void Function(SelectSetting) updates) => super.copyWith((message) => updates(message as SelectSetting)) as SelectSetting; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SelectSetting create() => SelectSetting._();
+  SelectSetting createEmptyInstance() => create();
+  static $pb.PbList<SelectSetting> createRepeated() => $pb.PbList<SelectSetting>();
+  @$core.pragma('dart2js:noInline')
+  static SelectSetting getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SelectSetting>(create);
+  static SelectSetting? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get selected => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set selected($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSelected() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSelected() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<SelectOption> get values => $_getList(1);
+}
+
+class SelectOption extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectOption', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..hasRequiredFields = false
+  ;
+
+  SelectOption._() : super();
+  factory SelectOption({
+    $core.String? value,
+    $core.String? title,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    if (title != null) {
+      _result.title = title;
+    }
+    return _result;
+  }
+  factory SelectOption.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SelectOption.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SelectOption clone() => SelectOption()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SelectOption copyWith(void Function(SelectOption) updates) => super.copyWith((message) => updates(message as SelectOption)) as SelectOption; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SelectOption create() => SelectOption._();
+  SelectOption createEmptyInstance() => create();
+  static $pb.PbList<SelectOption> createRepeated() => $pb.PbList<SelectOption>();
+  @$core.pragma('dart2js:noInline')
+  static SelectOption getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SelectOption>(create);
+  static SelectOption? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get value => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set value($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get title => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set title($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTitle() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTitle() => clearField(2);
+}
+
+class BoolSetting extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BoolSetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
+    ..hasRequiredFields = false
+  ;
+
+  BoolSetting._() : super();
+  factory BoolSetting({
+    $core.bool? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory BoolSetting.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BoolSetting.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  BoolSetting clone() => BoolSetting()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BoolSetting copyWith(void Function(BoolSetting) updates) => super.copyWith((message) => updates(message as BoolSetting)) as BoolSetting; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static BoolSetting create() => BoolSetting._();
+  BoolSetting createEmptyInstance() => create();
+  static $pb.PbList<BoolSetting> createRepeated() => $pb.PbList<BoolSetting>();
+  @$core.pragma('dart2js:noInline')
+  static BoolSetting getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BoolSetting>(create);
+  static BoolSetting? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get value => $_getBF(0);
+  @$pb.TagNumber(1)
+  set value($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+}
+
+class PathSetting extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PathSetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..hasRequiredFields = false
+  ;
+
+  PathSetting._() : super();
+  factory PathSetting({
+    $core.String? path,
+  }) {
+    final _result = create();
+    if (path != null) {
+      _result.path = path;
+    }
+    return _result;
+  }
+  factory PathSetting.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PathSetting.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PathSetting clone() => PathSetting()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PathSetting copyWith(void Function(PathSetting) updates) => super.copyWith((message) => updates(message as PathSetting)) as PathSetting; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PathSetting create() => PathSetting._();
+  PathSetting createEmptyInstance() => create();
+  static $pb.PbList<PathSetting> createRepeated() => $pb.PbList<PathSetting>();
+  @$core.pragma('dart2js:noInline')
+  static PathSetting getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PathSetting>(create);
+  static PathSetting? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get path => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set path($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPath() => clearField(1);
+}
+
+class PathListSetting extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PathListSetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'paths')
+    ..hasRequiredFields = false
+  ;
+
+  PathListSetting._() : super();
+  factory PathListSetting({
+    $core.Iterable<$core.String>? paths,
+  }) {
+    final _result = create();
+    if (paths != null) {
+      _result.paths.addAll(paths);
+    }
+    return _result;
+  }
+  factory PathListSetting.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PathListSetting.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PathListSetting clone() => PathListSetting()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PathListSetting copyWith(void Function(PathListSetting) updates) => super.copyWith((message) => updates(message as PathListSetting)) as PathListSetting; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PathListSetting create() => PathListSetting._();
+  PathListSetting createEmptyInstance() => create();
+  static $pb.PbList<PathListSetting> createRepeated() => $pb.PbList<PathListSetting>();
+  @$core.pragma('dart2js:noInline')
+  static PathListSetting getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PathListSetting>(create);
+  static PathListSetting? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.String> get paths => $_getList(0);
+}
+
+class HotkeySetting extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HotkeySetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'combination')
+    ..hasRequiredFields = false
+  ;
+
+  HotkeySetting._() : super();
+  factory HotkeySetting({
+    $core.String? combination,
+  }) {
+    final _result = create();
+    if (combination != null) {
+      _result.combination = combination;
+    }
+    return _result;
+  }
+  factory HotkeySetting.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HotkeySetting.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  HotkeySetting clone() => HotkeySetting()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  HotkeySetting copyWith(void Function(HotkeySetting) updates) => super.copyWith((message) => updates(message as HotkeySetting)) as HotkeySetting; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static HotkeySetting create() => HotkeySetting._();
+  HotkeySetting createEmptyInstance() => create();
+  static $pb.PbList<HotkeySetting> createRepeated() => $pb.PbList<HotkeySetting>();
+  @$core.pragma('dart2js:noInline')
+  static HotkeySetting getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HotkeySetting>(create);
+  static HotkeySetting? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get combination => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set combination($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCombination() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCombination() => clearField(1);
+}
+
+class Hotkeys extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Hotkeys', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..m<$core.String, $core.String>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keys', entryClassName: 'Hotkeys.KeysEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
+    ..hasRequiredFields = false
+  ;
+
+  Hotkeys._() : super();
+  factory Hotkeys({
+    $core.Map<$core.String, $core.String>? keys,
+  }) {
+    final _result = create();
+    if (keys != null) {
+      _result.keys.addAll(keys);
+    }
+    return _result;
+  }
+  factory Hotkeys.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Hotkeys.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Hotkeys clone() => Hotkeys()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Hotkeys copyWith(void Function(Hotkeys) updates) => super.copyWith((message) => updates(message as Hotkeys)) as Hotkeys; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Hotkeys create() => Hotkeys._();
+  Hotkeys createEmptyInstance() => create();
+  static $pb.PbList<Hotkeys> createRepeated() => $pb.PbList<Hotkeys>();
+  @$core.pragma('dart2js:noInline')
+  static Hotkeys getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Hotkeys>(create);
+  static Hotkeys? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.Map<$core.String, $core.String> get keys => $_getMap(0);
+}
+
+class MidiDeviceProfiles extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfiles', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..pc<MidiDeviceProfile>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'profiles', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile.create)
+    ..hasRequiredFields = false
+  ;
+
+  MidiDeviceProfiles._() : super();
+  factory MidiDeviceProfiles({
+    $core.Iterable<MidiDeviceProfile>? profiles,
+  }) {
+    final _result = create();
+    if (profiles != null) {
+      _result.profiles.addAll(profiles);
+    }
+    return _result;
+  }
+  factory MidiDeviceProfiles.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MidiDeviceProfiles.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -387,10 +913,8 @@ class MidiDeviceProfiles extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiDeviceProfiles copyWith(void Function(MidiDeviceProfiles) updates) => super.copyWith((message) => updates(message as MidiDeviceProfiles)) as MidiDeviceProfiles;
-
+  MidiDeviceProfiles copyWith(void Function(MidiDeviceProfiles) updates) => super.copyWith((message) => updates(message as MidiDeviceProfiles)) as MidiDeviceProfiles; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static MidiDeviceProfiles create() => MidiDeviceProfiles._();
   MidiDeviceProfiles createEmptyInstance() => create();
@@ -404,6 +928,16 @@ class MidiDeviceProfiles extends $pb.GeneratedMessage {
 }
 
 class MidiDeviceProfile extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfile', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filePath')
+    ..pc<Error>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'errors', $pb.PbFieldType.PM, subBuilder: Error.create)
+    ..hasRequiredFields = false
+  ;
+
+  MidiDeviceProfile._() : super();
   factory MidiDeviceProfile({
     $core.String? id,
     $core.String? manufacturer,
@@ -411,37 +945,26 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
     $core.String? filePath,
     $core.Iterable<Error>? errors,
   }) {
-    final $result = create();
+    final _result = create();
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (manufacturer != null) {
-      $result.manufacturer = manufacturer;
+      _result.manufacturer = manufacturer;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
     if (filePath != null) {
-      $result.filePath = filePath;
+      _result.filePath = filePath;
     }
     if (errors != null) {
-      $result.errors.addAll(errors);
+      _result.errors.addAll(errors);
     }
-    return $result;
+    return _result;
   }
-  MidiDeviceProfile._() : super();
   factory MidiDeviceProfile.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiDeviceProfile.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiDeviceProfile', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..aOS(2, _omitFieldNames ? '' : 'manufacturer')
-    ..aOS(3, _omitFieldNames ? '' : 'name')
-    ..aOS(4, _omitFieldNames ? '' : 'filePath')
-    ..pc<Error>(5, _omitFieldNames ? '' : 'errors', $pb.PbFieldType.PM, subBuilder: Error.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -451,10 +974,8 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiDeviceProfile copyWith(void Function(MidiDeviceProfile) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile)) as MidiDeviceProfile;
-
+  MidiDeviceProfile copyWith(void Function(MidiDeviceProfile) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile)) as MidiDeviceProfile; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static MidiDeviceProfile create() => MidiDeviceProfile._();
   MidiDeviceProfile createEmptyInstance() => create();
@@ -504,29 +1025,28 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
 }
 
 class Error extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Error', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestamp')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
+    ..hasRequiredFields = false
+  ;
+
+  Error._() : super();
   factory Error({
     $core.String? timestamp,
     $core.String? message,
   }) {
-    final $result = create();
+    final _result = create();
     if (timestamp != null) {
-      $result.timestamp = timestamp;
+      _result.timestamp = timestamp;
     }
     if (message != null) {
-      $result.message = message;
+      _result.message = message;
     }
-    return $result;
+    return _result;
   }
-  Error._() : super();
   factory Error.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Error.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Error', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'timestamp')
-    ..aOS(2, _omitFieldNames ? '' : 'message')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -536,10 +1056,8 @@ class Error extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Error copyWith(void Function(Error) updates) => super.copyWith((message) => updates(message as Error)) as Error;
-
+  Error copyWith(void Function(Error) updates) => super.copyWith((message) => updates(message as Error)) as Error; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Error create() => Error._();
   Error createEmptyInstance() => create();
@@ -567,6 +1085,3 @@ class Error extends $pb.GeneratedMessage {
   void clearMessage() => clearField(2);
 }
 
-
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

@@ -49,6 +49,8 @@ prost = "0.13"
 prost-types = "0.13"
 tonic = "0.12"
 tokio = { version = "1.37", features = ["time"] }
+facet = { version = "0.43", features = ["reflect"] }
+indexmap = "2.13"
 
 [build-dependencies]
 tonic-build = "0.12"

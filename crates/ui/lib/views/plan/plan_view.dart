@@ -41,7 +41,7 @@ class _PlanViewState extends State<PlanView>
     PlansBloc plansBloc = context.read();
     return BlocBuilder<PlansBloc, PlansState>(builder: (context, state) {
       return HotkeyConfiguration(
-        hotkeySelector: (hotkeys) => hotkeys.plan,
+        hotkeyGroupSelector: (hotkeys) => hotkeys["plan"],
         hotkeyMap: {
           "highlight": _highlight,
           "clear": _clear,

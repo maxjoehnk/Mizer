@@ -3,35 +3,77 @@ syntax = "proto3";
 package mizer.settings;
 
 message Settings {
-  Hotkeys hotkeys = 1;
-  PathSettings paths = 2;
-  General general = 3;
+  repeated SettingsCategory categories = 1;
+  UiSettings ui = 2;
 }
 
-message PathSettings {
-  string media_storage = 1;
-  repeated string midi_device_profiles = 2;
-  repeated string open_fixture_library = 3;
-  repeated string qlcplus = 4;
-  repeated string gdtf = 5;
-  repeated string mizer = 6;
+message UiSettings {
+  string language = 1;
+  map<string, Hotkeys> hotkeys = 2;
+}
+
+message SettingsCategory {
+  string title = 1;
+  repeated SettingsGroup groups = 2;
+}
+
+message SettingsGroup {
+  optional string title = 1;
+  repeated Setting settings = 2;
+}
+
+message Setting {
+  string key = 1;
+  string title = 2;
+  bool default_value = 3;
+  oneof value {
+    SelectSetting select = 4;
+    BoolSetting boolean = 5;
+    PathSetting path = 6;
+    PathListSetting path_list = 7;
+    HotkeySetting hotkey = 8;
+  }
+}
+
+message UpdateSetting {
+  string key = 1;
+  oneof value {
+    string select = 2;
+    bool boolean = 3;
+    string path = 4;
+    PathListSetting path_list = 5;
+    string hotkey = 6;
+  }
+}
+
+message SelectSetting {
+  string selected = 1;
+  repeated SelectOption values = 2;
+}
+
+message SelectOption {
+  string value = 1;
+  string title = 2;
+}
+
+message BoolSetting {
+  bool value = 1;
+}
+
+message PathSetting {
+  string path = 1;
+}
+
+message PathListSetting {
+  repeated string paths = 1;
+}
+
+message HotkeySetting {
+  string combination = 1;
 }
 
 message Hotkeys {
-  map<string, string> global = 1;
-  map<string, string> layouts = 2;
-  map<string, string> programmer = 3;
-  map<string, string> nodes = 4;
-  map<string, string> patch = 5;
-  map<string, string> sequencer = 6;
-  map<string, string> plan = 7;
-  map<string, string> effects = 8;
-  map<string, string> media = 9;
-}
-
-message General {
-  string language = 1;
-  bool auto_load_last_project = 2;
+  map<string, string> keys = 1;
 }
 
 message MidiDeviceProfiles {

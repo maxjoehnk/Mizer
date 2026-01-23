@@ -83,7 +83,7 @@ pub struct MediaServer {
 impl MediaServer {
     pub fn new(status_bus: StatusHandle, settings: Settings) -> anyhow::Result<Self> {
         let db = DataAccess::new()?;
-        let storage = FileStorage::new(settings.paths.media_storage)
+        let storage = FileStorage::new(settings.paths.media.storage)
             .context("Creating media storage")?;
         let import_paths = ImportPaths::new();
 

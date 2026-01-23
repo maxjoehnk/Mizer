@@ -23,7 +23,7 @@ class ProgrammerFixtureList extends StatelessWidget {
     var channels =
         programmerState.controls.map((c) => c.control).toSet().sorted((a, b) => a.value - b.value);
     return HotkeyConfiguration(
-      hotkeySelector: (hotkeys) => hotkeys.programmer,
+      hotkeyGroupSelector: (hotkeys) => hotkeys["programmer"],
       hotkeyMap: {
         "clear": () => _clear(),
         "highlight": () => _highlight(),

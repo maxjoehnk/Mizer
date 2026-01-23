@@ -1,10 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:mizer/api/contracts/settings.dart';
 
-typedef HotkeySelector = Map<String, String> Function(Hotkeys);
+typedef HotkeyGroupSelector = Map<String, String>? Function(Map<String, Map<String, String>>);
 
 class HotkeyWidgetValue {
-  HotkeySelector selector;
+  HotkeyGroupSelector selector;
 
   Map<String, Function()> actions;
 
@@ -28,7 +27,7 @@ class HotkeyManager extends ValueListenable<List<HotkeyWidgetValue>> {
     this._callListener();
   }
 
-  setHotkeys(HotkeyWidgetKey key, HotkeySelector hotkeyKeybindings,
+  setHotkeys(HotkeyWidgetKey key, HotkeyGroupSelector hotkeyKeybindings,
       Map<String, Function()> hotkeyActions) {
     this._hotkeys[key] = HotkeyWidgetValue(hotkeyKeybindings, hotkeyActions);
 

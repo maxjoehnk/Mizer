@@ -9,8 +9,10 @@ class BooleanField extends StatelessWidget {
   final bool value;
   final bool vertical;
   final Function(bool) onUpdate;
+  final bool resetToDefault;
+  final Function()? onResetToDefault;
 
-  BooleanField({required this.label, this.labelWidth, required this.value, this.vertical = false, required this.onUpdate});
+  BooleanField({required this.label, this.labelWidth, required this.value, this.vertical = false, required this.onUpdate, this.resetToDefault = false, this.onResetToDefault});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,8 @@ class BooleanField extends StatelessWidget {
         label: label,
         labelWidth: labelWidth,
         vertical: vertical,
+        resetToDefault: resetToDefault,
+        onResetToDefault: onResetToDefault,
         child: Container(
           height: INPUT_FIELD_HEIGHT,
           alignment: vertical ? Alignment.center : Alignment.centerRight,

@@ -62,9 +62,9 @@ class _HotkeyShortcutsMappingState extends State<HotkeyShortcutsMapping> {
 
   Map<ShortcutActivator, VoidCallback> _bindings(HotkeyManager manager, Settings settings) {
     return manager.value.map((hotkeys) {
-      var hotkeyKeybindings = hotkeys.selector(settings.hotkeys);
+      var hotkeyKeybindings = hotkeys.selector(settings.ui.hotkeys.map((key, value) => MapEntry(key, value.keys)));
 
-      return hotkeys.actions.map((key, value) => MapEntry(hotkeyKeybindings[key], value));
+      return hotkeys.actions.map((key, value) => MapEntry(hotkeyKeybindings?[key], value));
     }).fold(Map(), (result, hotkeys) {
       hotkeys.removeWhere((key, value) => key == null || key.isEmpty);
       var mappedHotkeys = hotkeys.map((key, value) {

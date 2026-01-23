@@ -26,6 +26,11 @@ class ApplicationPluginApi implements SettingsApi {
   }
 
   @override
+  Future<void> updateSetting(UpdateSetting update) async {
+    await channel.invokeMethod("updateSetting", update.writeToBuffer());
+  }
+
+  @override
   Future<void> saveSettings(Settings settings) async {
     await channel.invokeMethod("saveSettings", settings.writeToBuffer());
   }

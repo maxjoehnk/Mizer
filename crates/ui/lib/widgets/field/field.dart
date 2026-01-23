@@ -13,14 +13,21 @@ class Field extends StatelessWidget {
   final Widget? suffix;
   final bool big;
   final List<Widget> actions;
+  final bool resetToDefault;
+  final Function()? onResetToDefault;
 
-  Field({this.label, double? labelWidth, required this.child, this.suffix, this.vertical = false, this.big = false, this.actions = const []}) : labelWidth = labelWidth ?? 100;
+  Field({this.label, double? labelWidth, required this.child, this.suffix, this.vertical = false, this.big = false, this.actions = const [], this.resetToDefault = false, this.onResetToDefault}) : labelWidth = labelWidth ?? 100;
 
   @override
   Widget build(BuildContext context) {
     if (vertical) {
       return VerticalField(label: label, child: child);
     } else {
+      var actions = [...this.actions];
+      if (resetToDefault) {
+        actions.add(FieldAction(child: Icon(Icons.settings_backup_restore), onTap: onResetToDefault));
+      }
+
       return HorizontalField(label: label, labelWidth: labelWidth, big: big, child: child, suffix: suffix, actions: actions);
     }
   }

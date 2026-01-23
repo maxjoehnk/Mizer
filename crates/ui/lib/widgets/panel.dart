@@ -331,10 +331,8 @@ class PanelAction extends StatelessWidget {
 
   String? _getHotkey(BuildContext context) {
     var hotkeys = context.read<HotkeyMapping?>();
-    if (hotkeys?.mappings == null) {
-      return null;
-    }
-    return hotkeys!.mappings[action.hotkeyId];
+
+    return hotkeys?.mappings?[action.hotkeyId];
   }
 
   Color _getBackground(bool hovered) {

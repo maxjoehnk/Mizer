@@ -53,7 +53,7 @@ class _EffectsViewState extends State<EffectsView> {
   Widget build(BuildContext context) {
     EffectsBloc bloc = context.read();
     return HotkeyConfiguration(
-      hotkeySelector: (hotkeys) => hotkeys.effects,
+      hotkeyGroupSelector: (hotkeys) => hotkeys["effects"],
       hotkeyMap: {
         "add_effect": () => _addEffect(context, bloc),
         "delete": () => _deleteEffect(bloc),

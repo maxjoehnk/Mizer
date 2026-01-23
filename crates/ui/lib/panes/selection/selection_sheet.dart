@@ -58,7 +58,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
       return Container();
     }
     return HotkeyConfiguration(
-      hotkeySelector: (hotkeys) => hotkeys.programmer,
+      hotkeyGroupSelector: (hotkeys) => hotkeys["programmer"],
       hotkeyMap: {
         "clear": () => _clear(),
         "assign_group": () => _assignGroup(context),

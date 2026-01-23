@@ -133,9 +133,11 @@ pub fn build_runtime(
 
 fn load_settings() -> anyhow::Result<Arc<NonEmptyPinboard<SettingsManager>>> {
     let mut settings_manager = SettingsManager::new().context("Failed to load default settings")?;
-    settings_manager
+    if let Err(err) = settings_manager
         .load()
-        .context("Failed to load settings from disk")?;
+        .context("Failed to load settings from disk") {
+        tracing::error!("Failed to load settings: {err:?}");
+    }
     let settings_manager = Arc::new(NonEmptyPinboard::new(settings_manager));
 
     Ok(settings_manager)

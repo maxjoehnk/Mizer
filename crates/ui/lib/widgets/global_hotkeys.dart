@@ -13,7 +13,7 @@ class GlobalHotkeyConfiguration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HotkeyConfiguration(
-        hotkeySelector: (hotkeys) => hotkeys.global,
+        hotkeyGroupSelector: (hotkeys) => hotkeys["global"],
         hotkeyMap: {
           "undo": () => _undo(context),
           "redo": () => _redo(context),

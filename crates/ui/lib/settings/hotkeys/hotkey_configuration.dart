@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/settings/hotkeys/hotkey_manager.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:provider/provider.dart';
 
 class HotkeyConfiguration extends StatefulWidget {
   final Widget child;
-  final Map<String, String> Function(Hotkeys) hotkeySelector;
+  final HotkeyGroupSelector hotkeyGroupSelector;
   final Map<String, Function()> hotkeyMap;
 
   HotkeyConfiguration(
-      {required this.hotkeySelector,
+      {required this.hotkeyGroupSelector,
       required this.child,
       required this.hotkeyMap,
       bool? global = false});
@@ -26,7 +25,7 @@ class _HotkeyConfigurationState extends State<HotkeyConfiguration> {
   @override
   void didUpdateWidget(HotkeyConfiguration oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.hotkeySelector != widget.hotkeySelector ||
+    if (oldWidget.hotkeyGroupSelector != widget.hotkeyGroupSelector ||
         oldWidget.hotkeyMap != widget.hotkeyMap) {
       _updateHotkeys();
     }
@@ -34,8 +33,8 @@ class _HotkeyConfigurationState extends State<HotkeyConfiguration> {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = context.read<SettingsBloc>();
-    var hotkeys = HotkeyMapping(widget.hotkeySelector(bloc.state.hotkeys));
+    var bloc = context.watch<SettingsBloc>();
+    var hotkeys = HotkeyMapping(widget.hotkeyGroupSelector(bloc.state.ui.hotkeys.map((key, value) => MapEntry(key, value.keys))));
 
     return Provider.value(value: hotkeys, child: widget.child);
   }
@@ -49,7 +48,7 @@ class _HotkeyConfigurationState extends State<HotkeyConfiguration> {
 
   void _updateHotkeys() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      this._hotkeyManager.setHotkeys(_hotkeyWidgetKey!, widget.hotkeySelector, widget.hotkeyMap);
+      this._hotkeyManager.setHotkeys(_hotkeyWidgetKey!, widget.hotkeyGroupSelector, widget.hotkeyMap);
     });
   }
 
@@ -67,7 +66,7 @@ class _HotkeyConfigurationState extends State<HotkeyConfiguration> {
 }
 
 class HotkeyMapping {
-  final Map<String, String> mappings;
+  final Map<String, String>? mappings;
 
   HotkeyMapping(this.mappings);
 }

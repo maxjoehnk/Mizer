@@ -159,10 +159,7 @@ class PlaybackBarButton extends StatelessWidget {
 
   String? _getHotkey(BuildContext context) {
     var hotkeys = context.read<HotkeyMapping?>();
-    if (hotkeys?.mappings == null) {
-      return null;
-    }
-    return hotkeys!.mappings[hotkeyId];
+    return hotkeys?.mappings?[hotkeyId];
   }
 }
 

@@ -60,7 +60,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return HotkeyConfiguration(
-      hotkeySelector: (hotkeys) => hotkeys.sequencer,
+      hotkeyGroupSelector: (hotkeys) => hotkeys["sequencer"],
       hotkeyMap: {
         "go_forward": () {
           SequencerBloc bloc = context.read();

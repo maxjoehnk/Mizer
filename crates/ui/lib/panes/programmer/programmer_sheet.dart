@@ -56,7 +56,7 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
   @override
   Widget build(BuildContext context) {
     return HotkeyConfiguration(
-      hotkeySelector: (hotkeys) => hotkeys.programmer,
+      hotkeyGroupSelector: (hotkeys) => hotkeys["programmer"],
       hotkeyMap: {
         "store": () => _store(),
         "highlight": () => _highlight(),

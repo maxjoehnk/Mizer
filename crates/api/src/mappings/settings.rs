@@ -1,143 +1,144 @@
-use std::path::PathBuf;
-
+use crate::proto::settings as model;
+use facet::{Facet, Peek};
 use mizer_connections::midi_device_profile;
 use mizer_settings as settings;
+use mizer_settings::HotkeyGroup;
+use std::collections::HashMap;
+use std::hash::Hash;
+use std::path::PathBuf;
+use indexmap::IndexMap;
 
-use crate::proto::settings as model;
+impl From<(settings::Settings, Vec<settings::Preference>)> for model::Settings {
+    fn from((settings, preferences): (settings::Settings, Vec<settings::Preference>)) -> Self {
+        let mut ui: model::UiSettings = settings.hotkeys.into();
+        ui.language = settings.general.language.to_string();
 
-impl From<settings::Settings> for model::Settings {
-    fn from(settings: settings::Settings) -> Self {
-        Self {
-            general: Some(settings.general.into()),
-            hotkeys: Some(settings.hotkeys.into()),
-            paths: Some(settings.paths.into()),
+        let mut settings = Self {
+            ui: Some(ui),
             ..Default::default()
-        }
-    }
-}
+        };
 
-impl From<settings::General> for model::General {
-    fn from(general: settings::General) -> Self {
-        Self {
-            language: general.language,
-            auto_load_last_project: general.auto_load_last_project,
-        }
-    }
-}
+        let mut categories = IndexMap::new();
 
-impl From<settings::Hotkeys> for model::Hotkeys {
-    fn from(hotkeys: settings::Hotkeys) -> Self {
-        Self {
-            global: hotkeys.global,
-            programmer: hotkeys.programmer,
-            nodes: hotkeys.nodes,
-            layouts: hotkeys.layouts,
-            patch: hotkeys.patch,
-            sequencer: hotkeys.sequencer,
-            plan: hotkeys.plan,
-            effects: hotkeys.effects,
-            media: hotkeys.media,
+        for preference in preferences {
+            let category = categories
+                .entry(preference.category.clone())
+                .or_insert_with(IndexMap::new);
+            let group = category
+                .entry(preference.group.clone())
+                .or_insert_with(Vec::new);
+            group.push(preference.into());
         }
-    }
-}
 
-impl From<settings::FilePaths> for model::PathSettings {
-    fn from(paths: settings::FilePaths) -> Self {
-        Self {
-            media_storage: paths.media_storage.to_string_lossy().to_string(),
-            midi_device_profiles: paths
-                .midi_device_profiles
-                .into_iter()
-                .map(path_to_string)
-                .collect(),
-            open_fixture_library: paths
-                .fixture_libraries
-                .open_fixture_library
-                .into_iter()
-                .map(path_to_string)
-                .collect(),
-            qlcplus: paths
-                .fixture_libraries
-                .qlcplus
-                .into_iter()
-                .map(path_to_string)
-                .collect(),
-            gdtf: paths
-                .fixture_libraries
-                .gdtf
-                .into_iter()
-                .map(path_to_string)
-                .collect(),
-            mizer: paths
-                .fixture_libraries
-                .mizer
-                .into_iter()
-                .map(path_to_string)
-                .collect(),
-        }
-    }
-}
-
-impl From<model::Settings> for settings::Settings {
-    fn from(settings: model::Settings) -> Self {
-        Self {
-            general: settings.general.unwrap().into(),
-            hotkeys: settings.hotkeys.unwrap().into(),
-            paths: settings.paths.unwrap().into(),
-        }
-    }
-}
-
-impl From<model::General> for settings::General {
-    fn from(general: model::General) -> Self {
-        Self {
-            language: general.language,
-            auto_load_last_project: general.auto_load_last_project,
-        }
-    }
-}
-
-impl From<model::Hotkeys> for settings::Hotkeys {
-    fn from(hotkeys: model::Hotkeys) -> Self {
-        Self {
-            global: hotkeys.global,
-            programmer: hotkeys.programmer,
-            nodes: hotkeys.nodes,
-            layouts: hotkeys.layouts,
-            patch: hotkeys.patch,
-            sequencer: hotkeys.sequencer,
-            plan: hotkeys.plan,
-            effects: hotkeys.effects,
-            media: hotkeys.media,
-        }
-    }
-}
-
-impl From<model::PathSettings> for settings::FilePaths {
-    fn from(paths: model::PathSettings) -> Self {
-        Self {
-            media_storage: PathBuf::from(paths.media_storage),
-            fixture_libraries: settings::FixtureLibraryPaths {
-                gdtf: paths.gdtf.into_iter().map(PathBuf::from).collect(),
-                open_fixture_library: paths
-                    .open_fixture_library
+        for (category, groups) in categories {
+            settings.categories.push(model::SettingsCategory {
+                title: category,
+                groups: groups
                     .into_iter()
-                    .map(PathBuf::from)
+                    .map(|(group, settings)| model::SettingsGroup {
+                        title: group,
+                        settings,
+                    })
                     .collect(),
-                qlcplus: paths.qlcplus.into_iter().map(PathBuf::from).collect(),
-                mizer: paths.mizer.into_iter().map(PathBuf::from).collect(),
-            },
-            midi_device_profiles: paths
-                .midi_device_profiles
-                .into_iter()
-                .map(PathBuf::from)
-                .collect(),
+            })
+        }
+
+        settings
+    }
+}
+
+impl From<settings::Preference> for model::Setting {
+    fn from(preference: settings::Preference) -> Self {
+        model::Setting {
+            title: preference.title,
+            key: preference.key,
+            value: Some(preference.value.into()),
+            default_value: preference.default_value,
         }
     }
 }
 
-fn path_to_string(path: PathBuf) -> String {
+impl From<settings::PreferenceValue> for model::setting::Value {
+    fn from(value: settings::PreferenceValue) -> Self {
+        match value {
+            settings::PreferenceValue::Boolean(value) => {
+                model::setting::Value::Boolean(model::BoolSetting { value })
+            }
+            settings::PreferenceValue::Select { selected, options } => model::setting::Value::Select(model::SelectSetting {
+                selected,
+                values: options.into_iter().map(|option| model::SelectOption { value: option.value, title: option.title }).collect()
+            }),
+            settings::PreferenceValue::Path(value) => model::setting::Value::Path(model::PathSetting { path: path_to_string(&value) }),
+            settings::PreferenceValue::PathList(value) => model::setting::Value::PathList(model::PathListSetting {
+                paths: value.iter().map(path_to_string).collect()
+            }),
+            settings::PreferenceValue::Hotkey(value) => model::setting::Value::Hotkey(model::HotkeySetting {
+                combination: value,
+            }),
+        }
+    }
+}
+
+fn path_to_string(path: &PathBuf) -> String {
     path.to_string_lossy().to_string()
+}
+
+impl From<model::update_setting::Value> for settings::UpdateSettingValue {
+    fn from(value: model::update_setting::Value) -> Self {
+        match value {
+            model::update_setting::Value::Boolean(value) => Self::Bool(value),
+            model::update_setting::Value::Select(value) => Self::Select(value),
+            model::update_setting::Value::Path(value) => Self::Path(PathBuf::from(value)),
+            model::update_setting::Value::PathList(value) => {
+                Self::PathList(value.paths.into_iter().map(PathBuf::from).collect())
+            }
+            model::update_setting::Value::Hotkey(value) => Self::Hotkey(value),
+        }
+    }
+}
+
+impl From<settings::Hotkeys> for model::UiSettings {
+    fn from(hotkeys: settings::Hotkeys) -> Self {
+        let mut map = HashMap::new();
+        map.insert("global".into(), map_hotkey_map(hotkeys.global));
+        map.insert("programmer".into(), map_hotkey_map(hotkeys.programmer));
+        map.insert("nodes".into(), map_hotkey_map(hotkeys.nodes));
+        map.insert("layouts".into(), map_hotkey_map(hotkeys.layouts));
+        map.insert("patch".into(), map_hotkey_map(hotkeys.patch));
+        map.insert("sequencer".into(), map_hotkey_map(hotkeys.sequencer));
+        map.insert("plan".into(), map_hotkey_map(hotkeys.plan));
+        map.insert("effects".into(), map_hotkey_map(hotkeys.effects));
+        map.insert("media".into(), map_hotkey_map(hotkeys.media));
+
+        Self {
+            language: Default::default(),
+            hotkeys: map,
+        }
+    }
+}
+
+fn map_hotkey_map<'facet, T: Facet<'facet>>(group: HotkeyGroup<T>) -> model::Hotkeys
+where
+    T: PartialEq + Eq + Hash,
+{
+    let hotkeys = group
+        .into_iter()
+        .map(|(key, value)| {
+            let active_variant = Peek::new(&key)
+                .into_enum()
+                .expect("Hotkey key must be an enum")
+                .active_variant()
+                .expect("Hotkey key must be a variant");
+            let name = active_variant
+                .rename
+                .unwrap_or(active_variant.name)
+                .to_string();
+
+            (name, value)
+        })
+        .collect();
+
+    model::Hotkeys { keys: hotkeys }
 }
 
 impl From<Vec<midi_device_profile::DeviceProfile>> for model::MidiDeviceProfiles {

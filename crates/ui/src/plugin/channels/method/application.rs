@@ -50,10 +50,10 @@ impl<LH: LifecycleHandler + 'static, R: RuntimeApi + 'static> MethodCallHandler
 
                 reply.respond_msg(settings);
             }
-            "saveSettings" => {
+            "updateSetting" => {
                 if let Err(err) = call
                     .arguments()
-                    .and_then(|args| self.handler.save_settings(args))
+                    .and_then(|args| self.handler.update_setting(args))
                 {
                     reply.respond_error(err);
                 } else {

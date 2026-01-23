@@ -3,25 +3,30 @@ import 'dart:developer';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mizer/widgets/text_field_focus.dart';
-
 import 'package:mizer/widgets/field/field.dart';
+import 'package:mizer/widgets/text_field_focus.dart';
 
 class PathField extends StatefulWidget {
   final String? label;
+  final double? labelWidth;
   final String value;
   final String? placeholder;
   final List<Widget> actions;
   final Function(String) onUpdate;
   final bool readOnly;
+  final bool resetToDefault;
+  final Function()? onResetToDefault;
 
   PathField(
       {this.label,
+      this.labelWidth,
       required this.value,
       this.placeholder,
       this.readOnly = false,
       this.actions = const [],
-      required this.onUpdate});
+      required this.onUpdate,
+      this.resetToDefault = false,
+      this.onResetToDefault});
 
   @override
   _PathFieldState createState() => _PathFieldState(value);
@@ -92,6 +97,9 @@ class _PathFieldState extends State<PathField> {
     bool hasValue = controller.text.isNotEmpty;
     return Field(
       label: this.widget.label,
+      labelWidth: this.widget.labelWidth,
+      resetToDefault: widget.resetToDefault,
+      onResetToDefault: widget.onResetToDefault,
       child: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -125,25 +133,27 @@ class _PathFieldState extends State<PathField> {
     TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
 
     return Field(
-        label: this.widget.label,
-        child: Container(
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: TextFieldFocus(
-            child: EditableText(
-              focusNode: focusNode,
-              controller: controller,
-              cursorColor: Colors.black87,
-              backgroundCursorColor: Colors.black12,
-              style: textStyle,
-              textAlign: TextAlign.end,
-              selectionColor: Colors.black38,
-              keyboardType: TextInputType.text,
-              autofocus: true,
-              inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-            ),
+      label: this.widget.label,
+      resetToDefault: widget.resetToDefault,
+      onResetToDefault: widget.onResetToDefault,
+      child: Container(
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: TextFieldFocus(
+          child: EditableText(
+            focusNode: focusNode,
+            controller: controller,
+            cursorColor: Colors.black87,
+            backgroundCursorColor: Colors.black12,
+            style: textStyle,
+            textAlign: TextAlign.end,
+            selectionColor: Colors.black38,
+            keyboardType: TextInputType.text,
+            autofocus: true,
+            inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
           ),
         ),
+      ),
       actions: [
         FieldAction(
           onTap: () async {

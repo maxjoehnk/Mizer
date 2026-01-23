@@ -44,7 +44,7 @@ class _FixturesViewState extends State<FixturesView>
   Widget build(BuildContext context) {
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return HotkeyConfiguration(
-        hotkeySelector: (hotkeys) => hotkeys.programmer,
+        hotkeyGroupSelector: (hotkeys) => hotkeys["programmer"],
         hotkeyMap: {
           "select_all": () => _selectAll(fixtures.fixtures),
           "clear": () => _clear(),

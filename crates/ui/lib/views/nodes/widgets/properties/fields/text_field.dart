@@ -14,6 +14,8 @@ class TextPropertyField extends StatefulWidget {
   final bool multiline;
   final bool readOnly;
   final List<Widget> actions;
+  final bool resetToDefault;
+  final Function()? onResetToDefault;
 
   TextPropertyField(
       {required this.label,
@@ -26,7 +28,9 @@ class TextPropertyField extends StatefulWidget {
       this.actions = const [],
       this.onChanged,
       this.onUpdate,
-      this.multiline = false});
+      this.multiline = false,
+      this.resetToDefault = false,
+      this.onResetToDefault});
 
   @override
   _TextPropertyFieldState createState() => _TextPropertyFieldState(value);
@@ -67,6 +71,8 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
         big: widget.big,
         actions: widget.actions,
         vertical: widget.multiline,
+        resetToDefault: widget.resetToDefault,
+        onResetToDefault: widget.onResetToDefault,
         child: TextInput(
           focusNode: focusNode,
           readOnly: widget.readOnly,

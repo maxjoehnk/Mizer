@@ -1,7 +1,7 @@
 use crate::Languages;
 
 #[cfg(target_os = "windows")]
-pub fn get_system_locale() -> Option<Languages> {
+pub fn get_system_language() -> Option<Languages> {
     use windows_sys::Win32::Globalization::*;
 
     let mut locale_name: [u16; 85] = [0; 85];

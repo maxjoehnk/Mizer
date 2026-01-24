@@ -297,7 +297,7 @@ impl GroupControlNode {
         profiling::scope!("GroupControlNode::write");
         let source = FixtureValueSource::new(context.path(), &context.path().deref());
         let fade_timings = FadeTimings {
-            fade_out: if self.fade_out_seconds == 0. {
+            fade_out: if self.fade_out_seconds <= 0. {
                 None
             } else {
                 Some(Duration::from_secs_f64(self.fade_out_seconds))

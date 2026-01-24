@@ -1,5 +1,5 @@
 use futures::stream::{self, BoxStream, StreamExt};
-
+use mizer_module::Connections;
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser, Laser, LaserFrame};
 
 use crate::{Device, DeviceDiscovery, DeviceStatus};
@@ -63,10 +63,14 @@ impl Device for LaserDevice {
 impl DeviceDiscovery for LaserDevice {
     type Device = LaserDevice;
 
-    fn discover() -> BoxStream<'static, Self::Device> {
-        let helios = LaserDevice::discover_helios();
-        let ether_dream = LaserDevice::discover_ether_dream();
+    fn discover(settings: &Connections) -> BoxStream<'static, Self::Device> {
+        let mut lasers = vec![
+            LaserDevice::discover_helios()
+        ];
+        if settings.ether_dream.enabled {
+            lasers.push(LaserDevice::discover_ether_dream());
+        }
 
-        stream::select_all(vec![helios, ether_dream]).boxed()
+        stream::select_all(lasers).boxed()
     }
 }

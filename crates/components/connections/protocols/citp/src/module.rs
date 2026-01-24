@@ -30,6 +30,10 @@ impl Module for CitpModule {
                 tracing::error!("Error running connection manager: {:?}", err);
             }
         });
+        if !context.settings().connections.citp.enabled {
+            return Ok(());
+        }
+
         let discovery = context.block_on(CitpDiscovery::new(connection_sender))?;
         context.block_in_thread(|| async move {
             if let Err(err) = discovery.discover().await {

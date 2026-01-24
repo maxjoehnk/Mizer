@@ -30,6 +30,11 @@ pub fn get_default_settings() -> Settings {
             },
         },
         hotkeys: hotkeys::get_hotkeys(),
+        connections: Connections {
+            ether_dream: EtherDreamConnectionSettings { enabled: false },
+            citp: CitpConnectionSettings { enabled: false },
+            pro_dj_link: ProDjLinkConnectionSettings { enabled: false },
+        },
     }
 }
 

@@ -1,6 +1,6 @@
 use futures::stream::BoxStream;
 use futures::StreamExt;
-
+use mizer_module::Connections;
 use mizer_ndi::{NdiSourceDiscovery, NdiSourceRef};
 
 use crate::{Device, DeviceDiscovery, DeviceStatus};
@@ -8,7 +8,7 @@ use crate::{Device, DeviceDiscovery, DeviceStatus};
 impl DeviceDiscovery for NdiSourceDiscovery {
     type Device = NdiSourceRef;
 
-    fn discover() -> BoxStream<'static, Self::Device> {
+    fn discover(settings: &Connections) -> BoxStream<'static, Self::Device> {
         match NdiSourceDiscovery::new() {
             Ok(discovery) => discovery
                 .into_stream()

@@ -8,6 +8,7 @@ use crate::hotkeys::Hotkeys;
 #[derive(Debug, Clone, Deserialize, Serialize, Facet)]
 pub struct Settings {
     pub general: General,
+    pub connections: Connections,
     pub paths: FilePaths,
     pub hotkeys: Hotkeys,
 }
@@ -69,4 +70,30 @@ pub struct FixtureLibraryPaths {
     pub qlcplus: Vec<PathBuf>,
     pub gdtf: Vec<PathBuf>,
     pub mizer: Vec<PathBuf>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Facet)]
+#[facet(pod)]
+pub struct Connections {
+    pub citp: CitpConnectionSettings,
+    pub pro_dj_link: ProDjLinkConnectionSettings,
+    pub ether_dream: EtherDreamConnectionSettings,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Facet)]
+#[facet(pod)]
+pub struct CitpConnectionSettings {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Facet)]
+#[facet(pod)]
+pub struct ProDjLinkConnectionSettings {
+    pub enabled: bool,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Facet)]
+#[facet(pod)]
+pub struct EtherDreamConnectionSettings {
+    pub enabled: bool,
 }

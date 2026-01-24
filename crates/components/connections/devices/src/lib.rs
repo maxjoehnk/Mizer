@@ -10,6 +10,7 @@ use futures::StreamExt;
 
 use mizer_g13::{G13Discovery, G13Ref};
 use mizer_gamepads::{GamepadDiscovery, GamepadRef, GamepadState};
+use mizer_module::Connections;
 use mizer_ndi::{NdiSourceDiscovery, NdiSourceRef};
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser};
 use mizer_protocol_pro_dj_link::{CDJView, DJMView, ProDJLinkDevice, ProDJLinkDiscovery};
@@ -41,7 +42,7 @@ pub enum DeviceStatus {
 pub trait DeviceDiscovery {
     type Device: Device;
 
-    fn discover() -> BoxStream<'static, Self::Device>;
+    fn discover(settings: &Connections) -> BoxStream<'static, Self::Device>;
 }
 
 #[derive(From)]
@@ -85,27 +86,27 @@ impl DeviceManager {
         Default::default()
     }
 
-    pub async fn start_discovery(self) {
+    pub async fn start_discovery(self, settings: Connections) {
         tracing::debug!("Starting device discovery...");
-        let lasers = LaserDevice::discover()
+        let lasers = LaserDevice::discover(&settings)
             .map(DiscoveredDevice::from)
             .boxed_local();
-        let gamepads = GamepadDiscovery::discover()
+        let gamepads = GamepadDiscovery::discover(&settings)
             .map(DiscoveredDevice::from)
             .boxed_local();
-        let g13s = G13Discovery::discover()
+        let g13s = G13Discovery::discover(&settings)
             .map(DiscoveredDevice::from)
             .boxed_local();
-        let webcams = WebcamDiscovery::discover()
+        let webcams = WebcamDiscovery::discover(&settings)
             .map(DiscoveredDevice::from)
             .boxed_local();
-        let ndi_sources = NdiSourceDiscovery::discover()
+        let ndi_sources = NdiSourceDiscovery::discover(&settings)
             .map(DiscoveredDevice::from)
             .boxed_local();
-        let pro_dj_link_devices = ProDJLinkDiscovery::discover()
+        let pro_dj_link_devices = ProDJLinkDiscovery::discover(&settings)
             .map(DiscoveredDevice::from)
             .boxed_local();
-        let traktor_x1s = TraktorX1Discovery::discover()
+        let traktor_x1s = TraktorX1Discovery::discover(&settings)
             .map(DiscoveredDevice::from)
             .boxed_local();
 

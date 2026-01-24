@@ -90,7 +90,7 @@ class NavigationBarItem extends StatelessWidget {
 class Route {
   final WidgetFunction view;
   final IconData icon;
-  final String label;
+  final String Function() label;
   final View viewKey;
   final bool show;
 
@@ -112,7 +112,7 @@ class NavigationRouteItem extends StatelessWidget {
     return NavigationBarItem(
         onSelect: onSelect,
         icon: route.icon,
-        label: route.label,
+        label: route.label(),
         selected: selected,
         hotkeyLabel: hotkeyLabel);
   }

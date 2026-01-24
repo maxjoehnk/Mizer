@@ -33,14 +33,14 @@ class _EditSequencerControlBehaviorDialogState extends State<EditSequencerContro
           children: [
             Row(
               children: [
-                Flexible(flex: 1, child: Text("Click")),
+                Flexible(flex: 1, child: Text("Click".i18n)),
                 Flexible(
                   flex: 2,
                   child: MizerSelect<SequencerControlBehavior_ClickBehavior>(
                       value: behavior.clickBehavior,
                       options: [
-                        SelectOption(value: SequencerControlBehavior_ClickBehavior.GO_FORWARD, label: "Go+"),
-                        SelectOption(value: SequencerControlBehavior_ClickBehavior.TOGGLE, label: "Toggle Playback"),
+                        SelectOption(value: SequencerControlBehavior_ClickBehavior.GO_FORWARD, label: "Go+".i18n),
+                        SelectOption(value: SequencerControlBehavior_ClickBehavior.TOGGLE, label: "Toggle Playback".i18n),
                       ],
                       onChanged: (clickBehavior) =>
                           setState(() => behavior.clickBehavior = clickBehavior)),

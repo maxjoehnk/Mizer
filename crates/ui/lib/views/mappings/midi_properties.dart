@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/extensions/string_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/widgets/properties/groups/property_group.dart';
@@ -40,20 +41,20 @@ class _MidiPropertiesState extends State<MidiProperties> {
 
   @override
   Widget build(BuildContext context) {
-    return PropertyGroup(title: "MIDI", children: [
+    return PropertyGroup(title: "MIDI".i18n, children: [
       EnumField(
-        label: "Device",
+        label: "Device".i18n,
         initialValue: widget.config.device,
         items: midiDevices.map((e) => SelectOption(value: e.name, label: e.name)).toList(),
         onUpdate: _updateDevice,
       ),
       EnumField(
-        label: "Binding",
+        label: "Binding".i18n,
         initialValue: this.widget.config.whichBinding(),
         items: [
-          SelectOption(value: MidiNodeConfig_Binding.noteBinding, label: "Note"),
+          SelectOption(value: MidiNodeConfig_Binding.noteBinding, label: "Note".i18n),
           if (deviceProfile != null)
-            SelectOption(value: MidiNodeConfig_Binding.controlBinding, label: "Control"),
+            SelectOption(value: MidiNodeConfig_Binding.controlBinding, label: "Control".i18n),
         ],
         onUpdate: _updateBinding,
       ),
@@ -65,7 +66,7 @@ class _MidiPropertiesState extends State<MidiProperties> {
   List<Widget> _noteBinding() {
     return [
       NumberField(
-        label: "Channel",
+        label: "Channel".i18n,
         value: this.widget.config.noteBinding.channel,
         onUpdate: _updateChannel,
         min: 1,
@@ -73,7 +74,7 @@ class _MidiPropertiesState extends State<MidiProperties> {
         fractions: false,
       ),
       EnumField(
-        label: "Mode",
+        label: "Mode".i18n,
         initialValue: this.widget.config.noteBinding.type.value,
         items: MidiNodeConfig_NoteBinding_MidiType.values
             .map((v) => SelectOption(value: v.value, label: v.name.toCapitalCase()))
@@ -81,14 +82,14 @@ class _MidiPropertiesState extends State<MidiProperties> {
         onUpdate: _updateMode,
       ),
       NumberField(
-        label: "Port",
+        label: "Port".i18n,
         value: this.widget.config.noteBinding.port,
         onUpdate: _updatePort,
         min: 1,
         fractions: false,
       ),
       NumberField(
-        label: "Range From",
+        label: "Range From".i18n,
         value: this.widget.config.noteBinding.rangeFrom,
         onUpdate: _updateRangeFrom,
         min: 1,
@@ -96,7 +97,7 @@ class _MidiPropertiesState extends State<MidiProperties> {
         fractions: false,
       ),
       NumberField(
-        label: "Range To",
+        label: "Range To".i18n,
         value: this.widget.config.noteBinding.rangeTo,
         onUpdate: _updateRangeTo,
         min: 1,
@@ -129,7 +130,7 @@ class _MidiPropertiesState extends State<MidiProperties> {
   List<Widget> _controlBinding() {
     return [
       EnumField<String>(
-          label: "Page",
+          label: "Page".i18n,
           initialValue: state.controlBinding.page,
           items: deviceProfile?.pages
                   .map((page) => SelectOption(value: page.name, label: page.name))
@@ -137,7 +138,7 @@ class _MidiPropertiesState extends State<MidiProperties> {
               [],
           onUpdate: _updatePage),
       EnumField<String>(
-          label: "Control",
+          label: "Control".i18n,
           initialValue: state.controlBinding.control,
           items: [
             ..._groups,

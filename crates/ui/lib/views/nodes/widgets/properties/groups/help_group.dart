@@ -2,6 +2,7 @@ import 'package:change_case/change_case.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/widgets/properties/groups/property_group.dart';
 
@@ -14,7 +15,7 @@ class HelpGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    return PropertyGroup(title: "Help", children: [
+    return PropertyGroup(title: "Help".i18n, children: [
       Padding(
         padding: const EdgeInsets.all(2.0),
         child: BlocBuilder<NodesBloc, PipelineState>(

@@ -13,6 +13,7 @@ import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/views/sequencer/sequencer_settings.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
+import 'package:mizer/i18n.dart';
 
 import 'package:mizer/views/sequencer/cue_list.dart';
 import 'package:mizer/views/sequencer/sequence_list.dart';
@@ -99,7 +100,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
           children: [
             Expanded(
               child: Panel(
-                label: "Sequences",
+                label: "Sequences".i18n,
                 child: SequenceList(
                     selectSequence: _selectSequence,
                     selectedSequence: state.selectedSequence,
@@ -108,37 +109,37 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                 actions: [
                   PanelActionModel(
                       hotkeyId: "go_forward",
-                      label: "Go+",
+                      label: "Go+".i18n,
                       onClick: () => _sequenceGoForward(state.selectedSequenceId!),
                       disabled: state.selectedSequenceId == null,
                       menu: Menu(items: [
                         MenuItem(
-                            label: "Add Midi Mapping",
+                            label: "Add Midi Mapping".i18n,
                             action: () => _addMidiMappingForGo(context, state))
                       ])),
                   PanelActionModel(
                       hotkeyId: "go_backward",
-                      label: "Go-",
+                      label: "Go-".i18n,
                       onClick: () => _sequenceGoBackward(state.selectedSequenceId!),
                       disabled: state.selectedSequenceId == null),
                   PanelActionModel(
                       hotkeyId: "stop",
-                      label: "Stop",
+                      label: "Stop".i18n,
                       onClick: () => _sequenceStop(state.selectedSequenceId!),
                       disabled: state.selectedSequenceId == null,
                       menu: Menu(items: [
                         MenuItem(
-                            label: "Add Midi Mapping",
+                            label: "Add Midi Mapping".i18n,
                             action: () => _addMidiMappingForStop(context, state))
                       ])),
                   PanelActionModel(
                       hotkeyId: "delete",
-                      label: "Delete",
+                      label: "Delete".i18n,
                       onClick: () => _deleteSequence(state.selectedSequenceId!),
                       disabled: state.selectedSequenceId == null),
                   PanelActionModel(
                       hotkeyId: "duplicate",
-                      label: "Duplicate",
+                      label: "Duplicate".i18n,
                       onClick: () => _duplicateSequence(state.selectedSequenceId!),
                       disabled: state.selectedSequenceId == null),
                 ],
@@ -148,20 +149,20 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
             if (state.selectedSequence != null)
               Expanded(
                 child: Panel.tabs(
-                  label: "${state.selectedSequence!.name}",
+                  label: state.selectedSequence!.name,
                   tabs: [
                     tabs.Tab(
-                        label: "Cue List",
+                        label: "Cue List".i18n,
                         child: CueList(
                             sequence: state.selectedSequence!,
                             activeCue: sequenceStates[state.selectedSequenceId]?.cueId)),
                     tabs.Tab(
-                        label: "Track Sheet",
+                        label: "Track Sheet".i18n,
                         child: TrackSheet(
                             sequence: state.selectedSequence!,
                             activeCue: sequenceStates[state.selectedSequenceId]?.cueId)),
                     tabs.Tab(
-                        label: "Sequence Settings",
+                        label: "Sequence Settings".i18n,
                         child: SequencerSettings(sequence: state.selectedSequence!)),
                   ],
                 ),

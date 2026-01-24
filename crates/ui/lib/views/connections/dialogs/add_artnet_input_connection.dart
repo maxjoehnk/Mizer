@@ -45,7 +45,7 @@ class _ConfigureArtnetInputConnectionDialogState
           : "Add Artnet Input Connection".i18n,
       content: Column(spacing: FORM_GAP_SIZE, mainAxisSize: MainAxisSize.min, children: [
         Field(
-          label: "Name",
+          label: "Name".i18n,
           big: true,
           child: TextInput(
             autofocus: true,
@@ -53,14 +53,14 @@ class _ConfigureArtnetInputConnectionDialogState
           )
         ),
         Field(
-            label: "Host",
+            label: "Host".i18n,
             big: true,
             child: TextInput(
               controller: _hostController,
             )
         ),
         Field(
-            label: "Port",
+            label: "Port".i18n,
             big: true,
             child: TextInput(
               controller: _portController,
@@ -69,8 +69,8 @@ class _ConfigureArtnetInputConnectionDialogState
         ),
       ]),
       actions: [
-        PopupAction("Cancel", () => Navigator.of(context).pop()),
-        PopupAction("Create", _onCreate)
+        PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+        PopupAction("Create".i18n, _onCreate)
       ],
     );
   }

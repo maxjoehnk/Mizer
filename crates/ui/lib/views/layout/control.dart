@@ -92,7 +92,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         if (supportsMappings) MenuDivider(),
         if (supportsMappings)
           SubMenu(title: "Mappings".i18n, children: [
-            MenuItem(label: "Add MIDI Mapping", action: () => _addMappingForControl(context))
+            MenuItem(label: "Add MIDI Mapping".i18n, action: () => _addMappingForControl(context))
           ]),
       ]),
       child: RepaintBoundary(child: _getControl(node, nodesApi)),

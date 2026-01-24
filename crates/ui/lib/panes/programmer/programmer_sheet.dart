@@ -27,6 +27,7 @@ import 'package:mizer/panes/programmer/sheets/dimmer_sheet.dart';
 import 'package:mizer/panes/programmer/sheets/effects_sheet.dart';
 import 'package:mizer/panes/programmer/sheets/gobo_sheet.dart';
 import 'package:mizer/panes/programmer/sheets/position_sheet.dart';
+import 'package:mizer/i18n.dart';
 
 class ProgrammerSheet extends StatefulWidget {
   final List<FixtureInstance> fixtures;
@@ -63,50 +64,50 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
         "clear": () => _clear(),
       },
       child: Panel.tabs(
-        label: "Programmer",
+        label: "Programmer".i18n,
         tabs: [
           Tab(
-              label: "Dimmer",
+              label: "Dimmer".i18n,
               child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
           Tab(
-              label: "Position",
+              label: "Position".i18n,
               child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
           Tab(
-              label: "Gobo",
+              label: "Gobo".i18n,
               child: GoboSheet(fixtures: widget.fixtures, channels: widget.channels)),
           Tab(
-              label: "Color",
+              label: "Color".i18n,
               child: ColorSheet(fixtures: widget.fixtures, channels: widget.channels)),
           Tab(
-              label: "Beam",
+              label: "Beam".i18n,
               child: BeamSheet(fixtures: widget.fixtures, channels: widget.channels)),
           Tab(
-              label: "Channels",
+              label: "Channels".i18n,
               child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),
           Tab(
-            label: "Effects",
+            label: "Effects".i18n,
             child: EffectsSheet(effects: widget.effects),
           )
         ],
         actions: [
           PanelActionModel(
               hotkeyId: "highlight",
-              label: "Highlight",
+              label: "Highlight".i18n,
               activated: widget.highlight,
               command: "highlight",
               menu: Menu(items: [
                 MenuItem(
-                    label: "Add Midi Mapping", action: () => _addMidiMappingForHighlight(context))
+                    label: "Add Midi Mapping".i18n, action: () => _addMidiMappingForHighlight(context))
               ])),
           PanelActionModel(
-              hotkeyId: "store", label: "Store", onClick: () => _store(), disabled: widget.isEmpty),
+              hotkeyId: "store", label: "Store".i18n, onClick: () => _store(), disabled: widget.isEmpty),
           PanelActionModel(
               hotkeyId: "clear",
-              label: "Clear",
+              label: "Clear".i18n,
               command: "clear",
               disabled: widget.isEmpty,
               menu: Menu(items: [
-                MenuItem(label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
+                MenuItem(label: "Add Midi Mapping".i18n, action: () => _addMidiMappingForClear(context))
               ])),
         ],
         padding: false,
@@ -114,8 +115,8 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0),
             child: MizerSwitch(
-                onText: "Live",
-                offText: "Offline",
+                onText: "Live".i18n,
+                offText: "Offline".i18n,
                 value: !widget.offline,
                 onChanged: (bool value) => context.read<ProgrammerApi>().setOffline(!value)),
           ),
@@ -221,13 +222,13 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
     var request = MappingRequest(
       programmerHighlight: ProgrammerHighlightAction(),
     );
-    addMidiMapping(context, "Add MIDI Mapping for Programmer Highlight", request);
+    addMidiMapping(context, "Add MIDI Mapping for Programmer Highlight".i18n, request);
   }
 
   Future<void> _addMidiMappingForClear(BuildContext context) async {
     var request = MappingRequest(
       programmerClear: ProgrammerClearAction(),
     );
-    addMidiMapping(context, "Add MIDI Mapping for Programmer Clear", request);
+    addMidiMapping(context, "Add MIDI Mapping for Programmer Clear".i18n, request);
   }
 }

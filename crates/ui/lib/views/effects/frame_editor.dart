@@ -80,7 +80,7 @@ class FrameEditor extends StatelessWidget {
   Widget build(BuildContext context) {
     return Panel(
         label: "Frames".i18n,
-        actions: [PanelActionModel(label: "Add Channel", onClick: () => _addChannel(context))],
+        actions: [PanelActionModel(label: "Add Channel".i18n, onClick: () => _addChannel(context))],
         child: ListView(
           children: effect.channels.mapIndexed((channelIndex, channel) {
             return Padding(
@@ -89,7 +89,7 @@ class FrameEditor extends StatelessWidget {
                 SizedBox(child: Text(channel.control.toDisplay()), width: 128),
                 MizerIconButton(
                     icon: Icons.close,
-                    label: "Remove Channel",
+                    label: "Remove Channel".i18n,
                     onClick: () => onRemoveChannel(channelIndex)),
                 Padding(padding: const EdgeInsets.all(8)),
                 Expanded(
@@ -112,7 +112,7 @@ class FrameEditor extends StatelessWidget {
     EffectControl? control = await showDialog(
         context: context,
         builder: (context) => PopupSelect(
-            title: "Add Channel",
+            title: "Add Channel".i18n,
             closeButton: true,
             items: effectControls
                 .whereNot((faderControl) =>

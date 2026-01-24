@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/popup/popup_dmx_address_input.dart';
 import 'package:mizer/widgets/popup/popup_input.dart';
@@ -27,16 +28,16 @@ class FixtureTable extends StatelessWidget {
 
     return MizerTable(columnWidths: {
       0: FixedColumnWidth(64),
-    }, columns: const [
-      Text("Id"),
-      Text("Name"),
-      Text("Address"),
-      Text("Manufacturer"),
-      Text("Model"),
-      Text("Mode"),
-      Text("Invert Pan"),
-      Text("Invert Tilt"),
-      Text("Reverse Pixel Order"),
+    }, columns: [
+      Text("Id".i18n),
+      Text("Name".i18n),
+      Text("Address".i18n),
+      Text("Manufacturer".i18n),
+      Text("Model".i18n),
+      Text("Mode".i18n),
+      Text("Invert Pan".i18n),
+      Text("Invert Tilt".i18n),
+      Text("Reverse Pixel Order".i18n),
     ], rows: rows);
   }
 
@@ -60,17 +61,17 @@ class FixtureTable extends StatelessWidget {
         Text(fixture.manufacturer),
         Text(fixture.model),
         Text(fixture.mode),
-        invertedAxisField(context, "Invert Pan", fixture.config.invertPan,
+        invertedAxisField(context, "Invert Pan".i18n, fixture.config.invertPan,
             (invertPan) => onUpdateFixture(fixture.id, UpdateFixtureRequest(invertPan: invertPan))),
         invertedAxisField(
             context,
-            "Invert Tilt",
+            "Invert Tilt".i18n,
             fixture.config.invertTilt,
             (invertTilt) =>
                 onUpdateFixture(fixture.id, UpdateFixtureRequest(invertTilt: invertTilt))),
         reversePixelField(
             context,
-            "Reverse Pixel Order",
+            "Reverse Pixel Order".i18n,
             fixture.config.reversePixelOrder,
             (reversePixelOrder) => onUpdateFixture(
                 fixture.id, UpdateFixtureRequest(reversePixelOrder: reversePixelOrder))),
@@ -87,7 +88,7 @@ Widget nameField(BuildContext context, Fixture fixture, Function(String) onUpdat
   return PopupTableCell(
       child: Text(fixture.name),
       popup: PopupInput(
-        title: "Name",
+        title: "Name".i18n,
         value: fixture.name,
         onChange: onUpdate,
       ));
@@ -97,7 +98,7 @@ Widget addressField(BuildContext context, Fixture fixture, Function(FixtureAddre
   return PopupTableCell(
       child: Text("${fixture.universe}.${fixture.channel.toString().padLeft(3, "0")}"),
       popup: PopupDmxAddressInput(
-        title: "Address",
+        title: "Address".i18n,
         value: FixtureAddress(universe: fixture.universe, channel: fixture.channel),
         onChange: onUpdate,
       ));
@@ -106,14 +107,14 @@ Widget addressField(BuildContext context, Fixture fixture, Function(FixtureAddre
 Widget invertedAxisField(
     BuildContext context, String title, bool inverted, Function(bool) onUpdate) {
   return PopupTableCell(
-      child: Text(inverted ? "Inverted" : "Normal",
+      child: Text(inverted ? "Inverted".i18n : "Normal".i18n,
           style: inverted ? null : TextStyle(color: Colors.white54)),
       popup: PopupSelect(title: title, items: [
         SelectItem(
-            title: "Normal",
+            title: "Normal".i18n,
             onTap: () => onUpdate(false)),
         SelectItem(
-            title: "Inverted",
+            title: "Inverted".i18n,
             onTap: () => onUpdate(true))
       ]));
 }
@@ -121,14 +122,14 @@ Widget invertedAxisField(
 Widget reversePixelField(
     BuildContext context, String title, bool reversed, Function(bool) onUpdate) {
   return PopupTableCell(
-      child: Text(reversed ? "Reversed" : "Normal",
+      child: Text(reversed ? "Reversed".i18n : "Normal".i18n,
           style: reversed ? null : TextStyle(color: Colors.white54)),
       popup: PopupSelect(title: title, items: [
         SelectItem(
-            title: "Normal",
+            title: "Normal".i18n,
             onTap: () => onUpdate(false)),
         SelectItem(
-            title: "Reversed",
+            title: "Reversed".i18n,
             onTap: () => onUpdate(true))
       ]));
 }

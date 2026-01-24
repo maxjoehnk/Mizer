@@ -27,7 +27,7 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
         Expanded(
           flex: 1,
           child: Panel(
-            label: "Fixture Definitions",
+            label: "Fixture Definitions".i18n,
             actions: [
               PanelActionModel(
                 label: "Reload".i18n,
@@ -36,7 +36,7 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
             ],
             tabs: [
               Tab(
-                label: "Open Fixture Library",
+                label: "Open Fixture Library".i18n,
                 child: MizerDataTable(
                     tableId: "fixtures/definitions/list/ofl",
                     onTap: (id) => setState(() {
@@ -47,7 +47,7 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
                     selectedId: selectedDefinitionId)
               ),
               Tab(
-                  label: "GDTF",
+                  label: "GDTF".i18n,
                   child: MizerDataTable(
                       tableId: "fixtures/definitions/list/gdtf",
                       onTap: (id) => setState(() {
@@ -58,7 +58,7 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
                       selectedId: selectedDefinitionId)
               ),
               Tab(
-                  label: "QLC+",
+                  label: "QLC+".i18n,
                   child: MizerDataTable(
                       tableId: "fixtures/definitions/list/qlc",
                       onTap: (id) => setState(() {
@@ -69,7 +69,7 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
                       selectedId: selectedDefinitionId)
               ),
               Tab(
-                  label: "Mizer",
+                  label: "Mizer".i18n,
                   child: MizerDataTable(
                       tableId: "fixtures/definitions/list/mizer",
                       onTap: (id) => setState(() {
@@ -89,7 +89,7 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
           Expanded(
             flex: 2,
             child: Panel(
-              label: "Fixture Modes",
+              label: "Fixture Modes".i18n,
               child: MizerDataTable(
                   tableId: "fixtures/definitions/modes",
                   arguments: [selectedDefinitionId!],
@@ -103,16 +103,16 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
           Expanded(
               flex: 2,
               child: Panel(
-            label: "Fixture Mode",
+            label: "Fixture Mode".i18n,
             padding: false,
             tabs: [
               Tab(
-                  label: "Controls",
+                  label: "Controls".i18n,
                   child: MizerDataTable(
                       tableId: "fixtures/definitions/tree",
                       arguments: [selectedDefinitionId!, selectedMode!])),
               Tab(
-                  label: "DMX Channels",
+                  label: "DMX Channels".i18n,
                   child: MizerDataTable(
                       tableId: "fixtures/definitions/channels",
                       arguments: [selectedDefinitionId!, selectedMode!]))

@@ -16,7 +16,7 @@ class SectionSettings extends StatelessWidget {
     return BlocBuilder<SurfacesCubit, SurfacesState>(
       builder: (context, state) {
         return Panel(
-          label: 'Settings (${state.selectedSection?.name ?? ""})'.i18n,
+          label: 'Settings ({name})'.i18n.args({ "name": state.selectedSection?.name ?? "" }),
           child: Padding(
             padding: const EdgeInsets.all(PANEL_GAP_SIZE),
             child: Column(
@@ -24,13 +24,13 @@ class SectionSettings extends StatelessWidget {
                   ? []
                   : [
                       MappingSettings(
-                          title: "Input",
+                          title: "Input".i18n,
                           transform: state.selectedSection!.input,
                           onChange: (transform) {
                             context.read<SurfacesCubit>().changeInputTransform(transform);
                           }),
                       MappingSettings(
-                          title: "Output",
+                          title: "Output".i18n,
                           transform: state.selectedSection!.output,
                           onChange: (transform) {
                             context.read<SurfacesCubit>().changeOutputTransform(transform);

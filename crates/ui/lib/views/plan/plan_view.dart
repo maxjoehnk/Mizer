@@ -7,6 +7,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/dialogs/name_dialog.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/mappings.pb.dart';
@@ -47,7 +48,7 @@ class _PlanViewState extends State<PlanView>
           "clear": _clear,
         },
         child: Panel.tabs(
-          label: "2D Plan",
+          label: "2D Plan".i18n,
           tabIndex: state.tabIndex,
           onSelectTab: (index) => plansBloc.add(SelectPlanTab(index)),
           padding: false,
@@ -56,9 +57,9 @@ class _PlanViewState extends State<PlanView>
                   header: (active, setActive) => ContextMenu(
                       menu: Menu(items: [
                         MenuItem(
-                            label: "Rename", action: () => _onRename(context, plan, plansBloc)),
+                            label: "Rename".i18n, action: () => _onRename(context, plan, plansBloc)),
                         MenuItem(
-                            label: "Delete", action: () => _onDelete(context, plan, plansBloc)),
+                            label: "Delete".i18n, action: () => _onDelete(context, plan, plansBloc)),
                       ]),
                       child: tabs.TabHeader(plan.name, selected: active, onSelect: setActive)),
                   child: Column(children: [
@@ -87,30 +88,30 @@ class _PlanViewState extends State<PlanView>
           actions: [
             PanelActionModel(
                 hotkeyId: "highlight",
-                label: "Highlight",
+                label: "Highlight".i18n,
                 onClick: _highlight,
                 activated: programmerState.highlight,
                 menu: Menu(items: [
                   MenuItem(
-                      label: "Add Midi Mapping", action: () => _addMidiMappingForHighlight(context))
+                      label: "Add Midi Mapping".i18n, action: () => _addMidiMappingForHighlight(context))
                 ])),
             PanelActionModel(
                 hotkeyId: "clear",
-                label: "Clear",
+                label: "Clear".i18n,
                 onClick: _clear,
                 menu: Menu(items: [
                   MenuItem(
-                      label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
+                      label: "Add Midi Mapping".i18n, action: () => _addMidiMappingForClear(context))
                 ])),
-            PanelActionModel(label: "Setup", activated: _setupMode, onClick: _setup),
+            PanelActionModel(label: "Setup".i18n, activated: _setupMode, onClick: _setup),
             if (_setupMode)
               PanelActionModel(
-                  label: "Place Fixture Selection",
+                  label: "Place Fixture Selection".i18n,
                   onClick: () => _placeFixtureSelection(plansBloc)),
             if (_setupMode)
-              PanelActionModel(label: "Add Image", onClick: () => _addImage(plansBloc)),
+              PanelActionModel(label: "Add Image".i18n, onClick: () => _addImage(plansBloc)),
             if (_setupMode)
-              PanelActionModel(label: "Add Screen", onClick: () => setState(() => _creatingScreen = true)),
+              PanelActionModel(label: "Add Screen".i18n, onClick: () => setState(() => _creatingScreen = true)),
           ],
         ),
       );
@@ -155,7 +156,7 @@ class _PlanViewState extends State<PlanView>
   }
 
   _addImage(PlansBloc bloc) async {
-    const imageGroup = XTypeGroup(label: 'Images', extensions: ['jpg', 'jpeg', 'png']);
+    final imageGroup = XTypeGroup(label: "Images".i18n, extensions: ['jpg', 'jpeg', 'png']);
     XFile? image = await openFile(acceptedTypeGroups: [imageGroup]);
     if (image == null) {
       return;
@@ -234,7 +235,7 @@ class _AlignToolbarState extends State<AlignToolbar> {
           width: 200,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
-            child: NumberField(label: "Groups", bar: false, value: groups, onUpdate: (v) => groups = v.toInt()),
+            child: NumberField(label: "Groups".i18n, bar: false, value: groups, onUpdate: (v) => groups = v.toInt()),
           ),
         ),
         PanelHeaderDivider(),
@@ -242,7 +243,7 @@ class _AlignToolbarState extends State<AlignToolbar> {
           width: 200,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
-            child: NumberField(label: "Row Gap", bar: false, value: rowGap, onUpdate: (v) => rowGap = v.toInt()),
+            child: NumberField(label: "Row Gap".i18n, bar: false, value: rowGap, onUpdate: (v) => rowGap = v.toInt()),
           ),
         ),
         PanelHeaderDivider(),
@@ -250,21 +251,21 @@ class _AlignToolbarState extends State<AlignToolbar> {
           width: 200,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
-            child: NumberField(label: "Column Gap", bar: false, value: columnGap, onUpdate: (v) => columnGap = v.toInt()),
+            child: NumberField(label: "Column Gap".i18n, bar: false, value: columnGap, onUpdate: (v) => columnGap = v.toInt()),
           ),
         ),
         PanelHeaderDivider(),
-        PanelToolbarButton(child: Text("Apply"), onTap: () => _align()),
+        PanelToolbarButton(child: Text("Apply".i18n), onTap: () => _align()),
         PanelToolbarSectionDivider(),
         SizedBox(
           width: 200,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
-            child: NumberField(label: "Rotation", bar: false, value: rotation, onUpdate: (v) => rotation = v.toInt()),
+            child: NumberField(label: "Rotation".i18n, bar: false, value: rotation, onUpdate: (v) => rotation = v.toInt()),
           ),
         ),
         PanelHeaderDivider(),
-        PanelToolbarButton.text("Transform", onTap: () => _transform()),
+        PanelToolbarButton.text("Transform".i18n, onTap: () => _transform()),
         PanelToolbarSectionDivider(),
         PanelToolbarButton.icon(icon: Icons.square_outlined, onTap: () => _spread(SpreadFixturesRequest_SpreadGeometry.SQUARE)),
         PanelHeaderDivider(),

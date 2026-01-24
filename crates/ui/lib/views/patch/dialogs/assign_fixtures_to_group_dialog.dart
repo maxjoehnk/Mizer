@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/dialogs/name_dialog.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/patch/dialogs/group_store_mode_dialog.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
@@ -55,7 +56,7 @@ class _AssignFixturesToGroupDialogState extends State<AssignFixturesToGroupDialo
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-      title: "Select Group",
+      title: "Select Group".i18n,
       onConfirm: _creating ? null : () => _newGroup(context),
       padding: false,
       content: Container(
@@ -72,8 +73,8 @@ class _AssignFixturesToGroupDialogState extends State<AssignFixturesToGroupDialo
                     .toList()),
           )),
       actions: [
-        PopupAction("Cancel", () => Navigator.of(context).pop()),
-        PopupAction("New Group", () => _newGroup(context))
+        PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+        PopupAction("New Group".i18n, () => _newGroup(context))
       ],
     );
   }

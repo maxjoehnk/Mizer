@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 
 class TagNameDialog extends StatefulWidget {
@@ -22,17 +23,17 @@ class _TagNameDialogState extends State<TagNameDialog> {
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-      title: "Enter Tag Name",
+      title: "Enter Tag Name".i18n,
       content: TextField(
         controller: nameController,
         autofocus: true,
-        decoration: InputDecoration(labelText: "Name"),
+        decoration: InputDecoration(labelText: "Name".i18n),
         textInputAction: TextInputAction.done,
         onSubmitted: (value) => _close(context, name: value),
       ),
       actions: [
-        PopupAction("Confirm", () => _close(context, name: nameController.text)),
-        PopupAction("Cancel", () => _close(context)),
+        PopupAction("Confirm".i18n, () => _close(context, name: nameController.text)),
+        PopupAction("Cancel".i18n, () => _close(context)),
       ],
     );
   }

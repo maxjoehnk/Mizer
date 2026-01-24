@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show LogicalKeyboardKey;
+import 'package:mizer/i18n.dart';
 import 'package:mizer/widgets/field/field.dart';
 import 'package:mizer/widgets/field/text_input.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
@@ -39,8 +40,8 @@ class _PopupInputState extends State<PopupInput> {
             ),
           ),
           actions: [
-            PopupAction("Cancel", () => Navigator.of(context).pop()),
-            PopupAction("Save", () => _confirm(context)),
+            PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+            PopupAction("Save".i18n, () => _confirm(context)),
           ]),
     );
   }

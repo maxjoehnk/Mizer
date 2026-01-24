@@ -83,7 +83,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         children: [
           Expanded(
             child: Panel(
-              label: "Nodes",
+              label: "Nodes".i18n,
               child: Stack(
                 children: [
                   GestureDetector(
@@ -213,7 +213,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
             categories: categories.entries
                 .sorted((lhs, rhs) => lhs.key.name.compareTo(rhs.key.name))
                 .map((e) => PopupCategory(
-                    label: CATEGORY_NAMES[e.key]!,
+                    label: CATEGORY_NAMES[e.key]!(),
                     items: e.value
                         .map((n) {
                           if (n.templates.isEmpty) {
@@ -223,7 +223,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                               label: n.name,
                               description: n.description,
                               items: [
-                                PopupItem(CreateNode(n.type), "Default", description: n.description, searchLabel: n.name, sortOrder: SortOrder.First),
+                                PopupItem(CreateNode(n.type), "Default".i18n, description: n.description, searchLabel: n.name, sortOrder: SortOrder.First),
                                 ...n.templates
                                   .map((t) => PopupItem(CreateNode(n.type, template: t.name), t.name, description: t.description))
                                 ]

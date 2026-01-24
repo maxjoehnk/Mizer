@@ -14,7 +14,7 @@ class DeleteControlDialog extends StatelessWidget {
       onConfirm: () => Navigator.of(context).pop(true),
       title: "Delete Control".i18n,
       content: SingleChildScrollView(
-        child: Text("Delete Control ${control.hasLabel() ? control.label : control.node}?".i18n),
+        child: Text("Delete Control {label}?".i18n.args({ "label": control.hasLabel() ? control.label : control.node })),
       ),
       actions: [
         PopupAction("Cancel".i18n, () => Navigator.of(context).pop(false)),

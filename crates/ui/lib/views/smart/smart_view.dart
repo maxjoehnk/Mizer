@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/effects_bloc.dart';
@@ -11,16 +12,16 @@ import 'programmer_control_list.dart';
 import 'programmer_fixture_list.dart';
 
 final NAMES = {
-  FixtureControl.INTENSITY: "Dimmer",
-  FixtureControl.SHUTTER: "Shutter",
-  FixtureControl.COLOR_MIXER: "Color",
-  FixtureControl.COLOR_WHEEL: "Color Wheel",
-  FixtureControl.GOBO: "Gobo",
-  FixtureControl.ZOOM: "Zoom",
-  FixtureControl.FOCUS: "Focus",
-  FixtureControl.PRISM: "Prism",
-  FixtureControl.FROST: "Frost",
-  FixtureControl.IRIS: "Iris",
+  FixtureControl.INTENSITY: () => "Dimmer".i18n,
+  FixtureControl.SHUTTER: () => "Shutter".i18n,
+  FixtureControl.COLOR_MIXER: () => "Color".i18n,
+  FixtureControl.COLOR_WHEEL: () => "Color Wheel".i18n,
+  FixtureControl.GOBO: () => "Gobo".i18n,
+  FixtureControl.ZOOM: () => "Zoom".i18n,
+  FixtureControl.FOCUS: () => "Focus".i18n,
+  FixtureControl.PRISM: () => "Prism".i18n,
+  FixtureControl.FROST: () => "Frost".i18n,
+  FixtureControl.IRIS: () => "Iris".i18n,
 };
 
 class SmartViewWrapper extends StatelessWidget {

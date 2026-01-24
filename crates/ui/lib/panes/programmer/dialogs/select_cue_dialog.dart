@@ -4,6 +4,7 @@ import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
+import 'package:mizer/i18n.dart';
 
 class SelectCueDialog extends StatelessWidget {
   final Sequence sequence;
@@ -13,7 +14,7 @@ class SelectCueDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-      title: "Select Cue",
+      title: "Select Cue".i18n,
       content: Container(
         width: MAX_TILE_DIALOG_WIDTH,
         height: MAX_DIALOG_HEIGHT,
@@ -26,7 +27,7 @@ class SelectCueDialog extends StatelessWidget {
                 .toList()),
       ),
       actions: [
-        PopupAction("Cancel", () => Navigator.of(context).pop()),
+        PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
       ],
     );
   }

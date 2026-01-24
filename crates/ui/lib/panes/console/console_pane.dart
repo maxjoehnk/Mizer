@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:mizer/state/console_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
-
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/console.pb.dart';
 
 final Map<ConsoleLevel, Color> levelColors = {
@@ -27,7 +27,7 @@ class _ConsolePaneState extends State<ConsolePane> {
   @override
   Widget build(BuildContext context) {
     return Panel(
-      label: "Console",
+      label: "Console".i18n,
       child: BlocBuilder<ConsoleCubit, ConsoleState>(
         builder: (context, state) {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

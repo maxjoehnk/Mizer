@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/media.pb.dart';
 import 'package:mizer/state/media_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -26,10 +27,10 @@ class _MediaViewState extends State<MediaView> {
                   selectedFile: selectedFile,
                   onSelectFile: (file) => setState(() => this.selectedFile = file)),
               preview: Panel(
-                  label: "Preview",
+                  label: "Preview".i18n,
                   child: selectedFile == null ? Container() : MediaPreview(file: selectedFile!)),
               metadata: Panel(
-                  label: "Metadata",
+                  label: "Metadata".i18n,
                   child:
                       selectedFile == null ? Container() : MediaMetadataPanel(file: selectedFile!)),
             ));

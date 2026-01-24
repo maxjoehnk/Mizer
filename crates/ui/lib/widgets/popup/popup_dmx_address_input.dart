@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/field/field.dart';
 import 'package:mizer/widgets/field/text_input.dart';
@@ -28,20 +29,20 @@ class _PopupDmxAddressInputState extends State<PopupDmxAddressInput> {
   @override
   Widget build(BuildContext context) {
     return PopupContainer(
-        title: widget.title ?? "Address",
+        title: widget.title ?? "Address".i18n,
         child: Column(
           spacing: FORM_GAP_SIZE,
           mainAxisSize: MainAxisSize.min,
           children: [
             Field(
-              label: "Universe",
+              label: "Universe".i18n,
               big: true,
               child: TextInput(
                   controller: _universeController,
                   autofocus: true),
             ),
             Field(
-              label: "Channel",
+              label: "Channel".i18n,
               big: true,
               child: TextInput(
                   controller: _channelController,
@@ -51,8 +52,8 @@ class _PopupDmxAddressInputState extends State<PopupDmxAddressInput> {
           ],
         ),
         actions: [
-          PopupAction("Cancel", () => Navigator.of(context).pop()),
-          PopupAction("Save", () => _save(context)),
+          PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+          PopupAction("Save".i18n, () => _save(context)),
         ]);
   }
 

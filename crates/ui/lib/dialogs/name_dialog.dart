@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/field/field.dart';
 import 'package:mizer/widgets/field/text_input.dart';
+import 'package:mizer/i18n.dart';
 
 class NameDialog extends StatefulWidget {
   final String? name;
@@ -25,10 +26,10 @@ class _NameDialogState extends State<NameDialog> {
   Widget build(BuildContext context) {
     return ActionDialog(
         width: 500,
-        title: "Enter Name",
+        title: "Enter Name".i18n,
         content: Field(
           big: true,
-          label: "Name",
+          label: "Name".i18n,
           child: TextInput(
             autofocus: true,
             controller: controller,
@@ -36,7 +37,7 @@ class _NameDialogState extends State<NameDialog> {
           ),
         ),
         actions: [
-          PopupAction("Rename", () => Navigator.of(context).pop(controller.text)),
+          PopupAction("Rename".i18n, () => Navigator.of(context).pop(controller.text)),
         ]);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/extensions/number_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/sequencer.dart';
@@ -10,21 +11,21 @@ import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
 
 final LABELS = {
-  CueControl_Type.INTENSITY: 'Dimmer',
-  CueControl_Type.SHUTTER: 'Shutter',
-  CueControl_Type.COLOR_RED: 'Red',
-  CueControl_Type.COLOR_GREEN: 'Green',
-  CueControl_Type.COLOR_BLUE: 'Blue',
-  CueControl_Type.COLOR_WHEEL: 'Color',
-  CueControl_Type.PAN: 'Pan',
-  CueControl_Type.TILT: 'Tilt',
-  CueControl_Type.FOCUS: 'Focus',
-  CueControl_Type.ZOOM: 'Zoom',
-  CueControl_Type.PRISM: 'Prism',
-  CueControl_Type.IRIS: 'Iris',
-  CueControl_Type.FROST: 'Frost',
-  CueControl_Type.GOBO: 'Gobo',
-  CueControl_Type.GENERIC: 'Generic',
+  CueControl_Type.INTENSITY: () => 'Dimmer'.i18n,
+  CueControl_Type.SHUTTER: () => 'Shutter'.i18n,
+  CueControl_Type.COLOR_RED: () => 'Red'.i18n,
+  CueControl_Type.COLOR_GREEN: () => 'Green'.i18n,
+  CueControl_Type.COLOR_BLUE: () => 'Blue'.i18n,
+  CueControl_Type.COLOR_WHEEL: () => 'Color'.i18n,
+  CueControl_Type.PAN: () => 'Pan'.i18n,
+  CueControl_Type.TILT: () => 'Tilt'.i18n,
+  CueControl_Type.FOCUS: () => 'Focus'.i18n,
+  CueControl_Type.ZOOM: () => 'Zoom'.i18n,
+  CueControl_Type.PRISM: () => 'Prism'.i18n,
+  CueControl_Type.IRIS: () => 'Iris'.i18n,
+  CueControl_Type.FROST: () => 'Frost'.i18n,
+  CueControl_Type.GOBO: () => 'Gobo'.i18n,
+  CueControl_Type.GENERIC: () => 'Generic'.i18n,
 };
 
 class TrackSheet extends StatelessWidget {
@@ -47,12 +48,12 @@ class TrackSheet extends StatelessWidget {
     return MizerTable(
         columnWidths: columnWidths,
         columns: [
-          Text("Cue"),
+          Text("Cue".i18n),
           ..._controls.map((c) => Column(
               mainAxisSize: MainAxisSize.min,
-              children: [Text(c.fixtureId.toDisplay()), Text(LABELS[c.control]!)])),
+              children: [Text(c.fixtureId.toDisplay()), Text(LABELS[c.control]!())])),
           ..._effectIds.map((c) => Column(
-              mainAxisSize: MainAxisSize.min, children: [Text(c.toString()), Text("Offsets")])),
+              mainAxisSize: MainAxisSize.min, children: [Text(c.toString()), Text("Offsets".i18n)])),
         ],
         rows: _buildRows(context));
   }
@@ -130,7 +131,7 @@ extension CueTimerDisplayExtensions on CueTimer {
 extension CueTimeDisplayExtensions on CueTime {
   String toDisplay() {
     if (hasBeats()) {
-      return "$beats Beats";
+      return "{beats} Beats".i18n.args({ "beats": beats });
     } else {
       return "${seconds}s";
     }

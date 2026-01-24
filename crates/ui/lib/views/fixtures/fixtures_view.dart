@@ -80,8 +80,8 @@ class _FixturesViewState extends State<FixturesView>
                 hotkeyId: "select_all",
                 label: "Select All".i18n,
                 onClick: () => _selectAll(fixtures.fixtures)),
-            PanelActionModel(label: "Select Even", onClick: () => _selectEven(fixtures.fixtures)),
-            PanelActionModel(label: "Select Odd", onClick: () => _selectOdd(fixtures.fixtures)),
+            PanelActionModel(label: "Select Even".i18n, onClick: () => _selectEven(fixtures.fixtures)),
+            PanelActionModel(label: "Select Odd".i18n, onClick: () => _selectOdd(fixtures.fixtures)),
             PanelActionModel(
                 hotkeyId: "clear",
                 label: "Clear".i18n,
@@ -89,7 +89,7 @@ class _FixturesViewState extends State<FixturesView>
                 disabled: trackedIds.isEmpty && selectedIds.isEmpty,
                 menu: Menu(items: [
                   MenuItem(
-                      label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
+                      label: "Add Midi Mapping".i18n, action: () => _addMidiMappingForClear(context))
                 ])),
           ],
           onSearch: (query) => setState(() => this.searchQuery = query),

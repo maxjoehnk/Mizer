@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/extensions/map_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/list_item.dart';
 
@@ -49,7 +50,7 @@ class _FixtureSelectorState extends State<FixtureSelector> {
           child: TextPropertyField(
             big: true,
             autofocus: true,
-            label: "Search",
+            label: "Search".i18n,
             value: search ?? "",
             onChanged: (value) {
               setState(() {
@@ -67,11 +68,11 @@ class _FixtureSelectorState extends State<FixtureSelector> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _FixtureSelectorColumn(
-                  label: "Manufacturer", children: _manufacturers.map(_manufacturerItem).toList()),
+                  label: "Manufacturer".i18n, children: _manufacturers.map(_manufacturerItem).toList()),
               _FixtureSelectorColumn(
-                  label: "Fixtures", children: _definitions.map(_definitionItem).toList()),
+                  label: "Fixtures".i18n, children: _definitions.map(_definitionItem).toList()),
               _FixtureSelectorColumn(
-                  label: "Modes", children: definition?.modes.map(_modeItem).toList() ?? []),
+                  label: "Modes".i18n, children: definition?.modes.map(_modeItem).toList() ?? []),
               _SelectedFixtureMode(definition, mode)
             ],
           ),
@@ -112,7 +113,7 @@ class _FixtureSelectorState extends State<FixtureSelector> {
     var child = ListItem.twoLines(
       selected: selected,
       title: text,
-      subtitle: "${manufacturer.definitions.length} fixtures",
+      subtitle: "{count} fixtures".i18n.args({ "count": manufacturer.definitions.length }),
       onTap: () => setState(() {
         _setManufacturer(manufacturer.name);
         mode = null;
@@ -218,7 +219,7 @@ class _SelectedFixtureMode extends StatelessWidget {
               style: textTheme.headlineSmall,
             ),
             Row(children: definition!.tags.map((tag) => Chip(label: Text(tag))).toList()),
-            Text("Channels", style: textTheme.titleMedium),
+            Text("Channels".i18n, style: textTheme.titleMedium),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/state/surfaces_bloc.dart';
 import 'package:mizer/widgets/list_item.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -12,7 +13,7 @@ class SectionList extends StatelessWidget {
     return BlocBuilder<SurfacesCubit, SurfacesState>(
       builder: (context, state) {
         return Panel(
-          label: 'Sections',
+          label: 'Sections'.i18n,
           child: ListView(
             children: state.selectedSurface?.sections
                     .map((section) => ListItem(

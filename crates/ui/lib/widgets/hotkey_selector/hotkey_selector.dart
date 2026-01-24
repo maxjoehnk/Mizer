@@ -26,8 +26,8 @@ class _HotkeySelectorDialogState extends State<HotkeySelectorDialog> {
     return ActionDialog(
         title: "Define Keyboard Shortcut".i18n,
         actions: [
-          PopupAction("Cancel", () => Navigator.of(context).pop()),
-          PopupAction("Confirm", () => Navigator.of(context).pop(currentHotkey.toLowerCase())),
+          PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+          PopupAction("Confirm".i18n, () => Navigator.of(context).pop(currentHotkey.toLowerCase())),
         ],
         content: KeyboardListener(
             focusNode: focusNode,

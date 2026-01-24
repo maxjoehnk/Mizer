@@ -69,7 +69,7 @@ class PortField extends StatelessWidget {
       return Field(label: port, child: Container(
           padding: EdgeInsets.only(right: 8),
           alignment: Alignment.centerRight,
-          child: Text("${connections.length} connections".i18n, style: TextStyle(color: Colors.grey.shade300))));
+          child: Text("{connections} connections".i18n.args({ "connections": connections.length }), style: TextStyle(color: Colors.grey.shade300))));
     }
 
     return Field(label: port, child: Container(

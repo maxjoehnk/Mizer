@@ -14,7 +14,7 @@ class DeleteLayoutDialog extends StatelessWidget {
       onConfirm: () => Navigator.of(context).pop(true),
       title: "Delete Layout".i18n,
       content: SingleChildScrollView(
-        child: Text("Delete Layout ${layout.id}?".i18n),
+        child: Text("Delete Layout {id}?".i18n.args({ "id": layout.id })),
       ),
       actions: [
         PopupAction("Cancel".i18n, () => Navigator.of(context).pop(false)),

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/boolean_field.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/enum_field.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
-Map<FixturePriority, String> PriorityLabels = {
-  FixturePriority.PRIORITY_HTP: "HTP",
-  FixturePriority.PRIORITY_LTP_HIGHEST: "Highest",
-  FixturePriority.PRIORITY_LTP_HIGH: "High",
-  FixturePriority.PRIORITY_LTP_NORMAL: "LTP",
-  FixturePriority.PRIORITY_LTP_LOW: "Low",
-  FixturePriority.PRIORITY_LTP_LOWEST: "Lowest",
+Map<FixturePriority, String Function()> PriorityLabels = {
+  FixturePriority.PRIORITY_HTP: () => "HTP".i18n,
+  FixturePriority.PRIORITY_LTP_HIGHEST: () => "Highest".i18n,
+  FixturePriority.PRIORITY_LTP_HIGH: () => "High".i18n,
+  FixturePriority.PRIORITY_LTP_NORMAL: () => "LTP".i18n,
+  FixturePriority.PRIORITY_LTP_LOW: () => "Low".i18n,
+  FixturePriority.PRIORITY_LTP_LOWEST: () => "Lowest".i18n,
 };
 
 class SequencerSettings extends StatelessWidget {
@@ -27,7 +28,7 @@ class SequencerSettings extends StatelessWidget {
       SizedBox(
         width: GRID_8_SIZE,
         child: BooleanField(
-          label: "Wrap Around",
+          label: "Wrap Around".i18n,
           vertical: true,
           value: sequence.wrapAround,
           onUpdate: (wrapAround) => _updateWrapAround(context, wrapAround),
@@ -36,7 +37,7 @@ class SequencerSettings extends StatelessWidget {
       SizedBox(
         width: GRID_8_SIZE,
         child: BooleanField(
-          label: "Stop on Last Cue",
+          label: "Stop on Last Cue".i18n,
           vertical: true,
           value: sequence.stopOnLastCue,
           onUpdate: (stopOnLastCue) => _updateStopOnLastCue(context, stopOnLastCue),
@@ -45,12 +46,12 @@ class SequencerSettings extends StatelessWidget {
       SizedBox(
           width: GRID_8_SIZE,
           child: EnumField<FixturePriority>(
-              label: "Priority",
+              label: "Priority".i18n,
               vertical: true,
               initialValue: sequence.priority,
               items: FixturePriority.values
                   .map((p) => SelectOption(
-                        label: PriorityLabels[p]!,
+                        label: PriorityLabels[p]!(),
                         value: p,
                       ))
                   .toList(),

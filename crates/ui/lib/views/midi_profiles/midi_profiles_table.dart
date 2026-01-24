@@ -16,13 +16,13 @@ class MidiProfilesTable extends StatelessWidget {
     var titleTheme = TextStyle(fontWeight: FontWeight.bold);
 
     return Panel(
-      label: "MIDI Device Profiles",
+      label: "MIDI Device Profiles".i18n,
       child: MizerTable(
         columns: [
-          Text("Manufacturer", style: titleTheme),
-          Text("Name", style: titleTheme),
-          Text("Errors", style: titleTheme),
-          Text("File Path", style: titleTheme),
+          Text("Manufacturer".i18n, style: titleTheme),
+          Text("Name".i18n, style: titleTheme),
+          Text("Errors".i18n, style: titleTheme),
+          Text("File Path".i18n, style: titleTheme),
         ],
         columnWidths: {
           0: FlexColumnWidth(1),

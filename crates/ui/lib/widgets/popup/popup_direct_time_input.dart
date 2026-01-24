@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/widgets/inputs/time_input.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
 
@@ -16,7 +17,7 @@ class PopupDirectTimeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupContainer(
-        title: "Enter Time",
+        title: "Enter Time".i18n,
         width: 286,
         height: 320,
         child: DirectTimeInput(

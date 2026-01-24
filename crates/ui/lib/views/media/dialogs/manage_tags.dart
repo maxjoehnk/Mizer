@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/media.pb.dart';
 import 'package:mizer/state/media_bloc.dart';
 import 'package:mizer/views/media/dialogs/tag_name.dart';
@@ -16,7 +17,7 @@ class ManageTagsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-        title: "Media Tags",
+        title: "Media Tags".i18n,
         content: Container(
           width: MAX_DIALOG_WIDTH,
           height: MAX_DIALOG_HEIGHT,
@@ -40,8 +41,8 @@ class ManageTagsDialog extends StatelessWidget {
           ),
         ),
         actions: [
-          PopupAction("Add Tag", () => _addTag(context)),
-          PopupAction("Close", () => Navigator.of(context).pop()),
+          PopupAction("Add Tag".i18n, () => _addTag(context)),
+          PopupAction("Close".i18n, () => Navigator.of(context).pop()),
         ]);
   }
 

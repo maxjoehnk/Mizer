@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/plugin/ffi/timecode.dart';
 import 'package:mizer/api/plugin/ffi/transport.dart';
 import 'package:mizer/dialogs/name_dialog.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/timecode.pb.dart';
 import 'package:mizer/state/timecode_bloc.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
-import 'package:mizer/widgets/popup/popup_input.dart';
 import 'package:mizer/widgets/transport/time_control.dart';
 import 'package:provider/provider.dart';
 
@@ -29,11 +29,11 @@ class TimecodeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Panel(
-        label: "Timecodes",
+        label: "Timecodes".i18n,
         actions: [
-          PanelActionModel(label: "Add Timecode", onClick: () => _addTimecode(context)),
+          PanelActionModel(label: "Add Timecode".i18n, onClick: () => _addTimecode(context)),
           PanelActionModel(
-              label: "Delete",
+              label: "Delete".i18n,
               disabled: selectedTimecode == null,
               onClick: () => _deleteTimecode(context))
         ],

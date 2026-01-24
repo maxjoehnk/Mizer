@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/extensions/list_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -28,9 +29,9 @@ class _HistoryViewState extends State<HistoryView> {
             int lastItem = state.data?.items.length ?? 0;
 
             return Panel(
-              label: "History",
+              label: "History".i18n,
               child: MizerTable(
-                columns: [Text("Label"), Text("Timestamp")],
+                columns: [Text("Label".i18n), Text("Timestamp".i18n)],
                 rows: (state.data?.items ?? [])
                     .mapEnumerated((item, i) {
                       var inactive = (i + 1) > pointer;
@@ -49,9 +50,9 @@ class _HistoryViewState extends State<HistoryView> {
               ),
               actions: [
                 PanelActionModel(
-                    label: "Undo", hotkeyId: "undo", onClick: _undo, disabled: pointer == 0),
+                    label: "Undo".i18n, hotkeyId: "undo", onClick: _undo, disabled: pointer == 0),
                 PanelActionModel(
-                    label: "Redo", hotkeyId: "redo", onClick: _redo, disabled: pointer >= lastItem),
+                    label: "Redo".i18n, hotkeyId: "redo", onClick: _redo, disabled: pointer >= lastItem),
               ],
             );
           }),

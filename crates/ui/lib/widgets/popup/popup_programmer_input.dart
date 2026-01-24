@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/panes/programmer/sheets/fixture_group_control.dart';
 import 'package:mizer/views/presets/preset_group.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -85,7 +86,7 @@ class _PopupProgrammerInputState extends State<PopupProgrammerInput> {
   @override
   Widget build(BuildContext context) {
     return PopupContainer(
-      title: "Enter Value",
+      title: "Enter Value".i18n,
       height: 320,
       child: Focus(
         autofocus: true,
@@ -117,13 +118,13 @@ class _PopupProgrammerInputState extends State<PopupProgrammerInput> {
                       Pad("7", () => _push(Value(7))),
                       Pad("8", () => _push(Value(8))),
                       Pad("0", () => _push(Value(0))),
-                      if (widget.allowRange) Pad("Thru", () => _push(Thru()), wide: true),
+                      if (widget.allowRange) Pad("Thru".i18n, () => _push(Thru()), wide: true),
                     ]),
                     Row(children: [
                       Pad("4", () => _push(Value(4))),
                       Pad("5", () => _push(Value(5))),
                       Pad("6", () => _push(Value(6))),
-                      Pad("Clear", () => setState(() => _ast.clear()), wide: true),
+                      Pad("Clear".i18n, () => setState(() => _ast.clear()), wide: true),
                     ]),
                     Row(children: [
                       Pad("1", () => _push(Value(1))),
@@ -133,7 +134,7 @@ class _PopupProgrammerInputState extends State<PopupProgrammerInput> {
                     Row(children: [
                       Pad("0", () => _push(Value(0)), wide: true),
                       Pad(".", () => _push(Value.dot())),
-                      Pad("Enter", () => _build(context), wide: true),
+                      Pad("Enter".i18n, () => _build(context), wide: true),
                     ]),
                   ])),
               SizedBox(
@@ -141,7 +142,7 @@ class _PopupProgrammerInputState extends State<PopupProgrammerInput> {
                 child: PopupInputTabs(tabs: [
                   if (!(widget.controlPresets?.isEmpty ?? true))
                     Tab(
-                        label: "Fixture Slots",
+                        label: "Fixture Slots".i18n,
                         child: FixtureControlPresets(widget.controlPresets!, onSelect: (double v) {
                           setState(() {
                             _ast = ValueAst([Value.fromDouble(v * 100)]);
@@ -149,7 +150,7 @@ class _PopupProgrammerInputState extends State<PopupProgrammerInput> {
                           _build(context);
                         })),
                   if (!(widget.globalPresets?.isEmpty ?? true))
-                    Tab(label: "Presets", child: PresetsTab(widget.globalPresets!, onSelect: () => Navigator.of(context).pop())),
+                    Tab(label: "Presets".i18n, child: PresetsTab(widget.globalPresets!, onSelect: () => Navigator.of(context).pop())),
                 ]),
               )
             ]),

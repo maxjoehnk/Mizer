@@ -17,17 +17,17 @@ enum ConnectionCategory {
   HID,
 }
 
-final Map<ConnectionCategory, String> categoryNames = {
-  ConnectionCategory.Dmx: "DMX",
-  ConnectionCategory.Midi: "MIDI",
-  ConnectionCategory.Osc: "OSC",
-  ConnectionCategory.Laser: "Laser",
-  ConnectionCategory.GameControllers: "Game Controllers",
-  ConnectionCategory.ProDjLink: "Pro DJ Link",
-  ConnectionCategory.Mqtt: "MQTT",
-  ConnectionCategory.Citp: "CITP",
-  ConnectionCategory.Video: "Video Sources",
-  ConnectionCategory.HID: "HID Devices",
+final Map<ConnectionCategory, String Function()> categoryNames = {
+  ConnectionCategory.Dmx: () => "DMX".i18n,
+  ConnectionCategory.Midi: () => "MIDI".i18n,
+  ConnectionCategory.Osc: () => "OSC".i18n,
+  ConnectionCategory.Laser: () => "Laser".i18n,
+  ConnectionCategory.GameControllers: () => "Game Controllers".i18n,
+  ConnectionCategory.ProDjLink: () => "Pro DJ Link".i18n,
+  ConnectionCategory.Mqtt: () => "MQTT".i18n,
+  ConnectionCategory.Citp: () => "CITP".i18n,
+  ConnectionCategory.Video: () => "Video Sources".i18n,
+  ConnectionCategory.HID: () => "HID Devices".i18n,
 };
 
 class ConnectionCategoryList extends StatelessWidget {
@@ -47,7 +47,7 @@ class ConnectionCategoryList extends StatelessWidget {
           child: ListView(
               children: ConnectionCategory.values
                   .map((c) => ListItem(
-                      child: Text("${categoryNames[c]!} (${connections.getByCategory(c).length})"),
+                      child: Text("${categoryNames[c]!()} (${connections.getByCategory(c).length})"),
                       onTap: () => onSelect(c),
                       selected: selected == c))
                   .toList()),

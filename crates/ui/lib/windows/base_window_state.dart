@@ -35,6 +35,7 @@ class LanguageSwitcher extends StatelessWidget {
         var i18n = I18n.of(context);
         if (settings.hasUi() && i18n.locale.languageCode != settings.ui.language) {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            print("changing locale to ${settings.ui.language}");
             i18n.locale = Locale(settings.ui.language);
           });
         }

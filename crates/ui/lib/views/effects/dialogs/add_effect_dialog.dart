@@ -24,8 +24,8 @@ class _AddEffectDialogState extends State<AddEffectDialog> {
           decoration: InputDecoration(labelText: "Name".i18n),
         ),
         actions: [
-          PopupAction("Cancel", () => Navigator.of(context).pop()),
-          PopupAction("Save", () {
+          PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+          PopupAction("Save".i18n, () {
             Navigator.of(context).pop(nameController.text);
           }),
         ],

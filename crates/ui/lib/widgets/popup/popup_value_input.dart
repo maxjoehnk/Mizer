@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
 
@@ -69,7 +70,7 @@ class _PopupValueInputState extends State<PopupValueInput> {
   @override
   Widget build(BuildContext context) {
     return PopupContainer(
-      title: "Enter Value",
+      title: "Enter Value".i18n,
       width: 286,
       height: 320,
       child: Focus(
@@ -93,13 +94,13 @@ class _PopupValueInputState extends State<PopupValueInput> {
             Pad("7", () => _push(Value(7))),
             Pad("8", () => _push(Value(8))),
             Pad("0", () => _push(Value(0))),
-            if (widget.allowRange) Pad("Thru", () => _push(Thru()), wide: true),
+            if (widget.allowRange) Pad("Thru".i18n, () => _push(Thru()), wide: true),
           ]),
           Row(children: [
             Pad("4", () => _push(Value(4))),
             Pad("5", () => _push(Value(5))),
             Pad("6", () => _push(Value(6))),
-            Pad("Clear", () => setState(() => _ast.clear()), wide: true),
+            Pad("Clear".i18n, () => setState(() => _ast.clear()), wide: true),
           ]),
           Row(children: [
             Pad("1", () => _push(Value(1))),
@@ -109,7 +110,7 @@ class _PopupValueInputState extends State<PopupValueInput> {
           Row(children: [
             Pad("0", () => _push(Value(0)), wide: true),
             Pad(".", () => _push(Value.dot())),
-            Pad("Enter", () => _build(context), wide: true),
+            Pad("Enter".i18n, () => _build(context), wide: true),
           ]),
         ]),
       ),

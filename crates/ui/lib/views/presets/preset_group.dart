@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
@@ -20,7 +21,7 @@ class PresetGroup extends StatelessWidget {
   factory PresetGroup.build(String label, Presets presets, List<Effect> effects, PresetType type) {
     if (type == PresetType.Intensity) {
       return PresetGroup(
-        label: "Dimmer",
+        label: "Dimmer".i18n,
         child: PresetList(
             presets: presets.intensities,
             effects: effects.getEffectsForControls([EffectControl.INTENSITY])),
@@ -28,7 +29,7 @@ class PresetGroup extends StatelessWidget {
     }
     if (type == PresetType.Shutter) {
       return PresetGroup(
-        label: "Shutter",
+        label: "Shutter".i18n,
         child: PresetList(
             presets: presets.shutters,
             effects: effects.getEffectsForControls([EffectControl.SHUTTER])),
@@ -36,7 +37,7 @@ class PresetGroup extends StatelessWidget {
     }
     if (type == PresetType.Color) {
       return PresetGroup(
-          label: "Color",
+          label: "Color".i18n,
           child: PresetList(
               presets: presets.colors,
               effects: effects.getEffectsForControls([
@@ -48,7 +49,7 @@ class PresetGroup extends StatelessWidget {
     }
     if (type == PresetType.Position) {
       return PresetGroup(
-          label: "Position",
+          label: "Position".i18n,
           child: PresetList(
               presets: presets.positions,
               effects: effects.getEffectsForControls([EffectControl.PAN, EffectControl.TILT])));

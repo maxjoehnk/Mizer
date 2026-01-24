@@ -12,6 +12,7 @@ import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/number_field.dart';
 import 'package:mizer/views/patch/dialogs/assign_fixtures_to_group_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/i18n.dart';
 import 'package:provider/provider.dart';
 
 class SelectionSheet extends StatefulWidget {
@@ -68,7 +69,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
         "shuffle": () => _shuffle(),
       },
       child: Panel(
-          label: "Selection",
+          label: "Selection".i18n,
           child: Padding(
             padding: const EdgeInsets.all(PANEL_GAP_SIZE),
             child: Column(
@@ -95,7 +96,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                   child: Row(spacing: PANEL_GAP_SIZE, children: [
                     Expanded(
                       child: NumberField(
-                          label: "Block Size",
+                          label: "Block Size".i18n,
                           value: widget.state.blockSize,
                           bar: false,
                           min: 0,
@@ -107,7 +108,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                     ),
                     Expanded(
                       child: NumberField(
-                          label: "Groups",
+                          label: "Groups".i18n,
                           value: widget.state.groups,
                           bar: false,
                           min: 0,
@@ -119,7 +120,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                     ),
                     Expanded(
                       child: NumberField(
-                          label: "Wings",
+                          label: "Wings".i18n,
                           value: widget.state.wings,
                           bar: false,
                           min: 0,
@@ -137,29 +138,29 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
           actions: [
             PanelActionModel(
                 hotkeyId: "clear",
-                label: "Clear",
+                label: "Clear".i18n,
                 onClick: () => _clear(),
                 disabled: widget.isEmpty,
                 menu: Menu(items: [
                   MenuItem(
-                      label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
+                      label: "Add Midi Mapping".i18n, action: () => _addMidiMappingForClear(context))
                 ])),
             PanelActionModel(
-                label: "Assign Group",
+                label: "Assign Group".i18n,
                 hotkeyId: "assign_group",
                 disabled: widget.isEmpty,
                 onClick: () => _assignGroup(context)),
             PanelActionModel(
-                label: "Shuffle",
+                label: "Shuffle".i18n,
                 hotkeyId: "shuffle",
                 disabled: widget.isEmpty,
                 onClick: () => _shuffle()),
             PanelActionModel(
-                label: "Set", hotkeyId: "set", disabled: widget.isEmpty, onClick: () => _set()),
+                label: "Set".i18n, hotkeyId: "set", disabled: widget.isEmpty, onClick: () => _set()),
             PanelActionModel(
-                label: "Prev", hotkeyId: "prev", disabled: widget.isEmpty, onClick: () => _prev()),
+                label: "Prev".i18n, hotkeyId: "prev", disabled: widget.isEmpty, onClick: () => _prev()),
             PanelActionModel(
-                label: "Next", hotkeyId: "next", disabled: widget.isEmpty, onClick: () => _next()),
+                label: "Next".i18n, hotkeyId: "next", disabled: widget.isEmpty, onClick: () => _next()),
           ]),
     );
   }

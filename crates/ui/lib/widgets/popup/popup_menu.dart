@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/list_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/widgets/field/text_input.dart';
 
 const MAX_ROWS = 10;
@@ -71,7 +72,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
               Container(
                 height: 40,
                 child: TextInput(
-                  placeholder: "Search",
+                  placeholder: "Search".i18n,
                   controller: _searchController,
                   textAlign: TextAlign.start,
                   autofocus: true,

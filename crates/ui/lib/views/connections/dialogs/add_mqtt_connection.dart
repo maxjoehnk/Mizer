@@ -68,7 +68,7 @@ class _ConfigureMqttConnectionDialogState extends State<ConfigureMqttConnectionD
       ]),
       actions: [
         PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
-        PopupAction("Save", () => _onConfirm()),
+        PopupAction("Save".i18n, () => _onConfirm()),
       ],
     );
   }

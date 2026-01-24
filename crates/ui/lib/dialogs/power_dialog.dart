@@ -4,6 +4,7 @@ import 'package:mizer/api/plugin/app.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/dialog/dialog_tile.dart';
 import 'package:mizer/widgets/dialog/grid_dialog.dart';
+import 'package:mizer/i18n.dart';
 
 class PowerDialog extends StatelessWidget {
   final ApplicationPluginApi applicationApi;
@@ -13,15 +14,15 @@ class PowerDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-        title: "Shutdown Menu",
+        title: "Shutdown Menu".i18n,
         content: DialogTileGrid(
           columns: 3,
           children: [
             PowerTile(
-                icon: MdiIcons.power, title: "Shutdown", onTap: () => applicationApi.shutdown()),
+                icon: MdiIcons.power, title: "Shutdown".i18n, onTap: () => applicationApi.shutdown()),
             PowerTile(
-                icon: MdiIcons.restart, title: "Reboot", onTap: () => applicationApi.reboot()),
-            PowerTile(icon: MdiIcons.exitToApp, title: "Exit", onTap: () => applicationApi.exit()),
+                icon: MdiIcons.restart, title: "Reboot".i18n, onTap: () => applicationApi.reboot()),
+            PowerTile(icon: MdiIcons.exitToApp, title: "Exit".i18n, onTap: () => applicationApi.exit()),
           ],
         ));
   }

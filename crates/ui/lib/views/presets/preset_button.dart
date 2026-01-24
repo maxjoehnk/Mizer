@@ -3,6 +3,7 @@ import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/dialogs/name_dialog.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/state/presets_bloc.dart';
@@ -37,8 +38,8 @@ class _GroupButtonState extends State<GroupButton>
   Widget build(BuildContext context) {
     return ContextMenu(
       menu: Menu(items: [
-        MenuItem(label: "Rename", action: () => _renameGroup()),
-        MenuItem(label: "Delete", action: () => _deleteGroup()),
+        MenuItem(label: "Rename".i18n, action: () => _renameGroup()),
+        MenuItem(label: "Delete".i18n, action: () => _deleteGroup()),
       ]),
       child: PresetButton.group(
         child: Container(),
@@ -78,8 +79,8 @@ class CallPresetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ContextMenu(
       menu: Menu(items: [
-        MenuItem(label: "Rename", action: () => _renamePreset(context)),
-        MenuItem(label: "Delete", action: () => _deletePreset(context)),
+        MenuItem(label: "Rename".i18n, action: () => _renamePreset(context)),
+        MenuItem(label: "Delete".i18n, action: () => _deletePreset(context)),
       ]),
       child: PresetButton.preset(
         child: child,

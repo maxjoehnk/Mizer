@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
@@ -196,8 +197,8 @@ class _DirectTimeInputState extends State<DirectTimeInput> {
                     alignment: AlignmentDirectional.centerStart, child: Text(_ast.toDisplay()))),
           ),
           Column(children: [
-            if (widget.allowBeats) _timeMode(true, "Beats"),
-            if (widget.allowSeconds) _timeMode(false, "Seconds"),
+            if (widget.allowBeats) _timeMode(true, "Beats".i18n),
+            if (widget.allowSeconds) _timeMode(false, "Seconds".i18n),
           ])
         ]),
         Row(children: [
@@ -209,7 +210,7 @@ class _DirectTimeInputState extends State<DirectTimeInput> {
           _Pad("4", () => _push(_Value(4))),
           _Pad("5", () => _push(_Value(5))),
           _Pad("6", () => _push(_Value(6))),
-          _Pad("Clear", () => setState(() => _ast.clear()), wide: true),
+          _Pad("Clear".i18n, () => setState(() => _ast.clear()), wide: true),
         ]),
         Row(children: [
           _Pad("1", () => _push(_Value(1))),
@@ -219,7 +220,7 @@ class _DirectTimeInputState extends State<DirectTimeInput> {
         Row(children: [
           _Pad("0", () => _push(_Value(0)), wide: true),
           _Pad(".", () => _push(_Value.dot())),
-          _Pad("Enter", () => _build(context), wide: true),
+          _Pad("Enter".i18n, () => _build(context), wide: true),
         ]),
       ]),
     );

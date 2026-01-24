@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/state/effects_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 
@@ -17,27 +18,27 @@ class PresetsView extends StatelessWidget {
             builder: (context, state) {
               var children = [
                   PresetGroup(
-                      label: "Groups",
+                      label: "Groups".i18n,
                       child: PresetButtonList(
                         fill: true,
                           children:
                               state.groups.map((group) => GroupButton(group: group)).toList())),
                   PresetGroup(
-                      label: "Dimmer",
+                      label: "Dimmer".i18n,
                       child: PresetList(
                         fill: true,
                         presets: state.presets.intensities,
                         effects: effects.getEffectsForControls([EffectControl.INTENSITY]),
                       )),
                   PresetGroup(
-                      label: "Shutter",
+                      label: "Shutter".i18n,
                       child: PresetList(
                         fill: true,
                         presets: state.presets.shutters,
                         effects: effects.getEffectsForControls([EffectControl.SHUTTER]),
                       )),
                   PresetGroup(
-                      label: "Color",
+                      label: "Color".i18n,
                       child: PresetList(
                           fill: true,
                           presets: state.presets.colors,
@@ -48,7 +49,7 @@ class PresetsView extends StatelessWidget {
                             EffectControl.COLOR_WHEEL
                           ]))),
                   PresetGroup(
-                      label: "Position",
+                      label: "Position".i18n,
                       child: PresetList(
                         fill: true,
                         presets: state.presets.positions,

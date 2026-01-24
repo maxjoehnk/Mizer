@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/api/contracts/mappings.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
@@ -35,8 +36,8 @@ class _MidiMappingDialogState extends State<MidiMappingDialog> {
           MidiProperties(config, isInput: true, onUpdate: (c) => setState(() => config = c)),
         ]),
         actions: [
-          PopupAction("Cancel", () => Navigator.of(context).pop()),
-          PopupAction("Add", () => Navigator.of(context).pop(binding)),
+          PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+          PopupAction("Add".i18n, () => Navigator.of(context).pop(binding)),
         ]);
   }
 }

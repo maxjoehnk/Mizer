@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/sequencer.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/views/sequencer/track_sheet.dart';
@@ -19,18 +20,18 @@ class CueList extends StatelessWidget {
   Widget build(BuildContext context) {
     return MizerTable(
         columns: [
-          Center(child: Text("ID")),
-          Center(child: Text("Name")),
-          _twoLineHeader("Trigger", "Type"),
-          _twoLineHeader("Trigger", "Time"),
-          _twoLineHeader("Cue", "Fade"),
-          _twoLineHeader("Cue", "Delay"),
-          _twoLineHeader("Dimmer", "Fade"),
-          _twoLineHeader("Dimmer", "Delay"),
-          _twoLineHeader("Position", "Fade"),
-          _twoLineHeader("Position", "Delay"),
-          _twoLineHeader("Color", "Fade"),
-          _twoLineHeader("Color", "Delay"),
+          Center(child: Text("ID".i18n)),
+          Center(child: Text("Name".i18n)),
+          _twoLineHeader("Trigger".i18n, "Type".i18n),
+          _twoLineHeader("Trigger".i18n, "Time".i18n),
+          _twoLineHeader("Cue".i18n, "Fade".i18n),
+          _twoLineHeader("Cue".i18n, "Delay".i18n),
+          _twoLineHeader("Dimmer".i18n, "Fade".i18n),
+          _twoLineHeader("Dimmer".i18n, "Delay".i18n),
+          _twoLineHeader("Position".i18n, "Fade".i18n),
+          _twoLineHeader("Position".i18n, "Delay".i18n),
+          _twoLineHeader("Color".i18n, "Fade".i18n),
+          _twoLineHeader("Color".i18n, "Delay".i18n),
         ],
         rows: sequence.cues.map((cue) {
           return MizerTableRow(cells: [
@@ -38,21 +39,21 @@ class CueList extends StatelessWidget {
             PopupTableCell(
                 child: Text(cue.name),
                 popup: PopupInput(
-                  title: "Name",
+                  title: "Name".i18n,
                   value: cue.name,
                   onChange: (name) => _updateCueName(context, cue, name),
                 )),
             PopupTableCell(
                 child: Center(child: Text(cue.trigger.toLabel())),
-                popup: PopupSelect(title: "Trigger", items: [
+                popup: PopupSelect(title: "Trigger".i18n, items: [
                   SelectItem(
-                      title: "Go",
+                      title: "Go".i18n,
                       onTap: () => _updateCueTrigger(context, cue, CueTrigger_Type.GO)),
                   SelectItem(
-                      title: "Follow",
+                      title: "Follow".i18n,
                       onTap: () => _updateCueTrigger(context, cue, CueTrigger_Type.FOLLOW)),
                   SelectItem(
-                      title: "Time",
+                      title: "Time".i18n,
                       onTap: () => _updateCueTrigger(context, cue, CueTrigger_Type.TIME)),
                 ])),
             PopupTableCell(

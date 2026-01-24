@@ -42,7 +42,7 @@ widgetbook:
 	flutter run -t widgetbook/main.dart
 
 i18n:
-	flutter pub run i18n_extension:getstrings
+	dart run i18n_extension_importer:getstrings
 
 icons:
 	flutter pub run flutter_launcher_icons

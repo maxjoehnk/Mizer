@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/ui.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/context_state_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/widgets/text_field_focus.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,7 @@ class _CommandLineInputState extends State<CommandLineInput> {
         children: [
           if (!focusNode.hasFocus && controller.text.isEmpty)
             Center(
-                child: Text("Command Line",
+                child: Text("Command Line".i18n,
                     style: textTheme.bodyMedium!.copyWith(color: Colors.white54))),
           if (success) Positioned(child: Icon(Icons.check, color: Colors.green), right: 4),
           if (error)

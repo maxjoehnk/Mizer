@@ -35,32 +35,32 @@ class ApplicationMenu extends StatelessWidget {
             children: [
               const MenuBarTitle(),
               const MenuPlaceholder(),
-              MenuButton.text("Project", popupBuilder: (context) => PopupSelect(
+              MenuButton.text("Project".i18n, popupBuilder: (context) => PopupSelect(
                 width: context.globalPaintBounds!.width,
-                title: "Project",
+                title: "Project".i18n,
                 items: [
                   SelectItem(
-                    title: "New",
+                    title: "New".i18n,
                     onTap: () => _newProject(context),
                   ),
                   SelectItem(
-                    title: "Open",
+                    title: "Open".i18n,
                     onTap: () => _openProject(context),
                   ),
                   SelectItem(
-                    title: "Save",
+                    title: "Save".i18n,
                     onTap: () => ProjectFiles.saveProject(context),
                   ),
                   SelectItem(
-                    title: "Save as",
+                    title: "Save as".i18n,
                     onTap: () => ProjectFiles.saveProjectAs(context),
                   ),
                 ],
               )),
-              Expanded(child: MenuButton.text(state.hasProject() ? state.project : "New Project", popupBuilder: (context) => PopupSelect(
+              Expanded(child: MenuButton.text(state.hasProject() ? state.project : "New Project".i18n, popupBuilder: (context) => PopupSelect(
                 width: context.globalPaintBounds!.width,
                 height: 48 * 6,
-                title: "Open Recent",
+                title: "Open Recent".i18n,
                 items: state.projectHistory
                     .map((history) => SelectItem(
                         title: history.split(io.Platform.pathSeparator).last,
@@ -81,19 +81,19 @@ class ApplicationMenu extends StatelessWidget {
                 Window.create({});
               }),
               const MenuPlaceholder(),
-              MenuButton.text("Patch", active: activeView == View.FixturePatch,
+              MenuButton.text("Patch".i18n, active: activeView == View.FixturePatch,
                   onTap: () => changeView(View.FixturePatch)),
-              MenuButton.text("Connections", active: activeView == View.Connections,
+              MenuButton.text("Connections".i18n, active: activeView == View.Connections,
                   onTap: () => changeView(View.Connections)),
-              MenuButton.text("DMX Output", active: activeView == View.DmxOutput,
+              MenuButton.text("DMX Output".i18n, active: activeView == View.DmxOutput,
                   onTap: () => changeView(View.DmxOutput)),
-              MenuButton.text("History", active: activeView == View.History,
+              MenuButton.text("History".i18n, active: activeView == View.History,
                   onTap: () => changeView(View.History)),
-              MenuButton.text("Session", active: activeView == View.Session,
+              MenuButton.text("Session".i18n, active: activeView == View.Session,
                   onTap: () => changeView(View.Session)),
-              MenuButton.text("MIDI Profiles", active: activeView == View.MidiProfiles,
+              MenuButton.text("MIDI Profiles".i18n, active: activeView == View.MidiProfiles,
                   onTap: () => changeView(View.MidiProfiles)),
-              MenuButton.text("Fixture Library", active: activeView == View.FixtureDefinitions,
+              MenuButton.text("Fixture Library".i18n, active: activeView == View.FixtureDefinitions,
                   onTap: () => changeView(View.FixtureDefinitions)),
               const MenuPlaceholder(),
               MenuButton.icon(MdiIcons.cog, active: activeView == View.Preferences,

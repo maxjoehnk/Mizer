@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/number_field.dart';
@@ -58,7 +59,7 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
   Widget build(BuildContext context) {
     var windowSize = MediaQuery.of(context).size;
     return ActionDialog(
-      title: "Patch Fixture",
+      title: "Patch Fixture".i18n,
       content: SizedBox(
           child: _getStep(), width: windowSize.width * 0.9, height: windowSize.height * 0.8),
       actions: _getActions(context),
@@ -102,14 +103,14 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
   List<PopupAction> _getActions(BuildContext context) {
     if (step == 0) {
       return [
-        PopupAction("Cancel", () => Navigator.of(context).pop()),
-        PopupAction("Next", () => this.mode == null ? null : setState(() => step += 1)),
+        PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+        PopupAction("Next".i18n, () => this.mode == null ? null : setState(() => step += 1)),
       ];
     }
     if (step == 1) {
       return [
-        PopupAction("Back", () => setState(() => step = 0)),
-        PopupAction("Add Fixtures", () => this.addFixtures(context)),
+        PopupAction("Back".i18n, () => setState(() => step = 0)),
+        PopupAction("Add Fixtures".i18n, () => this.addFixtures(context)),
       ];
     }
     return [];
@@ -277,7 +278,7 @@ class _PatchSettingsState extends State<PatchSettings> {
         TextPropertyField(
           autofocus: true,
           big: true,
-          label: "Name",
+          label: "Name".i18n,
           value: name,
           onChanged: (value) {
             name = value;
@@ -285,7 +286,7 @@ class _PatchSettingsState extends State<PatchSettings> {
           },
         ),
         NumberField(
-          label: "Universe",
+          label: "Universe".i18n,
           big: true,
           value: universe,
           onUpdate: (value) {
@@ -297,7 +298,7 @@ class _PatchSettingsState extends State<PatchSettings> {
           max: 524288,
         ),
         NumberField(
-          label: "Channel",
+          label: "Channel".i18n,
           big: true,
           value: channel,
           onUpdate: (value) {
@@ -309,7 +310,7 @@ class _PatchSettingsState extends State<PatchSettings> {
           max: 512,
         ),
         NumberField(
-          label: "Start ID",
+          label: "Start ID".i18n,
           big: true,
           value: id,
           onUpdate: (value) {
@@ -319,7 +320,7 @@ class _PatchSettingsState extends State<PatchSettings> {
           bar: false,
         ),
         NumberField(
-          label: "Count",
+          label: "Count".i18n,
           big: true,
           value: count,
           onUpdate: (value) {
@@ -367,9 +368,9 @@ class FixturePatchPreview extends StatelessWidget {
         2: FixedColumnWidth(128),
       },
       columns: [
-        Text("Id"),
-        Text("Name"),
-        Text("Address"),
+        Text("Id".i18n),
+        Text("Name".i18n),
+        Text("Address".i18n),
       ],
       rows: fixtures.fixtures.sorted((lhs, rhs) => lhs.id.compareTo(rhs.id)).map((f) {
         var startAddress = f.channel;

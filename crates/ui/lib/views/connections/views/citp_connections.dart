@@ -39,14 +39,14 @@ class CitpConnectionsView extends StatelessWidget {
   String formatKind(CitpConnection_CitpKind kind) {
     switch (kind) {
       case CitpConnection_CitpKind.CITP_KIND_LIGHTING_CONSOLE:
-        return "Lighting Console";
+        return "Lighting Console".i18n;
       case CitpConnection_CitpKind.CITP_KIND_MEDIA_SERVER:
-        return "Media Server";
+        return "Media Server".i18n;
       case CitpConnection_CitpKind.CITP_KIND_VISUALIZER:
-        return "Visualizer";
+        return "Visualizer".i18n;
       case CitpConnection_CitpKind.CITP_KIND_UNKNOWN:
       default:
-        return "Unknown";
+        return "Unknown".i18n;
     }
   }
 }

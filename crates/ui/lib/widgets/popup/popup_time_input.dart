@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
 
@@ -227,21 +228,21 @@ class _PopupTimeInputState extends State<PopupTimeInput> {
                           child: Text(_ast.toDisplay()))),
                 ),
                 Column(children: [
-                  _timeMode(true, "Beats"),
-                  _timeMode(false, "Seconds"),
+                  _timeMode(true, "Beats".i18n),
+                  _timeMode(false, "Seconds".i18n),
                 ])
               ]),
           Row(children: [
             Pad("7", () => _push(Value(7))),
             Pad("8", () => _push(Value(8))),
             Pad("0", () => _push(Value(0))),
-            Pad("Thru", () => _push(Thru()), wide: true),
+            Pad("Thru".i18n, () => _push(Thru()), wide: true),
           ]),
           Row(children: [
             Pad("4", () => _push(Value(4))),
             Pad("5", () => _push(Value(5))),
             Pad("6", () => _push(Value(6))),
-            Pad("Clear", () => setState(() => _ast.clear()), wide: true),
+            Pad("Clear".i18n, () => setState(() => _ast.clear()), wide: true),
           ]),
           Row(children: [
             Pad("1", () => _push(Value(1))),
@@ -251,7 +252,7 @@ class _PopupTimeInputState extends State<PopupTimeInput> {
           Row(children: [
             Pad("0", () => _push(Value(0)), wide: true),
             Pad(".", () => _push(Value.dot())),
-            Pad("Enter", () => _build(context), wide: true),
+            Pad("Enter".i18n, () => _build(context), wide: true),
           ]),
         ]),
       ),

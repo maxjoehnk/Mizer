@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 final Map<NodeCategory, Color> CATEGORY_COLORS = {
@@ -18,18 +19,18 @@ final Map<NodeCategory, Color> CATEGORY_COLORS = {
   NodeCategory.NODE_CATEGORY_UI: Colors.blue.shade700,
 };
 
-final Map<NodeCategory, String> CATEGORY_NAMES = {
-  NodeCategory.NODE_CATEGORY_STANDARD: "Standard",
-  NodeCategory.NODE_CATEGORY_CONNECTIONS: "Connections",
-  NodeCategory.NODE_CATEGORY_CONVERSIONS: "Conversions",
-  NodeCategory.NODE_CATEGORY_CONTROLS: "Controls",
-  NodeCategory.NODE_CATEGORY_DATA: "Data",
-  NodeCategory.NODE_CATEGORY_COLOR: "Color",
-  NodeCategory.NODE_CATEGORY_AUDIO: "Audio",
-  NodeCategory.NODE_CATEGORY_VIDEO: "Video",
-  NodeCategory.NODE_CATEGORY_LASER: "Laser",
-  NodeCategory.NODE_CATEGORY_PIXEL: "Pixel",
-  NodeCategory.NODE_CATEGORY_VECTOR: "Vector",
-  NodeCategory.NODE_CATEGORY_FIXTURES: "Fixtures",
-  NodeCategory.NODE_CATEGORY_UI: "UI",
+final Map<NodeCategory, String Function()> CATEGORY_NAMES = {
+  NodeCategory.NODE_CATEGORY_STANDARD: () => "Standard".i18n,
+  NodeCategory.NODE_CATEGORY_CONNECTIONS: () => "Connections".i18n,
+  NodeCategory.NODE_CATEGORY_CONVERSIONS: () => "Conversions".i18n,
+  NodeCategory.NODE_CATEGORY_CONTROLS: () => "Controls".i18n,
+  NodeCategory.NODE_CATEGORY_DATA: () => "Data".i18n,
+  NodeCategory.NODE_CATEGORY_COLOR: () => "Color".i18n,
+  NodeCategory.NODE_CATEGORY_AUDIO: () => "Audio".i18n,
+  NodeCategory.NODE_CATEGORY_VIDEO: () => "Video".i18n,
+  NodeCategory.NODE_CATEGORY_LASER: () => "Laser".i18n,
+  NodeCategory.NODE_CATEGORY_PIXEL: () => "Pixel".i18n,
+  NodeCategory.NODE_CATEGORY_VECTOR: () => "Vector".i18n,
+  NodeCategory.NODE_CATEGORY_FIXTURES: () => "Fixtures".i18n,
+  NodeCategory.NODE_CATEGORY_UI: () => "UI".i18n,
 };

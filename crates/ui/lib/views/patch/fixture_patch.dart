@@ -57,7 +57,7 @@ class _FixturePatchViewState extends State<FixturePatchView> {
             Expanded(
               flex: 2,
               child: Panel(
-                label: "Fixtures",
+                label: "Fixtures".i18n,
                 child: FixtureTable(
                   fixtures: fixtures.fixtures.search(
                       [(f) => f.name, (f) => f.manufacturer, (f) => f.mode], searchQuery).toList(),
@@ -79,25 +79,25 @@ class _FixturePatchViewState extends State<FixturePatchView> {
                 ),
                 actions: [
                   PanelActionModel(
-                      label: "Add Fixture",
+                      label: "Add Fixture".i18n,
                       hotkeyId: "add_fixture",
                       onClick: () => _addFixture(context, fixturesApi, fixturesBloc)),
                   PanelActionModel(
-                      label: "Clear",
+                      label: "Clear".i18n,
                       hotkeyId: "clear",
                       onClick: _clear,
                       disabled: selectedIds.isEmpty),
                   PanelActionModel(
-                      label: "Delete",
+                      label: "Delete".i18n,
                       hotkeyId: "delete",
                       onClick: () => _deleteFixture(context, fixturesBloc),
                       disabled: selectedIds.isEmpty),
                   PanelActionModel(
-                      label: "Assign Group",
+                      label: "Assign Group".i18n,
                       hotkeyId: "assign_group",
                       onClick: () => _assignGroup(context, fixturesBloc)),
                   PanelActionModel(
-                    label: "Export Patch",
+                    label: "Export Patch".i18n,
                     hotkeyId: "export_patch",
                     onClick: () => _exportPatch(context),
                   )
@@ -108,10 +108,10 @@ class _FixturePatchViewState extends State<FixturePatchView> {
             Flexible(
               flex: 1,
               child: Panel(
-                label: "Fixture Configuration",
+                label: "Fixture Configuration".i18n,
                 tabs: [
                   Tab(
-                    label: "Channel Limits",
+                    label: "Channel Limits".i18n,
                     child: FixtureChannelLimits(selectedIds: selectedIds, onUpdateFixture: (fixtureId, updateRequest) =>
                       fixturesBloc.add(UpdateFixture(fixtureId, updateRequest))),
                   )

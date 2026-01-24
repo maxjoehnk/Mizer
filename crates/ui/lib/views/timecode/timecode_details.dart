@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/plugin/ffi/transport.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/timecode.pb.dart';
 import 'package:mizer/state/timecode_bloc.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/spline_field.dart';
@@ -27,7 +28,7 @@ class TimecodeDetail extends StatelessWidget {
     return Panel(
       label: timecode.name,
       actions: [
-        PanelActionModel(label: "Add Control", onClick: () => _addTimecodeControl(context))
+        PanelActionModel(label: "Add Control".i18n, onClick: () => _addTimecodeControl(context))
       ],
       child: Stack(
         children: [

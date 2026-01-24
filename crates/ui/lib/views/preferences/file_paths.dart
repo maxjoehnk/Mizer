@@ -44,7 +44,7 @@ class PathsSetting extends StatelessWidget {
             ]);
       }),
       MizerButton(
-          child: Text("Add Path"),
+          child: Text("Add Path".i18n),
           onClick: () async {
             final path = await getDirectoryPath();
             if (path == null) {

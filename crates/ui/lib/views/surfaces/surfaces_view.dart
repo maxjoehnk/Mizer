@@ -35,7 +35,7 @@ class SurfacesView extends StatelessWidget {
         Flexible(
           flex: 4,
           child: Panel(
-            label: "Surface ${state.selectedSurface?.name ?? ""}".i18n,
+            label: "Surface {name}".i18n.args({ "name": state.selectedSurface?.name ?? "" }),
             tabIndex: 0,
             tabs: [
               Tab(label: 'Input'.i18n, child: InputMapping()),

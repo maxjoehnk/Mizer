@@ -1,5 +1,6 @@
 import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/enum_field.dart';
 import 'package:mizer/widgets/controls/select.dart';
@@ -16,29 +17,29 @@ class NodeProperties extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PropertyGroup(title: "Node", children: [
+    return PropertyGroup(title: "Node".i18n, children: [
       TextPropertyField(
-        label: "Path",
+        label: "Path".i18n,
         readOnly: true,
         value: node.path,
         onUpdate: (String path) {},
       ),
       TextPropertyField(
-        label: "Name",
+        label: "Name".i18n,
         readOnly: true,
         value: node.details.hasCustomName ? node.details.displayName : "",
         placeholder: node.details.displayName,
         onUpdate: (String path) {},
       ),
       TextPropertyField(
-        label: "Type",
+        label: "Type".i18n,
         readOnly: true,
         value: "",
         placeholder: node.details.nodeTypeName,
         onUpdate: (String path) {},
       ),
       EnumField<NodeColor>(
-          label: "Color",
+          label: "Color".i18n,
           initialValue: node.designer.color,
           items: NodeColor.values
               .map((color) => SelectOption(

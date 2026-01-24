@@ -4,7 +4,7 @@ import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
-
+import 'package:mizer/i18n.dart';
 import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 
 class SelectPresetDialog extends StatelessWidget {
@@ -16,7 +16,7 @@ class SelectPresetDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-      title: "Select Preset",
+      title: "Select Preset".i18n,
       onConfirm: () => _newPreset(context),
       padding: false,
       content: Container(
@@ -34,8 +34,8 @@ class SelectPresetDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        PopupAction("Cancel", () => Navigator.of(context).pop()),
-        PopupAction("New Preset", () => _newPreset(context))
+        PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+        PopupAction("New Preset".i18n, () => _newPreset(context))
       ],
     );
   }

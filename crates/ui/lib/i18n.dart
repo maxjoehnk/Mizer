@@ -1,13 +1,21 @@
 import 'package:i18n_extension/i18n_extension.dart';
-// TODO: figure out how to import locales in new i18n_extension version
-// import 'package:i18n_extension/io/import.dart';
+export 'package:i18n_extension/i18n_extension.dart';
 
 class MizerI18n {
-  static var translations = Translations.byLocale("en");
+  static var translations = Translations.byFile("en", dir: "assets/locales");
 
   static Future<void> loadTranslations() async {
-    Translations.missingKeyCallback = (key, locale) {};
-    // translations += await GettextImporter().fromAssetDirectory("assets/locales");
+    Set encounteredKeys = {};
+    Translations.missingKeyCallback = (key, locale) {
+      if (locale == "en") {
+        return;
+      }
+      if (encounteredKeys.contains(key)) {
+        return;
+      }
+      print("Missing translation key '$key' for locale '$locale'");
+      encounteredKeys.add(key);
+    };
   }
 }
 

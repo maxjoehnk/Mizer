@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/ui.pb.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
+import 'package:mizer/i18n.dart';
 
 class BackendDialog extends StatelessWidget {
   final ShowDialog dialogRequest;
@@ -13,7 +14,7 @@ class BackendDialog extends StatelessWidget {
       title: dialogRequest.title,
       content:
           Column(children: dialogRequest.elements.map((e) => _buildElement(context, e)).toList()),
-      actions: [PopupAction("Close", () => Navigator.of(context).pop())],
+      actions: [PopupAction("Close".i18n, () => Navigator.of(context).pop())],
     );
   }
 

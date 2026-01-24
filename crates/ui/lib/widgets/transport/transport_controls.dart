@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
@@ -68,11 +69,11 @@ class _TransportControlsState extends State<TransportControls> {
                     child: SpeedControl(transportStream.map((event) => event.speed).distinct())),
                 _Divider(),
                 TransportButton(
-                    child: SizedBox(width: 64, child: Center(child: Text("Tap"))),
+                    child: SizedBox(width: 64, child: Center(child: Text("Tap".i18n))),
                     onClick: () => apiClient.tap()),
                 _Divider(),
                 TransportButton(
-                    child: SizedBox(width: 64, child: Center(child: Text("Resync"))),
+                    child: SizedBox(width: 64, child: Center(child: Text("Resync".i18n))),
                     onClick: () => apiClient.resync()),
                 _Divider(width: 4),
                 RepaintBoundary(child: TimeControl(apiClient, transportStream)),
@@ -91,19 +92,19 @@ class _TransportControlsState extends State<TransportControls> {
             ),
           ),
           PlaybackBarButton(
-            label: "Console",
+            label: "Console".i18n,
             hotkeyId: "console_pane",
             onTap: widget.toggleConsole,
             active: widget.showConsole,
           ),
           PlaybackBarButton(
-            label: "Selection",
+            label: "Selection".i18n,
             hotkeyId: "selection_pane",
             onTap: widget.toggleSelection,
             active: widget.showSelection,
           ),
           PlaybackBarButton(
-            label: "Programmer",
+            label: "Programmer".i18n,
             hotkeyId: "programmer_pane",
             onTap: widget.toggleProgrammer,
             active: widget.showProgrammer,

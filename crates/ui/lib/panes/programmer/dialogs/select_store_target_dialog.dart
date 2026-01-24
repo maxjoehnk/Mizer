@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/dialog/dialog_tile.dart';
 import 'package:mizer/widgets/dialog/grid_dialog.dart';
+import 'package:mizer/i18n.dart';
 
 enum StoreTarget {
   Group,
@@ -10,10 +11,10 @@ enum StoreTarget {
   Preset,
 }
 
-const Map<StoreTarget, String> storeTargetNames = {
-  StoreTarget.Group: "Group",
-  StoreTarget.Sequence: "Sequence",
-  StoreTarget.Preset: "Preset",
+final Map<StoreTarget, String Function()> storeTargetNames = {
+  StoreTarget.Group: () => "Group".i18n,
+  StoreTarget.Sequence: () => "Sequence".i18n,
+  StoreTarget.Preset: () => "Preset".i18n,
 };
 
 final Map<LogicalKeyboardKey, StoreTarget> storeTargetHotkeys = {
@@ -40,7 +41,7 @@ class _SelectStoreTargetDialogState extends State<SelectStoreTargetDialog> {
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-        title: "Store",
+        title: "Store".i18n,
         content: KeyboardListener(
           autofocus: true,
           onKeyEvent: (event) {
@@ -62,7 +63,7 @@ class _SelectStoreTargetDialogState extends State<SelectStoreTargetDialog> {
                   .toList()),
         ),
         actions: [
-          PopupAction("Cancel", () => Navigator.of(context).pop()),
+          PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
         ]);
   }
 
@@ -79,7 +80,7 @@ class StoreTargetTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var name = storeTargetNames[target]!;
+    var name = storeTargetNames[target]!();
     return DialogTile(child: Center(child: RichText(text: _highlightHotkey(name))), onClick: onSelect);
   }
 

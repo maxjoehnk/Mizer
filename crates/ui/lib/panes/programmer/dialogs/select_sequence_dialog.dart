@@ -4,6 +4,7 @@ import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
+import 'package:mizer/i18n.dart';
 
 class SelectSequenceDialog extends StatelessWidget {
   final SequencerApi api;
@@ -13,7 +14,7 @@ class SelectSequenceDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-      title: "Select Sequence",
+      title: "Select Sequence".i18n,
       onConfirm: () => _newSequence(context),
       padding: false,
       content: Container(
@@ -37,8 +38,8 @@ class SelectSequenceDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        PopupAction("Cancel", () => Navigator.of(context).pop()),
-        PopupAction("New Sequence", () => _newSequence(context))
+        PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+        PopupAction("New Sequence".i18n, () => _newSequence(context))
       ],
     );
   }

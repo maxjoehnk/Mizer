@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/effects_bloc.dart';
@@ -44,7 +45,7 @@ class ProgrammerControlList extends StatelessWidget {
             .map((control) => PRESET_TYPES[control]!)
             .toSet()
             .map((presetType) => PresetGroup.build(
-                presetType.toString(), presetsState.presets, effectsState, presetType))
+                presetType.toString().i18n, presetsState.presets, effectsState, presetType))
             .toList());
   }
 }

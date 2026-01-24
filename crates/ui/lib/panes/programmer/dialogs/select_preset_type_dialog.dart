@@ -3,14 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/dialog/dialog_tile.dart';
 import 'package:mizer/widgets/dialog/grid_dialog.dart';
+import 'package:mizer/i18n.dart';
 
 enum PresetType { Intensity, Shutter, Color, Position }
 
-const Map<PresetType, String> storeTargetNames = {
-  PresetType.Intensity: "Intensity",
-  PresetType.Shutter: "Shutter",
-  PresetType.Color: "Color",
-  PresetType.Position: "Position",
+final Map<PresetType, String Function()> storeTargetNames = {
+  PresetType.Intensity: () => "Intensity".i18n,
+  PresetType.Shutter: () => "Shutter".i18n,
+  PresetType.Color: () => "Color".i18n,
+  PresetType.Position: () => "Position".i18n,
 };
 
 final Map<LogicalKeyboardKey, PresetType> storeTargetHotkeys = {
@@ -38,7 +39,7 @@ class _SelectPresetTypeDialogState extends State<SelectPresetTypeDialog> {
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-        title: "Store",
+        title: "Store".i18n,
         content: KeyboardListener(
           autofocus: true,
           onKeyEvent: (event) {
@@ -60,7 +61,7 @@ class _SelectPresetTypeDialogState extends State<SelectPresetTypeDialog> {
                   .toList()),
         ),
         actions: [
-          PopupAction("Cancel", () => Navigator.of(context).pop()),
+          PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
         ]);
   }
 
@@ -77,7 +78,7 @@ class PresetTypeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var name = storeTargetNames[target]!;
+    var name = storeTargetNames[target]!();
     return DialogTile(child: Center(child: RichText(text: _highlightHotkey(name))), onClick: onSelect);
   }
 

@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/extensions/programmer_channel_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -29,21 +30,21 @@ class ProgrammerFixtureList extends StatelessWidget {
         "highlight": () => _highlight(),
       },
       child: Panel(
-        label: "Fixtures",
+        label: "Fixtures".i18n,
         actions: [
           PanelActionModel(
-              label: "Highlight",
+              label: "Highlight".i18n,
               hotkeyId: "highlight",
               activated: programmerState.highlight,
               onClick: _highlight),
           PanelActionModel(
-              label: "Clear",
+              label: "Clear".i18n,
               hotkeyId: "clear",
               disabled: programmerState.fixtures.isEmpty && programmerState.activeFixtures.isEmpty,
               onClick: _clear),
         ],
         child: MizerTable(
-          columns: [Text("ID"), Text("Name"), ...channels.map((c) => Text(NAMES[c]!))],
+          columns: [Text("ID".i18n), Text("Name".i18n), ...channels.map((c) => Text(NAMES[c]!()))],
           rows: fixtures
               .map((f) => MizerTableRow(cells: [
                     Text(f.id.toDisplay()),

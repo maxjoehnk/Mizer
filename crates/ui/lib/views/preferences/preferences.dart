@@ -99,7 +99,7 @@ class Preference extends StatelessWidget {
   Widget build(BuildContext context) {
     if (setting.whichValue() == Setting_Value.boolean) {
       return BooleanField(
-          label: setting.title,
+          label: setting.title.i18n,
           labelWidth: 200,
           value: setting.boolean.value,
           resetToDefault: !setting.defaultValue,
@@ -108,7 +108,7 @@ class Preference extends StatelessWidget {
     }
     if (setting.whichValue() == Setting_Value.select) {
       return EnumField(
-        label: setting.title,
+        label: setting.title.i18n,
         labelWidth: 200,
         initialValue: setting.select.selected,
         items: setting.select.values
@@ -121,7 +121,7 @@ class Preference extends StatelessWidget {
     }
     if (setting.whichValue() == Setting_Value.hotkey) {
       return HotkeySetting(
-          label: setting.title,
+          label: setting.title.i18n,
           combination: setting.hotkey.combination,
           resetToDefault: !setting.defaultValue,
           onResetToDefault: () => onUpdate(UpdateSetting(key: setting.key)),
@@ -129,7 +129,7 @@ class Preference extends StatelessWidget {
     }
     if (setting.whichValue() == Setting_Value.path) {
       return PathField(
-          label: setting.title,
+          label: setting.title.i18n,
           labelWidth: 200,
           value: setting.path.path,
           resetToDefault: !setting.defaultValue,
@@ -138,7 +138,7 @@ class Preference extends StatelessWidget {
     }
     if (setting.whichValue() == Setting_Value.pathList) {
       return PathsSetting(
-          label: setting.title,
+          label: setting.title.i18n,
           paths: setting.pathList.paths,
           resetToDefault: !setting.defaultValue,
           onResetToDefault: () => onUpdate(UpdateSetting(key: setting.key)),

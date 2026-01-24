@@ -55,7 +55,7 @@ class _MediaListState extends State<MediaList> {
         "manage_tags": () => _manageMediaTags(context),
       },
       child: Panel(
-        label: "Files",
+        label: "Files".i18n,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -83,11 +83,11 @@ class _MediaListState extends State<MediaList> {
               child: MizerTable(
                 columns: [
                   Container(),
-                  Text("Name"),
-                  Text("Duration"),
-                  Text("Resolution"),
-                  Text("FPS"),
-                  Text("Status"),
+                  Text("Name".i18n),
+                  Text("Duration".i18n),
+                  Text("Resolution".i18n),
+                  Text("FPS".i18n),
+                  Text("Status".i18n),
                 ],
                 rows:
                     _files.search([(f) => f.name], searchQuery).map((file) => _row(file)).toList(),
@@ -106,24 +106,24 @@ class _MediaListState extends State<MediaList> {
         onSearch: (query) => setState(() => this.searchQuery = query),
         actions: [
           PanelActionModel(
-              label: "Add File(s)", onClick: () => _addFiles(context), hotkeyId: "add_media"),
+              label: "Add File(s)".i18n, onClick: () => _addFiles(context), hotkeyId: "add_media"),
           PanelActionModel(
-            label: "Delete",
+            label: "Delete".i18n,
             disabled: widget.selectedFile == null,
             onClick: () => context.read<MediaBloc>().add(RemoveMedia(widget.selectedFile!.id)),
             hotkeyId: "delete",
           ),
           PanelActionModel(
-            label: "Relink",
+            label: "Relink".i18n,
             disabled: widget.selectedFile == null,
             onClick: () => _relinkFile(context),
           ),
           PanelActionModel(
-              label: "Media Folders",
+              label: "Media Folders".i18n,
               onClick: () => _manageMediaFolders(context),
               hotkeyId: "media_folders"),
           PanelActionModel(
-              label: "Manage Tags",
+              label: "Manage Tags".i18n,
               onClick: () => _manageMediaTags(context),
               hotkeyId: "manage_tags")
         ],

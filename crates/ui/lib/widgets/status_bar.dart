@@ -89,7 +89,7 @@ class _StatusBarFpsState extends State<StatusBarFps> with SingleTickerProviderSt
       return Container();
     }
     var fps = _fps!.toStringAsFixed(2);
-    return Text('FPS $fps'.i18n, style: Theme.of(context).textTheme.bodySmall!.copyWith(fontFamily: "RobotoMono"));
+    return Text('FPS {fps}'.i18n.args({ 'fps': fps }), style: Theme.of(context).textTheme.bodySmall!.copyWith(fontFamily: "RobotoMono"));
   }
 }
 
@@ -194,7 +194,7 @@ class _BatteryLevelState extends State<BatteryLevel> {
         return Container();
       }
 
-      return Text('${level.requireData}%'.i18n, style: Theme.of(context).textTheme.bodySmall!.copyWith(fontFamily: "RobotoMono"));
+      return Text('${level.requireData}%', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontFamily: "RobotoMono"));
     });
   }
 }

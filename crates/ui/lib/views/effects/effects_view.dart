@@ -67,8 +67,8 @@ class _EffectsViewState extends State<EffectsView> {
                 label: "Effects".i18n,
                 child: MizerTable(
                   columns: [
-                    Text("ID"),
-                    Text("Name"),
+                    Text("ID".i18n),
+                    Text("Name".i18n),
                   ],
                   columnWidths: {
                     0: FixedColumnWidth(64),

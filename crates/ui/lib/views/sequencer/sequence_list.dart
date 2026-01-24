@@ -9,8 +9,6 @@ import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
-import 'package:mizer/widgets/popup/popup_input.dart';
-import 'package:mizer/widgets/popup/popup_route.dart';
 
 class SequenceList extends StatelessWidget {
   final Sequence? selectedSequence;

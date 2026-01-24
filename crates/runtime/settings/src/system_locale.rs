@@ -40,6 +40,9 @@ pub fn get_system_language() -> Option<Languages> {
 
 impl From<String> for Languages {
     fn from(value: String) -> Self {
+        if value.len() < 2 {
+            return Self::English;
+        }
         match &value[..2] {
             "de" => Self::German,
             _ => Self::English,

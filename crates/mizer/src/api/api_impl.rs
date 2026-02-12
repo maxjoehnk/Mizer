@@ -10,9 +10,10 @@ use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_command_executor::{
     CommandExecutorApi, GetCommandHistoryQuery, ICommandExecutor, SendableCommand, SendableQuery,
 };
+use mizer_connections::ConnectionStorageView;
 use mizer_devices::DeviceManager;
 use mizer_message_bus::{MessageBus, Subscriber};
-use mizer_module::ApiInjector;
+use mizer_module::{ApiInjector, Inject};
 use mizer_node::{NodePath, NodeSetting, PortId};
 use mizer_protocol_dmx::DmxMonitorHandle;
 use mizer_protocol_midi::{MidiDeviceProfileRegistry, MidiEvent};
@@ -221,6 +222,11 @@ impl RuntimeApi for Api {
     }
 
     #[profiling::function]
+    fn get_connections_view(&self) -> ConnectionStorageView {
+        self.api_injector.inject::<ConnectionStorageView>().clone()
+    }
+
+    #[profiling::function]
     fn get_gamepad_ref(&self, id: String) -> anyhow::Result<Option<GamepadRef>> {
         let gamepad = self.get_gamepad(id);
 
@@ -377,9 +383,7 @@ impl Api {
     }
 
     fn get_gamepad(&self, id: String) -> Option<GamepadRef> {
-        self.device_manager
-            .get_gamepad(&id)
-            .map(|gamepad| gamepad.value().clone())
+        todo!()
     }
 
     fn update_read_node_metadata(&self) {

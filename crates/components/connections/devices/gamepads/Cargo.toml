@@ -13,3 +13,5 @@ flume = "0.11"
 pinboard = "2.2"
 enum-iterator = "2.0"
 mizer-console = { path = "../../../console" }
+mizer-module = { path = "../../../../runtime/module" }
+mizer-connection-contracts = { path = "../../contracts" }

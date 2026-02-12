@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/views/connections/connection_indicator.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
@@ -31,9 +32,11 @@ class _DmxConnectionsViewState extends State<DmxConnectionsView> {
       label: "DMX Connections".i18n,
       child: MizerTable(
           columnWidths: {
-            5: FixedColumnWidth(128),
+            0: FixedColumnWidth(48),
+            6: FixedColumnWidth(128),
           },
           columns: [
+            Container(),
             Text("Name".i18n, style: titleTheme),
             Text("Direction".i18n, style: titleTheme),
             Text("Type".i18n, style: titleTheme),
@@ -60,6 +63,7 @@ class _DmxConnectionsViewState extends State<DmxConnectionsView> {
 
   MizerTableRow _dmxOutput(Connection connection) {
     return MizerTableRow(cells: [
+      ConnectionIndicator(connection),
       Text(connection.dmxOutput.hasArtnet()
           ? connection.dmxOutput.artnet.name
           : connection.dmxOutput.sacn.name),
@@ -78,6 +82,7 @@ class _DmxConnectionsViewState extends State<DmxConnectionsView> {
 
   MizerTableRow _dmxInput(Connection connection) {
     return MizerTableRow(cells: [
+      ConnectionIndicator(connection),
       Text(connection.name),
       Text("Input".i18n),
       Text(connection.dmxInput.hasArtnet() ? "Artnet".i18n : ""),

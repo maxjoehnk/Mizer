@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_protocol_mqtt::MqttConnectionManager;
+use mizer_connections::{ConnectionStorage, MqttConnectionExt};
 use mizer_util::StructuredData;
 
 use crate::MqttInjectorExt;
@@ -73,14 +73,10 @@ impl ProcessingNode for MqttOutputNode {
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let value = context.read_port_changes::<_, StructuredData>(VALUE_PORT);
-        let connection_manager = context.try_inject::<MqttConnectionManager>();
-        if connection_manager.is_none() {
-            anyhow::bail!("Missing mqtt module");
-        }
-        let connection_manager = connection_manager.unwrap();
+        let connection_storage = context.inject::<ConnectionStorage>();
 
         if let Some(value) = value {
-            if let Some(output) = connection_manager.get_output(&self.connection) {
+            if let Some(output) = connection_storage.get_output(&self.connection) {
                 output.write(self.path.clone(), value.clone(), self.retain)?;
             }
             context.write_data_preview(value);

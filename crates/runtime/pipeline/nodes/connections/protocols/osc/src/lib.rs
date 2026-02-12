@@ -1,7 +1,7 @@
 pub use argument_type::OscArgumentType;
 pub use input::*;
+use mizer_connections::{ConnectionStorage, OscConnection};
 use mizer_node::{Inject, SelectVariant};
-use mizer_protocol_osc::OscConnectionManager;
 pub use output::*;
 
 mod argument_type;
@@ -14,14 +14,14 @@ trait OscInjectorExt {
 
 impl<T: Inject> OscInjectorExt for T {
     fn get_connections(&self) -> Vec<SelectVariant> {
-        let connection_manager = self.inject::<OscConnectionManager>();
+        let connection_manager = self.inject::<ConnectionStorage>();
 
         connection_manager
-            .list_connections()
+            .query::<OscConnection>()
             .into_iter()
-            .map(|(id, connection)| SelectVariant::Item {
-                value: id.clone().into(),
-                label: connection.name.clone().into(),
+            .map(|(id, name, _)| SelectVariant::Item {
+                value: id.to_stable().to_string().into(),
+                label: name.cloned().unwrap_or_default(),
             })
             .collect()
     }

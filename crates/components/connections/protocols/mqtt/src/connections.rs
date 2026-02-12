@@ -3,11 +3,11 @@ use crate::subscription::MqttSubscription;
 use flume::{Receiver, Sender};
 use futures::future::Either;
 use futures::{future, FutureExt};
+use mizer_connection_contracts::{ConnectionStorage, IConnection, TransmissionStateSender};
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_util::StructuredData;
 use mqtt_async_client::client::{Client, Publish, QoS, ReadResult, Subscribe, SubscribeTopic};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use url::Url;
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, PartialOrd, Ord, Deserialize, Serialize)]
@@ -29,62 +29,21 @@ impl MqttAddress {
     }
 }
 
-#[derive(Default)]
-pub struct MqttConnectionManager {
-    connections: HashMap<String, MqttConnection>,
+pub trait MqttConnectionExt {
+    fn get_output(&self, id: &str) -> Option<MqttOutput>;
+    fn subscribe(&self, id: &str, path: String) -> anyhow::Result<Option<MqttSubscription>>;
 }
 
-impl MqttConnectionManager {
-    pub fn new() -> Self {
-        Self::default()
-    }
-
-    pub fn add_connection(&mut self, id: String, address: MqttAddress) -> anyhow::Result<()> {
-        let (connection, background_client) = MqttConnection::new(address)?;
-        self.connections.insert(id, connection);
-        tokio::spawn(background_client.run());
-
-        Ok(())
-    }
-
-    pub fn list_connections(&self) -> Vec<(&String, &MqttConnection)> {
-        self.connections.iter().collect()
-    }
-
-    pub fn delete_connection(&mut self, id: &str) -> Option<MqttAddress> {
-        self.connections
-            .remove(id)
-            .map(|connection| connection.address.clone())
-    }
-
-    pub(crate) fn reconfigure_connection(
-        &mut self,
-        id: &str,
-        address: MqttAddress,
-    ) -> anyhow::Result<MqttAddress> {
-        tracing::debug!("reconfigure_connection {id}");
-        let connection = self
-            .connections
-            .get_mut(id)
-            .ok_or_else(|| anyhow::anyhow!("Unknown connection"))?;
-        let previous_address = connection.reconfigure(address)?;
-
-        Ok(previous_address)
-    }
-
-    pub fn clear(&mut self) {
-        self.connections.clear();
-    }
-
-    pub fn get_output(&self, id: &str) -> Option<MqttOutput> {
-        self.connections
-            .get(id)
+impl MqttConnectionExt for ConnectionStorage {
+    fn get_output(&self, id: &str) -> Option<MqttOutput> {
+        let stable_id = id.parse().ok()?;
+        self.get_connection_by_stable::<MqttConnection>(&stable_id)
             .map(|connection| MqttOutput::new(&connection.command_publisher))
     }
 
-    pub fn subscribe(&self, id: &str, path: String) -> anyhow::Result<Option<MqttSubscription>> {
-        self.connections
-            .get(id)
+    fn subscribe(&self, id: &str, path: String) -> anyhow::Result<Option<MqttSubscription>> {
+        let stable_id = id.parse()?;
+        self.get_connection_by_stable::<MqttConnection>(&stable_id)
             .map(|connection| {
                 let subscriber = connection.subscribe(path.clone())?;
 
@@ -104,6 +63,21 @@ pub struct MqttConnection {
     event_publisher: MessageBus<MqttEvent>,
 }
 
+impl IConnection for MqttConnection {
+    type Config = MqttAddress;
+    const TYPE: &'static str = "mqtt";
+
+    fn create(
+        address: Self::Config,
+        transmission_sender: TransmissionStateSender,
+    ) -> anyhow::Result<Self> {
+        let (connection, background_client) = MqttConnection::new(address, transmission_sender)?;
+        tokio::spawn(background_client.run());
+
+        Ok(connection)
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct MqttEvent {
     pub topic: String,
@@ -111,7 +85,7 @@ pub struct MqttEvent {
 }
 
 impl MqttConnection {
-    fn new(address: MqttAddress) -> anyhow::Result<(Self, MqttBackgroundClient)> {
+    fn new(address: MqttAddress, transmission_state_sender: TransmissionStateSender) -> anyhow::Result<(Self, MqttBackgroundClient)> {
         let client = address.clone().into_client()?;
 
         let (command_publisher, command_receiver) = flume::unbounded();
@@ -127,11 +101,12 @@ impl MqttConnection {
             command_receiver,
             event_publisher,
             subscriptions: Default::default(),
+            transmission_state_sender,
         };
         Ok((connection, background_client))
     }
 
-    fn reconfigure(&mut self, address: MqttAddress) -> anyhow::Result<MqttAddress> {
+    pub(crate) fn reconfigure(&mut self, address: MqttAddress) -> anyhow::Result<MqttAddress> {
         let mut previous_address = address.clone();
         std::mem::swap(&mut self.address, &mut previous_address);
         self.command_publisher
@@ -170,6 +145,7 @@ struct MqttBackgroundClient {
     command_receiver: Receiver<MqttClientCommand>,
     event_publisher: MessageBus<MqttEvent>,
     subscriptions: Vec<String>,
+    transmission_state_sender: TransmissionStateSender,
 }
 
 impl MqttBackgroundClient {
@@ -220,6 +196,7 @@ impl MqttBackgroundClient {
             MqttClientCommand::Publish(publish) => {
                 tracing::debug!("Publishing message to {}", publish.topic());
                 self.client.publish(&publish).await?;
+                self.transmission_state_sender.sent_packet();
 
                 Ok(false)
             }
@@ -253,6 +230,7 @@ impl MqttBackgroundClient {
         &mut self,
         result: mqtt_async_client::Result<ReadResult>,
     ) -> anyhow::Result<()> {
+        self.transmission_state_sender.received_packet();
         let result = result?;
         let topic = result.topic().to_string();
         let payload = serde_json::from_slice(result.payload())?;

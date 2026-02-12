@@ -1,25 +1,24 @@
 use std::collections::HashMap;
-use std::sync::Arc;
+use std::sync::{Arc};
 
-use flume::{Receiver, Sender};
-use futures::Stream;
+use tokio::sync::Mutex;
 use pro_dj_link::{
     AsyncSearchService, AsyncTrackBpmService, AsyncVirtualCdj, DeviceType, StatusPacket,
 };
-use tokio::sync::Mutex;
+use mizer_connection_contracts::{RemoteConnectionStorageHandle, StorageCommandId};
+use crate::{CDJView, DJMView, DeviceView};
 
-use crate::{CDJView, DJMView, DeviceView, ProDJLinkDevice};
-
-struct ProDJLinkDiscoveryService {
-    sender: Sender<ProDJLinkDevice>,
+pub(crate) struct ProDJLinkDiscoveryService {
+    cdj_sender: RemoteConnectionStorageHandle<CDJView>,
+    djm_sender: RemoteConnectionStorageHandle<DJMView>,
     virtual_cdj: AsyncVirtualCdj,
     search: AsyncSearchService,
     tempo: AsyncTrackBpmService,
-    devices: Arc<Mutex<HashMap<u8, ProDJLinkDevice>>>,
+    devices: Arc<Mutex<HashMap<u8, StorageCommandId>>>,
 }
 
 impl ProDJLinkDiscoveryService {
-    async fn new(sender: Sender<ProDJLinkDevice>) -> anyhow::Result<Self> {
+    pub(crate) async fn new(cdj_sender: RemoteConnectionStorageHandle<CDJView>, djm_sender: RemoteConnectionStorageHandle<DJMView>) -> anyhow::Result<Self> {
         let network_interface =
             netdev::get_default_interface().map_err(|err| anyhow::anyhow!("{err}"))?;
         let ip = network_interface
@@ -36,7 +35,8 @@ impl ProDJLinkDiscoveryService {
         let tempo = AsyncTrackBpmService::new().await?;
 
         Ok(Self {
-            sender,
+            cdj_sender,
+            djm_sender,
             virtual_cdj,
             search,
             tempo,
@@ -44,10 +44,10 @@ impl ProDJLinkDiscoveryService {
         })
     }
 
-    async fn run(mut self) {
+    pub(crate) async fn run(mut self) {
         tracing::debug!("Discovering ProDJLink devices...");
         let devices = self.devices.clone();
-        let sender = self.sender.clone();
+        let sender = self.cdj_sender.clone();
         let virtual_cdj_handle = tokio::spawn(async move {
             loop {
                 if let Err(err) = self.virtual_cdj.send_keep_alive().await {
@@ -57,11 +57,14 @@ impl ProDJLinkDiscoveryService {
                 match self.virtual_cdj.recv().await {
                     Ok(Some(StatusPacket::CdjStatus(packet))) => {
                         tracing::trace!("Virtual CDJ Packet: {packet:?}");
-                        let mut devices = devices.lock().await;
-                        if let Some(ProDJLinkDevice::CDJ(cdj)) = devices.get_mut(&packet.device_id)
+                        let devices = devices.lock().await;
+                        if let Some(id) = devices.get(&packet.device_id)
                         {
-                            cdj.state = packet.state;
-                            sender.send(ProDJLinkDevice::CDJ(cdj.clone())).unwrap();
+                            if let Err(err) = sender.update_connection(*id, move |cdj| {
+                                cdj.state = packet.state;
+                            }) {
+                                tracing::error!("Failed to update cdj with status packet: {err:?}");
+                            }
                         }
                     }
                     Ok(Some(StatusPacket::MixerStatus(packet))) => {
@@ -73,21 +76,20 @@ impl ProDJLinkDiscoveryService {
             }
         });
         let devices = self.devices.clone();
-        let sender = self.sender.clone();
+        let sender = self.cdj_sender.clone();
         let tempo_handle = tokio::spawn(async move {
             loop {
                 match self.tempo.recv().await {
                     Ok(None) => continue,
                     Ok(Some(packet)) => {
                         tracing::trace!("Tempo Packet: {packet:?}");
-                        let mut devices = devices.lock().await;
-                        if let Some(device) = devices.get_mut(&packet.device_id) {
-                            if let ProDJLinkDevice::CDJ(cdj) = device {
+                        let devices = devices.lock().await;
+                        if let Some(id) = devices.get(&packet.device_id) {
+                            if let Err(err) = sender.update_connection(*id, move |cdj| {
                                 cdj.speed = packet.speed;
                                 cdj.beat = packet.beat;
-                                if let Err(err) = sender.send(ProDJLinkDevice::CDJ(cdj.clone())) {
-                                    tracing::error!("Failed to send CDJ device: {err:?}");
-                                }
+                            }) {
+                                tracing::error!("Failed to update cdj with tempo packet: {err:?}");
                             }
                         }
                     }
@@ -96,7 +98,8 @@ impl ProDJLinkDiscoveryService {
             }
         });
         let devices = self.devices.clone();
-        let sender = self.sender.clone();
+        let cdj_sender = self.cdj_sender.clone();
+        let djm_sender = self.djm_sender.clone();
         let search_handle = tokio::spawn(async move {
             loop {
                 match self.search.recv().await {
@@ -113,7 +116,23 @@ impl ProDJLinkDiscoveryService {
                             continue;
                         }
                         let mut devices = devices.lock().await;
-                        let entry = devices.entry(keep_alive.device_id).or_insert_with(|| {
+                        if let Some(id) = devices.get(&keep_alive.device_id) {
+                            let ping = std::time::Instant::now();
+                            let result = if keep_alive.device_type == DeviceType::CDJ {
+                                cdj_sender.update_connection(*id, move |cdj| {
+                                    cdj.device.last_ping = ping;
+                                })
+                            }else if keep_alive.device_type == DeviceType::Mixer {
+                                djm_sender.update_connection(*id, move |djm| {
+                                    djm.device.last_ping = ping;
+                                })
+                            }else {
+                                continue;
+                            };
+                            if let Err(err) = result {
+                                tracing::error!("Unable to update device ping {err:?}");
+                            }
+                        }else {
                             let device = DeviceView {
                                 name: keep_alive.name.to_string(),
                                 device_id: keep_alive.device_id,
@@ -121,20 +140,21 @@ impl ProDJLinkDiscoveryService {
                                 mac_addr: keep_alive.mac,
                                 ip_addr: keep_alive.ip,
                             };
-                            if keep_alive.device_type == DeviceType::CDJ {
-                                ProDJLinkDevice::CDJ(CDJView {
-                                    device,
-                                    speed: Default::default(),
-                                    beat: 1,
-                                    state: Default::default(),
-                                })
+                            let result = if keep_alive.device_type == DeviceType::CDJ {
+                                cdj_sender.add_connection(device, Some(keep_alive.name.to_string()))
+                            } else if keep_alive.device_type == DeviceType::Mixer {
+                                djm_sender.add_connection(device, Some(keep_alive.name.to_string()))
                             } else {
-                                ProDJLinkDevice::DJM(DJMView { device })
+                                continue;
+                            };
+                            match result {
+                                Err(err) => {
+                                    tracing::error!("Failed to add connection: {err:?}");
+                                }
+                                Ok(id) => {
+                                    devices.insert(keep_alive.device_id, id);
+                                }
                             }
-                        });
-                        entry.last_ping = std::time::Instant::now();
-                        if let Err(err) = sender.send(entry.clone()) {
-                            tracing::error!("Failed to send ProDJ Link device: {err:?}");
                         }
                     }
                     Err(err) => tracing::error!("Search error: {err:?}"),
@@ -151,23 +171,5 @@ impl ProDJLinkDiscoveryService {
         if let Err(err) = virtual_cdj_handle.await {
             tracing::error!("Virtual CDJ handle error: {err:?}");
         }
-    }
-}
-
-pub struct ProDJLinkDiscovery {
-    devices: Receiver<ProDJLinkDevice>,
-}
-
-impl ProDJLinkDiscovery {
-    pub async fn new() -> anyhow::Result<Self> {
-        let (sender, receiver) = flume::unbounded();
-        let service = ProDJLinkDiscoveryService::new(sender).await?;
-        tokio::spawn(service.run());
-
-        Ok(Self { devices: receiver })
-    }
-
-    pub fn into_stream(self) -> impl Stream<Item = ProDJLinkDevice> {
-        self.devices.into_stream()
     }
 }

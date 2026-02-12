@@ -5624,11 +5624,14 @@ dependencies = [
  "mizer-devices",
  "mizer-fixture-definition-provider",
  "mizer-fixtures",
+ "mizer-g13",
+ "mizer-gamepads",
  "mizer-gdtf-provider",
  "mizer-layouts",
  "mizer-media",
  "mizer-message-bus",
  "mizer-module",
+ "mizer-ndi",
  "mizer-node",
  "mizer-nodes",
  "mizer-open-fixture-library-provider",
@@ -5638,6 +5641,7 @@ dependencies = [
  "mizer-project-files",
  "mizer-protocol-citp",
  "mizer-protocol-dmx",
+ "mizer-protocol-laser",
  "mizer-protocol-midi",
  "mizer-protocol-mqtt",
  "mizer-protocol-osc",
@@ -5830,6 +5834,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-connection-contracts"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "dashmap",
+ "serde",
+ "serde_derive",
+ "tracing",
+ "uuid 1.19.0",
+]
+
+[[package]]
 name = "mizer-connection-queries"
 version = "0.1.0"
 dependencies = [
@@ -5852,12 +5868,21 @@ dependencies = [
  "anyhow",
  "dashmap",
  "derive_more",
+ "mizer-connection-contracts",
  "mizer-devices",
+ "mizer-g13",
+ "mizer-gamepads",
+ "mizer-module",
+ "mizer-ndi",
  "mizer-protocol-citp",
  "mizer-protocol-dmx",
+ "mizer-protocol-laser",
  "mizer-protocol-midi",
+ "mizer-protocol-mqtt",
  "mizer-protocol-osc",
  "mizer-protocol-pro-dj-link",
+ "mizer-traktor-kontrol-x1",
+ "mizer-webcams",
  "tracing",
 ]
 
@@ -5982,6 +6007,7 @@ name = "mizer-dmx-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "mizer-connections",
  "mizer-node",
  "mizer-protocol-dmx",
  "serde",
@@ -6115,8 +6141,9 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "flume",
- "futures",
  "g13",
+ "mizer-connection-contracts",
+ "mizer-module",
  "pinboard",
  "rusb",
  "tracing",
@@ -6129,6 +6156,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
+ "mizer-connections",
  "mizer-devices",
  "mizer-g13",
  "mizer-node",
@@ -6143,7 +6171,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "mizer-devices",
+ "mizer-connections",
  "mizer-gamepads",
  "mizer-node",
  "mizer-util",
@@ -6161,7 +6189,9 @@ dependencies = [
  "flume",
  "futures",
  "gilrs",
+ "mizer-connection-contracts",
  "mizer-console",
+ "mizer-module",
  "pinboard",
  "tracing",
 ]
@@ -6208,7 +6238,7 @@ name = "mizer-laser-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "mizer-devices",
+ "mizer-connections",
  "mizer-node",
  "mizer-protocol-laser",
  "serde",
@@ -6362,6 +6392,7 @@ name = "mizer-mqtt-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "mizer-connections",
  "mizer-node",
  "mizer-protocol-mqtt",
  "mizer-util",
@@ -6377,6 +6408,8 @@ dependencies = [
  "flume",
  "futures",
  "image 0.25.9",
+ "mizer-connection-contracts",
+ "mizer-module",
  "ndi",
  "pinboard",
  "tracing",
@@ -6389,8 +6422,7 @@ dependencies = [
  "anyhow",
  "futures",
  "image 0.25.9",
- "mizer-devices",
- "mizer-ndi",
+ "mizer-connections",
  "mizer-node",
  "mizer-video-nodes",
  "mizer-wgpu",
@@ -6526,8 +6558,8 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
+ "mizer-connections",
  "mizer-node",
- "mizer-protocol-osc",
  "mizer-util",
  "num_enum",
  "serde",
@@ -6677,9 +6709,8 @@ name = "mizer-pro-dj-link-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "mizer-devices",
+ "mizer-connections",
  "mizer-node",
- "mizer-protocol-pro-dj-link",
  "mizer-util",
  "serde",
  "tracing",
@@ -6705,7 +6736,9 @@ dependencies = [
  "enum_dispatch",
  "fs2",
  "indexmap 2.13.0",
+ "itertools 0.14.0",
  "lazy_static",
+ "mizer-connections",
  "mizer-console",
  "mizer-fixtures",
  "mizer-layouts",
@@ -6739,6 +6772,7 @@ dependencies = [
  "flume",
  "futures",
  "mizer-commander",
+ "mizer-connection-contracts",
  "mizer-fixtures",
  "mizer-module",
  "mizer-processing",
@@ -6760,6 +6794,7 @@ dependencies = [
  "evmap",
  "flume",
  "mizer-commander",
+ "mizer-connection-contracts",
  "mizer-module",
  "mizer-processing",
  "profiling",
@@ -6778,6 +6813,8 @@ dependencies = [
  "helios-dac",
  "ilda-idtf",
  "lasy",
+ "mizer-connection-contracts",
+ "mizer-module",
  "pinboard",
  "serde",
  "tracing",
@@ -6793,6 +6830,7 @@ dependencies = [
  "lazy_static",
  "midir",
  "mizer-commander",
+ "mizer-connection-contracts",
  "mizer-console",
  "mizer-message-bus",
  "mizer-midi-device-profiles",
@@ -6815,6 +6853,7 @@ dependencies = [
  "flume",
  "futures",
  "mizer-commander",
+ "mizer-connection-contracts",
  "mizer-message-bus",
  "mizer-module",
  "mizer-processing",
@@ -6835,6 +6874,7 @@ dependencies = [
  "flume",
  "futures",
  "mizer-commander",
+ "mizer-connection-contracts",
  "mizer-message-bus",
  "mizer-module",
  "rosc",
@@ -6852,6 +6892,7 @@ dependencies = [
  "flume",
  "futures",
  "mizer-commander",
+ "mizer-connection-contracts",
  "mizer-message-bus",
  "mizer-module",
  "netdev",
@@ -7236,6 +7277,7 @@ dependencies = [
  "lazy_static",
  "mizer-api",
  "mizer-clock",
+ "mizer-connections",
  "mizer-devices",
  "mizer-fixtures",
  "mizer-gamepads",
@@ -7341,6 +7383,7 @@ dependencies = [
  "anyhow",
  "enum-iterator",
  "image 0.25.9",
+ "mizer-connections",
  "mizer-devices",
  "mizer-node",
  "mizer-video-nodes",
@@ -7361,7 +7404,9 @@ dependencies = [
  "enum-iterator",
  "flume",
  "futures",
+ "mizer-connection-contracts",
  "mizer-console",
+ "mizer-module",
  "nokhwa",
  "pinboard",
  "tracing",

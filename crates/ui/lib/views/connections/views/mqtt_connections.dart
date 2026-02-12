@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/views/connections/connection_indicator.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
@@ -29,9 +30,11 @@ class _MqttConnectionsViewState extends State<MqttConnectionsView> {
       label: "MQTT Connections".i18n,
       child: MizerTable(
           columnWidths: {
-            4: FixedColumnWidth(128),
+            0: FixedColumnWidth(48),
+            5: FixedColumnWidth(128),
           },
           columns: [
+            Container(),
             Text("Name".i18n, style: titleTheme),
             Text("URL".i18n, style: titleTheme),
             Text("Username".i18n, style: titleTheme),
@@ -40,6 +43,7 @@ class _MqttConnectionsViewState extends State<MqttConnectionsView> {
           ],
           rows: _connections
               .map((c) => MizerTableRow(cells: [
+                    ConnectionIndicator(c),
                     Text(c.name),
                     Text(c.mqtt.url),
                     Text(c.mqtt.username),

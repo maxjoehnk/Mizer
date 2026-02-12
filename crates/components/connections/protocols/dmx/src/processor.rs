@@ -1,6 +1,7 @@
+use mizer_connection_contracts::ConnectionStorage;
 use mizer_processing::*;
 
-use crate::DmxConnectionManager;
+use crate::{ArtnetOutput, DmxConnectionManager, DmxOutput, DmxOutputConnection, SacnOutput};
 
 #[derive(Debug)]
 pub(crate) struct DmxProcessor;
@@ -23,7 +24,13 @@ impl Processor for DmxProcessor {
     #[tracing::instrument]
     fn post_process(&mut self, injector: &InjectionScope, _: ClockFrame) {
         profiling::scope!("DmxProcessor::post_process");
-        if let Some(dmx) = injector.try_inject_mut::<DmxConnectionManager>() {
+        if let Some((dmx, storage)) = injector.try_get_mut::<DmxConnectionManager>().zip(injector.try_get_mut::<ConnectionStorage>()) {
+            for artnet in storage.get_connections::<ArtnetOutput>() {
+                artnet.flush(&dmx.buffer);
+            }
+            for sacn in storage.get_connections::<SacnOutput>() {
+                sacn.flush(&dmx.buffer);
+            }
             dmx.flush();
             dmx.buffer.cleanup();
         }

@@ -89,7 +89,7 @@ impl ProcessingNode for DmxOutputNode {
 
         if let Some(value) = value {
             context.push_history_value(value);
-            let value = (value * u8::MAX as f64).min(255.).max(0.).floor() as u8;
+            let value = (value * u8::MAX as f64).clamp(0., 255.).floor() as u8;
 
             writer.write_single(self.universe, channel, value);
         }

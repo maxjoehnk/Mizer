@@ -1,14 +1,26 @@
 use image::{DynamicImage, ImageBuffer, Pixel};
 use ndi::{FourCCVideoType, FrameType, Recv, RecvColorFormat, Source, VideoData};
 
-pub use discovery::NdiSourceDiscovery;
+use mizer_connection_contracts::{IConnection, TransmissionStateSender};
+
+pub use module::NdiModule;
 
 mod discovery;
+mod module;
 
 #[derive(Clone)]
 pub struct NdiSourceRef {
     source: Source,
     name: String,
+}
+
+impl IConnection for NdiSourceRef {
+    type Config = Source;
+    const TYPE: &'static str = "ndi";
+
+    fn create(source: Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        Ok(Self::new(source))
+    }
 }
 
 impl std::fmt::Debug for NdiSourceRef {

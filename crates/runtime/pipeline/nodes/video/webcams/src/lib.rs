@@ -1,7 +1,6 @@
 use anyhow::{anyhow, Context};
 use serde::{Deserialize, Serialize};
-
-use mizer_devices::{DeviceManager, DeviceRef};
+use mizer_connections::ConnectionStorage;
 use mizer_node::*;
 use mizer_video_nodes::background_thread_decoder::*;
 use mizer_webcams::{Webcam, WebcamRef, WebcamSetting, WebcamSettingValue};
@@ -36,18 +35,14 @@ pub struct WebcamNode {
 
 impl ConfigurableNode for WebcamNode {
     fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let device_manager = injector.inject::<DeviceManager>();
+        let device_manager = injector.inject::<ConnectionStorage>();
         let devices = device_manager
-            .current_devices()
+            .query::<WebcamRef>()
             .into_iter()
-            .flat_map(|device| {
-                if let DeviceRef::Webcam(webcam) = device {
-                    Some(SelectVariant::Item {
-                        value: webcam.id.into(),
-                        label: webcam.name.into(),
-                    })
-                } else {
-                    None
+            .map(|(id, name, webcam)| {
+                SelectVariant::Item {
+                    value: id.to_stable().to_string().into(),
+                    label: name.cloned().unwrap_or_else(|| webcam.name().into()),
                 }
             })
             .collect();
@@ -194,15 +189,14 @@ impl ProcessingNode for WebcamNode {
         let Some(wgpu_pipeline) = context.try_inject::<WgpuPipeline>() else {
             return Ok(());
         };
-        let Some(device_manager) = context.try_inject::<DeviceManager>() else {
-            return Ok(());
-        };
+        let connection_storage = context.inject::<ConnectionStorage>();
 
         if self.device_id.is_empty() {
             return Ok(());
         }
 
-        let webcam_ref = device_manager.get_webcam(&self.device_id);
+        let id = self.device_id.parse()?;
+        let webcam_ref = connection_storage.get_connection_by_stable::<WebcamRef>(&id);
         if webcam_ref.is_none() {
             return Ok(());
         }
@@ -211,13 +205,13 @@ impl ProcessingNode for WebcamNode {
 
         if state.is_none() {
             *state = Some(
-                WebcamState::new(wgpu_context, texture_registry, webcam_ref.value().clone())
+                WebcamState::new(wgpu_context, texture_registry, webcam_ref.clone())
                     .context("Creating video file state")?,
             );
         }
 
         let state = state.as_mut().unwrap();
-        if &state.webcam_ref != webcam_ref.value() {
+        if &state.webcam_ref != webcam_ref {
             state
                 .change_webcam(webcam_ref.clone())
                 .context("Changing webcam")?;

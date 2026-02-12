@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
-
-use mizer_devices::{DeviceManager, DeviceRef};
+use mizer_connections::{ConnectionStorage, ProDjLinkExt};
 use mizer_node::*;
 
 const ORIGINAL_TEMPO_OUTPUT: &str = "Original Tempo";
@@ -75,21 +74,8 @@ impl ProcessingNode for PioneerCdjNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let device_manager = context.try_inject::<DeviceManager>().unwrap();
-        let cdj = device_manager
-            .current_devices()
-            .into_iter()
-            .find_map(|device| {
-                if let DeviceRef::PioneerCDJ(cdj) = device {
-                    if cdj.device.device_id as u32 == self.device_id {
-                        Some(cdj)
-                    } else {
-                        None
-                    }
-                } else {
-                    None
-                }
-            });
+        let connection_storage = context.inject::<ConnectionStorage>();
+        let cdj = connection_storage.get_cdj(self.device_id as u8);
 
         if let Some(cdj) = cdj {
             context.write_port(CURRENT_TEMPO_OUTPUT, cdj.current_bpm());

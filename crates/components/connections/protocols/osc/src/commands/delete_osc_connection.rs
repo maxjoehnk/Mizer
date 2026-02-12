@@ -1,15 +1,15 @@
-use crate::{OscAddress, OscConnectionManager};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
+use mizer_connection_contracts::{ConnectionStorage, DeletedConnectionHandle, StableConnectionId};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteOscConnectionCommand {
-    pub id: String,
+    pub id: StableConnectionId,
 }
 
 impl<'a> Command<'a> for DeleteOscConnectionCommand {
-    type Dependencies = RefMut<OscConnectionManager>;
-    type State = (String, OscAddress);
+    type Dependencies = RefMut<ConnectionStorage>;
+    type State = DeletedConnectionHandle;
     type Result = ();
 
     fn label(&self) -> String {
@@ -18,21 +18,21 @@ impl<'a> Command<'a> for DeleteOscConnectionCommand {
 
     fn apply(
         &self,
-        osc_manager: &mut OscConnectionManager,
+        osc_manager: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let config = osc_manager
-            .delete_connection(&self.id)
+        let handle = osc_manager
+            .delete_connection_by_stable(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown osc connection"))?;
 
-        Ok(((), config))
+        Ok(((), handle))
     }
 
     fn revert(
         &self,
-        osc_manager: &mut OscConnectionManager,
-        (name, address): Self::State,
+        osc_manager: &mut ConnectionStorage,
+        state: Self::State,
     ) -> anyhow::Result<()> {
-        osc_manager.add_connection(self.id.clone(), name, address)?;
+        osc_manager.restore_connection(state);
 
         Ok(())
     }

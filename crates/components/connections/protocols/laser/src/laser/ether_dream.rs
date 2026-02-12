@@ -1,25 +1,32 @@
+use std::net::SocketAddr;
 use super::Laser;
 use crate::laser::{LaserFrame, LaserPoint};
 use ::ether_dream::dac::stream;
 use ::ether_dream::protocol::DacPoint;
 use std::time::Duration;
+use ether_dream::dac::MacAddress;
+use ether_dream::protocol::DacBroadcast;
+use mizer_connection_contracts::{IConnection, RemoteConnectionStorageHandle, TransmissionStateSender};
 
 pub struct EtherDreamLaser {
     device: stream::Stream,
+    transmission_state_sender: TransmissionStateSender,
 }
 
 impl EtherDreamLaser {
-    pub fn find_devices() -> anyhow::Result<impl Iterator<Item = anyhow::Result<EtherDreamLaser>>> {
+    pub fn find_devices(handler: RemoteConnectionStorageHandle<EtherDreamLaser>) -> anyhow::Result<()> {
         let broadcasts = ::ether_dream::recv_dac_broadcasts()?;
         broadcasts.set_timeout(Some(Duration::from_secs(5)))?;
 
-        Ok(broadcasts.into_iter().map(|dac_broadcast| {
-            let (dac_broadcast, addr) = dac_broadcast?;
-            tracing::debug!("Found ether dream {:?} on {:?}", &dac_broadcast, &addr);
-            let device = stream::connect(&dac_broadcast, addr.ip())?;
+        for dac in broadcasts.into_iter() {
+            let dac = dac?;
 
-            Ok(EtherDreamLaser { device })
-        }))
+            let mac = MacAddress(dac.0.mac_address);
+
+            handler.add_connection(dac, Some(format!("EtherDream ({})", mac)))?;
+        }
+
+        Ok(())
     }
 
     pub fn status(&self) -> EtherDreamLaserStatus {
@@ -30,6 +37,18 @@ impl EtherDreamLaser {
             hw_revision: dac.hw_revision,
             sw_revision: dac.sw_revision,
         }
+    }
+}
+
+impl IConnection for EtherDreamLaser {
+    type Config = (DacBroadcast, SocketAddr);
+    const TYPE: &'static str = "ether-dream";
+
+    fn create((dac_broadcast, addr): Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        tracing::debug!("Found ether dream {:?} on {:?}", &dac_broadcast, &addr);
+        let device = stream::connect(&dac_broadcast, addr.ip())?;
+
+        Ok(Self { device, transmission_state_sender: transmission_sender })
     }
 }
 
@@ -47,6 +66,7 @@ impl Laser for EtherDreamLaser {
             .data(frame.points.into_iter().map(DacPoint::from))
             .begin(0, 30000)
             .submit()?;
+        self.transmission_state_sender.sent_packet();
 
         Ok(())
     }

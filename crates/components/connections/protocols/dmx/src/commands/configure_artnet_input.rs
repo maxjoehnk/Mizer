@@ -3,19 +3,19 @@ use std::net::Ipv4Addr;
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, RefMut};
-
-use crate::{ArtnetInputConfig, DmxConnectionManager, DmxInputConnection};
+use mizer_connection_contracts::{ConnectionStorage, StableConnectionId};
+use crate::{ArtnetInput, ArtnetInputConfig};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ConfigureArtnetInputCommand {
-    pub id: String,
+    pub id: StableConnectionId,
     pub name: String,
     pub host: Ipv4Addr,
     pub port: Option<u16>,
 }
 
 impl<'a> Command<'a> for ConfigureArtnetInputCommand {
-    type Dependencies = RefMut<DmxConnectionManager>;
+    type Dependencies = RefMut<ConnectionStorage>;
     type State = ArtnetInputConfig;
     type Result = ();
 
@@ -25,30 +25,28 @@ impl<'a> Command<'a> for ConfigureArtnetInputCommand {
 
     fn apply(
         &self,
-        dmx_manager: &mut DmxConnectionManager,
+        storage: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let input = dmx_manager
-            .get_input_mut(&self.id)
+        let input = storage.get_connection_by_stable_mut::<ArtnetInput>(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown input {}", self.id))?;
-        let DmxInputConnection::Artnet(input) = input;
         let previous_config = input.reconfigure(ArtnetInputConfig::new(
             self.host,
             self.port,
             self.name.clone(),
         ))?;
+        // TODO: revert new name
+        storage.rename_connection_by_stable(&self.id, self.name.clone());
 
         Ok(((), previous_config))
     }
 
     fn revert(
         &self,
-        dmx_manager: &mut DmxConnectionManager,
+        storage: &mut ConnectionStorage,
         config: Self::State,
     ) -> anyhow::Result<()> {
-        let input = dmx_manager
-            .get_input_mut(&self.id)
+        let input = storage.get_connection_by_stable_mut::<ArtnetInput>(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown input {}", self.id))?;
-        let DmxInputConnection::Artnet(input) = input;
         input.reconfigure(config)?;
 
         Ok(())

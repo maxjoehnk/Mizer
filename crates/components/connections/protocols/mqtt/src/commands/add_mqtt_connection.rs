@@ -1,7 +1,9 @@
-use crate::{MqttAddress, MqttConnectionManager};
+use crate::{MqttAddress};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
 use url::Url;
+use mizer_connection_contracts::{ConnectionId, ConnectionStorage};
+use crate::connections::MqttConnection;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AddMqttConnectionCommand {
@@ -11,9 +13,9 @@ pub struct AddMqttConnectionCommand {
 }
 
 impl<'a> Command<'a> for AddMqttConnectionCommand {
-    type Dependencies = RefMut<MqttConnectionManager>;
-    type State = String;
-    type Result = String;
+    type Dependencies = RefMut<ConnectionStorage>;
+    type State = ConnectionId;
+    type Result = ConnectionId;
 
     fn label(&self) -> String {
         format!("Add MQTT Connection '{}'", self.url)
@@ -21,27 +23,25 @@ impl<'a> Command<'a> for AddMqttConnectionCommand {
 
     fn apply(
         &self,
-        mqtt_manager: &mut MqttConnectionManager,
+        connection_storage: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let id = mqtt_manager.list_connections().len();
-        let id = format!("mqtt-{}", id);
         let url = Url::parse(&self.url)?;
         let address = MqttAddress {
             url,
             username: self.username.clone(),
             password: self.password.clone(),
         };
-        mqtt_manager.add_connection(id.clone(), address)?;
+        let id = connection_storage.acquire_new_connection::<MqttConnection>(address, None)?;
 
-        Ok((id.clone(), id))
+        Ok((id, id))
     }
 
     fn revert(
         &self,
-        mqtt_manager: &mut MqttConnectionManager,
+        connection_storage: &mut ConnectionStorage,
         id: Self::State,
     ) -> anyhow::Result<()> {
-        mqtt_manager.delete_connection(&id);
+        connection_storage.delete_connection(&id);
 
         Ok(())
     }

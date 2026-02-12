@@ -8,11 +8,13 @@ use mizer_api::proto::connections::PioneerCdjConnection;
 use mizer_api::Message;
 use mizer_devices::DeviceManager;
 use mizer_gamepads::{Axis, Button, GamepadRef, GamepadState};
+use mizer_connections::ConnectionStorageView;
 
 use crate::types::{Array, FFIFromPointer};
 
 pub struct GamepadConnectionRef(pub GamepadRef);
 pub struct ConnectionsRef(pub DeviceManager);
+pub struct ConnectionViewRef(pub ConnectionStorageView);
 
 #[no_mangle]
 pub extern "C" fn read_gamepad_state(ptr: *const GamepadConnectionRef) -> FFIGamepadState {
@@ -45,19 +47,51 @@ pub extern "C" fn read_gamepad_state(ptr: *const GamepadConnectionRef) -> FFIGam
 
 #[no_mangle]
 pub extern "C" fn read_cdj_state(ptr: *const ConnectionsRef, id: *const c_char) -> Array<u8> {
+    Vec::default().into()
+
+    // let id = unsafe { CStr::from_ptr(id) };
+    // let id = id.to_str().unwrap();
+    // let ffi = Arc::from_pointer(ptr);
+    // let cdj = ffi.0.get_cdj(id);
+    // let state = cdj.map(|cdj_ref| PioneerCdjConnection::from(cdj_ref.clone()));
+    //
+    // std::mem::forget(ffi);
+    //
+    // if let Some(state) = state {
+    //     state.encode_to_vec().into()
+    // } else {
+    //     Vec::default().into()
+    // }
+}
+
+#[no_mangle]
+pub extern "C" fn read_transmission_state(ptr: *const ConnectionViewRef, id: *const c_char) -> FFITransmissionState {
     let id = unsafe { CStr::from_ptr(id) };
     let id = id.to_str().unwrap();
     let ffi = Arc::from_pointer(ptr);
-    let cdj = ffi.0.get_cdj(id);
-    let state = cdj.map(|cdj_ref| PioneerCdjConnection::from(cdj_ref.clone()));
+    let is_sending = ffi.0.is_sending(id);
+    let is_receiving = ffi.0.is_receiving(id);
+    let state = is_sending.zip(is_receiving);
 
     std::mem::forget(ffi);
 
-    if let Some(state) = state {
-        state.encode_to_vec().into()
-    } else {
-        Vec::default().into()
+    if let Some((sending, receiving)) = state {
+        FFITransmissionState {
+            has_state: 1,
+            sending: sending.into(),
+            receiving: receiving.into(),
+        }
+    }else {
+        FFITransmissionState::default()
     }
+}
+
+#[derive(Clone, Copy, Debug, Default)]
+#[repr(C)]
+pub struct FFITransmissionState {
+    pub has_state: u8,
+    pub sending: u8,
+    pub receiving: u8,
 }
 
 fn button(state: &GamepadState, button: Button) -> u8 {

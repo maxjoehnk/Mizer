@@ -104,7 +104,8 @@ message Connections {
 }
 
 message Connection {
-  string name = 1;
+  string id = 1;
+  string name = 2;
   oneof connection {
     DmxOutputConnection dmx_output = 10;
     DmxInputConnection dmx_input = 11;

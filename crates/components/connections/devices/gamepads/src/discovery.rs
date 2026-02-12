@@ -5,17 +5,17 @@ use flume::{unbounded, Receiver, Sender};
 use futures::Stream;
 use gilrs::{EventType, GamepadId, Gilrs};
 use pinboard::NonEmptyPinboard;
-
+use mizer_connection_contracts::RemoteConnectionStorageHandle;
 use crate::{GamepadRef, GamepadState};
 
-struct GamepadDiscoveryService {
-    gilrs: Gilrs,
-    connection_sender: Sender<GamepadRef>,
-    gamepad_states: HashMap<GamepadId, Arc<NonEmptyPinboard<GamepadState>>>,
+pub(crate) struct GamepadDiscoveryService {
+    pub gilrs: Gilrs,
+    pub connection_sender: RemoteConnectionStorageHandle<GamepadRef>,
+    pub gamepad_states: HashMap<GamepadId, Arc<NonEmptyPinboard<GamepadState>>>,
 }
 
 impl GamepadDiscoveryService {
-    fn run(mut self) {
+    pub fn run(mut self) {
         for id in self.gilrs.gamepads().map(|(id, _)| id).collect::<Vec<_>>() {
             self.add_gamepad(id);
         }
@@ -25,6 +25,9 @@ impl GamepadDiscoveryService {
                 tracing::trace!("{:?}", event);
                 if event.event == EventType::Connected {
                     self.add_gamepad(event.id);
+                }
+                if event.event == EventType::Disconnected {
+
                 }
                 if let Some(gamepad_state) = self.gamepad_states.get(&event.id) {
                     let mut state = gamepad_state.read();
@@ -45,37 +48,8 @@ impl GamepadDiscoveryService {
         let state = GamepadState::new(&gamepad);
         let state = Arc::new(NonEmptyPinboard::new(state));
         self.gamepad_states.insert(id, state.clone());
-        let gamepad = GamepadRef::new(id, gamepad, state);
-        self.connection_sender.send(gamepad).unwrap();
-    }
-}
-
-pub struct GamepadDiscovery {
-    connections: Receiver<GamepadRef>,
-}
-
-impl GamepadDiscovery {
-    // As this will spawn a background thread initializing a new instance of this struct should be explicit.
-    #[allow(clippy::new_without_default)]
-    pub fn new() -> Self {
-        let (sender, receiver) = unbounded();
-        std::thread::spawn(move || {
-            let service = GamepadDiscoveryService {
-                gilrs: Gilrs::new()
-                    .map_err(|err| anyhow::anyhow!("Can't create Gamepad context {:?}", err))
-                    .unwrap(),
-                connection_sender: sender,
-                gamepad_states: Default::default(),
-            };
-            service.run();
-        });
-
-        GamepadDiscovery {
-            connections: receiver,
+        if let Err(err) = self.connection_sender.add_connection(state, Some(gamepad.name().to_string())) {
+            tracing::error!("Can't add gamepad connection: {:?}", err);
         }
-    }
-
-    pub fn into_stream(self) -> impl Stream<Item = GamepadRef> {
-        self.connections.into_stream()
     }
 }

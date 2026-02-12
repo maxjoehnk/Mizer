@@ -1,0 +1,13 @@
+[package]
+name = "mizer-connection-contracts"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+tracing = "0.1"
+anyhow = "1"
+serde = "1"
+serde_derive = "1"
+uuid = { version = "1.19", features = ["v4"] }
+dashmap = "6"

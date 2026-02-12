@@ -1,6 +1,7 @@
+use mizer_connections::ConnectionStorage;
 pub use self::input::*;
 pub use self::output::*;
-use mizer_devices::{DeviceManager, DeviceRef};
+use mizer_g13::G13Ref;
 use mizer_node::{Inject, SelectVariant};
 
 mod input;
@@ -12,16 +13,15 @@ trait G13InjectorExt {
 
 impl<T: Inject> G13InjectorExt for T {
     fn get_devices(&self) -> Vec<SelectVariant> {
-        let device_manager = self.inject::<DeviceManager>();
+        let device_manager = self.inject::<ConnectionStorage>();
 
         device_manager
-            .current_devices()
+            .query::<G13Ref>()
             .into_iter()
-            .flat_map(|device| {
-                if let DeviceRef::G13(g13) = device {
-                    Some(SelectVariant::from(g13.id))
-                } else {
-                    None
+            .map(|(id, _, _)| {
+                SelectVariant::Item {
+                    label: "G13".to_string().into(),
+                    value: id.to_stable().to_string().into(),
                 }
             })
             .collect()

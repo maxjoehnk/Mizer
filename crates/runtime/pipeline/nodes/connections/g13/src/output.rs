@@ -1,8 +1,7 @@
-use serde::{Deserialize, Serialize};
-
-use mizer_devices::DeviceManager;
+use mizer_connections::ConnectionStorage;
 use mizer_node::*;
-
+use serde::{Deserialize, Serialize};
+use mizer_g13::G13Ref;
 use crate::G13InjectorExt;
 
 const KEY_COLOR: &str = "Key Color";
@@ -61,32 +60,33 @@ impl ProcessingNode for G13OutputNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(device_manager) = context.try_inject::<DeviceManager>() {
-            if let Some(g13) = device_manager.get_g13_mut(&self.device_id) {
-                if let Some(color) = context.read_port::<_, Color>(KEY_COLOR) {
-                    g13.write_key_color(color.red, color.green, color.blue)?;
-                }
-                let m1 = context
-                    .read_port::<_, f64>(M1)
-                    .map(|value| value > 0.)
-                    .unwrap_or_default();
-                let m2 = context
-                    .read_port::<_, f64>(M2)
-                    .map(|value| value > 0.)
-                    .unwrap_or_default();
-                let m3 = context
-                    .read_port::<_, f64>(M3)
-                    .map(|value| value > 0.)
-                    .unwrap_or_default();
-                let mr = context
-                    .read_port::<_, f64>(MR)
-                    .map(|value| value > 0.)
-                    .unwrap_or_default();
-
-                g13.set_key_state(m1, m2, m3, mr)?;
+        if self.device_id.is_empty() {
+            return Ok(());
+        }
+        let connection_storage = context.inject::<ConnectionStorage>();
+        let id = self.device_id.parse()?;
+        if let Some(g13) = connection_storage.get_connection_by_stable::<G13Ref>(&id) {
+            if let Some(color) = context.read_port::<_, Color>(KEY_COLOR) {
+                g13.write_key_color(color.red, color.green, color.blue)?;
             }
-        } else {
-            anyhow::bail!("G13 Output node is missing DeviceManager");
+            let m1 = context
+                .read_port::<_, f64>(M1)
+                .map(|value| value > 0.)
+                .unwrap_or_default();
+            let m2 = context
+                .read_port::<_, f64>(M2)
+                .map(|value| value > 0.)
+                .unwrap_or_default();
+            let m3 = context
+                .read_port::<_, f64>(M3)
+                .map(|value| value > 0.)
+                .unwrap_or_default();
+            let mr = context
+                .read_port::<_, f64>(MR)
+                .map(|value| value > 0.)
+                .unwrap_or_default();
+
+            g13.set_key_state(m1, m2, m3, mr)?;
         }
         Ok(())
     }

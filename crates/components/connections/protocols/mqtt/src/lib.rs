@@ -1,9 +1,8 @@
-pub use connections::{MqttAddress, MqttConnectionManager, MqttEvent};
-pub use module::MqttModule;
+pub use connections::{MqttAddress, MqttConnectionExt, MqttEvent, MqttConnection};
 pub use subscription::MqttSubscription;
+pub use output::MqttOutput;
 
 pub mod commands;
 mod connections;
-mod module;
 mod output;
 mod subscription;

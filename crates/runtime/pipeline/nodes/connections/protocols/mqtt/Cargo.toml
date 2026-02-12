@@ -9,4 +9,5 @@ anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../../../node" }
 mizer-protocol-mqtt = { path = "../../../../../../components/connections/protocols/mqtt" }
+mizer-connections = { path = "../../../../../../components/connections" }
 mizer-util = { path = "../../../../../../util" }

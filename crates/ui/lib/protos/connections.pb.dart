@@ -1308,7 +1308,8 @@ class Connection extends $pb.GeneratedMessage {
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Connection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
     ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24])
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOM<DmxOutputConnection>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxOutput', subBuilder: DmxOutputConnection.create)
     ..aOM<DmxInputConnection>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxInput', subBuilder: DmxInputConnection.create)
     ..aOM<MidiConnection>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midi', subBuilder: MidiConnection.create)
@@ -1329,6 +1330,7 @@ class Connection extends $pb.GeneratedMessage {
 
   Connection._() : super();
   factory Connection({
+    $core.String? id,
     $core.String? name,
     DmxOutputConnection? dmxOutput,
     DmxInputConnection? dmxInput,
@@ -1347,6 +1349,9 @@ class Connection extends $pb.GeneratedMessage {
     TraktorKontrolX1Connection? x1,
   }) {
     final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
     if (name != null) {
       _result.name = name;
     }
@@ -1422,178 +1427,187 @@ class Connection extends $pb.GeneratedMessage {
   void clearConnection() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $core.String get name => $_getSZ(0);
+  $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) { $_setString(0, v); }
+  set id($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasName() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
 
   @$pb.TagNumber(10)
-  DmxOutputConnection get dmxOutput => $_getN(1);
+  DmxOutputConnection get dmxOutput => $_getN(2);
   @$pb.TagNumber(10)
   set dmxOutput(DmxOutputConnection v) { setField(10, v); }
   @$pb.TagNumber(10)
-  $core.bool hasDmxOutput() => $_has(1);
+  $core.bool hasDmxOutput() => $_has(2);
   @$pb.TagNumber(10)
   void clearDmxOutput() => clearField(10);
   @$pb.TagNumber(10)
-  DmxOutputConnection ensureDmxOutput() => $_ensure(1);
+  DmxOutputConnection ensureDmxOutput() => $_ensure(2);
 
   @$pb.TagNumber(11)
-  DmxInputConnection get dmxInput => $_getN(2);
+  DmxInputConnection get dmxInput => $_getN(3);
   @$pb.TagNumber(11)
   set dmxInput(DmxInputConnection v) { setField(11, v); }
   @$pb.TagNumber(11)
-  $core.bool hasDmxInput() => $_has(2);
+  $core.bool hasDmxInput() => $_has(3);
   @$pb.TagNumber(11)
   void clearDmxInput() => clearField(11);
   @$pb.TagNumber(11)
-  DmxInputConnection ensureDmxInput() => $_ensure(2);
+  DmxInputConnection ensureDmxInput() => $_ensure(3);
 
   @$pb.TagNumber(12)
-  MidiConnection get midi => $_getN(3);
+  MidiConnection get midi => $_getN(4);
   @$pb.TagNumber(12)
   set midi(MidiConnection v) { setField(12, v); }
   @$pb.TagNumber(12)
-  $core.bool hasMidi() => $_has(3);
+  $core.bool hasMidi() => $_has(4);
   @$pb.TagNumber(12)
   void clearMidi() => clearField(12);
   @$pb.TagNumber(12)
-  MidiConnection ensureMidi() => $_ensure(3);
+  MidiConnection ensureMidi() => $_ensure(4);
 
   @$pb.TagNumber(13)
-  OscConnection get osc => $_getN(4);
+  OscConnection get osc => $_getN(5);
   @$pb.TagNumber(13)
   set osc(OscConnection v) { setField(13, v); }
   @$pb.TagNumber(13)
-  $core.bool hasOsc() => $_has(4);
+  $core.bool hasOsc() => $_has(5);
   @$pb.TagNumber(13)
   void clearOsc() => clearField(13);
   @$pb.TagNumber(13)
-  OscConnection ensureOsc() => $_ensure(4);
+  OscConnection ensureOsc() => $_ensure(5);
 
   @$pb.TagNumber(14)
-  HeliosConnection get helios => $_getN(5);
+  HeliosConnection get helios => $_getN(6);
   @$pb.TagNumber(14)
   set helios(HeliosConnection v) { setField(14, v); }
   @$pb.TagNumber(14)
-  $core.bool hasHelios() => $_has(5);
+  $core.bool hasHelios() => $_has(6);
   @$pb.TagNumber(14)
   void clearHelios() => clearField(14);
   @$pb.TagNumber(14)
-  HeliosConnection ensureHelios() => $_ensure(5);
+  HeliosConnection ensureHelios() => $_ensure(6);
 
   @$pb.TagNumber(15)
-  EtherDreamConnection get etherDream => $_getN(6);
+  EtherDreamConnection get etherDream => $_getN(7);
   @$pb.TagNumber(15)
   set etherDream(EtherDreamConnection v) { setField(15, v); }
   @$pb.TagNumber(15)
-  $core.bool hasEtherDream() => $_has(6);
+  $core.bool hasEtherDream() => $_has(7);
   @$pb.TagNumber(15)
   void clearEtherDream() => clearField(15);
   @$pb.TagNumber(15)
-  EtherDreamConnection ensureEtherDream() => $_ensure(6);
+  EtherDreamConnection ensureEtherDream() => $_ensure(7);
 
   @$pb.TagNumber(16)
-  GamepadConnection get gamepad => $_getN(7);
+  GamepadConnection get gamepad => $_getN(8);
   @$pb.TagNumber(16)
   set gamepad(GamepadConnection v) { setField(16, v); }
   @$pb.TagNumber(16)
-  $core.bool hasGamepad() => $_has(7);
+  $core.bool hasGamepad() => $_has(8);
   @$pb.TagNumber(16)
   void clearGamepad() => clearField(16);
   @$pb.TagNumber(16)
-  GamepadConnection ensureGamepad() => $_ensure(7);
+  GamepadConnection ensureGamepad() => $_ensure(8);
 
   @$pb.TagNumber(17)
-  MqttConnection get mqtt => $_getN(8);
+  MqttConnection get mqtt => $_getN(9);
   @$pb.TagNumber(17)
   set mqtt(MqttConnection v) { setField(17, v); }
   @$pb.TagNumber(17)
-  $core.bool hasMqtt() => $_has(8);
+  $core.bool hasMqtt() => $_has(9);
   @$pb.TagNumber(17)
   void clearMqtt() => clearField(17);
   @$pb.TagNumber(17)
-  MqttConnection ensureMqtt() => $_ensure(8);
+  MqttConnection ensureMqtt() => $_ensure(9);
 
   @$pb.TagNumber(18)
-  G13Connection get g13 => $_getN(9);
+  G13Connection get g13 => $_getN(10);
   @$pb.TagNumber(18)
   set g13(G13Connection v) { setField(18, v); }
   @$pb.TagNumber(18)
-  $core.bool hasG13() => $_has(9);
+  $core.bool hasG13() => $_has(10);
   @$pb.TagNumber(18)
   void clearG13() => clearField(18);
   @$pb.TagNumber(18)
-  G13Connection ensureG13() => $_ensure(9);
+  G13Connection ensureG13() => $_ensure(10);
 
   @$pb.TagNumber(19)
-  WebcamConnection get webcam => $_getN(10);
+  WebcamConnection get webcam => $_getN(11);
   @$pb.TagNumber(19)
   set webcam(WebcamConnection v) { setField(19, v); }
   @$pb.TagNumber(19)
-  $core.bool hasWebcam() => $_has(10);
+  $core.bool hasWebcam() => $_has(11);
   @$pb.TagNumber(19)
   void clearWebcam() => clearField(19);
   @$pb.TagNumber(19)
-  WebcamConnection ensureWebcam() => $_ensure(10);
+  WebcamConnection ensureWebcam() => $_ensure(11);
 
   @$pb.TagNumber(20)
-  PioneerCdjConnection get cdj => $_getN(11);
+  PioneerCdjConnection get cdj => $_getN(12);
   @$pb.TagNumber(20)
   set cdj(PioneerCdjConnection v) { setField(20, v); }
   @$pb.TagNumber(20)
-  $core.bool hasCdj() => $_has(11);
+  $core.bool hasCdj() => $_has(12);
   @$pb.TagNumber(20)
   void clearCdj() => clearField(20);
   @$pb.TagNumber(20)
-  PioneerCdjConnection ensureCdj() => $_ensure(11);
+  PioneerCdjConnection ensureCdj() => $_ensure(12);
 
   @$pb.TagNumber(21)
-  PioneerDjmConnection get djm => $_getN(12);
+  PioneerDjmConnection get djm => $_getN(13);
   @$pb.TagNumber(21)
   set djm(PioneerDjmConnection v) { setField(21, v); }
   @$pb.TagNumber(21)
-  $core.bool hasDjm() => $_has(12);
+  $core.bool hasDjm() => $_has(13);
   @$pb.TagNumber(21)
   void clearDjm() => clearField(21);
   @$pb.TagNumber(21)
-  PioneerDjmConnection ensureDjm() => $_ensure(12);
+  PioneerDjmConnection ensureDjm() => $_ensure(13);
 
   @$pb.TagNumber(22)
-  NdiSourceConnection get ndiSource => $_getN(13);
+  NdiSourceConnection get ndiSource => $_getN(14);
   @$pb.TagNumber(22)
   set ndiSource(NdiSourceConnection v) { setField(22, v); }
   @$pb.TagNumber(22)
-  $core.bool hasNdiSource() => $_has(13);
+  $core.bool hasNdiSource() => $_has(14);
   @$pb.TagNumber(22)
   void clearNdiSource() => clearField(22);
   @$pb.TagNumber(22)
-  NdiSourceConnection ensureNdiSource() => $_ensure(13);
+  NdiSourceConnection ensureNdiSource() => $_ensure(14);
 
   @$pb.TagNumber(23)
-  CitpConnection get citp => $_getN(14);
+  CitpConnection get citp => $_getN(15);
   @$pb.TagNumber(23)
   set citp(CitpConnection v) { setField(23, v); }
   @$pb.TagNumber(23)
-  $core.bool hasCitp() => $_has(14);
+  $core.bool hasCitp() => $_has(15);
   @$pb.TagNumber(23)
   void clearCitp() => clearField(23);
   @$pb.TagNumber(23)
-  CitpConnection ensureCitp() => $_ensure(14);
+  CitpConnection ensureCitp() => $_ensure(15);
 
   @$pb.TagNumber(24)
-  TraktorKontrolX1Connection get x1 => $_getN(15);
+  TraktorKontrolX1Connection get x1 => $_getN(16);
   @$pb.TagNumber(24)
   set x1(TraktorKontrolX1Connection v) { setField(24, v); }
   @$pb.TagNumber(24)
-  $core.bool hasX1() => $_has(15);
+  $core.bool hasX1() => $_has(16);
   @$pb.TagNumber(24)
   void clearX1() => clearField(24);
   @$pb.TagNumber(24)
-  TraktorKontrolX1Connection ensureX1() => $_ensure(15);
+  TraktorKontrolX1Connection ensureX1() => $_ensure(16);
 }
 
 enum DmxOutputConnection_Config {

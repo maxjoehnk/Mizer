@@ -21,6 +21,7 @@ mizer-fixtures = { path = "../components/fixtures" }
 mizer-sequencer = { path = "../components/sequencer" }
 mizer-plan = { path = "../components/plan" }
 mizer-timecode = { path = "../components/timecode" }
+mizer-connections = { path = "../components/connections" }
 mizer-protocol-dmx = { path = "../components/connections/protocols/dmx" }
 mizer-protocol-mqtt = { path = "../components/connections/protocols/mqtt" }
 mizer-protocol-osc = { path = "../components/connections/protocols/osc" }
@@ -31,6 +32,7 @@ indexmap = { version = "2.2", features = ["serde"] }
 enum_dispatch = "0.3"
 enum-iterator = "2.0"
 profiling = "1.0"
+itertools = "0.14"
 
 [dev-dependencies]
 test-case = "3.3"

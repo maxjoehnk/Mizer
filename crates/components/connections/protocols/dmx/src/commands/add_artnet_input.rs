@@ -3,8 +3,8 @@ use std::net::Ipv4Addr;
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, RefMut};
-
-use crate::{ArtnetInput, DmxConnectionManager};
+use mizer_connection_contracts::{ConnectionId, ConnectionStorage};
+use crate::{ArtnetInput, ArtnetInputConfig};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AddArtnetInputCommand {
@@ -14,8 +14,8 @@ pub struct AddArtnetInputCommand {
 }
 
 impl<'a> Command<'a> for AddArtnetInputCommand {
-    type Dependencies = RefMut<DmxConnectionManager>;
-    type State = String;
+    type Dependencies = RefMut<ConnectionStorage>;
+    type State = ConnectionId;
     type Result = ();
 
     fn label(&self) -> String {
@@ -24,23 +24,23 @@ impl<'a> Command<'a> for AddArtnetInputCommand {
 
     fn apply(
         &self,
-        dmx_manager: &mut DmxConnectionManager,
+        connection_storage: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let input = ArtnetInput::new(self.host.clone(), self.port, self.name.clone())?;
-        let id = format!("dmx-input-{}", dmx_manager.list_inputs().len());
-        dmx_manager.add_input(id.clone(), input);
+        let id = connection_storage.acquire_new_connection::<ArtnetInput>(ArtnetInputConfig {
+            name: self.name.clone(),
+            host: self.host,
+            port: self.port.unwrap_or(6454),
+        }, Some(self.name.clone()))?;
 
         Ok(((), id))
     }
 
     fn revert(
         &self,
-        dmx_manager: &mut DmxConnectionManager,
+        connection_storage: &mut ConnectionStorage,
         id: Self::State,
     ) -> anyhow::Result<()> {
-        dmx_manager
-            .delete_input(&id)
-            .ok_or_else(|| anyhow::anyhow!("Unknown input {id}"))?;
+        connection_storage.delete_connection(&id).ok_or_else(|| anyhow::anyhow!("Unknown input {id}"))?;
 
         Ok(())
     }

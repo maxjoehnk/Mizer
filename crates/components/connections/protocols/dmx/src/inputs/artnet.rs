@@ -7,7 +7,7 @@ use artnet_protocol::{ArtCommand, Output, Poll};
 use dashmap::DashMap;
 use flume::{Receiver, Sender, TryRecvError};
 use tokio::net::UdpSocket;
-
+use mizer_connection_contracts::{IConnection, TransmissionStateSender};
 use super::DmxInput;
 
 #[derive(Debug)]
@@ -26,17 +26,31 @@ pub struct ArtnetInputConfig {
 impl ArtnetInputConfig {
     pub fn new(host: Ipv4Addr, port: Option<u16>, name: String) -> Self {
         Self {
+            name,
             host,
             port: port.unwrap_or(6454),
-            name,
         }
     }
 }
 
+impl IConnection for ArtnetInput {
+    type Config = ArtnetInputConfig;
+    const TYPE: &'static str = "";
+
+    fn create(config: Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        let thread_handle = ArtnetInputThread::spawn(config.clone(), transmission_sender)?;
+
+        Ok(Self {
+            config,
+            thread_handle,
+        })
+    }
+}
+
 impl ArtnetInput {
-    pub fn new(host: Ipv4Addr, port: Option<u16>, name: String) -> anyhow::Result<Self> {
+    pub fn new(host: Ipv4Addr, port: Option<u16>, name: String, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
         let config = ArtnetInputConfig::new(host, port, name);
-        let thread_handle = ArtnetInputThread::spawn(config.clone())?;
+        let thread_handle = ArtnetInputThread::spawn(config.clone(), transmission_sender)?;
 
         Ok(Self {
             config,
@@ -56,10 +70,6 @@ impl ArtnetInput {
 }
 
 impl DmxInput for ArtnetInput {
-    fn name(&self) -> String {
-        self.config.name.clone()
-    }
-
     fn read_single(&self, universe: u16, channel: u16) -> Option<u8> {
         self.thread_handle
             .buffer
@@ -109,10 +119,11 @@ struct ArtnetInputThread {
     config: ArtnetInputConfig,
     buffer: Arc<DashMap<u16, [u8; 512]>>,
     receiver: Receiver<ThreadMessage>,
+    transmission_sender: TransmissionStateSender,
 }
 
 impl ArtnetInputThread {
-    fn spawn(config: ArtnetInputConfig) -> anyhow::Result<ThreadHandle> {
+    fn spawn(config: ArtnetInputConfig, transmission_state_sender: TransmissionStateSender) -> anyhow::Result<ThreadHandle> {
         let buffer = DashMap::new();
         let buffer = Arc::new(buffer);
         let (sender, receiver) = flume::bounded(20);
@@ -121,7 +132,7 @@ impl ArtnetInputThread {
             .name("ArtnetInputThread".into())
             .spawn(move || {
                 // TODO: handle crashes
-                if let Err(err) = Self::start(config, send_buffer, receiver) {
+                if let Err(err) = Self::start(config, send_buffer, receiver, transmission_state_sender) {
                     tracing::error!(err = %err, "ArtnetInputThread crashed");
                 }
             })?;
@@ -137,6 +148,7 @@ impl ArtnetInputThread {
         config: ArtnetInputConfig,
         buffer: Arc<DashMap<u16, [u8; 512]>>,
         receiver: Receiver<ThreadMessage>,
+        transmission_sender: TransmissionStateSender,
     ) -> anyhow::Result<()> {
         let runtime = tokio::runtime::Builder::new_current_thread()
             .enable_io()
@@ -146,6 +158,7 @@ impl ArtnetInputThread {
             config,
             buffer,
             receiver,
+            transmission_sender,
         };
 
         runtime.block_on(runner.run())
@@ -173,19 +186,22 @@ impl ArtnetInputThread {
             match socket.try_recv_buf(&mut buffer) {
                 Err(err) if err.kind() == std::io::ErrorKind::WouldBlock => continue,
                 Err(err) => tracing::error!(err = %err, "Error receiving artnet message"),
-                Ok(bytes) => match ArtCommand::from_buffer(&buffer[0..bytes]) {
-                    Err(err) => tracing::error!(err = %err, "Unable to decode artnet message"),
-                    Ok(ArtCommand::Output(msg)) => {
-                        if let Err(err) = self.output(msg).await {
-                            tracing::error!(err = %err, "Unable to handle output message");
+                Ok(bytes) => {
+                    self.transmission_sender.received_packet();
+                    match ArtCommand::from_buffer(&buffer[0..bytes]) {
+                        Err(err) => tracing::error!(err = %err, "Unable to decode artnet message"),
+                        Ok(ArtCommand::Output(msg)) => {
+                            if let Err(err) = self.output(msg).await {
+                                tracing::error!(err = %err, "Unable to handle output message");
+                            }
                         }
-                    }
-                    Ok(ArtCommand::Poll(poll)) => {
-                        if let Err(err) = self.poll(&socket, poll).await {
-                            tracing::error!(err = %err, "Unable to respond to poll request");
+                        Ok(ArtCommand::Poll(poll)) => {
+                            if let Err(err) = self.poll(&socket, poll).await {
+                                tracing::error!(err = %err, "Unable to respond to poll request");
+                            }
                         }
+                        Ok(msg) => tracing::debug!("Ignoring unimplemented message {msg:?}"),
                     }
-                    Ok(msg) => tracing::debug!("Ignoring unimplemented message {msg:?}"),
                 },
             }
         }

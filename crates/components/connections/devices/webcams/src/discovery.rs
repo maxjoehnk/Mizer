@@ -1,16 +1,15 @@
 use crate::WebcamRef;
-use flume::{unbounded, Receiver, Sender};
-use futures::Stream;
 use nokhwa::utils::ApiBackend;
 use nokhwa::{nokhwa_check, nokhwa_initialize};
+use mizer_connection_contracts::RemoteConnectionStorageHandle;
 
 struct DiscoveryService {
     backend: ApiBackend,
-    sender: Sender<WebcamRef>,
+    sender: RemoteConnectionStorageHandle<WebcamRef>,
 }
 
 impl DiscoveryService {
-    fn new(sender: Sender<WebcamRef>) -> Self {
+    fn new(sender: RemoteConnectionStorageHandle<WebcamRef>) -> Self {
         let backend = nokhwa::native_api_backend().unwrap();
 
         Self { backend, sender }
@@ -27,8 +26,8 @@ impl DiscoveryService {
                         "Webcam connected: {:?}",
                         camera.human_name()
                     );
-                    let camera = WebcamRef::new(camera);
-                    if let Err(err) = self.sender.send(camera) {
+                    let name = camera.human_name();
+                    if let Err(err) = self.sender.add_connection(camera, Some(name)) {
                         tracing::error!("Unable to notify of new device {err:?}");
                     }
                 }
@@ -38,33 +37,19 @@ impl DiscoveryService {
     }
 }
 
-pub struct WebcamDiscovery {
-    cameras: Receiver<WebcamRef>,
-}
-
-impl WebcamDiscovery {
-    pub fn new() -> Self {
-        let (sender, receiver) = unbounded();
-
-        if !nokhwa_check() {
-            nokhwa_initialize(move |success| {
-                if success {
-                    start_discovery(sender.clone());
-                }
-            })
-        } else {
-            start_discovery(sender);
-        }
-
-        Self { cameras: receiver }
-    }
-
-    pub fn into_stream(self) -> impl Stream<Item = WebcamRef> {
-        self.cameras.into_stream()
+pub fn discover_devices(handle: RemoteConnectionStorageHandle<WebcamRef>) {
+    if !nokhwa_check() {
+        nokhwa_initialize(move |success| {
+            if success {
+                start_discovery(handle.clone());
+            }
+        })
+    } else {
+        start_discovery(handle);
     }
 }
 
-fn start_discovery(sender: Sender<WebcamRef>) {
+fn start_discovery(sender: RemoteConnectionStorageHandle<WebcamRef>) {
     std::thread::spawn(move || {
         let service = DiscoveryService::new(sender);
 

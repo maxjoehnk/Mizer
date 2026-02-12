@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, RefMut};
-
-use crate::{DmxConnectionManager, SacnOutput};
+use mizer_connection_contracts::{ConnectionId, ConnectionStorage};
+use crate::SacnOutput;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AddSacnOutputCommand {
@@ -11,28 +11,27 @@ pub struct AddSacnOutputCommand {
 }
 
 impl<'a> Command<'a> for AddSacnOutputCommand {
-    type Dependencies = RefMut<DmxConnectionManager>;
-    type State = ();
+    type Dependencies = RefMut<ConnectionStorage>;
+    type State = ConnectionId;
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Add Artnet Connection '{}'", self.name)
+        format!("Add Sacn Connection '{}'", self.name)
     }
 
     fn apply(
         &self,
-        dmx_manager: &mut DmxConnectionManager,
+        dmx_manager: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let output = SacnOutput::new(Some(self.priority));
-        dmx_manager.add_output(self.name.clone(), output);
+        let connection_id = dmx_manager.acquire_new_connection::<SacnOutput>(Some(self.priority), Some(self.name.clone()))?;
 
-        Ok(((), ()))
+        Ok(((), connection_id))
     }
 
-    fn revert(&self, dmx_manager: &mut DmxConnectionManager, _: Self::State) -> anyhow::Result<()> {
+    fn revert(&self, dmx_manager: &mut ConnectionStorage, connection_id: Self::State) -> anyhow::Result<()> {
         dmx_manager
-            .delete_output(&self.name)
-            .ok_or_else(|| anyhow::anyhow!("Unknown output {}", self.name))?;
+            .delete_connection(&connection_id)
+            .ok_or_else(|| anyhow::anyhow!("Unknown output {connection_id}"))?;
 
         Ok(())
     }

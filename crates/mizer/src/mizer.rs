@@ -4,6 +4,7 @@ use std::time::Duration;
 use anyhow::Context;
 
 use mizer_api::handlers::Handlers;
+use mizer_connections::ConnectionStorage;
 use mizer_console::ConsoleCategory;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::{MediaDiscovery, MediaServer};
@@ -11,9 +12,6 @@ use mizer_message_bus::MessageBus;
 use mizer_module::Runtime;
 use mizer_processing::{Inject, InjectMut};
 use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
-use mizer_protocol_dmx::*;
-use mizer_protocol_mqtt::MqttConnectionManager;
-use mizer_protocol_osc::OscConnectionManager;
 use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectEngine, Sequencer};
 use mizer_session::SessionState;
@@ -84,12 +82,8 @@ impl Mizer {
             sequencer.new_project();
             let timecode_manager = injector.inject::<TimecodeManager>();
             timecode_manager.new_project();
-            let dmx_manager = injector.inject_mut::<DmxConnectionManager>();
-            dmx_manager.new_project();
-            let mqtt_manager = injector.inject_mut::<MqttConnectionManager>();
-            mqtt_manager.new_project();
-            let osc_manager = injector.inject_mut::<OscConnectionManager>();
-            osc_manager.new_project();
+            let connection_storage = injector.inject_mut::<ConnectionStorage>();
+            connection_storage.new_project();
             let surface_registry = injector.inject_mut::<SurfaceRegistry>();
             surface_registry.new_project();
         }
@@ -129,18 +123,10 @@ impl Mizer {
                 timecode_manager
                     .load(&project)
                     .context("loading timecodes")?;
-                let dmx_manager = scope.inject_mut::<DmxConnectionManager>();
-                dmx_manager
+                let connection_storage = injector.inject_mut::<ConnectionStorage>();
+                connection_storage
                     .load(&project)
-                    .context("loading dmx connections")?;
-                let mqtt_manager = scope.inject_mut::<MqttConnectionManager>();
-                mqtt_manager
-                    .load(&project)
-                    .context("loading mqtt connections")?;
-                let osc_manager = scope.inject_mut::<OscConnectionManager>();
-                osc_manager
-                    .load(&project)
-                    .context("loading osc connections")?;
+                    .context("loading connections")?;
                 let surface_registry = scope.inject_mut::<SurfaceRegistry>();
                 surface_registry
                     .load(&project)
@@ -201,13 +187,9 @@ impl Mizer {
             let scope = self.runtime.injector();
             let fixture_manager = scope.inject::<FixtureManager>();
             fixture_manager.save(&mut project);
-            let dmx_manager = scope.inject::<DmxConnectionManager>();
+            let dmx_manager = scope.inject::<ConnectionStorage>();
             dmx_manager.save(&mut project);
-            let mqtt_manager = scope.inject::<MqttConnectionManager>();
-            mqtt_manager.save(&mut project);
-            let osc_manager = scope.inject::<OscConnectionManager>();
-            osc_manager.save(&mut project);
-            let sequencer = scope.inject::<Sequencer>();
+            let sequencer = injector.inject::<Sequencer>();
             sequencer.save(&mut project);
             let timecode_manager = scope.inject::<TimecodeManager>();
             timecode_manager.save(&mut project);
@@ -238,13 +220,9 @@ impl Mizer {
         let scope = self.runtime.injector();
         let fixture_manager = scope.inject::<FixtureManager>();
         fixture_manager.clear();
-        let dmx_manager = scope.inject_mut::<DmxConnectionManager>();
+        let dmx_manager = scope.inject_mut::<ConnectionStorage>();
         dmx_manager.clear();
-        let mqtt_manager = scope.inject_mut::<MqttConnectionManager>();
-        mqtt_manager.clear();
-        let osc_manager = scope.inject_mut::<OscConnectionManager>();
-        osc_manager.clear();
-        let sequencer = scope.inject::<Sequencer>();
+        let sequencer = injector.inject::<Sequencer>();
         sequencer.clear();
         let timecode_manager = scope.inject::<TimecodeManager>();
         timecode_manager.clear();

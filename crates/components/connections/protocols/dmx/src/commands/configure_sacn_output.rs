@@ -1,19 +1,19 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, RefMut};
-
-use crate::{DmxConnectionManager, DmxOutputConnection, SacnOutput};
+use mizer_connection_contracts::{ConnectionStorage, StableConnectionId};
+use crate::{SacnOutput};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ConfigureSacnOutputCommand {
-    pub id: String,
+    pub id: StableConnectionId,
     pub name: String,
     pub priority: u8,
 }
 
 impl<'a> Command<'a> for ConfigureSacnOutputCommand {
-    type Dependencies = RefMut<DmxConnectionManager>;
-    type State = SacnOutput;
+    type Dependencies = RefMut<ConnectionStorage>;
+    type State = u8;
     type Result = ();
 
     fn label(&self) -> String {
@@ -22,36 +22,28 @@ impl<'a> Command<'a> for ConfigureSacnOutputCommand {
 
     fn apply(
         &self,
-        dmx_manager: &mut DmxConnectionManager,
+        storage: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let output = dmx_manager
-            .get_output(&self.id)
+        let connection = storage
+            .get_connection_by_stable_mut::<SacnOutput>(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown output {}", self.id))?;
-        if let DmxOutputConnection::Sacn(_) = output {
-            let new_output = SacnOutput::new(Some(self.priority));
-            let output = dmx_manager.delete_output(&self.id).unwrap();
-            let output = if let DmxOutputConnection::Sacn(output) = output {
-                output
-            } else {
-                unreachable!()
-            };
-            dmx_manager.add_output(self.name.clone(), new_output);
 
-            Ok(((), output))
-        } else {
-            anyhow::bail!("Invalid output type");
-        }
+        let state = connection.reconfigure(self.priority);
+        // TODO: revert new name
+        storage.rename_connection_by_stable(&self.id, self.name.clone());
+
+        Ok(((), state))
     }
 
     fn revert(
         &self,
-        dmx_manager: &mut DmxConnectionManager,
-        output: Self::State,
+        storage: &mut ConnectionStorage,
+        state: Self::State,
     ) -> anyhow::Result<()> {
-        dmx_manager
-            .delete_output(&self.name)
+        let connection = storage
+            .get_connection_by_stable_mut::<SacnOutput>(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown output {}", self.id))?;
-        dmx_manager.add_output(self.id.clone(), output);
+        connection.reconfigure(state);
 
         Ok(())
     }

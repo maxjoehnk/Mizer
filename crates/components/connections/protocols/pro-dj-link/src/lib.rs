@@ -1,45 +1,14 @@
 use std::net::Ipv4Addr;
-use std::ops::{Deref, DerefMut};
 use std::time::Instant;
 
-use enum_dispatch::enum_dispatch;
-use pro_dj_link::Speed;
+use pro_dj_link::{Speed};
 
 pub use discovery::*;
+use mizer_connection_contracts::{ConnectionStorage, IConnection, TransmissionStateSender};
+pub use module::*;
 
+mod module;
 mod discovery;
-
-#[enum_dispatch]
-#[derive(Debug, Clone)]
-pub enum ProDJLinkDevice {
-    CDJ(CDJView),
-    DJM(DJMView),
-}
-
-impl Deref for ProDJLinkDevice {
-    type Target = DeviceView;
-
-    fn deref(&self) -> &Self::Target {
-        match self {
-            Self::CDJ(view) => &view.device,
-            Self::DJM(view) => &view.device,
-        }
-    }
-}
-
-impl DerefMut for ProDJLinkDevice {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        match self {
-            Self::CDJ(view) => &mut view.device,
-            Self::DJM(view) => &mut view.device,
-        }
-    }
-}
-
-#[enum_dispatch(ProDJLinkDevice)]
-pub trait Device {
-    fn is_online(&self) -> bool;
-}
 
 #[derive(Debug, Clone)]
 pub struct DeviceView {
@@ -64,12 +33,21 @@ pub struct CDJView {
     pub state: pro_dj_link::State,
 }
 
-impl CDJView {
-    pub fn id(&self) -> String {
-        let id = self.device.id();
-        format!("cdj-{id}")
-    }
+impl IConnection for CDJView {
+    type Config = DeviceView;
+    const TYPE: &'static str = "cdj";
 
+    fn create(device: Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        Ok(CDJView {
+            device,
+            speed: Default::default(),
+            beat: 1,
+            state: Default::default(),
+        })
+    }
+}
+
+impl CDJView {
     pub fn original_bpm(&self) -> i16 {
         self.speed.original
     }
@@ -91,7 +69,7 @@ impl CDJView {
     }
 }
 
-impl Device for CDJView {
+impl CDJView {
     fn is_online(&self) -> bool {
         self.device.last_ping.elapsed().as_secs() < 5
     }
@@ -102,15 +80,39 @@ pub struct DJMView {
     pub device: DeviceView,
 }
 
-impl DJMView {
-    pub fn id(&self) -> String {
-        let id = self.device.id();
-        format!("djm-{id}")
+impl IConnection for DJMView {
+    type Config = DeviceView;
+    const TYPE: &'static str = "djm";
+
+    fn create(device: Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        Ok(Self { device })
     }
 }
 
-impl Device for DJMView {
+impl DJMView {
     fn is_online(&self) -> bool {
         self.device.last_ping.elapsed().as_secs() < 5
+    }
+}
+
+pub trait ProDjLinkExt {
+    fn get_djm(&self) -> Option<DJMView>;
+    fn get_cdj(&self, id: u8) -> Option<CDJView>;
+}
+
+impl ProDjLinkExt for ConnectionStorage {
+    fn get_djm(&self) -> Option<DJMView> {
+        self.query::<DJMView>()
+            .into_iter()
+            .map(|(_, _, djm)| djm.clone())
+            .next()
+    }
+
+    fn get_cdj(&self, id: u8) -> Option<CDJView> {
+        self.query::<CDJView>()
+            .into_iter()
+            .filter(|(_, _, cdj)| cdj.device.device_id == id)
+            .map(|(_, _, cdj)| cdj.clone())
+            .next()
     }
 }

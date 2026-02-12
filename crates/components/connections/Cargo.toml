@@ -12,6 +12,15 @@ derive_more = { version = "2.0", features = ["from"] }
 mizer-protocol-citp = { path = "./protocols/citp" }
 mizer-protocol-dmx = { path = "./protocols/dmx" }
 mizer-protocol-midi = { path = "./protocols/midi" }
+mizer-protocol-mqtt = { path = "./protocols/mqtt" }
 mizer-protocol-osc = { path = "./protocols/osc" }
 mizer-protocol-pro-dj-link = { path = "./protocols/pro-dj-link" }
+mizer-protocol-laser = { path = "./protocols/laser" }
+mizer-g13 = { path = "./devices/g13" }
+mizer-traktor-kontrol-x1 = { path = "./devices/traktor-kontrol-x1" }
+mizer-gamepads = { path = "./devices/gamepads" }
+mizer-ndi = { path = "./devices/ndi" }
 mizer-devices = { path = "./devices" }
+mizer-webcams = { path = "./devices/webcams" }
+mizer-connection-contracts = { path = "./contracts" }
+mizer-module = { path = "../../runtime/module" }

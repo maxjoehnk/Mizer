@@ -134,7 +134,9 @@ impl TraktorX1Discovery {
     pub fn new() -> anyhow::Result<Self> {
         let (sender, receiver) = unbounded();
         let service = X1DiscoveryService::new(sender)?;
-        std::thread::spawn(move || service.run());
+        std::thread::Builder::new()
+            .name("Traktor X1 Discovery".to_string())
+            .spawn(move || service.run())?;
 
         Ok(Self { devices: receiver })
     }

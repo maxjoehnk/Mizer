@@ -2,21 +2,37 @@ use super::DmxOutput;
 use crate::buffer::DmxBuffer;
 use std::convert::TryFrom;
 use std::net::{SocketAddr, ToSocketAddrs, UdpSocket};
+use mizer_connection_contracts::{IConnection, TransmissionStateSender};
 
 pub struct ArtnetOutput {
     socket: UdpSocket,
     pub host: String,
     pub port: u16,
+    transmission_sender: TransmissionStateSender,
 }
 
-impl ArtnetOutput {
-    pub fn new(host: String, port: Option<u16>) -> anyhow::Result<Self> {
+impl IConnection for ArtnetOutput {
+    type Config = (String, Option<u16>);
+    const TYPE: &'static str = "dmx";
+
+    fn create((host, port): Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
         let port = port.unwrap_or(6454);
         let socket = UdpSocket::bind(("0.0.0.0", 0))?;
         socket.set_nonblocking(true)?;
         socket.set_broadcast(true)?;
 
-        Ok(ArtnetOutput { socket, host, port })
+        Ok(ArtnetOutput { socket, host, port, transmission_sender })
+    }
+}
+
+impl ArtnetOutput {
+    pub(crate) fn reconfigure(&mut self, host: String, port: Option<u16>) -> (String, u16) {
+        let mut old_host = host;
+        let mut old_port = port.unwrap_or(6454);
+        std::mem::swap(&mut self.host, &mut old_host);
+        std::mem::swap(&mut self.port, &mut old_port);
+
+        (old_host, old_port)
     }
 
     fn parse_addr(&self) -> anyhow::Result<SocketAddr> {
@@ -57,6 +73,8 @@ impl DmxOutput for ArtnetOutput {
 
             if let Err(err) = self.socket.send_to(&msg, broadcast_addr) {
                 tracing::error!("Unable to send to artnet server {:?}", err);
+            }else {
+                self.transmission_sender.sent_packet();
             }
         }
     }

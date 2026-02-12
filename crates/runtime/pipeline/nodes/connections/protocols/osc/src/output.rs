@@ -1,7 +1,8 @@
+use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_protocol_osc::*;
+use mizer_connections::{ConnectionStorage, OscConnectionExt, StableConnectionId, OscType, OscMessage, OscColor};
 use mizer_util::{ConvertBytes, StructuredData};
 
 use crate::argument_type::OscArgumentType;
@@ -92,12 +93,9 @@ impl ProcessingNode for OscOutputNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
-        let connection_manager = context.try_inject::<OscConnectionManager>();
-        if connection_manager.is_none() {
-            anyhow::bail!("Missing osc module");
-        }
-        let connection_manager = connection_manager.unwrap();
-        let output = connection_manager.get_output(&self.connection);
+        let connection_manager = context.inject::<ConnectionStorage>();
+        let stable_id = StableConnectionId::from_str(&self.connection)?;
+        let output = connection_manager.get_output(&stable_id);
         if output.is_none() {
             return Ok(());
         }
@@ -174,15 +172,15 @@ fn map_data_to_osc(data: StructuredData) -> Vec<OscType> {
         StructuredData::Boolean(boolean) => vec![OscType::Bool(boolean)],
         StructuredData::Float(number) => vec![OscType::Double(number)],
         StructuredData::Int(number) => vec![OscType::Long(number)],
-        StructuredData::Array(items) => items.into_iter().map(map_data_to_osc).flatten().collect(),
+        StructuredData::Array(items) => items.into_iter().flat_map(map_data_to_osc).collect(),
         StructuredData::Object(items) => items
             .into_iter()
-            .map(|(key, value)| {
+            .flat_map(|(key, value)| {
                 let mut result = map_data_to_osc(value);
                 result.insert(0, OscType::String(key));
+
                 result
             })
-            .flatten()
             .collect(),
         StructuredData::Null => vec![],
     }

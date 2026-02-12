@@ -1,9 +1,8 @@
 use anyhow::Context;
 use serde::{Deserialize, Serialize};
-
-use mizer_devices::{DeviceManager, DeviceRef};
+use mizer_connections::{ConnectionStorage, StableConnectionId};
 pub use mizer_node::*;
-use mizer_protocol_laser::{Laser, LaserFrame};
+use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser, Laser, LaserFrame};
 
 const INPUT_PORT: &str = "Frames";
 
@@ -23,16 +22,24 @@ pub struct LaserState {
 
 impl ConfigurableNode for LaserNode {
     fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let device_manager = injector.inject::<DeviceManager>();
-        let devices = device_manager
-            .current_devices()
+        let device_manager = injector.inject::<ConnectionStorage>();
+        // TODO: Query for has entity Helios or EtherDream
+        let helios = device_manager
+            .query::<HeliosLaser>()
             .into_iter()
-            .filter_map(|device| match device {
-                DeviceRef::EtherDream(ether_dream) => Some(SelectVariant::from(ether_dream.name)),
-                DeviceRef::Helios(helios) => Some(SelectVariant::from(helios.name)),
-                _ => None,
-            })
-            .collect();
+            .map(|(id, name, laser)| SelectVariant::Item {
+                value: id.to_stable().to_string().into(),
+                label: name.cloned().unwrap_or_default().into(),
+            });
+        let ether_dream = device_manager
+            .query::<EtherDreamLaser>()
+            .into_iter()
+            .map(|(id, name, laser)| SelectVariant::Item {
+                value: id.to_stable().to_string().into(),
+                label: name.cloned().unwrap_or_default().into(),
+            });
+
+        let devices = helios.chain(ether_dream).collect();
 
         vec![setting!(select DEVICE_SETTING, &self.device_id, devices)]
     }
@@ -71,21 +78,31 @@ impl ProcessingNode for LaserNode {
             state.frames = frames;
             state.current_frame = 0;
         }
-        if let Some(device_manager) = context.try_inject::<DeviceManager>() {
-            if let Some(mut laser) = device_manager.get_laser_mut(&self.device_id) {
-                if state.current_frame >= state.frames.len() {
-                    state.current_frame = 0;
-                }
-                let frame = &state.frames[state.current_frame];
-                laser
-                    .write_frame(frame.clone())
-                    .context("Error writing frame to laser dac")?;
-                state.current_frame += 1;
-            }
-        } else {
-            tracing::warn!("Laser node is missing DeviceManager");
-        }
-        Ok(())
+        if self.device_id.is_empty() {
+            return Ok(());
+        };
+        let connection_storage = context.inject::<ConnectionStorage>();
+        let stable_id = self.device_id.parse::<StableConnectionId>().context("Error parsing laser device id")?;
+        let mut laser: Option<Box<&mut dyn Laser>> = None;
+        anyhow::bail!("TODO: request mutable access to connection storage in node processing");
+
+        // if let Some(helios) = connection_storage.get_connection_by_stable_mut::<HeliosLaser>(&stable_id) {
+        //     laser = Some(Box::new(helios));
+        // }
+        // if let Some(ether_dream) = connection_storage.get_connection_by_stable_mut::<EtherDreamLaser>(&stable_id) {
+        //     laser = Some(Box::new(ether_dream));
+        // }
+        // if let Some(mut laser) = laser {
+        //     if state.current_frame >= state.frames.len() {
+        //         state.current_frame = 0;
+        //     }
+        //     let frame = &state.frames[state.current_frame];
+        //     laser
+        //         .write_frame(frame.clone())
+        //         .context("Error writing frame to laser dac")?;
+        //     state.current_frame += 1;
+        // }
+        // Ok(())
     }
 
     fn create_state(&self) -> Self::State {

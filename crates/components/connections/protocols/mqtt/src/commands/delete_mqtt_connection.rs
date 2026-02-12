@@ -1,15 +1,15 @@
-use crate::{MqttAddress, MqttConnectionManager};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
+use mizer_connection_contracts::{ConnectionStorage, DeletedConnectionHandle, StableConnectionId};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteMqttConnectionCommand {
-    pub id: String,
+    pub id: StableConnectionId,
 }
 
 impl<'a> Command<'a> for DeleteMqttConnectionCommand {
-    type Dependencies = RefMut<MqttConnectionManager>;
-    type State = MqttAddress;
+    type Dependencies = RefMut<ConnectionStorage>;
+    type State = DeletedConnectionHandle;
     type Result = ();
 
     fn label(&self) -> String {
@@ -18,21 +18,20 @@ impl<'a> Command<'a> for DeleteMqttConnectionCommand {
 
     fn apply(
         &self,
-        mqtt_manager: &mut MqttConnectionManager,
+        connection_storage: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let address = mqtt_manager
-            .delete_connection(&self.id)
-            .ok_or_else(|| anyhow::anyhow!("Unknown mqtt connection"))?;
+        let handle = connection_storage.delete_connection_by_stable(&self.id)
+            .ok_or_else(|| anyhow::anyhow!("Connection not found"))?;
 
-        Ok(((), address))
+        Ok(((), handle))
     }
 
     fn revert(
         &self,
-        mqtt_manager: &mut MqttConnectionManager,
-        address: Self::State,
+        connection_storage: &mut ConnectionStorage,
+        handle: Self::State,
     ) -> anyhow::Result<()> {
-        mqtt_manager.add_connection(self.id.clone(), address)?;
+        connection_storage.restore_connection(handle);
 
         Ok(())
     }

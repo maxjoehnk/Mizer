@@ -2,6 +2,7 @@ use futures::{Stream, StreamExt};
 use std::sync::Arc;
 
 use mizer_command_executor::*;
+use mizer_connections::ConnectionStorageView;
 use mizer_devices::DeviceManager;
 use mizer_gamepads::GamepadRef;
 
@@ -179,24 +180,24 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     pub fn delete_connection(&self, connection: Connection) -> anyhow::Result<()> {
         if let Some(connection::Connection::DmxOutput(dmx)) = connection.connection {
             self.runtime.run_command(DeleteOutputCommand {
-                name: dmx.output_id,
+                id: dmx.output_id.try_into()?,
             })?;
 
             Ok(())
         } else if let Some(connection::Connection::DmxInput(dmx)) = connection.connection {
             self.runtime
-                .run_command(DeleteInputCommand { id: dmx.id })?;
+                .run_command(DeleteInputCommand { id: dmx.id.try_into()? })?;
 
             Ok(())
         } else if let Some(connection::Connection::Mqtt(mqtt)) = connection.connection {
             self.runtime.run_command(DeleteMqttConnectionCommand {
-                id: mqtt.connection_id,
+                id: mqtt.connection_id.try_into()?,
             })?;
 
             Ok(())
         } else if let Some(connection::Connection::Osc(osc)) = connection.connection {
             self.runtime.run_command(DeleteOscConnectionCommand {
-                id: osc.connection_id,
+                id: osc.connection_id.try_into()?,
             })?;
 
             Ok(())
@@ -213,7 +214,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
                 match connection.config {
                     Some(dmx_output_connection::Config::Artnet(config)) => {
                         self.runtime.run_command(ConfigureArtnetOutputCommand {
-                            id: connection.output_id,
+                            id: connection.output_id.try_into()?,
                             name: config.name,
                             host: config.host,
                             port: Some(config.port as u16),
@@ -223,7 +224,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
                     }
                     Some(dmx_output_connection::Config::Sacn(config)) => {
                         self.runtime.run_command(ConfigureSacnOutputCommand {
-                            id: connection.output_id,
+                            id: connection.output_id.try_into()?,
                             name: config.name,
                             priority: config.priority.clamp(0, 200) as u8,
                         })?;
@@ -239,7 +240,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
                 match connection.config {
                     Some(dmx_input_connection::Config::Artnet(config)) => {
                         self.runtime.run_command(ConfigureArtnetInputCommand {
-                            id: connection.id,
+                            id: connection.id.try_into()?,
                             name: config.name,
                             host: config.host.parse()?,
                             port: Some(config.port as u16),
@@ -254,7 +255,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             }
             Some(configure_connection_request::Config::Mqtt(connection)) => {
                 self.runtime.run_command(ConfigureMqttConnectionCommand {
-                    connection_id: connection.connection_id,
+                    connection_id: connection.connection_id.try_into()?,
                     url: connection.url,
                     username: connection.username,
                     password: connection.password,
@@ -264,7 +265,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             }
             Some(configure_connection_request::Config::Osc(connection)) => {
                 self.runtime.run_command(ConfigureOscConnectionCommand {
-                    connection_id: connection.connection_id,
+                    connection_id: connection.connection_id.try_into()?,
                     name: connection.name,
                     output_host: connection.output_address,
                     output_port: connection.output_port as u16,
@@ -287,5 +288,11 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     #[profiling::function]
     pub fn get_device_manager(&self) -> DeviceManager {
         self.runtime.get_device_manager()
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn get_connections_view(&self) -> ConnectionStorageView {
+        self.runtime.get_connections_view()
     }
 }

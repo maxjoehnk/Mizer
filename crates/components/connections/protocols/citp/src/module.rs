@@ -1,10 +1,9 @@
+use mizer_connection_contracts::{ConnectionStorageView};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_module::*;
-
+use crate::connection::CitpConnectionHandle;
 use crate::discovery::CitpDiscovery;
 use crate::handler::CitpConnectionHandler;
-use crate::manager::CitpConnectionManager;
-use crate::processor::UpdatedCitpConnectionProcessor;
 
 pub struct CitpModule;
 
@@ -14,10 +13,12 @@ impl Module for CitpModule {
     const IS_REQUIRED: bool = false;
 
     fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
-        let (handle_sender, handle_receiver) = flume::unbounded();
         let (connection_sender, connection_receiver) = flume::unbounded();
-        let connection_manager = CitpConnectionManager::new(handle_receiver)?;
-        context.provide(connection_manager);
+        if !context.settings().connections.citp.enabled {
+            return Ok(());
+        }
+        let connection_storage_view = context.try_get::<ConnectionStorageView>().unwrap();
+        let handle_sender = connection_storage_view.remote_access::<CitpConnectionHandle>();
         let fixture_manager = context.try_get::<FixtureManager>().as_deref().cloned();
         let mut connection_handler = CitpConnectionHandler::new(
             connection_receiver,
@@ -30,9 +31,6 @@ impl Module for CitpModule {
                 tracing::error!("Error running connection manager: {:?}", err);
             }
         });
-        if !context.settings().connections.citp.enabled {
-            return Ok(());
-        }
 
         let discovery = context.block_on(CitpDiscovery::new(connection_sender))?;
         context.block_in_thread(|| async move {
@@ -40,7 +38,6 @@ impl Module for CitpModule {
                 tracing::error!("Error discovering peers: {:?}", err);
             }
         });
-        context.add_processor(UpdatedCitpConnectionProcessor);
 
         Ok(())
     }

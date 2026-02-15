@@ -1,6 +1,6 @@
 use anyhow::{anyhow, Context};
 use serde::{Deserialize, Serialize};
-use mizer_connections::{ConnectionStorage, NdiSourceRef, NdiSource};
+use mizer_connections::{ConnectionStorage, NdiSourceRef, NdiSource, ConnectionId, Has, Name};
 use mizer_node::*;
 use mizer_video_nodes::background_thread_decoder::*;
 use mizer_wgpu::{
@@ -20,12 +20,12 @@ impl ConfigurableNode for NdiInputNode {
     fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         let connection_storage = injector.inject::<ConnectionStorage>();
         let devices = connection_storage
-            .query::<NdiSourceRef>()
+            .fetch::<(ConnectionId, Name, Has<NdiSourceRef>)>()
             .into_iter()
-            .flat_map(|(id, name, _source) | Some(SelectVariant::Item {
+            .map(|(id, name) | SelectVariant::Item {
                 value: id.to_stable().to_string().into(),
-                label: name.cloned()?
-            }))
+                label: name.clone().into(),
+            })
             .collect();
 
         vec![setting!(

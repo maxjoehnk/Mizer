@@ -34,11 +34,11 @@ pub trait ConnectionStorageExt {
 
 impl ConnectionStorageExt for ConnectionStorage {
     fn get_connection_views(&self) -> Vec<ConnectionView> {
-        let artnet_outputs = self.query::<ArtnetOutput>()
+        let artnet_outputs = self.fetch::<(ConnectionId, Option<Name>, ArtnetOutput)>()
             .into_iter()
             .map(|(id, name, output)| DmxOutputView {
                 output_id: id.to_stable().to_string(),
-                name: name.cloned().unwrap_or_else(|| output.name().into()),
+                name: name.cloned().map(Into::into).unwrap_or_else(|| output.name().into()),
                 config: DmxOutputConfig::Artnet {
                     host: output.host.clone(),
                     port: output.port,
@@ -46,114 +46,114 @@ impl ConnectionStorageExt for ConnectionStorage {
             })
         .map(ConnectionView::DmxOutput);
 
-        let sacn_outputs = self.query::<SacnOutput>()
+        let sacn_outputs = self.fetch::<(ConnectionId, Option<Name>, SacnOutput)>()
             .into_iter()
             .map(|(id, name, output)| DmxOutputView {
                 output_id: id.to_stable().to_string(),
-                name: name.cloned().unwrap_or_else(|| output.name().into()),
+                name: name.cloned().map(Into::into).unwrap_or_else(|| output.name().into()),
                 config: DmxOutputConfig::Sacn {
                     priority: output.priority
                 },
             })
             .map(ConnectionView::DmxOutput);
 
-        let osc_connections = self.query::<OscConnection>()
+        let osc_connections = self.fetch::<(ConnectionId, Name, OscConnection)>()
             .into_iter()
             .map(|(id, name, osc)| OscView {
                 connection_id: id.to_stable().to_string(),
-                name: name.cloned().unwrap_or_default(),
+                name: name.clone().into(),
                 input_port: osc.address.input_port,
                 output_host: osc.address.output_host.to_string(),
                 output_port: osc.address.output_port,
             })
             .map(ConnectionView::Osc);
 
-        let webcams = self.query::<WebcamRef>()
+        let webcams = self.fetch::<(ConnectionId, Option<Name>, WebcamRef)>()
             .into_iter()
             .map(|(id, name, webcam)| WebcamView {
                 id: id.to_stable().to_string(),
-                name: name.cloned().unwrap_or_else(|| webcam.name().into()),
+                name: name.cloned().map(Into::into).unwrap_or_else(|| webcam.name().into()),
             })
             .map(ConnectionView::Webcam);
 
-        let citp_connections = self.query::<CitpConnectionHandle>()
+        let citp_connections = self.fetch::<(ConnectionId, Option<Name>, CitpConnectionHandle)>()
             .into_iter()
             .map(|(id, name, citp)| CitpView {
                 connection_id: id.to_stable(),
-                name: name.cloned().unwrap_or_else(|| citp.name.to_string().into()),
+                name: name.cloned().map(Into::into).unwrap_or_else(|| citp.name.to_string().into()),
                 kind: citp.kind,
                 state: citp.state.clone(),
             })
             .map(ConnectionView::Citp);
 
-        let ether_dream_connections = self.query::<EtherDreamLaser>()
+        let ether_dream_connections = self.fetch::<(ConnectionId, Name, Has<EtherDreamLaser>)>()
             .into_iter()
-            .map(|(id, name, _laser)| {
+            .map(|(id, name)| {
                 EtherDreamView {
                     id: id.to_stable().to_string(),
-                    name: name.cloned().unwrap_or_default(),
+                    name: name.clone().into()
                 }
             })
             .map(ConnectionView::EtherDream);
 
-        let helios_connections = self.query::<HeliosLaser>()
+        let helios_connections = self.fetch::<(ConnectionId, Name, HeliosLaser)>()
             .into_iter()
             .map(|(id, name, laser)| {
                 HeliosView {
                     id: id.to_stable().to_string(),
-                    name: name.cloned().unwrap_or_default(),
+                    name: name.clone().into(),
                     firmware: laser.firmware,
                 }
             })
             .map(ConnectionView::Helios);
 
-        let mqtt_connections = self.query::<MqttConnection>()
+        let mqtt_connections = self.fetch::<(ConnectionId, Name, MqttConnection)>()
             .into_iter()
             .map(|(id, name, connection)| MqttView {
                 connection_id: id.to_stable().to_string(),
-                name: name.cloned().unwrap_or_default(),
+                name: name.clone().into(),
                 url: connection.address.url.to_string(),
                 username: connection.address.username.clone(),
                 password: connection.address.password.clone(),
             })
             .map(ConnectionView::Mqtt);
 
-        let g13_connections = self.query::<G13Ref>()
+        let g13_connections = self.fetch::<(ConnectionId, Has<G13Ref>)>()
             .into_iter()
-            .map(|(id, _name, _connection)| G13View {
+            .map(|id| G13View {
                 id: id.to_stable().to_string(),
             })
             .map(ConnectionView::G13);
 
-        let gamepad_connections = self.query::<GamepadRef>()
+        let gamepad_connections = self.fetch::<(ConnectionId, Name, GamepadRef)>()
             .into_iter()
             .map(|(id, name, gamepad)| GamepadView {
                 id: id.to_stable().to_string(),
-                name: name.cloned().unwrap_or_default(),
+                name: name.clone().into(),
                 state: gamepad.state(),
             })
             .map(ConnectionView::Gamepad);
 
-        let ndi_connections = self.query::<NdiSourceRef>()
+        let ndi_connections = self.fetch::<(ConnectionId, Name, Has<NdiSourceRef>)>()
             .into_iter()
-            .flat_map(|(id, name, _source)| Some(NdiSourceView {
+            .map(|(id, name)| NdiSourceView {
                 id: id.to_stable().to_string(),
-                name: name.cloned()?,
-            }))
+                name: name.clone().into()
+            })
             .map(ConnectionView::NdiSource);
 
-        let cdj_connections = self.query::<CDJView>()
+        let cdj_connections = self.fetch::<(ConnectionId, CDJView)>()
             .into_iter()
-            .map(|(id, _name, cdj)| {
+            .map(|(id, cdj)| {
                 ConnectionView::Cdj {
                     id: id.to_stable().to_string(),
                     state: cdj.clone(),
                 }
             });
 
-        let djm_connections = self.query::<DJMView>()
+        let djm_connections = self.fetch::<(ConnectionId, DJMView)>()
             .into_iter()
-            .map(|(id, _name, djm)| {
+            .map(|(id, djm)| {
                 ConnectionView::Djm {
                     id: id.to_stable().to_string(),
                     state: djm.clone(),

@@ -1,6 +1,6 @@
 use anyhow::Context;
 use serde::{Deserialize, Serialize};
-use mizer_connections::{ConnectionStorage, StableConnectionId};
+use mizer_connections::{ConnectionId, ConnectionStorage, Name, StableConnectionId, Either};
 pub use mizer_node::*;
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser, Laser, LaserFrame};
 
@@ -23,23 +23,14 @@ pub struct LaserState {
 impl ConfigurableNode for LaserNode {
     fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         let device_manager = injector.inject::<ConnectionStorage>();
-        // TODO: Query for has entity Helios or EtherDream
-        let helios = device_manager
-            .query::<HeliosLaser>()
+        let devices = device_manager
+            .fetch::<(ConnectionId, Name, Either<HeliosLaser, EtherDreamLaser>)>()
             .into_iter()
-            .map(|(id, name, laser)| SelectVariant::Item {
+            .map(|(id, name)| SelectVariant::Item {
                 value: id.to_stable().to_string().into(),
-                label: name.cloned().unwrap_or_default().into(),
-            });
-        let ether_dream = device_manager
-            .query::<EtherDreamLaser>()
-            .into_iter()
-            .map(|(id, name, laser)| SelectVariant::Item {
-                value: id.to_stable().to_string().into(),
-                label: name.cloned().unwrap_or_default().into(),
-            });
-
-        let devices = helios.chain(ether_dream).collect();
+                label: name.clone().into(),
+            })
+            .collect();
 
         vec![setting!(select DEVICE_SETTING, &self.device_id, devices)]
     }

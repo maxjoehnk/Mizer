@@ -102,17 +102,16 @@ pub trait ProDjLinkExt {
 
 impl ProDjLinkExt for ConnectionStorage {
     fn get_djm(&self) -> Option<DJMView> {
-        self.query::<DJMView>()
+        self.fetch::<DJMView>()
             .into_iter()
-            .map(|(_, _, djm)| djm.clone())
             .next()
+            .cloned()
     }
 
     fn get_cdj(&self, id: u8) -> Option<CDJView> {
-        self.query::<CDJView>()
+        self.fetch::<CDJView>()
             .into_iter()
-            .filter(|(_, _, cdj)| cdj.device.device_id == id)
-            .map(|(_, _, cdj)| cdj.clone())
-            .next()
+            .find(|cdj| cdj.device.device_id == id)
+            .cloned()
     }
 }

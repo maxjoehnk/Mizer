@@ -2,22 +2,45 @@ use std::any::{Any, TypeId};
 use std::collections::HashMap;
 use std::sync::Arc;
 use crate::{ConnectionId, IConnection, StableConnectionId, TransmissionState, TransmissionStateReceiver};
+use crate::sparse_set::{BoxedSparseSet, EntityId, SparseSet};
 use crate::transmissions::create_transmission_state;
 
 #[derive(Default)]
 pub struct ConnectionStorage {
-    connection_ids: Vec<Option<ConnectionId>>,
-    names: Vec<Option<Arc<String>>>,
-    connections: Vec<Option<Connection>>,
-    transmission_handles: Vec<Option<TransmissionStateReceiver>>,
-    connection_types: HashMap<TypeId, Vec<usize>>,
+    pub(crate) connection_ids: Vec<Option<ConnectionId>>,
+    pub(crate) names: SparseSet<Name>,
+    pub(crate) connections: Connections,
+    // pub(crate) connections: Vec<Option<Connection>>,
+    pub(crate) transmission_handles: Vec<Option<TransmissionStateReceiver>>,
+    pub(crate) connection_types: HashMap<TypeId, Vec<EntityId>>,
+}
+
+#[derive(Clone)]
+pub struct Name(pub Arc<String>);
+
+impl Name {
+    pub fn new(name: String) -> Self {
+        Self(Arc::new(name))
+    }
+}
+
+impl From<String> for Name {
+    fn from(value: String) -> Self {
+        Self::new(value)
+    }
+}
+
+impl From<Name> for Arc<String> {
+    fn from(value: Name) -> Self {
+        value.0
+    }
 }
 
 pub struct DeletedConnectionHandle {
     connection_id: ConnectionId,
     connection: Connection,
     transmission_handle: Option<TransmissionStateReceiver>,
-    name: Option<Arc<String>>,
+    name: Option<Name>,
 }
 
 impl DeletedConnectionHandle {
@@ -42,15 +65,17 @@ impl ConnectionStorage {
 
     pub fn acquire_new_connection<T: IConnection>(&mut self, config: T::Config, name: Option<String>) -> anyhow::Result<ConnectionId> {
         let connection_type = T::TYPE;
-        let entity_id = self.connection_ids.len();
+        let entity_id = EntityId(self.connection_ids.len());
         let type_id = self.connection_ids.iter().filter_map(|id| id.as_ref()).find(|id| id.connection_type == connection_type).map_or(0, |id| id.type_id) + 1;
         let id = ConnectionId { connection_type, type_id, entity_id };
 
         let (transmission_sender, transmission_receiver) = create_transmission_state();
         let connection = T::create(config, transmission_sender)?;
         self.connection_ids.push(Some(id));
-        self.connections.push(Some(Connection::new(connection)));
-        self.names.push(name.map(Arc::new));
+        self.connections.insert(entity_id, connection);
+        if let Some(name) = name {
+            self.names.insert(entity_id, Name::new(name));
+        }
         self.transmission_handles.push(Some(transmission_receiver));
         self.connection_types.entry(TypeId::of::<T>()).or_default().push(entity_id);
 
@@ -61,14 +86,16 @@ impl ConnectionStorage {
     pub fn add_connection<T: IConnection>(&mut self, id: StableConnectionId, config: T::Config, name: Option<String>) -> anyhow::Result<ConnectionId> {
         let connection_type = T::TYPE;
         let type_id = id.type_id();
-        let entity_id = self.connection_ids.len();
+        let entity_id = EntityId(self.connection_ids.len());
         let id = ConnectionId { connection_type, type_id, entity_id };
 
         let (transmission_sender, transmission_receiver) = create_transmission_state();
         let connection = T::create(config, transmission_sender)?;
         self.connection_ids.push(Some(id));
-        self.connections.push(Some(Connection::new(connection)));
-        self.names.push(name.map(Arc::new));
+        self.connections.insert(entity_id, connection);
+        if let Some(name) = name {
+            self.names.insert(entity_id, Name::new(name));
+        }
         self.transmission_handles.push(Some(transmission_receiver));
         self.connection_types.entry(TypeId::of::<T>()).or_default().push(entity_id);
 
@@ -80,10 +107,12 @@ impl ConnectionStorage {
     }
 
     pub fn delete_connection(&mut self, id: &ConnectionId) -> Option<DeletedConnectionHandle> {
-        self.connection_ids[id.entity_id] = None;
-        let transmission_handle = self.transmission_handles[id.entity_id].take();
-        let name = self.names[id.entity_id].take();
-        let connection = self.connections[id.entity_id].take()?;
+        todo!();
+        self.connection_ids[id.entity_id.0] = None;
+        let transmission_handle = self.transmission_handles[id.entity_id.0].take();
+        let name = self.names.remove(id.entity_id);
+        // self.connections.remove(id.entity_id);
+        let connection = self.connections[id.entity_id.0].take()?;
 
         Some(DeletedConnectionHandle {
             connection_id: *id,
@@ -94,13 +123,11 @@ impl ConnectionStorage {
     }
 
     pub fn delete_all_with<T: IConnection>(&mut self) {
-        let type_id = TypeId::of::<T>();
-        let entity_ids = self.connection_types.remove(&type_id).unwrap_or_default();
-        for entity_id in entity_ids {
-            self.connection_ids[entity_id] = None;
-            self.connections[entity_id] = None;
-            self.transmission_handles[entity_id] = None;
-            self.names[entity_id] = None;
+        for entity_id in self.connections.ids::<T>() {
+            self.names.remove(entity_id);
+            self.connections.remove(entity_id);
+            self.connection_ids[entity_id.0] = None;
+            self.transmission_handles[entity_id.0] = None;
         }
     }
 
@@ -131,12 +158,12 @@ impl ConnectionStorage {
         self.connections.iter().filter_map(|c| c.as_ref()).filter_map(|Connection(type_id, connection)| connection.downcast_ref::<T>().filter(|_| *type_id == TypeId::of::<T>())).collect()
     }
 
-    pub fn rename_connection_by_stable(&mut self, stable_id: &StableConnectionId, name: String) -> Option<Arc<String>> {
+    pub fn rename_connection_by_stable(&mut self, stable_id: &StableConnectionId, name: impl Into<Name>) -> Option<Name> {
         self.rename_connection(&self.get_connection_id(stable_id)?, name)
     }
 
-    pub fn rename_connection(&mut self, id: &ConnectionId, name: String) -> Option<Arc<String>> {
-        self.names[id.entity_id].replace(name.into())
+    pub fn rename_connection(&mut self, id: &ConnectionId, name: impl Into<Name>) -> Option<Name> {
+        self.names.insert(id.entity_id, name.into())
     }
 
     pub fn query<T: IConnection>(&self) -> Vec<(ConnectionId, Option<&Arc<String>>, &T)> {
@@ -145,13 +172,13 @@ impl ConnectionStorage {
             .zip(self.connections.iter())
             .filter_map(|((id, name), connection)| {
                 let id = *id.as_ref()?;
-                connection.as_ref()?.as_ref::<T>().map(|connection| (id, name.as_ref(), connection))
+                connection.as_ref()?.as_ref::<T>().map(|connection| (id, name.as_ref().map(|name| &name.0), connection))
             })
             .collect()
     }
 
     pub fn get_transmission_state(&self, id: &ConnectionId) -> Option<TransmissionState> {
-        Some(self.transmission_handles.get(id.entity_id)?.as_ref()?.get_state())
+        Some(self.transmission_handles.get(id.entity_id.0)?.as_ref()?.get_state())
     }
 
     pub(crate) fn get_transmission_states(&self) -> Vec<(ConnectionId, TransmissionState)> {
@@ -167,10 +194,12 @@ impl ConnectionStorage {
 
     pub fn restore_connection(&mut self, handle: DeletedConnectionHandle) {
         let id = handle.connection_id;
-        self.connection_ids[id.entity_id] = Some(id);
-        self.connections[id.entity_id] = Some(handle.connection);
-        self.transmission_handles[id.entity_id] = handle.transmission_handle;
-        self.names[id.entity_id] = handle.name;
+        self.connection_ids[id.entity_id.0] = Some(id);
+        self.connections[id.entity_id.0] = Some(handle.connection);
+        self.transmission_handles[id.entity_id.0] = handle.transmission_handle;
+        if let Some(name) = handle.name {
+            self.names.insert(id.entity_id, name);
+        }
     }
 
     pub fn process_handles(&mut self) {
@@ -180,11 +209,53 @@ impl ConnectionStorage {
     }
 }
 
+#[derive(Default)]
+struct Connections(HashMap<TypeId, BoxedSparseSet>);
+
+impl Connections {
+    fn insert<T: IConnection>(&mut self, entity_id: EntityId, connection: T) -> Option<T> {
+        let sparse_set = self.0.entry(TypeId::of::<T>()).or_insert_with(|| SparseSet::<T>::new().boxed());
+        sparse_set.downcast_mut().unwrap().insert(entity_id, connection)
+    }
+
+    fn get<T: IConnection>(&self, entity_id: EntityId) -> Option<&T> {
+        self.0.get(&TypeId::of::<T>()).and_then(|set| set.downcast_ref::<T>()).and_then(|set| set.get(entity_id))
+    }
+
+    fn get_mut<T: IConnection>(&mut self, entity_id: EntityId) -> Option<&mut T> {
+        self.0.get_mut(&TypeId::of::<T>()).and_then(|set| set.downcast_mut::<T>()).and_then(|set| set.get_mut(entity_id))
+    }
+
+    fn as_ref<T: IConnection>(&self) -> Option<&SparseSet<T>> {
+        self.0.get(&TypeId::of::<T>()).and_then(|set| set.downcast_ref())
+    }
+
+    fn iter<T: IConnection>(&self) -> impl Iterator<Item = &T> {
+        self.0.get(&TypeId::of::<T>()).into_iter().flat_map(|set| set.downcast_ref::<T>()).flat_map(|set| set.iter())
+    }
+
+    fn entities<T: IConnection>(&self) -> impl Iterator<Item = (EntityId, &T)> {
+        self.0.get(&TypeId::of::<T>()).into_iter().flat_map(|set| set.downcast_ref::<T>()).flat_map(|set| set.entities())
+    }
+
+    fn ids<T: IConnection>(&self) -> impl Iterator<Item = EntityId> + use<'_, T> {
+        self.0.get(&TypeId::of::<T>()).into_iter().flat_map(|set| set.downcast_ref::<T>()).flat_map(|set| set.ids())
+    }
+
+    fn remove(&mut self, entity_id: EntityId) -> Option<Connection> {
+        todo!()
+    }
+}
+
 pub struct Connection(TypeId, Box<dyn Any>);
 
 impl Connection {
     pub fn as_ref<T: IConnection>(&self) -> Option<&T> {
         self.1.downcast_ref::<T>()
+    }
+
+    pub fn is_type<T: IConnection>(&self) -> bool {
+        self.1.is::<T>()
     }
 }
 

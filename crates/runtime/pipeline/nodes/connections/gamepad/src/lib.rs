@@ -3,7 +3,7 @@ use std::fmt::{Display, Formatter};
 use enum_iterator::Sequence;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
-use mizer_connections::ConnectionStorage;
+use mizer_connections::{ConnectionId, ConnectionStorage, G13Ref, Has, Name};
 use mizer_gamepads::{Axis, Button, GamepadRef};
 pub use mizer_node::*;
 use mizer_util::LerpExt;
@@ -25,11 +25,11 @@ impl ConfigurableNode for GamepadNode {
         let device_manager = injector.inject::<ConnectionStorage>();
 
         let devices = device_manager
-            .query::<GamepadRef>()
+            .fetch::<(ConnectionId, Name, Has<GamepadRef>)>()
             .into_iter()
-            .map(|(id, name, gamepad)| SelectVariant::Item {
+            .map(|(id, name)| SelectVariant::Item {
                 value: id.to_stable().to_string().into(),
-                label: name.cloned().unwrap_or_default()
+                label: name.clone().into()
             })
             .collect();
 

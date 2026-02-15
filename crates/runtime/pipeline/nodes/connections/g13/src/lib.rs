@@ -1,4 +1,4 @@
-use mizer_connections::ConnectionStorage;
+use mizer_connections::{ConnectionId, ConnectionStorage, Has};
 pub use self::input::*;
 pub use self::output::*;
 use mizer_g13::G13Ref;
@@ -16,9 +16,9 @@ impl<T: Inject> G13InjectorExt for T {
         let device_manager = self.inject::<ConnectionStorage>();
 
         device_manager
-            .query::<G13Ref>()
+            .fetch::<(ConnectionId, Has<G13Ref>)>()
             .into_iter()
-            .map(|(id, _, _)| {
+            .map(|id| {
                 SelectVariant::Item {
                     label: "G13".to_string().into(),
                     value: id.to_stable().to_string().into(),

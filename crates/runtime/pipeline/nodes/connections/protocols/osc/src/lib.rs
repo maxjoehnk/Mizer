@@ -1,6 +1,6 @@
 pub use argument_type::OscArgumentType;
 pub use input::*;
-use mizer_connections::{ConnectionStorage, OscConnection};
+use mizer_connections::{ConnectionId, ConnectionStorage, Has, Name, OscConnection};
 use mizer_node::{Inject, SelectVariant};
 pub use output::*;
 
@@ -17,11 +17,11 @@ impl<T: Inject> OscInjectorExt for T {
         let connection_manager = self.inject::<ConnectionStorage>();
 
         connection_manager
-            .query::<OscConnection>()
+            .fetch::<(ConnectionId, Name, Has<OscConnection>)>()
             .into_iter()
-            .map(|(id, name, _)| SelectVariant::Item {
+            .map(|(id, name)| SelectVariant::Item {
                 value: id.to_stable().to_string().into(),
-                label: name.cloned().unwrap_or_default(),
+                label: name.clone().into(),
             })
             .collect()
     }

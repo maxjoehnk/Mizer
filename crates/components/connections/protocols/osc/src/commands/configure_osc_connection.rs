@@ -1,8 +1,7 @@
-use std::sync::Arc;
 use crate::{OscAddress, OscConnection, OscProtocol};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
-use mizer_connection_contracts::{ConnectionStorage, StableConnectionId};
+use mizer_connection_contracts::{ConnectionStorage, Name, StableConnectionId};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ConfigureOscConnectionCommand {
@@ -15,7 +14,7 @@ pub struct ConfigureOscConnectionCommand {
 
 impl<'a> Command<'a> for ConfigureOscConnectionCommand {
     type Dependencies = RefMut<ConnectionStorage>;
-    type State = (Option<Arc<String>>, OscAddress);
+    type State = (Option<Name>, OscAddress);
     type Result = ();
 
     fn label(&self) -> String {
@@ -49,7 +48,7 @@ impl<'a> Command<'a> for ConfigureOscConnectionCommand {
             .ok_or_else(|| anyhow::anyhow!("Unknown osc connection"))?;
         connection.reconfigure(previous_address)?;
         if let Some(name) = previous_name {
-            storage.rename_connection_by_stable(&self.connection_id, name.to_string());
+            storage.rename_connection_by_stable(&self.connection_id, name);
         }
 
         Ok(())

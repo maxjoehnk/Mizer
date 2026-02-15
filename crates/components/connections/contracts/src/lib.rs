@@ -9,11 +9,15 @@ pub use storage::*;
 pub use storage_commands::*;
 pub use transmissions::*;
 pub use view::*;
+pub use queries::*;
+use crate::sparse_set::EntityId;
 
 mod transmissions;
 mod storage;
 mod storage_commands;
 mod view;
+mod queries;
+mod sparse_set;
 
 pub trait IConnection: Sized + Any + 'static {
     type Config;
@@ -28,7 +32,7 @@ pub struct ConnectionId {
     connection_type: &'static str,
     /// connection type specific id, used for serialization and references
     type_id: u32,
-    entity_id: usize,
+    entity_id: EntityId,
 }
 
 impl PartialEq<StableConnectionId> for ConnectionId {

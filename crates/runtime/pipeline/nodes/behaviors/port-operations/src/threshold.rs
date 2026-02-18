@@ -37,7 +37,7 @@ impl Default for ThresholdNode {
 }
 
 impl ConfigurableNode for ThresholdNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![
             setting!(LOWER_THRESHOLD_SETTING, self.lower_threshold)
                 .min_hint(0.)
@@ -73,7 +73,7 @@ impl PipelineNode for ThresholdNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(VALUE_INPUT, PortType::Single),
             output_port!(VALUE_OUTPUT, PortType::Single),

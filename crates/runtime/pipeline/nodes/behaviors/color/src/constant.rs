@@ -49,7 +49,7 @@ impl Display for ConstantColorNode {
 }
 
 impl ConfigurableNode for ConstantColorNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         let mode_setting = setting!(enum MODE_SETTING, *self);
         match *self {
             Self::Rgb { red, green, blue } => {
@@ -107,7 +107,7 @@ impl PipelineNode for ConstantColorNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(COLOR_OUTPUT, PortType::Color)]
     }
 

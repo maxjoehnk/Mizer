@@ -1,4 +1,4 @@
-use mizer_module::{ClockFrame, Injector, Processor};
+use mizer_module::{ClockFrame, InjectionScope, Processor};
 
 use crate::TimecodeManager;
 
@@ -11,7 +11,7 @@ impl TimecodeProcessor {
 }
 
 impl Processor for TimecodeProcessor {
-    fn pre_process(&mut self, _: &mut Injector, _frame: ClockFrame, _fps: f64) {
+    fn pre_process(&mut self, _: &InjectionScope, _frame: ClockFrame, _fps: f64) {
         self.0.advance_timecodes();
     }
 }

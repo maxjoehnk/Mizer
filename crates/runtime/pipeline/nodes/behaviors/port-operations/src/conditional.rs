@@ -29,7 +29,7 @@ impl Default for ConditionalNode {
 }
 
 impl ConfigurableNode for ConditionalNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![
             setting!(THRESHOLD_SETTING, self.threshold)
                 .min_hint(0.)
@@ -63,7 +63,7 @@ impl PipelineNode for ConditionalNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(CONDITION_INPUT, PortType::Single),
             input_port!(VALUE_INPUT, self.port_type),

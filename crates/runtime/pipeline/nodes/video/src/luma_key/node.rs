@@ -29,7 +29,7 @@ pub struct LumaKeyState {
 }
 
 impl ConfigurableNode for LumaKeyNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![setting!(THRESHOLD_SETTING, self.threshold)
             .min(0.0)
             .max(1.0)]
@@ -51,7 +51,7 @@ impl PipelineNode for LumaKeyNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Texture),
             input_port!(THRESHOLD_PORT, PortType::Single),

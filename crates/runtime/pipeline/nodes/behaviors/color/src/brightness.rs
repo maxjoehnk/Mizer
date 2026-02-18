@@ -20,7 +20,7 @@ impl PipelineNode for ColorBrightnessNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(BRIGHTNESS_INPUT, PortType::Single),
             input_port!(COLOR_INPUT, PortType::Color),

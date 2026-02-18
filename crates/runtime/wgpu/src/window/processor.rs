@@ -4,15 +4,15 @@ use winit::event::{Event, WindowEvent};
 use winit::platform::pump_events::EventLoopExtPumpEvents;
 use winit::window::WindowId;
 
-use mizer_module::{ClockFrame, Injector, Processor};
+use mizer_module::{ClockFrame, InjectMut, InjectionScope, Processor};
 
 use super::{EventLoopHandle, WindowEventSenders};
 
 pub struct WindowProcessor;
 
 impl Processor for WindowProcessor {
-    fn pre_process(&mut self, injector: &mut Injector, _frame: ClockFrame, _fps: f64) {
-        let event_loop = injector.get_mut::<EventLoopHandle>().unwrap();
+    fn pre_process(&mut self, injector: &InjectionScope, _frame: ClockFrame, _fps: f64) {
+        let event_loop = injector.inject_mut::<EventLoopHandle>();
         event_loop
             .event_loop
             .pump_events(Some(Duration::ZERO), |event, _target| {

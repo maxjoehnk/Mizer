@@ -20,7 +20,7 @@ impl PipelineNode for MultiToDataNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(VALUE_INPUT, PortType::Multi),
             output_port!(VALUE_OUTPUT, PortType::Data),

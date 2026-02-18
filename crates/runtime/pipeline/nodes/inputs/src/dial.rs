@@ -47,7 +47,7 @@ fn default_show_percentage() -> bool {
 }
 
 impl ConfigurableNode for DialNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![
             setting!(DEFAULT_VALUE_SETTING, self.default_value)
                 .min(0f64)
@@ -82,7 +82,7 @@ impl PipelineNode for DialNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Single),
             output_port!(OUTPUT_PORT, PortType::Single),

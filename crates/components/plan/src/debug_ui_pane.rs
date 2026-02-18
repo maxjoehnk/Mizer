@@ -10,7 +10,7 @@ impl<S: DebugUi> DebugUiPane<S> for PlanDebugUiPane {
 
     fn render<'a>(
         &mut self,
-        injector: &Injector,
+        injector: &InjectionScope,
         _state_access: &dyn NodeStateAccess,
         ui: &mut S::DrawHandle<'a>,
         _textures: &mut <S::DrawHandle<'a> as DebugUiDrawHandle<'a>>::TextureMap,

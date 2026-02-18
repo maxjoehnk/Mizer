@@ -23,7 +23,7 @@ impl PipelineNode for ClockNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(TIMECODE_OUTPUT, PortType::Clock)]
     }
 

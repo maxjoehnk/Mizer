@@ -4,7 +4,7 @@ use enum_iterator::Sequence;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{Injector, SelectVariant};
+use mizer_node::*;
 use mizer_protocol_midi::{ControlStep, MidiConnectionManager};
 
 pub use self::input::{MidiInputConfig, MidiInputNode};
@@ -33,7 +33,7 @@ impl Display for NoteMode {
 }
 
 fn get_pages_and_controls(
-    injector: &Injector,
+    injector: &ReadOnlyInjectionScope,
     device: &str,
     page_name: &str,
     control_name: &str,
@@ -43,7 +43,7 @@ fn get_pages_and_controls(
     Vec<SelectVariant>,
     Option<Vec<SelectVariant>>,
 ) {
-    let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
+    let connection_manager = injector.try_inject::<MidiConnectionManager>().unwrap();
     let pages = connection_manager
         .request_device(device)
         .ok()
@@ -120,7 +120,7 @@ fn get_pages_and_controls(
 }
 
 fn get_pages_and_grid(
-    injector: &Injector,
+    injector: &ReadOnlyInjectionScope,
     device: &str,
     page_name: &str,
 ) -> (
@@ -128,7 +128,7 @@ fn get_pages_and_grid(
     Option<(u32, u32)>,
     Option<Vec<SelectVariant>>,
 ) {
-    let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
+    let connection_manager = injector.try_inject::<MidiConnectionManager>().unwrap();
     let pages = connection_manager
         .request_device(device)
         .ok()

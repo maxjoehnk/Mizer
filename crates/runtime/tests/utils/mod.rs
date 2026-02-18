@@ -1,5 +1,5 @@
 use mizer_commander::{Command, ExtractDependencies};
-use mizer_module::{Injector, Runtime};
+use mizer_module::{InjectionScope, Runtime};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType};
 pub use mizer_nodes::test_sink::TestSink;
 use mizer_nodes::Node;
@@ -17,20 +17,20 @@ pub fn run_node(
 ) {
     runtime.provide(Pipeline::new());
     runtime.add_processor(RuntimeProcessor);
-    let output_path = setup_sink(sink, runtime.injector_mut());
-    let oscillator_node = add_node_command(node_type, node, runtime.injector_mut());
+    let output_path = setup_sink(sink, &runtime.injector());
+    let oscillator_node = add_node_command(node_type, node, &runtime.injector());
     add_link(
         source_port,
         oscillator_node,
         output_path,
-        runtime.injector_mut(),
+        &runtime.injector(),
     );
 }
 
 fn add_node_command(
     node_type: NodeType,
     node: Option<Node>,
-    injector: &mut Injector,
+    injector: &InjectionScope,
 ) -> StaticNodeDescriptor {
     let deps = <AddNodeCommand as Command<'_>>::Dependencies::extract(injector);
     let oscillator_add_node = AddNodeCommand {
@@ -48,7 +48,7 @@ fn add_link(
     source_port: impl Into<PortId>,
     oscillator_node: StaticNodeDescriptor,
     output_path: NodePath,
-    injector: &mut Injector,
+    injector: &InjectionScope,
 ) {
     let add_link_command = AddLinkCommand {
         link: NodeLink {
@@ -64,7 +64,7 @@ fn add_link(
     add_link_command.apply(deps).unwrap();
 }
 
-fn setup_sink(sink: TestSink, injector: &mut Injector) -> NodePath {
+fn setup_sink(sink: TestSink, injector: &InjectionScope) -> NodePath {
     let deps = <AddNodeCommand as Command<'_>>::Dependencies::extract(injector);
     let sink_add_node = AddNodeCommand {
         node_type: NodeType::TestSink,

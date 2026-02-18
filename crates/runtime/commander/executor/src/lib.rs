@@ -1,6 +1,5 @@
 pub use mizer_commander::Command;
-use mizer_module::ApiInjector;
-use mizer_processing::Injector;
+use mizer_module::{ApiInjector, InjectMut};
 use parking_lot::RwLock;
 use std::any::{type_name, TypeId};
 use std::sync::Arc;
@@ -56,9 +55,9 @@ impl ICommandExecutor for CommandExecutorApi {
     {
         let cmd = command.into();
         let result: anyhow::Result<_> =
-            self.executor.run_in_main_loop(move |executor, injector| {
-                let (result, key) = cmd.apply(injector, executor, None)?;
-                let history = injector.get_mut::<CommandHistory>().unwrap();
+            self.executor.run_in_main_loop(move |executor, scope| {
+                let (result, key) = cmd.apply(scope, executor, None)?;
+                let history = scope.inject_mut::<CommandHistory>();
                 history.add_entry(cmd, key);
 
                 Ok(result)
@@ -99,8 +98,7 @@ impl ICommandExecutor for CommandExecutorApi {
 
     fn undo(&self) -> anyhow::Result<()> {
         self.executor.run_in_main_loop(move |executor, injector| {
-            let injector1: &mut Injector = unsafe { std::mem::transmute_copy(&injector) };
-            let history = injector1.get_mut::<CommandHistory>().unwrap();
+            let history = injector.inject_mut::<CommandHistory>();
             history.undo(executor, injector)
         })??;
 
@@ -109,8 +107,7 @@ impl ICommandExecutor for CommandExecutorApi {
 
     fn redo(&self) -> anyhow::Result<()> {
         self.executor.run_in_main_loop(move |executor, injector| {
-            let injector1: &mut Injector = unsafe { std::mem::transmute_copy(&injector) };
-            let history = injector1.get_mut::<CommandHistory>().unwrap();
+            let history = injector.inject_mut::<CommandHistory>();
             history.redo(executor, injector)
         })??;
 

@@ -75,8 +75,8 @@ fn default_midi_range() -> (u8, u8) {
 }
 
 impl ConfigurableNode for MidiInputNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
+    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+        let connection_manager = injector.try_inject::<MidiConnectionManager>().unwrap();
         let devices = connection_manager.list_available_devices();
         let devices = devices
             .into_iter()
@@ -157,7 +157,7 @@ impl PipelineNode for MidiInputNode {
         }
     }
 
-    fn display_name(&self, _injector: &Injector) -> String {
+    fn display_name(&self, _injector: &ReadOnlyInjectionScope) -> String {
         match &self.config {
             MidiInputConfig::Control { page, control, .. } => {
                 format!("MIDI Input ({} - {}/{})", self.device, page, control)
@@ -171,7 +171,7 @@ impl PipelineNode for MidiInputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(OUTPUT_PORT, PortType::Single)]
     }
 

@@ -40,7 +40,7 @@ pub struct VideoHsvState {
 }
 
 impl ConfigurableNode for VideoHsvNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![
             setting!(HUE_SETTING, self.hue).min(0.0).max(360.0),
             setting!(SATURATION_SETTING, self.saturation)
@@ -68,7 +68,7 @@ impl PipelineNode for VideoHsvNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Texture),
             output_port!(OUTPUT_PORT, PortType::Texture),

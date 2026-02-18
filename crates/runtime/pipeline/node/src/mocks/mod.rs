@@ -2,7 +2,7 @@ use std::cell::RefCell;
 
 use crate::{ClockFrame, NodeContext, NodePath, PortId, PortMetadata, PreviewContext};
 use mizer_clock::{ClockState, Timecode};
-use mizer_injector::Inject;
+use mizer_injector::{Inject, InjectMut};
 use mizer_ports::{Color, PortValue};
 use mizer_util::StructuredData;
 use mizer_wgpu::TextureView;
@@ -119,6 +119,12 @@ impl NodeContext for NodeContextMock {
 
 impl Inject for NodeContextMock {
     fn try_inject<T: 'static>(&self) -> Option<&T> {
+        todo!()
+    }
+}
+
+impl InjectMut for NodeContextMock {
+    fn try_inject_mut<T: 'static>(&self) -> Option<&mut T> {
         todo!()
     }
 }

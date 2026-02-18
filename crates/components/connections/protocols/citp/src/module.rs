@@ -18,7 +18,7 @@ impl Module for CitpModule {
         let (connection_sender, connection_receiver) = flume::unbounded();
         let connection_manager = CitpConnectionManager::new(handle_receiver)?;
         context.provide(connection_manager);
-        let fixture_manager = context.try_get::<FixtureManager>().cloned();
+        let fixture_manager = context.try_get::<FixtureManager>().as_deref().cloned();
         let mut connection_handler = CitpConnectionHandler::new(
             connection_receiver,
             handle_sender,

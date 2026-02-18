@@ -17,7 +17,7 @@ pub struct PioneerCdjNode {
 }
 
 impl ConfigurableNode for PioneerCdjNode {
-    fn settings(&self, _: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         let devices = vec![
             IdVariant {
                 label: "1".into(),
@@ -56,7 +56,7 @@ impl PipelineNode for PioneerCdjNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             output_port!(ORIGINAL_TEMPO_OUTPUT, PortType::Single),
             output_port!(CURRENT_TEMPO_OUTPUT, PortType::Single),

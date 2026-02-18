@@ -46,8 +46,8 @@ impl PartialEq for GroupNode {
 }
 
 impl ConfigurableNode for GroupNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let manager = injector.get::<FixtureManager>().unwrap();
+    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+        let manager = injector.try_inject::<FixtureManager>().unwrap();
         let groups = manager
             .get_groups()
             .into_iter()
@@ -81,9 +81,9 @@ impl PipelineNode for GroupNode {
         }
     }
 
-    fn display_name(&self, injector: &Injector) -> String {
+    fn display_name(&self, injector: &ReadOnlyInjectionScope) -> String {
         if let Some(group) = injector
-            .get::<FixtureManager>()
+            .try_inject::<FixtureManager>()
             .and_then(|manager| manager.groups.get(&self.id))
         {
             format!("Group ({})", group.name)
@@ -93,9 +93,9 @@ impl PipelineNode for GroupNode {
     }
 
     // TODO: nodes need a way to notify the pipeline of new ports
-    fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         let fixture_channels: Vec<_> =
-            if let Some(fixture_manager) = injector.get::<FixtureManager>() {
+            if let Some(fixture_manager) = injector.try_inject::<FixtureManager>() {
                 fixture_manager
                     .get_group_fixture_controls(self.id)
                     .get_ports()

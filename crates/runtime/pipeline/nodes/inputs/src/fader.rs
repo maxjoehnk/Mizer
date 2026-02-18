@@ -39,7 +39,7 @@ fn default_end_value() -> f64 {
 }
 
 impl ConfigurableNode for FaderNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![
             setting!(DEFAULT_VALUE_SETTING, self.default_value)
                 .min(0f64)
@@ -71,7 +71,7 @@ impl PipelineNode for FaderNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Single),
             output_port!(OUTPUT_PORT, PortType::Single),

@@ -14,7 +14,7 @@ pub struct ExtractNode {
 }
 
 impl ConfigurableNode for ExtractNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![setting!(PATH_SETTING, &self.path)]
     }
 
@@ -34,7 +34,7 @@ impl PipelineNode for ExtractNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Data),
             output_port!(OUTPUT_PORT, PortType::Data),

@@ -31,7 +31,7 @@ impl Default for MqttOutputNode {
 }
 
 impl ConfigurableNode for MqttOutputNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         let connections = injector.get_connections();
 
         vec![
@@ -59,7 +59,7 @@ impl PipelineNode for MqttOutputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(VALUE_PORT, PortType::Data)]
     }
 

@@ -1,13 +1,12 @@
 use crate::ExtractDependencies;
-use mizer_injector::Injector;
+use mizer_injector::{InjectionScope};
 
-// TODO: Access to the injector is highly dangerous as it allows for mutable and immutable access to the same objects
 pub struct InjectorRef;
 
 impl<'a> ExtractDependencies<'a> for InjectorRef {
-    type Type = &'a Injector;
+    type Type = InjectionScope<'a>;
 
-    fn extract(injector: &'a mut Injector) -> Self::Type {
-        injector
+    fn extract(injector: &'a InjectionScope) -> Self::Type {
+        injector.scope()
     }
 }

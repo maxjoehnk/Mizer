@@ -10,7 +10,7 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for EffectsDebugUiPane {
 
     fn render<'a>(
         &mut self,
-        injector: &Injector,
+        injector: &InjectionScope,
         _state_access: &dyn NodeStateAccess,
         ui: &mut TUi::DrawHandle<'a>,
         _textures: &mut <TUi::DrawHandle<'a> as DebugUiDrawHandle<'a>>::TextureMap,

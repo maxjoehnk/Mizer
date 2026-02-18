@@ -2,7 +2,7 @@ use mizer_debug_ui_impl::{DebugUiImpl, DebugUiPane};
 use std::future::Future;
 
 use mizer_module::{ApiInjector, ModuleContext, Runtime};
-use mizer_processing::Processor;
+use mizer_processing::{Borrowed, Processor};
 use mizer_runtime::DefaultRuntime;
 use mizer_settings::Settings;
 use mizer_status_bus::StatusHandle;
@@ -19,11 +19,11 @@ impl ModuleContext for SetupContext {
     type DebugUiImpl = DebugUiImpl;
 
     fn provide<T: 'static>(&mut self, service: T) {
-        self.runtime.injector_mut().provide(service);
+        self.runtime.provide(service);
     }
 
-    fn try_get<T: 'static>(&self) -> Option<&T> {
-        self.runtime.injector().get()
+    fn try_get<T: 'static>(&self) -> Option<Borrowed<'_, T>> {
+        self.runtime.try_borrow()
     }
 
     fn provide_api<T: 'static + Clone + Send + Sync>(&mut self, api: T) {

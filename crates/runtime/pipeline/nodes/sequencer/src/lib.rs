@@ -22,8 +22,8 @@ pub struct SequencerNode {
 }
 
 impl ConfigurableNode for SequencerNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let sequencer = injector.get::<Sequencer>().unwrap();
+    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+        let sequencer = injector.try_inject::<Sequencer>().unwrap();
         let sequences = sequencer
             .sequences()
             .into_iter()
@@ -52,9 +52,9 @@ impl PipelineNode for SequencerNode {
         }
     }
 
-    fn display_name(&self, injector: &Injector) -> String {
+    fn display_name(&self, injector: &ReadOnlyInjectionScope) -> String {
         if let Some(sequence) = injector
-            .get::<Sequencer>()
+            .try_inject::<Sequencer>()
             .and_then(|sequencer| sequencer.sequence(self.sequence_id))
         {
             format!("Sequencer ({})", sequence.name)
@@ -63,7 +63,7 @@ impl PipelineNode for SequencerNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(GO_FORWARD, PortType::Single),
             input_port!(GO_BACKWARD, PortType::Single),

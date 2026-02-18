@@ -21,7 +21,7 @@ impl PipelineNode for RasterizeVectorNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(VECTOR_INPUT_PORT, PortType::Vector),
             output_port!(TEXTURE_OUTPUT_PORT, PortType::Texture),

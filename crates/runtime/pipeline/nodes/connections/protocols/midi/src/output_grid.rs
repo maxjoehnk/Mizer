@@ -31,8 +31,8 @@ pub struct MidiOutputGridNode {
 }
 
 impl ConfigurableNode for MidiOutputGridNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
+    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+        let connection_manager = injector.try_inject::<MidiConnectionManager>().unwrap();
         let devices = connection_manager.list_available_devices();
         let devices = devices
             .into_iter()
@@ -115,7 +115,7 @@ impl PipelineNode for MidiOutputGridNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(INPUT_PORT, PortType::Multi)]
     }
 

@@ -36,7 +36,7 @@ pub struct DropShadowState {
 }
 
 impl ConfigurableNode for DropShadowNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![
             setting!(Y_OFFSET_SETTING, self.y_offset)
                 .min_hint(-50.0)
@@ -66,7 +66,7 @@ impl PipelineNode for DropShadowNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Texture),
             output_port!(OUTPUT_PORT, PortType::Texture),

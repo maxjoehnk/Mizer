@@ -1,7 +1,7 @@
 use crate::executor::CommandKey;
 use crate::{CommandExecutor, CommandImpl};
-use mizer_module::Injector;
 use std::time::{SystemTime, UNIX_EPOCH};
+use mizer_module::InjectionScope;
 
 pub struct CommandHistory {
     commands: CommandCursor<(CommandImpl, CommandKey, SystemTime)>,
@@ -22,7 +22,7 @@ impl CommandHistory {
     pub(crate) fn undo(
         &mut self,
         executor: &mut CommandExecutor,
-        injector: &mut Injector,
+        injector: &InjectionScope,
     ) -> anyhow::Result<()> {
         if let Some((command, key, _)) = self.commands.back() {
             command.revert(injector, executor, key)
@@ -34,7 +34,7 @@ impl CommandHistory {
     pub(crate) fn redo(
         &mut self,
         executor: &mut CommandExecutor,
-        injector: &mut Injector,
+        injector: &InjectionScope,
     ) -> anyhow::Result<()> {
         if let Some((command, key, _)) = self.commands.forward() {
             command.apply(injector, executor, Some(*key))?;

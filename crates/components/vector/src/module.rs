@@ -11,10 +11,13 @@ impl Module for VectorModule {
     const IS_REQUIRED: bool = false;
 
     fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
-        let wgpu_context = context
-            .try_get::<WgpuContext>()
-            .ok_or_else(|| anyhow::anyhow!("missing wgpu module"))?;
-        context.provide(VectorWgpuRenderer::new(wgpu_context)?);
+        let renderer = {
+            let wgpu_context = context
+                .try_get::<WgpuContext>()
+                .ok_or_else(|| anyhow::anyhow!("missing wgpu module"))?;
+            VectorWgpuRenderer::new(&wgpu_context)?
+        };
+        context.provide(renderer);
 
         Ok(())
     }

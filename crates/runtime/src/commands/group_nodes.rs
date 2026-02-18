@@ -1,10 +1,9 @@
 use crate::commands::{AddNodeCommand, RenameNodeCommand};
 use mizer_commander::{sub_command, Command, InjectorRef, Ref, RefMut};
-use mizer_node::{NodeDesigner, NodePath, NodePosition, NodeType};
+use mizer_node::{InjectionScope, NodeDesigner, NodePath, NodePosition, NodeType};
 use mizer_nodes::{ContainerNode, Node};
 use serde::{Deserialize, Serialize};
 use mizer_layouts::LayoutStorage;
-use mizer_processing::Injector;
 use crate::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -24,7 +23,7 @@ impl<'a> Command<'a> for GroupNodesCommand {
 
     fn apply(
         &self,
-        (pipeline, layout_storage, injector): (&mut Pipeline, &LayoutStorage, &Injector),
+        (pipeline, layout_storage, injector): (&mut Pipeline, &LayoutStorage, InjectionScope),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let positions = pipeline.get_positions(&self.nodes);
         let center = get_center(positions);
@@ -56,7 +55,7 @@ impl<'a> Command<'a> for GroupNodesCommand {
 
     fn revert(
         &self,
-        (pipeline, layout_storage, injector): (&mut Pipeline, &LayoutStorage, &Injector),
+        (pipeline, layout_storage, injector): (&mut Pipeline, &LayoutStorage, InjectionScope),
         (add_node_state, rename_node_states): Self::State,
     ) -> anyhow::Result<()> {
         for (command, state) in rename_node_states {

@@ -23,7 +23,7 @@ impl PipelineNode for ColorToHsvNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(COLOR_INPUT, PortType::Color),
             output_port!(HUE_OUTPUT, PortType::Single),

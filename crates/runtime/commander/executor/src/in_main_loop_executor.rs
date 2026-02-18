@@ -1,9 +1,9 @@
 use crate::CommandExecutor;
-use mizer_module::Injector;
 use std::any::{type_name, Any};
+use mizer_node::InjectionScope;
 
 type WrappedCallback =
-    Box<dyn FnOnce(&mut CommandExecutor, &mut Injector) -> anyhow::Result<()> + Send + Sync>;
+    Box<dyn FnOnce(&mut CommandExecutor, &InjectionScope) -> anyhow::Result<()> + Send + Sync>;
 
 #[derive(Clone)]
 pub(crate) struct InMainLoopExecutor(flume::Sender<WrappedCallback>);
@@ -17,11 +17,11 @@ impl InMainLoopExecutor {
 
     pub fn run_in_main_loop<T: Any + Send>(
         &self,
-        callback: impl FnOnce(&mut CommandExecutor, &mut Injector) -> T + Send + Sync + 'static,
+        callback: impl FnOnce(&mut CommandExecutor, &InjectionScope) -> T + Send + Sync + 'static,
     ) -> anyhow::Result<T> {
         let (return_channel_sender, return_channel_receiver) =
             flume::bounded::<Box<dyn Any + Send>>(1);
-        let callback_wrapper = move |executor: &mut _, injector: &mut _| {
+        let callback_wrapper = move |executor: &mut _, injector: &InjectionScope| {
             let result = callback(executor, injector);
 
             return_channel_sender
@@ -48,7 +48,7 @@ impl InMainLoopExecutionWorker {
     pub fn process_callbacks(
         &mut self,
         executor: &mut CommandExecutor,
-        injector: &mut Injector,
+        injector: &InjectionScope,
     ) -> anyhow::Result<()> {
         while let Ok(callback) = self.0.try_recv() {
             callback(executor, injector)?;

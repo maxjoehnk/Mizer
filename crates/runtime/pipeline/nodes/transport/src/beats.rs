@@ -22,7 +22,7 @@ impl PipelineNode for BeatsNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             output_port!(OUTPUT_4_4_PORT, PortType::Single),
             output_port!(OUTPUT_2_4_PORT, PortType::Single),

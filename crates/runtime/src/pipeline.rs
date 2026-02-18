@@ -4,18 +4,17 @@ use anyhow::Context;
 use indexmap::IndexMap;
 use mizer_clock::{BoxedClock, ClockFrame};
 use mizer_debug_ui_impl::{Injector, NodeStateAccess};
-use mizer_node::{NodeDesigner, NodeLink, NodeMetadata, NodePath, NodePosition, NodeSetting, NodeType, PipelineNode, PortDirection, PortMetadata, ProcessingNode};
+use mizer_node::{NodeDesigner, NodeLink, NodeMetadata, NodePath, NodePosition, NodeSetting, NodeType, PipelineNode, PortDirection, PortMetadata, ProcessingNode, ReadOnlyInjectionScope};
 use mizer_nodes::{ContainerNode, Node, NodeDowncast, NodeExt};
 use mizer_pipeline::{NodePortReader, NodePreviewRef, PipelineWorker, ProcessingNodeExt};
 use mizer_ports::PortId;
-use mizer_processing::{Processor, ProcessorPriorities};
+use mizer_processing::{InjectMut, InjectionScope, Processor, ProcessorPriorities};
 use mizer_project_files::{Channel, Project};
 use pinboard::NonEmptyPinboard;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::io::Write;
-use std::ops::{Deref, DerefMut};
-use std::str::FromStr;
+use std::ops::DerefMut;
 use std::sync::Arc;
 use regex::Regex;
 
@@ -50,7 +49,7 @@ impl Pipeline {
 
     pub fn add_node(
         &mut self,
-        injector: &Injector,
+        injector: &ReadOnlyInjectionScope,
         node_type: NodeType,
         designer: NodeDesigner,
         node: Option<Node>,
@@ -64,7 +63,7 @@ impl Pipeline {
 
     fn add_node_with_path(
         &mut self,
-        injector: &Injector,
+        injector: &ReadOnlyInjectionScope,
         path: NodePath,
         designer: NodeDesigner,
         node: Node,
@@ -464,7 +463,7 @@ impl Pipeline {
     }
 
     #[profiling::function]
-    pub(crate) fn refresh_ports(&mut self, injector: &Injector) {
+    pub(crate) fn refresh_ports(&mut self, injector: &ReadOnlyInjectionScope) {
         for (_path, state) in self.nodes.iter_mut() {
             let _scope = format!("{:?}Node::list_ports", state.node.node_type());
             profiling::scope!(&_scope);
@@ -474,7 +473,7 @@ impl Pipeline {
     }
 
     #[profiling::function]
-    pub(crate) fn refresh_metadata(&mut self, injector: &Injector) {
+    pub(crate) fn refresh_metadata(&mut self, injector: &ReadOnlyInjectionScope) {
         for (_path, state) in self.nodes.iter_mut() {
             let _scope = format!("{:?}Node::display_name", state.node.node_type());
             profiling::scope!(&_scope);
@@ -488,7 +487,7 @@ impl Pipeline {
     }
 
     #[profiling::function]
-    pub(crate) fn refresh_settings(&mut self, injector: &Injector, paths: &[NodePath]) {
+    pub(crate) fn refresh_settings(&mut self, injector: &ReadOnlyInjectionScope, paths: &[NodePath]) {
         for path in paths {
             if let Some(state) = self.nodes.get_mut(path) {
                 let _scope = format!("{:?}Node::settings", state.node.node_type());
@@ -627,17 +626,17 @@ impl Processor for RuntimeProcessor {
         }
     }
 
-    fn pre_process(&mut self, injector: &mut Injector, frame: ClockFrame, fps: f64) {
+    fn pre_process(&mut self, injector: &InjectionScope<'_>, frame: ClockFrame, fps: f64) {
         profiling::scope!("Pipeline::pre_process");
-        let (pipeline, injector) = injector.get_slice_mut::<Pipeline>().unwrap();
-        let (clock, injector) = injector.get_slice_mut::<BoxedClock>().unwrap();
+        let pipeline = injector.inject_mut::<Pipeline>();
+        let clock = injector.inject_mut::<BoxedClock>();
         let nodes = pipeline
             .nodes
             .iter()
             .map(|(path, state)| (path, &state.node))
             .collect::<Vec<_>>();
         let context = CoordinatorRuntimeContext {
-            injector,
+            injector: injector.scope(),
             fps,
             master_clock: frame,
         };
@@ -649,17 +648,17 @@ impl Processor for RuntimeProcessor {
         );
     }
 
-    fn process(&mut self, injector: &mut Injector, frame: ClockFrame) {
+    fn process(&mut self, injector: &InjectionScope<'_>, frame: ClockFrame) {
         profiling::scope!("Pipeline::process");
-        let (pipeline, injector) = injector.get_slice_mut::<Pipeline>().unwrap();
-        let (clock, injector) = injector.get_slice_mut::<BoxedClock>().unwrap();
+        let pipeline = injector.inject_mut::<Pipeline>();
+        let clock = injector.inject_mut::<BoxedClock>();
         let nodes = pipeline
             .nodes
             .iter()
             .map(|(path, state)| (path, &state.node))
             .collect::<Vec<_>>();
         let context = CoordinatorRuntimeContext {
-            injector,
+            injector: injector.scope(),
             fps: 60.,
             master_clock: frame,
         };
@@ -671,17 +670,17 @@ impl Processor for RuntimeProcessor {
         );
     }
 
-    fn post_process(&mut self, injector: &mut Injector, frame: ClockFrame) {
+    fn post_process(&mut self, injector: &InjectionScope<'_>, frame: ClockFrame) {
         profiling::scope!("Pipeline::post_process");
-        let (pipeline, injector) = injector.get_slice_mut::<Pipeline>().unwrap();
-        let (clock, injector) = injector.get_slice_mut::<BoxedClock>().unwrap();
+        let pipeline = injector.inject_mut::<Pipeline>();
+        let clock = injector.inject_mut::<BoxedClock>();
         let nodes = pipeline
             .nodes
             .iter()
             .map(|(path, state)| (path, &state.node))
             .collect::<Vec<_>>();
         let context = CoordinatorRuntimeContext {
-            injector,
+            injector: injector.scope(),
             fps: 60.,
             master_clock: frame,
         };
@@ -697,7 +696,7 @@ impl Processor for RuntimeProcessor {
 impl Pipeline {
     pub fn new_project(&mut self, injector: &Injector) {
         self.add_node(
-            injector,
+            &injector.read_only_scope(),
             NodeType::Programmer,
             Default::default(),
             None,
@@ -705,7 +704,7 @@ impl Pipeline {
         )
         .unwrap();
         self.add_node(
-            injector,
+            &injector.read_only_scope(),
             NodeType::Transport,
             Default::default(),
             None,
@@ -717,7 +716,7 @@ impl Pipeline {
     pub fn load(&mut self, project: &Project, injector: &Injector) -> anyhow::Result<()> {
         for node in &project.nodes {
             self.add_node_with_path(
-                injector,
+                &injector.read_only_scope(),
                 node.path.clone(),
                 node.designer.clone(),
                 node.config.clone(),

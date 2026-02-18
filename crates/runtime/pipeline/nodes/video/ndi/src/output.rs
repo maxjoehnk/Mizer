@@ -83,7 +83,7 @@ impl NdiOutputState {
 }
 
 impl ConfigurableNode for NdiOutputNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![setting!(NAME_SETTING, &self.name)]
     }
 
@@ -103,7 +103,7 @@ impl PipelineNode for NdiOutputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(INPUT_PORT, PortType::Texture)]
     }
 

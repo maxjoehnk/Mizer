@@ -44,7 +44,7 @@ pub enum OpcOutputState {
 }
 
 impl ConfigurableNode for OpcOutputNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![
             setting!(HOST_SETTING, &self.host),
             setting!(PORT_SETTING, self.port as u32)
@@ -74,7 +74,7 @@ impl PipelineNode for OpcOutputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(PIXELS_INPUT, PortType::Texture, dimensions: (self.width as u64, self.height as u64)),
         ]

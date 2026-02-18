@@ -23,8 +23,8 @@ impl Default for PresetNode {
 }
 
 impl ConfigurableNode for PresetNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let manager = injector.get::<FixtureManager>().unwrap();
+    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+        let manager = injector.try_inject::<FixtureManager>().unwrap();
         let intensities = convert_presets_to_select_variants(manager.presets.intensity_presets());
         let shutters = convert_presets_to_select_variants(manager.presets.shutter_presets());
         let colors = convert_presets_to_select_variants(manager.presets.color_presets());
@@ -63,9 +63,9 @@ impl PipelineNode for PresetNode {
         }
     }
 
-    fn display_name(&self, injector: &Injector) -> String {
+    fn display_name(&self, injector: &ReadOnlyInjectionScope) -> String {
         if let Some(label) = injector
-            .get::<FixtureManager>()
+            .try_inject::<FixtureManager>()
             .and_then(|manager| manager.presets.get(&self.id))
             .and_then(|preset| preset.label().cloned())
         {
@@ -75,7 +75,7 @@ impl PipelineNode for PresetNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         let mut ports = vec![input_port!(CALL_PORT, PortType::Single)];
 
         match self.id {

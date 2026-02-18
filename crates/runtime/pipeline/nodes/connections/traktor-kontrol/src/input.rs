@@ -64,7 +64,7 @@ impl ConvertVariant for Element {
 }
 
 impl ConfigurableNode for TraktorKontrolX1InputNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         let devices = injector.get_devices();
         let elements = Element::list_variants("");
 
@@ -91,7 +91,7 @@ impl PipelineNode for TraktorKontrolX1InputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(VALUE_PORT, PortType::Single)]
     }
 

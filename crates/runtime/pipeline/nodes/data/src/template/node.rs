@@ -24,7 +24,7 @@ impl Default for TemplateNode {
 }
 
 impl ConfigurableNode for TemplateNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![setting!(TEMPLATE_SETTING, &self.template).multiline()]
     }
 
@@ -44,7 +44,7 @@ impl PipelineNode for TemplateNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Data, multiple),
             output_port!(OUTPUT_PORT, PortType::Data),

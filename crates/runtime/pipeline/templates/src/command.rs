@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{sub_command, Command, InjectorRef, RefMut};
-use mizer_node::{Injector, NodeLink};
+use mizer_node::{Injector, InjectionScope, NodeLink};
 use mizer_ports::PortType;
 use mizer_runtime::commands::{AddLinkCommand, AddNodeCommand};
 use mizer_runtime::Pipeline;
@@ -29,7 +29,7 @@ impl<'a> Command<'a> for ExecuteNodeTemplateCommand {
 
     fn apply(
         &self,
-        (pipeline, injector): (&mut Pipeline, &Injector),
+        (pipeline, injector): (&mut Pipeline, InjectionScope),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut node_paths = HashMap::new();
         let mut new_nodes = vec![];
@@ -57,7 +57,7 @@ impl<'a> Command<'a> for ExecuteNodeTemplateCommand {
         let nodes = new_nodes
             .into_iter()
             .map(|(template, cmd)| {
-                let (_, state) = cmd.apply((pipeline, injector))?;
+                let (_, state) = cmd.apply((pipeline, injector.scope()))?;
 
                 node_paths.insert(template, state.clone());
 
@@ -93,14 +93,15 @@ impl<'a> Command<'a> for ExecuteNodeTemplateCommand {
 
     fn revert(
         &self,
-        (pipeline, injector): (&mut Pipeline, &Injector),
+        (pipeline, injector): (&mut Pipeline, InjectionScope),
         (nodes, links): Self::State,
     ) -> anyhow::Result<()> {
         for (link_cmd, link_state) in links {
             link_cmd.revert(pipeline, link_state)?;
         }
         for (node_cmd, node_state) in nodes {
-            node_cmd.revert((pipeline, injector), node_state)?;
+            let scope = injector.scope();
+            node_cmd.revert((pipeline, scope), node_state)?;
         }
 
         Ok(())

@@ -54,7 +54,7 @@ fn default_playback_speed() -> f64 {
 }
 
 impl ConfigurableNode for VideoFileNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
         vec![
             setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Video]),
             setting!(PLAYBACK_SPEED_SETTING, self.playback_speed),
@@ -82,9 +82,9 @@ impl PipelineNode for VideoFileNode {
         }
     }
 
-    fn display_name(&self, injector: &Injector) -> String {
+    fn display_name(&self, injector: &ReadOnlyInjectionScope) -> String {
         if let Some(document) = injector
-            .get::<MediaServer>()
+            .try_inject::<MediaServer>()
             .zip(MediaId::try_from(self.file.clone()).ok())
             .and_then(|(media_server, media_id)| media_server.get_media_file(media_id))
         {
@@ -94,7 +94,7 @@ impl PipelineNode for VideoFileNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(PLAYBACK_INPUT, PortType::Single),
             input_port!(PLAYBACK_SPEED_INPUT, PortType::Single),

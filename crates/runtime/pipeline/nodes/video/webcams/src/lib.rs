@@ -25,7 +25,7 @@ const GAIN_SETTING: &str = "Gain";
 const PAN_SETTING: &str = "Pan";
 const TILT_SETTING: &str = "Tilt";
 const ZOOM_SETTING: &str = "Zoom";
-const EXPORURE_SETTING: &str = "Exposure";
+const EXPOSURE_SETTING: &str = "Exposure";
 const IRIS_SETTING: &str = "Iris";
 const FOCUS_SETTING: &str = "Focus";
 
@@ -112,7 +112,7 @@ fn collect_webcam_settings(webcam_ref: Option<&WebcamRef>) -> Vec<NodeSetting> {
                             settings.push(webcam_to_node_setting(value, ZOOM_SETTING))
                         }
                         WebcamSetting::Exposure(value) => {
-                            settings.push(webcam_to_node_setting(value, EXPORURE_SETTING))
+                            settings.push(webcam_to_node_setting(value, EXPOSURE_SETTING))
                         }
                         WebcamSetting::Iris(value) => {
                             settings.push(webcam_to_node_setting(value, IRIS_SETTING))

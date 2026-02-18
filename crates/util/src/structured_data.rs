@@ -9,6 +9,7 @@ pub enum StructuredData {
     Float(f64),
     Int(i64),
     Boolean(bool),
+    Null,
     Array(Vec<StructuredData>),
     Object(HashMap<String, StructuredData>),
 }
@@ -119,5 +120,18 @@ mod tests {
         let result = data.access("array.0");
 
         assert_eq!(Some(&value), result)
+    }
+
+    #[test]
+    fn parse_should_handle_null() -> anyhow::Result<()> {
+        let data = r#"{"key": null}"#;
+        let mut expected_data = HashMap::new();
+        expected_data.insert("key".to_string(), StructuredData::Null);
+        let expected = StructuredData::Object(expected_data);
+
+        let result: StructuredData = serde_json::from_str(data)?;
+
+        assert_eq!(expected, result);
+        Ok(())
     }
 }

@@ -54,6 +54,7 @@ fn convert_with_inventory(
                 })
                 .collect(),
         ),
+        StructuredData::Null => FFIStructuredData::null(),
     }
 }
 
@@ -110,6 +111,13 @@ impl FFIStructuredData {
             value: FFIStructuredDataValue { object },
         }
     }
+
+    fn null() -> Self {
+        Self {
+            r#type: FFIStructuredDataType::Null,
+            value: FFIStructuredDataValue { null: () },
+        }
+    }
 }
 
 #[derive(Clone, Copy)]
@@ -121,6 +129,7 @@ pub enum FFIStructuredDataType {
     Boolean = 3,
     Array = 4,
     Object = 5,
+    Null = 6,
 }
 
 #[derive(Clone, Copy)]
@@ -132,6 +141,7 @@ pub union FFIStructuredDataValue {
     pub boolean: u8,
     pub array: Array<FFIStructuredData>,
     pub object: Array<FFIStructuredDataObjectEntry>,
+    pub null: (),
 }
 
 #[derive(Clone, Copy)]

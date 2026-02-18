@@ -7275,6 +7275,7 @@ dependencies = [
  "profiling",
  "ringbuffer",
  "serde",
+ "serde_json",
  "shellexpand",
  "test-case",
  "tracing",

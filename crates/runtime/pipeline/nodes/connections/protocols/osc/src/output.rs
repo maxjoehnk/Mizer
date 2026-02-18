@@ -184,5 +184,6 @@ fn map_data_to_osc(data: StructuredData) -> Vec<OscType> {
             })
             .flatten()
             .collect(),
+        StructuredData::Null => vec![],
     }
 }

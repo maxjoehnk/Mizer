@@ -1,5 +1,5 @@
 use mizer_connections::ConnectionStorage;
-use mizer_node::{Inject, Injector, SelectVariant};
+use mizer_node::{Inject, SelectVariant};
 use mizer_protocol_mqtt::MqttConnection;
 
 pub use self::input::*;

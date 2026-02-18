@@ -3,9 +3,9 @@ use mizer_connections::ConnectionStorage;
 use crate::{ApiCommand, Mizer};
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_message_bus::Subscriber;
-use mizer_module::{Inject, Runtime};
-use mizer_processing::{Inject, InjectMut};
+use mizer_module::Runtime;
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
+use mizer_processing::{Inject, InjectMut};
 use mizer_protocol_osc::{OscConnectionExt, OscMessage};
 use mizer_runtime::Pipeline;
 

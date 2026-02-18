@@ -196,8 +196,7 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
 
     fn get_connections_pointer(&self) -> i64 {
         tracing::debug!("Acquiring pointer for connections");
-        let device_manager = self.handler.get_device_manager();
-        let connections_ref = ConnectionsRef(device_manager);
+        let connections_ref = ConnectionsRef();
         let connections_ref = Arc::new(connections_ref);
 
         connections_ref.to_pointer() as i64

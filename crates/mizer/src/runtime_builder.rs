@@ -9,7 +9,6 @@ use mizer_command_executor::{CommandExecutorApi, CommandExecutorModule};
 use mizer_console::ConsoleModule;
 #[cfg(feature = "debug-ui")]
 use mizer_debug_ui_egui::EguiDebugUiModule;
-use mizer_devices::DeviceModule;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::FixtureModule;
 use mizer_layouts::LayoutsModule;
@@ -36,6 +35,7 @@ use mizer_connections::{ConnectionsModule, WebcamModule};
 use mizer_g13::G13Module;
 use mizer_ndi::NdiModule;
 use mizer_protocol_laser::LaserModule;
+use mizer_traktor_kontrol_x1::TraktorX1Module;
 use crate::api::*;
 use crate::fixture_libraries_loader::MizerFixtureLoader;
 use crate::flags::Flags;
@@ -53,7 +53,7 @@ fn load_modules(context: &mut SetupContext, flags: &Flags) {
     LaserModule.try_load(context);
     G13Module.try_load(context);
     NdiModule.try_load(context);
-    DeviceModule.try_load(context);
+    TraktorX1Module.try_load(context);
     OscModule.try_load(context);
     MidiModule.try_load(context);
     WgpuModule.try_load(context).then(WindowModule);

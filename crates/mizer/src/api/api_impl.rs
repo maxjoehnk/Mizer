@@ -11,7 +11,6 @@ use mizer_command_executor::{
     CommandExecutorApi, GetCommandHistoryQuery, ICommandExecutor, SendableCommand, SendableQuery,
 };
 use mizer_connections::ConnectionStorageView;
-use mizer_devices::DeviceManager;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::{ApiInjector, Inject};
 use mizer_node::{NodePath, NodeSetting, PortId};
@@ -31,7 +30,6 @@ pub struct Api {
     settings: Arc<NonEmptyPinboard<SettingsManager>>,
     settings_bus: MessageBus<(Settings, Vec<Preference>)>,
     history_bus: MessageBus<(Vec<(String, u128)>, usize)>,
-    device_manager: DeviceManager,
     api_injector: ApiInjector,
     open_node_views: Arc<AtomicU8>,
 }
@@ -217,11 +215,6 @@ impl RuntimeApi for Api {
     }
 
     #[profiling::function]
-    fn get_device_manager(&self) -> DeviceManager {
-        self.device_manager.clone()
-    }
-
-    #[profiling::function]
     fn get_connections_view(&self) -> ConnectionStorageView {
         self.api_injector.inject::<ConnectionStorageView>().clone()
     }
@@ -333,7 +326,6 @@ impl Api {
         let (tx, rx) = flume::unbounded();
         let access = runtime.access();
         let command_executor_api = api_injector.require_service();
-        let device_manager = api_injector.require_service();
 
         (
             ApiHandler { recv: rx },
@@ -345,7 +337,6 @@ impl Api {
                 settings,
                 settings_bus: MessageBus::new(),
                 history_bus: MessageBus::new(),
-                device_manager,
                 open_node_views: Arc::new(AtomicU8::new(0)),
             },
         )

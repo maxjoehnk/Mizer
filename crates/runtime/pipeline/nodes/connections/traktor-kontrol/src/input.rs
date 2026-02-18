@@ -1,8 +1,7 @@
 use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
-
-use mizer_devices::DeviceManager;
+use mizer_connections::ConnectionStorage;
 use mizer_node::*;
 use mizer_traktor_kontrol_x1::*;
 
@@ -107,24 +106,22 @@ impl ProcessingNode for TraktorKontrolX1InputNode {
         if self.device_id.is_empty() || self.element.is_empty() {
             return Ok(());
         }
-        if let Some(device_manager) = context.try_inject::<DeviceManager>() {
-            if let Some(x1) = device_manager.get_x1_mut(&self.device_id) {
-                let element = Element::try_from_str(&self.element)?;
-                let value: Option<f32> = match element {
-                    Element::Button(button) => {
-                        x1.is_button_pressed(button).then_some(1.).or(Some(0.))
-                    }
-                    Element::Knob(knob) => x1.read_knob(knob).map(|value| value as f32 / 4090.),
-                    _ => todo!(),
-                };
-                if let Some(value) = value {
-                    let value = value as f64;
-                    context.write_port(VALUE_PORT, value);
-                    context.push_history_value(value);
+        let connection_storage = context.inject::<ConnectionStorage>();
+        let id = self.device_id.parse()?;
+        if let Some(x1) = connection_storage.get_connection_by_stable::<TraktorX1Ref>(&id) {
+            let element = Element::try_from_str(&self.element)?;
+            let value: Option<f32> = match element {
+                Element::Button(button) => {
+                    x1.is_button_pressed(button).then_some(1.).or(Some(0.))
                 }
+                Element::Knob(knob) => x1.read_knob(knob).map(|value| value as f32 / 4090.),
+                _ => todo!(),
+            };
+            if let Some(value) = value {
+                let value = value as f64;
+                context.write_port(VALUE_PORT, value);
+                context.push_history_value(value);
             }
-        } else {
-            anyhow::bail!("Traktor Kontrol X1 Input node is missing DeviceManager");
         }
         Ok(())
     }

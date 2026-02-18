@@ -64,6 +64,7 @@ mizer-protocol-laser = { path = "../components/connections/protocols/laser" }
 mizer-g13 = { path = "../components/connections/devices/g13" }
 mizer-gamepads = { path = "../components/connections/devices/gamepads" }
 mizer-ndi = { path = "../components/connections/devices/ndi" }
+mizer-traktor-kontrol-x1 = { path = "../components/connections/devices/traktor-kontrol-x1" }
 mizer-surfaces = { path = "../components/surfaces" }
 mizer-processing = { path = "../runtime/processing" }
 mizer-module = { path = "../runtime/module" }

@@ -72,28 +72,26 @@ impl ProcessingNode for LaserNode {
         if self.device_id.is_empty() {
             return Ok(());
         };
-        let connection_storage = context.inject::<ConnectionStorage>();
+        let mut connection_storage = context.inject_mut::<ConnectionStorage>();
         let stable_id = self.device_id.parse::<StableConnectionId>().context("Error parsing laser device id")?;
         let mut laser: Option<Box<&mut dyn Laser>> = None;
-        anyhow::bail!("TODO: request mutable access to connection storage in node processing");
 
-        // if let Some(helios) = connection_storage.get_connection_by_stable_mut::<HeliosLaser>(&stable_id) {
-        //     laser = Some(Box::new(helios));
-        // }
-        // if let Some(ether_dream) = connection_storage.get_connection_by_stable_mut::<EtherDreamLaser>(&stable_id) {
-        //     laser = Some(Box::new(ether_dream));
-        // }
-        // if let Some(mut laser) = laser {
-        //     if state.current_frame >= state.frames.len() {
-        //         state.current_frame = 0;
-        //     }
-        //     let frame = &state.frames[state.current_frame];
-        //     laser
-        //         .write_frame(frame.clone())
-        //         .context("Error writing frame to laser dac")?;
-        //     state.current_frame += 1;
-        // }
-        // Ok(())
+        if connection_storage.get_connection_by_stable::<HeliosLaser>(&stable_id).is_some() {
+            laser = connection_storage.get_connection_by_stable_mut::<HeliosLaser>(&stable_id).map(|laser| Box::new(laser as &mut dyn Laser));
+        }else if connection_storage.get_connection_by_stable::<EtherDreamLaser>(&stable_id).is_some() {
+            laser = connection_storage.get_connection_by_stable_mut::<EtherDreamLaser>(&stable_id).map(|laser| Box::new(laser as &mut dyn Laser));
+        }
+        if let Some(mut laser) = laser {
+            if state.current_frame >= state.frames.len() {
+                state.current_frame = 0;
+            }
+            let frame = &state.frames[state.current_frame];
+            laser
+                .write_frame(frame.clone())
+                .context("Error writing frame to laser dac")?;
+            state.current_frame += 1;
+        }
+        Ok(())
     }
 
     fn create_state(&self) -> Self::State {

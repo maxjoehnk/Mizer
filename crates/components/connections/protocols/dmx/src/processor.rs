@@ -1,7 +1,7 @@
 use mizer_connection_contracts::ConnectionStorage;
 use mizer_processing::*;
 
-use crate::{ArtnetOutput, DmxConnectionManager, DmxOutput, DmxOutputConnection, SacnOutput};
+use crate::{ArtnetOutput, DmxConnectionManager, DmxOutput, SacnOutput};
 
 #[derive(Debug)]
 pub(crate) struct DmxProcessor;

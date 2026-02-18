@@ -3,7 +3,6 @@ use std::sync::Arc;
 
 use mizer_command_executor::*;
 use mizer_connections::ConnectionStorageView;
-use mizer_devices::DeviceManager;
 use mizer_gamepads::GamepadRef;
 
 use crate::proto::connections::*;
@@ -282,12 +281,6 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     #[profiling::function]
     pub fn get_gamepad_ref(&self, name: String) -> anyhow::Result<Option<GamepadRef>> {
         self.runtime.get_gamepad_ref(name)
-    }
-
-    #[tracing::instrument(skip(self))]
-    #[profiling::function]
-    pub fn get_device_manager(&self) -> DeviceManager {
-        self.runtime.get_device_manager()
     }
 
     #[tracing::instrument(skip(self))]

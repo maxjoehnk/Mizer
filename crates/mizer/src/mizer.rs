@@ -123,7 +123,7 @@ impl Mizer {
                 timecode_manager
                     .load(&project)
                     .context("loading timecodes")?;
-                let connection_storage = injector.inject_mut::<ConnectionStorage>();
+                let connection_storage = scope.inject_mut::<ConnectionStorage>();
                 connection_storage
                     .load(&project)
                     .context("loading connections")?;
@@ -189,7 +189,7 @@ impl Mizer {
             fixture_manager.save(&mut project);
             let dmx_manager = scope.inject::<ConnectionStorage>();
             dmx_manager.save(&mut project);
-            let sequencer = injector.inject::<Sequencer>();
+            let sequencer = scope.inject::<Sequencer>();
             sequencer.save(&mut project);
             let timecode_manager = scope.inject::<TimecodeManager>();
             timecode_manager.save(&mut project);
@@ -222,7 +222,7 @@ impl Mizer {
         fixture_manager.clear();
         let dmx_manager = scope.inject_mut::<ConnectionStorage>();
         dmx_manager.clear();
-        let sequencer = injector.inject::<Sequencer>();
+        let sequencer = scope.inject::<Sequencer>();
         sequencer.clear();
         let timecode_manager = scope.inject::<TimecodeManager>();
         timecode_manager.clear();

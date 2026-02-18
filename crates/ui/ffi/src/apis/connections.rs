@@ -6,14 +6,13 @@ use bitflags::bitflags;
 
 use mizer_api::proto::connections::PioneerCdjConnection;
 use mizer_api::Message;
-use mizer_devices::DeviceManager;
 use mizer_gamepads::{Axis, Button, GamepadRef, GamepadState};
 use mizer_connections::ConnectionStorageView;
 
 use crate::types::{Array, FFIFromPointer};
 
 pub struct GamepadConnectionRef(pub GamepadRef);
-pub struct ConnectionsRef(pub DeviceManager);
+pub struct ConnectionsRef();
 pub struct ConnectionViewRef(pub ConnectionStorageView);
 
 #[no_mangle]

@@ -15,6 +15,7 @@ pub use mizer_protocol_osc::{OscMessage, OscType};
 pub use mizer_protocol_osc::{OscConnection, OscOutput, OscSubscription, OscColor, OscConnectionExt};
 pub use mizer_protocol_pro_dj_link::{CDJView, DJMView, ProDjLinkExt};
 pub use mizer_ndi::{NdiSourceRef, NdiSource};
+pub use mizer_traktor_kontrol_x1::TraktorX1Ref;
 pub use mizer_webcams::*;
 pub use crate::module::ConnectionsModule;
 
@@ -160,6 +161,12 @@ impl ConnectionStorageExt for ConnectionStorage {
                 }
             });
 
+        let x1_connections = self.fetch::<(ConnectionId, Has<TraktorX1Ref>)>()
+            .into_iter()
+            .map(|id| ConnectionView::TraktorKontrolX1(TraktorKontrolX1View {
+                id: id.to_stable().to_string(),
+            }));
+
         artnet_outputs
             .chain(sacn_outputs)
             .chain(osc_connections)
@@ -173,6 +180,7 @@ impl ConnectionStorageExt for ConnectionStorage {
             .chain(ndi_connections)
             .chain(cdj_connections)
             .chain(djm_connections)
+            .chain(x1_connections)
             .collect()
     }
 }
@@ -213,7 +221,8 @@ impl ConnectionView {
             ConnectionView::Citp(c) => c.connection_id.to_string(),
             ConnectionView::Cdj { id, .. } => id.clone(),
             ConnectionView::Djm { id, .. } => id.clone(),
-            _ => Default::default(),
+            // TODO
+            ConnectionView::Midi(device) => Default::default(),
         }
     }
 
@@ -228,21 +237,12 @@ impl ConnectionView {
             ConnectionView::Mqtt(connection) => connection.name.clone(),
             ConnectionView::Osc(connection) => connection.name.clone(),
             ConnectionView::G13(_) => "Logitech G13".to_string().into(),
-            ConnectionView::TraktorKontrolX1(_) => "Traktor Kontrol X1".to_string().into(),
+            ConnectionView::TraktorKontrolX1 { .. } => "Traktor Kontrol X1".to_string().into(),
             ConnectionView::Webcam(connection) => connection.name.clone(),
             ConnectionView::NdiSource(connection) => connection.name.clone(),
             ConnectionView::Cdj { state: cdj, .. } => cdj.device.name.clone().into(),
             ConnectionView::Djm { state: djm, .. } => djm.device.name.clone().into(),
             ConnectionView::Citp(citp) => citp.name.clone(),
-        }
-    }
-}
-
-impl From<DeviceRef> for ConnectionView {
-    fn from(device: DeviceRef) -> Self {
-        match device {
-            DeviceRef::TraktorKontrolX1(view) => view.into(),
-            DeviceRef::Webcam(view) => view.into(),
         }
     }
 }

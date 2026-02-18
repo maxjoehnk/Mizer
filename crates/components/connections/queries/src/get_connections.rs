@@ -1,6 +1,5 @@
 use mizer_commander::{Query, Ref};
 use mizer_connections::*;
-use mizer_devices::DeviceManager;
 use mizer_protocol_midi::MidiConnectionManager;
 use serde::{Deserialize, Serialize};
 
@@ -11,22 +10,19 @@ impl<'a> Query<'a> for ListConnectionsQuery {
     type Dependencies = (
         Ref<MidiConnectionManager>,
         Ref<ConnectionStorage>,
-        Ref<DeviceManager>,
     );
     type Result = Vec<ConnectionView>;
 
     fn query(
         &self,
-        (midi_manager, connection_storage, device_manager): (
+        (midi_manager, connection_storage): (
             &MidiConnectionManager,
             &ConnectionStorage,
-            &DeviceManager,
         ),
     ) -> anyhow::Result<Self::Result> {
         let mut connections = Vec::new();
         connections.extend(self.midi_connections(midi_manager));
         connections.extend(self.connection_storage_views(connection_storage));
-        connections.extend(self.devices(device_manager));
 
         Ok(connections)
     }
@@ -52,15 +48,5 @@ impl ListConnectionsQuery {
         connection_storage: &'a ConnectionStorage,
     ) -> impl Iterator<Item =ConnectionView> + 'a {
         connection_storage.get_connection_views().into_iter()
-    }
-
-    fn devices<'a>(
-        &self,
-        device_manager: &'a DeviceManager,
-    ) -> impl Iterator<Item =ConnectionView> + 'a {
-        device_manager
-            .current_devices()
-            .into_iter()
-            .map(ConnectionView::from)
     }
 }

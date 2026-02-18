@@ -5,6 +5,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/views/connections/connection_indicator.dart';
 import 'package:mizer/views/connections/dialogs/midi_monitor.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/controls/select.dart';
@@ -37,15 +38,18 @@ class _MidiConnectionsViewState extends State<MidiConnectionsView> {
       label: "MIDI Connections".i18n,
       child: MizerTable(
           columnWidths: {
-            2: FixedColumnWidth(64),
+            0: FixedColumnWidth(48),
+            3: FixedColumnWidth(64),
           },
           columns: [
+            Container(),
             Text("Name".i18n, style: titleTheme),
             Text("Device Profile".i18n, style: titleTheme),
             Container(),
           ],
           rows: _connections
               .map((c) => MizerTableRow(cells: [
+                    ConnectionIndicator(c),
                     Text(c.name),
                     MizerSelect(
                         value: c.midi.deviceProfile,

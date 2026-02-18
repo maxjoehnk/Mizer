@@ -1,7 +1,8 @@
+use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_protocol_osc::*;
+use mizer_connections::{ConnectionStorage, OscConnectionExt, StableConnectionId, OscSubscription, OscType, OscMessage, OscColor};
 use mizer_util::{ConvertPercentages, StructuredData};
 
 use crate::{OscArgumentType, OscInjectorExt};
@@ -87,7 +88,8 @@ impl ProcessingNode for OscInputNode {
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         let connection_manager = self.get_connection_manager(context);
         if state.is_none() {
-            *state = connection_manager.subscribe(&self.connection)?;
+            let id = StableConnectionId::from_str(&self.connection)?;
+            *state = connection_manager.subscribe(&id)?;
         }
         if let Some(msg) = state
             .as_ref()
@@ -107,10 +109,8 @@ impl OscInputNode {
     fn get_connection_manager<'a>(
         &self,
         context: &'a impl NodeContext,
-    ) -> &'a OscConnectionManager {
-        let connection_manager = context.try_inject::<OscConnectionManager>();
-
-        connection_manager.expect("Missing osc module")
+    ) -> &'a ConnectionStorage {
+        context.inject::<ConnectionStorage>()
     }
 
     fn handle_msg(&self, mut msg: OscMessage, context: &impl NodeContext) {

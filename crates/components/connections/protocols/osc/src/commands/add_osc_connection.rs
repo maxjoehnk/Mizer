@@ -1,6 +1,7 @@
-use crate::{OscAddress, OscConnectionManager, OscProtocol};
+use crate::{OscAddress, OscConnection, OscProtocol};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
+use mizer_connection_contracts::{ConnectionId, ConnectionStorage};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AddOscConnectionCommand {
@@ -11,9 +12,9 @@ pub struct AddOscConnectionCommand {
 }
 
 impl<'a> Command<'a> for AddOscConnectionCommand {
-    type Dependencies = RefMut<OscConnectionManager>;
-    type State = String;
-    type Result = String;
+    type Dependencies = RefMut<ConnectionStorage>;
+    type State = ConnectionId;
+    type Result = ConnectionId;
 
     fn label(&self) -> String {
         format!(
@@ -24,27 +25,25 @@ impl<'a> Command<'a> for AddOscConnectionCommand {
 
     fn apply(
         &self,
-        osc_manager: &mut OscConnectionManager,
+        storage: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let id = osc_manager.list_connections().len();
-        let id = format!("osc-{}", id);
         let address = OscAddress {
             protocol: OscProtocol::Udp,
             output_host: self.output_host.parse()?,
             output_port: self.output_port,
             input_port: self.input_port,
         };
-        osc_manager.add_connection(id.clone(), self.name.clone(), address)?;
+        let connection_id = storage.acquire_new_connection::<OscConnection>(address, Some(self.name.clone()))?;
 
-        Ok((id.clone(), id))
+        Ok((connection_id, connection_id))
     }
 
     fn revert(
         &self,
-        osc_manager: &mut OscConnectionManager,
+        storage: &mut ConnectionStorage,
         id: Self::State,
     ) -> anyhow::Result<()> {
-        osc_manager.delete_connection(&id);
+        storage.delete_connection(&id);
 
         Ok(())
     }

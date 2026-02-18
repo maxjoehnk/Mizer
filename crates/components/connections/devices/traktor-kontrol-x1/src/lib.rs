@@ -1,5 +1,7 @@
+mod module;
+
 use flume::{unbounded, Receiver, Sender, TryRecvError};
-use futures::Stream;
+use futures::{SinkExt, Stream};
 use pinboard::Pinboard;
 use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
@@ -7,6 +9,9 @@ use std::sync::Arc;
 use std::time::Duration;
 use traktor_kontrol_x1::{list_devices, TraktorX1, X1Error, X1State};
 pub use traktor_kontrol_x1::{Button, DeckButton, DeckEncoder, Encoder, FxButton, FxKnob, Knob};
+use mizer_connection_contracts::{IConnection, RemoteConnectionStorageHandle, TransmissionStateSender};
+
+pub use module::TraktorX1Module;
 
 #[derive(PartialEq, Eq, Hash)]
 #[repr(transparent)]
@@ -19,7 +24,7 @@ impl TraktorX1InternalId {
 }
 
 pub struct X1DiscoveryService {
-    device_sender: Sender<TraktorX1Ref>,
+    device_sender: RemoteConnectionStorageHandle<TraktorX1Ref>,
     states: HashMap<TraktorX1InternalId, TraktorX1State>,
 }
 
@@ -77,7 +82,7 @@ impl TraktorX1State {
 }
 
 impl X1DiscoveryService {
-    fn new(device_sender: Sender<TraktorX1Ref>) -> anyhow::Result<Self> {
+    fn new(device_sender: RemoteConnectionStorageHandle<TraktorX1Ref>) -> anyhow::Result<Self> {
         Ok(Self {
             device_sender,
             states: Default::default(),
@@ -100,7 +105,7 @@ impl X1DiscoveryService {
                         state: response,
                         sender,
                     };
-                    if let Err(err) = self.device_sender.send(x1_ref) {
+                    if let Err(err) = self.device_sender.add_connection(x1_ref, None) {
                         tracing::error!("Unable to notify of new device {err:?}");
                     }
                 }
@@ -124,29 +129,27 @@ impl X1DiscoveryService {
     }
 }
 
-pub struct TraktorX1Discovery {
-    devices: Receiver<TraktorX1Ref>,
-}
+pub fn discover_devices(handle: RemoteConnectionStorageHandle<TraktorX1Ref>) -> anyhow::Result<()> {
+    let service = X1DiscoveryService::new(handle)?;
+    std::thread::Builder::new()
+        .name("Traktor X1 Discovery".to_string())
+        .spawn(move || service.run())?;
 
-impl TraktorX1Discovery {
-    // As this will spawn a background thread initializing a new instance of this struct should be explicit.
-    #[allow(clippy::new_without_default)]
-    pub fn new() -> anyhow::Result<Self> {
-        let (sender, receiver) = unbounded();
-        let service = X1DiscoveryService::new(sender)?;
-        std::thread::spawn(move || service.run());
-
-        Ok(Self { devices: receiver })
-    }
-
-    pub fn into_stream(self) -> impl Stream<Item = TraktorX1Ref> {
-        self.devices.into_stream()
-    }
+    Ok(())
 }
 
 pub struct TraktorX1Ref {
     state: Arc<Pinboard<X1State>>,
     sender: Sender<X1Command>,
+}
+
+impl IConnection for TraktorX1Ref {
+    type Config = Self;
+    const TYPE: &'static str = "x1";
+
+    fn create(config: Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        Ok(config)
+    }
 }
 
 enum X1Command {

@@ -1,5 +1,5 @@
 use flume::{unbounded, Receiver, Sender, TryRecvError};
-use futures::Stream;
+pub use module::G13Module;
 pub use g13::Keys;
 use g13::{G13Error, G13Manager, ModeLeds, Response, G13};
 use pinboard::Pinboard;
@@ -7,6 +7,9 @@ use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
 use std::time::Duration;
+use mizer_connection_contracts::{IConnection, RemoteConnectionStorageHandle, TransmissionStateSender};
+
+mod module;
 
 #[derive(PartialEq, Eq, Hash)]
 #[repr(transparent)]
@@ -20,7 +23,7 @@ impl G13InternalId {
 
 pub struct G13DiscoveryService {
     manager: G13Manager,
-    device_sender: Sender<G13Ref>,
+    device_sender: RemoteConnectionStorageHandle<G13Ref>,
     g13_states: HashMap<G13InternalId, G13State>,
 }
 
@@ -87,7 +90,7 @@ impl G13State {
 }
 
 impl G13DiscoveryService {
-    fn new(device_sender: Sender<G13Ref>) -> anyhow::Result<Self> {
+    fn new(device_sender: RemoteConnectionStorageHandle<G13Ref>) -> anyhow::Result<Self> {
         Ok(Self {
             manager: G13Manager::new()?,
             device_sender,
@@ -111,7 +114,7 @@ impl G13DiscoveryService {
                         state: response,
                         sender,
                     };
-                    if let Err(err) = self.device_sender.send(g13_ref) {
+                    if let Err(err) = self.device_sender.add_connection(g13_ref, None) {
                         tracing::error!("Unable to notify of new device {err:?}");
                     }
                 }
@@ -135,29 +138,18 @@ impl G13DiscoveryService {
     }
 }
 
-pub struct G13Discovery {
-    devices: Receiver<G13Ref>,
-}
-
-impl G13Discovery {
-    // As this will spawn a background thread initializing a new instance of this struct should be explicit.
-    #[allow(clippy::new_without_default)]
-    pub fn new() -> anyhow::Result<Self> {
-        let (sender, receiver) = unbounded();
-        let service = G13DiscoveryService::new(sender)?;
-        std::thread::spawn(move || service.run());
-
-        Ok(Self { devices: receiver })
-    }
-
-    pub fn into_stream(self) -> impl Stream<Item = G13Ref> {
-        self.devices.into_stream()
-    }
-}
-
 pub struct G13Ref {
     state: Arc<Pinboard<Response>>,
     sender: Sender<G13Command>,
+}
+
+impl IConnection for G13Ref {
+    type Config = Self;
+    const TYPE: &'static str = "g13";
+
+    fn create(config: Self::Config, _: TransmissionStateSender) -> anyhow::Result<Self> {
+        Ok(config)
+    }
 }
 
 enum G13Command {

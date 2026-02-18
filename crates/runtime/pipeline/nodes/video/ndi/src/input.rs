@@ -1,8 +1,6 @@
 use anyhow::{anyhow, Context};
 use serde::{Deserialize, Serialize};
-
-use mizer_devices::{DeviceManager, DeviceRef};
-use mizer_ndi::{NdiSource, NdiSourceRef};
+use mizer_connections::{ConnectionStorage, NdiSourceRef, NdiSource, ConnectionId, Has, Name};
 use mizer_node::*;
 use mizer_video_nodes::background_thread_decoder::*;
 use mizer_wgpu::{
@@ -20,19 +18,13 @@ pub struct NdiInputNode {
 
 impl ConfigurableNode for NdiInputNode {
     fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let device_manager = injector.inject::<DeviceManager>();
-        let devices = device_manager
-            .current_devices()
+        let connection_storage = injector.inject::<ConnectionStorage>();
+        let devices = connection_storage
+            .fetch::<(ConnectionId, Name, Has<NdiSourceRef>)>()
             .into_iter()
-            .flat_map(|device| {
-                if let DeviceRef::NdiSource(source) = device {
-                    Some(SelectVariant::Item {
-                        value: source.id.into(),
-                        label: source.name.into(),
-                    })
-                } else {
-                    None
-                }
+            .map(|(id, name) | SelectVariant::Item {
+                value: id.to_stable().to_string().into(),
+                label: name.clone().into(),
             })
             .collect();
 
@@ -81,15 +73,14 @@ impl ProcessingNode for NdiInputNode {
         let Some(texture_registry) = context.try_inject::<TextureRegistry>() else {
             return Ok(());
         };
-        let Some(device_manager) = context.try_inject::<DeviceManager>() else {
-            return Ok(());
-        };
+        let connection_storage = context.inject::<ConnectionStorage>();
 
         if self.device_id.is_empty() {
             return Ok(());
         }
 
-        let ndi_source_ref = device_manager.get_ndi_source(&self.device_id);
+        let id = self.device_id.parse()?;
+        let ndi_source_ref = connection_storage.get_connection_by_stable::<NdiSourceRef>(&id);
         if ndi_source_ref.is_none() {
             return Ok(());
         }
@@ -101,7 +92,7 @@ impl ProcessingNode for NdiInputNode {
                 NdiInputState::new(
                     wgpu_context,
                     texture_registry,
-                    ndi_source_ref.value().clone(),
+                    ndi_source_ref.clone(),
                 )
                 .context("Creating ndi input state")?,
             );
@@ -109,7 +100,7 @@ impl ProcessingNode for NdiInputNode {
 
         let state = state.as_mut().unwrap();
         state.check_background_decoder()?;
-        if &state.ndi_source_ref != ndi_source_ref.value() {
+        if &state.ndi_source_ref != ndi_source_ref {
             state
                 .change_source(ndi_source_ref.clone())
                 .context("Changing ndi source")?;

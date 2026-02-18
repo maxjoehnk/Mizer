@@ -8,7 +8,7 @@ edition = "2021"
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../../../node" }
-mizer-protocol-osc = { path = "../../../../../../components/connections/protocols/osc" }
+mizer-connections = { path = "../../../../../../components/connections" }
 tracing = "0.1"
 mizer-util = { path = "../../../../../../util" }
 enum-iterator = "2.0"

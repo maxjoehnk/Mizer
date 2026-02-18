@@ -5,6 +5,7 @@ use std::convert::{TryFrom, TryInto};
 use std::sync::{Arc, Condvar, Mutex};
 use std::thread;
 use std::time::Duration;
+use mizer_connection_contracts::{IConnection, RemoteConnectionStorageHandle, TransmissionStateSender};
 
 pub struct HeliosLaser {
     current_frame: Arc<Pinboard<LaserFrame>>,
@@ -13,17 +14,28 @@ pub struct HeliosLaser {
     pub firmware: u32,
 }
 
+impl IConnection for HeliosLaser {
+    type Config = NativeHeliosDac;
+    const TYPE: &'static str = "helios";
+
+    fn create(device: Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        let device = device.open()?;
+
+        device.try_into()
+    }
+}
+
 impl HeliosLaser {
-    pub fn find_devices() -> anyhow::Result<Vec<HeliosLaser>> {
+    pub fn find_devices(sender: RemoteConnectionStorageHandle<HeliosLaser>) -> anyhow::Result<()> {
         let controller = helios_dac::NativeHeliosDacController::new()?;
         let devices = controller.list_devices()?;
-        let mut lasers = vec![];
         for device in devices {
             let device = device.open()?;
-            lasers.push(device.try_into()?);
+            let name = device.name()?;
+            sender.add_connection(device, Some(name))?;
         }
 
-        Ok(lasers)
+        Ok(())
     }
 }
 
@@ -93,8 +105,7 @@ impl TryFrom<helios_dac::NativeHeliosDac> for HeliosLaser {
                     device.write_frame(frame.into()).unwrap();
                     thread::sleep(Duration::from_millis(100));
                 }
-            })
-            .unwrap();
+            })?;
 
         Ok(HeliosLaser {
             lock,

@@ -1,6 +1,7 @@
-use crate::{ArtnetOutput, DmxConnectionManager};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
+use mizer_connection_contracts::{ConnectionId, ConnectionStorage};
+use crate::ArtnetOutput;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AddArtnetOutputCommand {
@@ -10,8 +11,8 @@ pub struct AddArtnetOutputCommand {
 }
 
 impl<'a> Command<'a> for AddArtnetOutputCommand {
-    type Dependencies = RefMut<DmxConnectionManager>;
-    type State = ();
+    type Dependencies = RefMut<ConnectionStorage>;
+    type State = ConnectionId;
     type Result = ();
 
     fn label(&self) -> String {
@@ -20,18 +21,17 @@ impl<'a> Command<'a> for AddArtnetOutputCommand {
 
     fn apply(
         &self,
-        dmx_manager: &mut DmxConnectionManager,
+        connection_storage: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let output = ArtnetOutput::new(self.host.clone(), self.port)?;
-        dmx_manager.add_output(self.name.clone(), output);
+        let connection_id = connection_storage.acquire_new_connection::<ArtnetOutput>((self.host.clone(), self.port), Some(self.name.clone()))?;
 
-        Ok(((), ()))
+        Ok(((), connection_id))
     }
 
-    fn revert(&self, dmx_manager: &mut DmxConnectionManager, _: Self::State) -> anyhow::Result<()> {
-        dmx_manager
-            .delete_output(&self.name)
-            .ok_or_else(|| anyhow::anyhow!("Unknown output {}", self.name))?;
+    fn revert(&self, storage: &mut ConnectionStorage, id: Self::State) -> anyhow::Result<()> {
+        storage
+            .delete_connection(&id)
+            .ok_or_else(|| anyhow::anyhow!("Unknown output {id}"))?;
 
         Ok(())
     }

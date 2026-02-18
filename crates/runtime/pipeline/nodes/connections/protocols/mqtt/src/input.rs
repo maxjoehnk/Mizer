@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_protocol_mqtt::{MqttConnectionManager, MqttSubscription};
+use mizer_connections::{ConnectionStorage, MqttConnectionExt, MqttSubscription};
 
 use crate::MqttInjectorExt;
 
@@ -65,7 +65,7 @@ impl ProcessingNode for MqttInputNode {
     type State = Option<MqttSubscription>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let connection_manager = self.get_connection_manager(context);
+        let connection_manager = context.inject::<ConnectionStorage>();
         if state.is_none() {
             self.create_subscription(connection_manager, state)?;
         } else {
@@ -82,18 +82,9 @@ impl ProcessingNode for MqttInputNode {
 }
 
 impl MqttInputNode {
-    fn get_connection_manager<'a>(
-        &self,
-        context: &'a impl NodeContext,
-    ) -> &'a MqttConnectionManager {
-        let connection_manager = context.try_inject::<MqttConnectionManager>();
-
-        connection_manager.expect("Missing mqtt module")
-    }
-
     fn verify_subscription(
         &self,
-        connection_manager: &MqttConnectionManager,
+        connection_manager: &impl MqttConnectionExt,
         subscription: &mut Option<MqttSubscription>,
     ) -> anyhow::Result<()> {
         if subscription
@@ -112,7 +103,7 @@ impl MqttInputNode {
 
     fn create_subscription(
         &self,
-        connection_manager: &MqttConnectionManager,
+        connection_manager: &impl MqttConnectionExt,
         subscription: &mut Option<MqttSubscription>,
     ) -> anyhow::Result<()> {
         *subscription = connection_manager.subscribe(&self.connection, self.path.clone())?;

@@ -14,7 +14,6 @@ image = "0.25"
 profiling = "1"
 ndi = { git = "https://github.com/maxjoehnk/ndi-rs.git", branch = "feature/ndi-5" }
 futures = "0.3"
-mizer-ndi = { path = "../../../../../components/connections/devices/ndi" }
-mizer-devices = { path = "../../../../../components/connections/devices" }
+mizer-connections = { path = "../../../../../components/connections" }
 mizer-video-nodes = { path = ".." }
 ringbuffer = "0.15"

@@ -17,5 +17,6 @@ mizer-module = { path = "../../../../runtime/module" }
 mizer-commander = { path = "../../../../runtime/commander" }
 mizer-message-bus = { path = "../../../../util/bus" }
 mizer-util = { path = "../../../../util" }
+mizer-connection-contracts = { path = "../../contracts" }
 url = { version = "2.5", features = ["serde"] }
 tokio = { version = "1", features = ["rt"] }

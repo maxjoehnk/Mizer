@@ -1,17 +1,18 @@
 use crate::proto::connections::*;
 
-impl From<mizer_connections::Connection> for Connection {
-    fn from(connection: mizer_connections::Connection) -> Self {
+impl From<mizer_connections::ConnectionView> for Connection {
+    fn from(connection: mizer_connections::ConnectionView) -> Self {
         Self {
-            name: connection.name(),
+            id: connection.id(),
+            name: connection.name().to_string(),
             connection: Some(connection.into()),
         }
     }
 }
 
-impl From<mizer_connections::Connection> for connection::Connection {
-    fn from(connection: mizer_connections::Connection) -> Self {
-        use mizer_connections::Connection::*;
+impl From<mizer_connections::ConnectionView> for connection::Connection {
+    fn from(connection: mizer_connections::ConnectionView) -> Self {
+        use mizer_connections::ConnectionView::*;
         match connection {
             Midi(midi) => Self::Midi(MidiConnection {
                 device_profile: midi.device_profile,
@@ -39,7 +40,7 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 config: Some(match view.config {
                     mizer_connections::DmxInputConfig::Artnet { host, port } => {
                         dmx_input_connection::Config::Artnet(ArtnetInputConfig {
-                            name: view.name,
+                            name: view.name.to_string(),
                             host: host.to_string(),
                             port: port as u32,
                         })
@@ -47,13 +48,13 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 }),
             }),
             Helios(laser) => Self::Helios(HeliosConnection {
-                name: laser.name,
+                name: laser.name.to_string(),
                 firmware: laser.firmware,
             }),
-            EtherDream(laser) => Self::EtherDream(EtherDreamConnection { name: laser.name }),
+            EtherDream(laser) => Self::EtherDream(EtherDreamConnection { name: laser.name.to_string() }),
             Gamepad(gamepad) => Self::Gamepad(GamepadConnection {
                 id: gamepad.id,
-                name: gamepad.name,
+                name: gamepad.name.to_string(),
             }),
             Mqtt(mqtt) => Self::Mqtt(MqttConnection {
                 connection_id: mqtt.connection_id,
@@ -62,7 +63,7 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 password: mqtt.password,
             }),
             Osc(osc) => Self::Osc(OscConnection {
-                name: osc.name,
+                name: osc.name.to_string(),
                 connection_id: osc.connection_id,
                 output_address: osc.output_host,
                 output_port: osc.output_port as u32,
@@ -72,23 +73,23 @@ impl From<mizer_connections::Connection> for connection::Connection {
             TraktorKontrolX1(x1) => Self::X1(TraktorKontrolX1Connection { id: x1.id }),
             Webcam(webcam) => Self::Webcam(WebcamConnection {
                 id: webcam.id,
-                name: webcam.name,
+                name: webcam.name.to_string(),
             }),
             NdiSource(ndi_source) => Self::NdiSource(NdiSourceConnection {
                 id: ndi_source.id,
-                name: ndi_source.name,
+                name: ndi_source.name.to_string(),
             }),
-            Cdj(cdj) => Self::Cdj(cdj.into()),
-            Djm(djm) => Self::Djm(djm.into()),
+            Cdj { state: cdj, id } => Self::Cdj((id, cdj).into()),
+            Djm { state: djm, id } => Self::Djm((id, djm).into()),
             Citp(citp) => Self::Citp(citp.into()),
         }
     }
 }
 
-impl From<mizer_connections::CDJView> for PioneerCdjConnection {
-    fn from(cdj: mizer_connections::CDJView) -> Self {
+impl From<(String, mizer_connections::CDJView)> for PioneerCdjConnection {
+    fn from((id, cdj): (String, mizer_connections::CDJView)) -> Self {
         Self {
-            id: cdj.id(),
+            id,
             playback: Some(CdjPlayback {
                 frame: cdj.beat as u32,
                 bpm: cdj.current_bpm(),
@@ -107,10 +108,10 @@ impl From<mizer_connections::CDJView> for PioneerCdjConnection {
     }
 }
 
-impl From<mizer_connections::DJMView> for PioneerDjmConnection {
-    fn from(djm: mizer_connections::DJMView) -> Self {
+impl From<(String, mizer_connections::DJMView)> for PioneerDjmConnection {
+    fn from((id, djm): (String, mizer_connections::DJMView)) -> Self {
         Self {
-            id: djm.id(),
+            id,
             address: djm.device.ip_addr.to_string(),
             model: djm.device.name,
             player_number: djm.device.device_id as u32,
@@ -288,7 +289,7 @@ impl From<mizer_connections::CitpView> for CitpConnection {
     fn from(value: mizer_connections::CitpView) -> Self {
         Self {
             connection_id: value.connection_id.to_string(),
-            name: value.name,
+            name: value.name.to_string(),
             kind: citp_connection::CitpKind::from(value.kind) as i32,
             state: value.state,
         }

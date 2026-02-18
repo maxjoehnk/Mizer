@@ -6,11 +6,11 @@ use futures::{future, FutureExt};
 use mizer_message_bus::{MessageBus, Subscriber};
 use rosc::{OscMessage, OscPacket};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::future::Future;
 use std::net::{Ipv4Addr, SocketAddrV4};
 use tokio::net::UdpSocket;
+use mizer_connection_contracts::{ConnectionStorage, IConnection, StableConnectionId, TransmissionStateSender};
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
 pub struct OscAddress {
@@ -52,94 +52,56 @@ impl Display for OscProtocol {
     }
 }
 
-#[derive(Default)]
-pub struct OscConnectionManager {
-    connections: HashMap<String, OscConnection>,
+pub trait OscConnectionExt {
+    fn get_output(&self, id: &StableConnectionId) -> Option<OscOutput>;
+    fn subscribe(&self, id: &StableConnectionId) -> anyhow::Result<Option<OscSubscription>>;
 }
 
-impl OscConnectionManager {
-    pub fn new() -> Self {
-        Self::default()
+impl OscConnectionExt for ConnectionStorage {
+    fn get_output(&self, id: &StableConnectionId) -> Option<OscOutput> {
+        let connection = self.get_connection_by_stable::<OscConnection>(id)?;
+
+        Some(OscOutput::new(&connection.command_publisher))
     }
 
-    pub fn add_connection(
-        &mut self,
-        id: String,
-        name: String,
-        address: OscAddress,
-    ) -> anyhow::Result<()> {
-        let (connection, background_client) = OscConnection::new(name, address)?;
-        self.connections.insert(id, connection);
-        tokio::spawn(async {
-            let client = background_client.await.unwrap();
-            client.run().await;
-        });
+    fn subscribe(&self, id: &StableConnectionId) -> anyhow::Result<Option<OscSubscription>> {
+        let Some(connection) = self.get_connection_by_stable::<OscConnection>(id) else {
+            return Ok(None);
+        };
+        let subscriber = connection.subscribe()?;
 
-        Ok(())
-    }
-
-    pub fn list_connections(&self) -> Vec<(&String, &OscConnection)> {
-        self.connections.iter().collect()
-    }
-
-    pub fn delete_connection(&mut self, id: &str) -> Option<(String, OscAddress)> {
-        self.connections
-            .remove(id)
-            .map(|connection| (connection.name.clone(), connection.address))
-    }
-
-    pub(crate) fn reconfigure_connection(
-        &mut self,
-        id: &str,
-        name: String,
-        address: OscAddress,
-    ) -> anyhow::Result<(String, OscAddress)> {
-        tracing::debug!("reconfigure_connection {id}");
-        let connection = self
-            .connections
-            .get_mut(id)
-            .ok_or_else(|| anyhow::anyhow!("Unknown connection"))?;
-        let previous_config = connection.reconfigure(name, address)?;
-
-        Ok(previous_config)
-    }
-
-    pub fn clear(&mut self) {
-        self.connections.clear();
-    }
-
-    pub fn get_output(&self, id: &str) -> Option<OscOutput> {
-        self.connections
-            .get(id)
-            .map(|connection| OscOutput::new(&connection.command_publisher))
-    }
-
-    pub fn subscribe(&self, id: &str) -> anyhow::Result<Option<OscSubscription>> {
-        self.connections
-            .get(id)
-            .map(|connection| {
-                let subscriber = connection.subscribe()?;
-
-                Ok(OscSubscription {
-                    connection_id: id.to_string(),
-                    subscriber,
-                })
-            })
-            .transpose()
+        Ok(Some(OscSubscription {
+            connection_id: id.to_string(),
+            subscriber,
+        }))
     }
 }
 
 pub struct OscConnection {
-    pub name: String,
     pub address: OscAddress,
     command_publisher: Sender<OscClientCommand>,
     event_publisher: MessageBus<OscMessage>,
 }
 
+impl IConnection for OscConnection {
+    type Config = OscAddress;
+    const TYPE: &'static str = "osc";
+
+    fn create(address: Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        let (connection, background_client) = OscConnection::new(address, transmission_sender)?;
+        tokio::spawn(async {
+            let client = background_client.await.unwrap();
+            client.run().await;
+        });
+
+        Ok(connection)
+    }
+}
+
 impl OscConnection {
     fn new(
-        name: String,
         address: OscAddress,
+        transmission_sender: TransmissionStateSender,
     ) -> anyhow::Result<(
         Self,
         impl Future<Output = anyhow::Result<OscBackgroundClient>>,
@@ -148,7 +110,6 @@ impl OscConnection {
         let event_publisher = MessageBus::new();
 
         let connection = Self {
-            name,
             address,
             command_publisher,
             event_publisher: event_publisher.clone(),
@@ -160,24 +121,22 @@ impl OscConnection {
                 output_socket: UdpSocket::bind("0.0.0.0:0").await?,
                 command_receiver,
                 event_publisher,
+                transmission_sender,
             })
         };
         Ok((connection, background_client))
     }
 
-    fn reconfigure(
+    pub(crate) fn reconfigure(
         &mut self,
-        name: String,
         address: OscAddress,
-    ) -> anyhow::Result<(String, OscAddress)> {
-        let mut previous_name = name;
+    ) -> anyhow::Result<OscAddress> {
         let mut previous_address = address;
         std::mem::swap(&mut self.address, &mut previous_address);
-        std::mem::swap(&mut self.name, &mut previous_name);
         self.command_publisher
             .send(OscClientCommand::Reconfigure(address))?;
 
-        Ok((previous_name, previous_address))
+        Ok(previous_address)
     }
 
     fn subscribe(&self) -> anyhow::Result<Subscriber<OscMessage>> {
@@ -208,6 +167,7 @@ struct OscBackgroundClient {
     output_socket: UdpSocket,
     command_receiver: Receiver<OscClientCommand>,
     event_publisher: MessageBus<OscMessage>,
+    transmission_sender: TransmissionStateSender,
 }
 
 impl OscBackgroundClient {
@@ -240,6 +200,7 @@ impl OscBackgroundClient {
             }
 
             if let Some(buffer_size) = event {
+                self.transmission_sender.received_packet();
                 if let Err(err) = self.handle_event(&buffer[..buffer_size]) {
                     tracing::error!("Error handling osc packet {:?}", err)
                 }
@@ -260,6 +221,7 @@ impl OscBackgroundClient {
                 self.output_socket
                     .send_to(&packet, self.addr.output_addr())
                     .await?;
+                self.transmission_sender.sent_packet();
 
                 Ok(false)
             }

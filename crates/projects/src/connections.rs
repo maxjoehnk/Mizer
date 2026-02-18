@@ -1,33 +1,35 @@
-use mizer_protocol_dmx::{
-    ArtnetInput, ArtnetOutput, DmxConnectionManager, DmxInput, DmxInputConnection, DmxOutput,
-    DmxOutputConnection, SacnOutput,
-};
-use mizer_protocol_mqtt::MqttConnectionManager;
-use mizer_protocol_osc::OscConnectionManager;
-
+use mizer_connections::ConnectionStorage;
+use mizer_protocol_dmx::{ArtnetInput, ArtnetInputConfig, ArtnetOutput, SacnOutput};
+use mizer_protocol_mqtt::MqttConnection;
+use mizer_protocol_osc::OscConnection;
 use crate::{ConnectionConfig, ConnectionTypes, Project, ProjectManagerMut};
 
-impl ProjectManagerMut for DmxConnectionManager {
+impl ProjectManagerMut for ConnectionStorage {
     fn new_project(&mut self) {
-        self.add_output("dmx-0".into(), SacnOutput::new(None));
+        let _ =self.acquire_new_connection::<SacnOutput>(None, None);
     }
 
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
-        profiling::scope!("DmxConnectionManager::load");
+        profiling::scope!("ConnectionStorage::load");
         for connection in &project.connections {
             match &connection.config {
                 ConnectionTypes::Sacn { priority } => {
-                    self.add_output(connection.id.clone(), SacnOutput::new(*priority))
+                    self.add_connection::<SacnOutput>(connection.id.parse()?, *priority, connection.name.clone())?;
                 }
-                ConnectionTypes::ArtnetOutput { port, host } => self.add_output(
-                    connection.id.clone(),
-                    ArtnetOutput::new(host.clone(), *port)?,
-                ),
-                ConnectionTypes::ArtnetInput { port, host } => self.add_input(
-                    connection.id.clone(),
-                    ArtnetInput::new(*host, *port, connection.name.clone())?,
-                ),
-                _ => {}
+                ConnectionTypes::ArtnetOutput { port, host } => {
+                    self.add_connection::<ArtnetOutput>(connection.id.parse()?, (host.clone(), *port), connection.name.clone())?;
+                },
+                ConnectionTypes::ArtnetInput { port, host } => {
+                    self.add_connection::<ArtnetInput>(connection.id.parse()?, ArtnetInputConfig::new(
+                        *host, *port, connection.name.clone().unwrap_or_else(|| "Mizer".to_string()),
+                    ), connection.name.clone())?;
+                },
+                ConnectionTypes::Osc(address) => {
+                    self.add_connection::<OscConnection>(connection.id.parse()?, *address, connection.name.clone())?;
+                }
+                ConnectionTypes::Mqtt(address) => {
+                    self.add_connection::<MqttConnection>(connection.id.parse()?, address.clone(), connection.name.clone())?;
+                }
             }
         }
 
@@ -35,106 +37,48 @@ impl ProjectManagerMut for DmxConnectionManager {
     }
 
     fn save(&self, project: &mut Project) {
-        profiling::scope!("DmxConnectionManager::save");
-        for (id, output) in self.list_outputs() {
+        for (id, name, output) in self.query::<ArtnetOutput>() {
             project.connections.push(ConnectionConfig {
-                id: id.clone(),
-                name: output.name(),
-                config: get_output_config(output),
+                id: id.to_stable().to_string(),
+                name: name.map(|n| n.to_string()),
+                config: ConnectionTypes::ArtnetOutput { port: Some(output.port), host: output.host.clone() },
             });
         }
-        for (id, input) in self.list_inputs() {
+        for (id, name, output) in self.query::<SacnOutput>() {
             project.connections.push(ConnectionConfig {
-                id: id.clone(),
-                name: input.name(),
-                config: get_input_config(input),
+                id: id.to_stable().to_string(),
+                name: name.map(|n| n.to_string()),
+                config: ConnectionTypes::Sacn { priority: Some(output.priority) },
             });
         }
-    }
-
-    fn clear(&mut self) {
-        self.clear();
-    }
-}
-
-fn get_output_config(connection: &DmxOutputConnection) -> ConnectionTypes {
-    match connection {
-        DmxOutputConnection::Artnet(artnet) => ConnectionTypes::ArtnetOutput {
-            host: artnet.host.clone(),
-            port: artnet.port.into(),
-        },
-        DmxOutputConnection::Sacn(sacn) => ConnectionTypes::Sacn {
-            priority: Some(sacn.priority),
-        },
-    }
-}
-
-fn get_input_config(connection: &DmxInputConnection) -> ConnectionTypes {
-    match connection {
-        DmxInputConnection::Artnet(artnet) => ConnectionTypes::ArtnetInput {
-            host: artnet.config.host,
-            port: artnet.config.port.into(),
-        },
-    }
-}
-
-impl ProjectManagerMut for MqttConnectionManager {
-    fn load(&mut self, project: &Project) -> anyhow::Result<()> {
-        profiling::scope!("MqttConnectionManager::load");
-        for connection in &project.connections {
-            if let ConnectionTypes::Mqtt(ref address) = connection.config {
-                self.add_connection(connection.id.clone(), address.clone())?;
-            }
-        }
-
-        Ok(())
-    }
-
-    fn save(&self, project: &mut Project) {
-        profiling::scope!("MqttConnectionManager::save");
-        for (id, connection) in self.list_connections() {
+        for (id, name, input) in self.query::<ArtnetInput>() {
             project.connections.push(ConnectionConfig {
-                id: id.clone(),
-                name: Default::default(),
+                id: id.to_stable().to_string(),
+                name: name.map(|n| n.to_string()),
+                config: ConnectionTypes::ArtnetInput { port: Some(input.config.port), host: input.config.host },
+            });
+        }
+        for (id, name, input) in self.query::<OscConnection>() {
+            project.connections.push(ConnectionConfig {
+                id: id.to_stable().to_string(),
+                name: name.map(|n| n.to_string()),
+                config: ConnectionTypes::Osc(input.address),
+            });
+        }
+        for (id, name, connection) in self.query::<MqttConnection>() {
+            project.connections.push(ConnectionConfig {
+                id: id.to_stable().to_string(),
+                name: name.map(|n| n.to_string()),
                 config: ConnectionTypes::Mqtt(connection.address.clone()),
             });
         }
     }
 
     fn clear(&mut self) {
-        self.clear();
-    }
-}
-
-impl ProjectManagerMut for OscConnectionManager {
-    fn load(&mut self, project: &Project) -> anyhow::Result<()> {
-        profiling::scope!("OscConnectionManager::load");
-        for connection in &project.connections {
-            if let ConnectionTypes::Osc(ref address) = connection.config {
-                let name = if connection.name.is_empty() {
-                    connection.id.clone()
-                } else {
-                    connection.name.clone()
-                };
-                self.add_connection(connection.id.clone(), name, *address)?;
-            }
-        }
-
-        Ok(())
-    }
-
-    fn save(&self, project: &mut Project) {
-        profiling::scope!("OscConnectionManager::save");
-        for (id, connection) in self.list_connections() {
-            project.connections.push(ConnectionConfig {
-                id: id.clone(),
-                name: connection.name.clone(),
-                config: ConnectionTypes::Osc(connection.address),
-            });
-        }
-    }
-
-    fn clear(&mut self) {
-        self.clear();
+        self.delete_all_with::<ArtnetOutput>();
+        self.delete_all_with::<ArtnetInput>();
+        self.delete_all_with::<SacnOutput>();
+        self.delete_all_with::<OscConnection>();
+        self.delete_all_with::<MqttConnection>();
     }
 }

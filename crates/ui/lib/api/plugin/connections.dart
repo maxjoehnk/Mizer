@@ -11,7 +11,7 @@ class ConnectionsPluginApi implements ConnectionsApi {
   final MethodChannel channel = const MethodChannel("mizer.live/connections");
   final EventChannel midiMonitorChannel = const EventChannel("mizer.live/connections/midi");
   final EventChannel oscMonitorChannel = const EventChannel("mizer.live/connections/osc");
-  ConnectionsPointer? _connectionsPointer;
+  DevicesPointer? _devicesPointer;
 
   ConnectionsPluginApi(this.bindings) {
     _openConnectionsRef();
@@ -19,7 +19,7 @@ class ConnectionsPluginApi implements ConnectionsApi {
 
   void _openConnectionsRef() async {
     int pointer = await channel.invokeMethod("getConnectionsRef");
-    _connectionsPointer = bindings.openConnectionsRef(pointer);
+    _devicesPointer = bindings.openConnectionsRef(pointer);
   }
 
   @override
@@ -106,7 +106,7 @@ class ConnectionsPluginApi implements ConnectionsApi {
 
   @override
   PioneerCdjConnection? getCdjState(String id) {
-    return this._connectionsPointer?.readCdjState(id);
+    return this._devicesPointer?.readCdjState(id);
   }
 
   @override
@@ -115,5 +115,11 @@ class ConnectionsPluginApi implements ConnectionsApi {
         "changeMidiDeviceProfile",
         ChangeMidiDeviceProfileRequest(deviceId: connectionId, profileId: profileId)
             .writeToBuffer());
+  }
+
+  @override
+  Future<ConnectionsPointer> getConnectionsPointer() async {
+    int pointer = await channel.invokeMethod("getConnectionsViewRef");
+    return bindings.openConnectionsViewRef(pointer);
   }
 }

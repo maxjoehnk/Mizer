@@ -60,6 +60,11 @@ mizer-protocol-dmx = { path = "../components/connections/protocols/dmx" }
 mizer-protocol-midi = { path = "../components/connections/protocols/midi" }
 mizer-protocol-mqtt = { path = "../components/connections/protocols/mqtt" }
 mizer-protocol-osc = { path = "../components/connections/protocols/osc" }
+mizer-protocol-laser = { path = "../components/connections/protocols/laser" }
+mizer-g13 = { path = "../components/connections/devices/g13" }
+mizer-gamepads = { path = "../components/connections/devices/gamepads" }
+mizer-ndi = { path = "../components/connections/devices/ndi" }
+mizer-traktor-kontrol-x1 = { path = "../components/connections/devices/traktor-kontrol-x1" }
 mizer-surfaces = { path = "../components/surfaces" }
 mizer-processing = { path = "../runtime/processing" }
 mizer-module = { path = "../runtime/module" }

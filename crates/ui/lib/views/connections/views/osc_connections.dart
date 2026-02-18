@@ -3,6 +3,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/views/connections/connection_indicator.dart';
 import 'package:mizer/views/connections/dialogs/osc_monitor.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/dialog/dialog.dart';
@@ -32,9 +33,11 @@ class _OscConnectionsViewState extends State<OscConnectionsView> {
       label: "OSC Connections".i18n,
       child: MizerTable(
           columnWidths: {
-            3: FixedColumnWidth(128),
+            0: FixedColumnWidth(48),
+            4: FixedColumnWidth(128),
           },
           columns: [
+            Container(),
             Text("Name".i18n, style: titleTheme),
             Text("Input".i18n, style: titleTheme),
             Text("Output".i18n, style: titleTheme),
@@ -42,6 +45,7 @@ class _OscConnectionsViewState extends State<OscConnectionsView> {
           ],
           rows: _connections
               .map((c) => MizerTableRow(cells: [
+                    ConnectionIndicator(c),
                     Text(c.osc.name),
                     Text("0.0.0.0:${c.osc.inputPort}"),
                     Text("${c.osc.outputAddress}:${c.osc.outputPort}"),

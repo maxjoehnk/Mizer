@@ -10,6 +10,7 @@ tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
 mizer-g13 = { path = "../../../../../components/connections/devices/g13" }
 mizer-devices = { path = "../../../../../components/connections/devices" }
+mizer-connections = { path = "../../../../../components/connections" }
 mizer-node = { path = "../../../node" }
 enum-iterator = "2.0"
 num_enum = "0.7"

@@ -3,9 +3,8 @@ use std::fmt::{Display, Formatter};
 use enum_iterator::Sequence;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
-
-use mizer_devices::{DeviceManager, DeviceRef};
-use mizer_gamepads::{Axis, Button};
+use mizer_connections::{ConnectionId, ConnectionStorage, G13Ref, Has, Name};
+use mizer_gamepads::{Axis, Button, GamepadRef};
 pub use mizer_node::*;
 use mizer_util::LerpExt;
 
@@ -23,20 +22,14 @@ pub struct GamepadNode {
 
 impl ConfigurableNode for GamepadNode {
     fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let device_manager = injector.inject::<DeviceManager>();
+        let device_manager = injector.inject::<ConnectionStorage>();
 
         let devices = device_manager
-            .current_devices()
+            .fetch::<(ConnectionId, Name, Has<GamepadRef>)>()
             .into_iter()
-            .flat_map(|device| {
-                if let DeviceRef::Gamepad(gamepad) = device {
-                    Some(SelectVariant::Item {
-                        value: gamepad.id.into(),
-                        label: gamepad.name.into(),
-                    })
-                } else {
-                    None
-                }
+            .map(|(id, name)| SelectVariant::Item {
+                value: id.to_stable().to_string().into(),
+                label: name.clone().into()
             })
             .collect();
 
@@ -76,13 +69,13 @@ impl ProcessingNode for GamepadNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let Some(device_manager) = context.try_inject::<DeviceManager>() else {
-            tracing::error!("Gamepad node is missing DeviceManager");
-
+        if self.device_id.is_empty() {
             return Ok(());
-        };
+        }
+        let device_manager = context.inject::<ConnectionStorage>();
 
-        if let Some(gamepad) = device_manager.get_gamepad(&self.device_id) {
+        let id = self.device_id.parse()?;
+        if let Some(gamepad) = device_manager.get_connection_by_stable::<GamepadRef>(&id) {
             let state = gamepad.state();
             let value: Option<f64> = match self.control {
                 GamepadControl::LeftStickX => state.axis_value(Axis::LeftStickX).map(axis),

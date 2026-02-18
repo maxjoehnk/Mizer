@@ -1,9 +1,9 @@
 pub use self::input::*;
 pub use self::output::*;
-use mizer_devices::{DeviceManager, DeviceRef};
 use mizer_node::{Inject, SelectVariant};
-use mizer_traktor_kontrol_x1::{Button, DeckButton, DeckEncoder, Encoder, FxButton, FxKnob, Knob};
+use mizer_traktor_kontrol_x1::{Button, DeckButton, DeckEncoder, Encoder, FxButton, FxKnob, Knob, TraktorX1Ref};
 use std::sync::Arc;
+use mizer_connections::{ConnectionId, ConnectionStorage, Has};
 
 mod input;
 mod output;
@@ -14,18 +14,12 @@ trait X1InjectorExt {
 
 impl<I: ?Sized + Inject> X1InjectorExt for I {
     fn get_devices(&self) -> Vec<SelectVariant> {
-        let device_manager = self.inject::<DeviceManager>();
+        let device_manager = self.inject::<ConnectionStorage>();
 
         device_manager
-            .current_devices()
+            .fetch::<(ConnectionId, Has<TraktorX1Ref>)>()
             .into_iter()
-            .flat_map(|device| {
-                if let DeviceRef::TraktorKontrolX1(x1) = device {
-                    Some(SelectVariant::from(x1.id))
-                } else {
-                    None
-                }
-            })
+            .map(|id| SelectVariant::from(id.to_stable().to_string()))
             .collect()
     }
 }

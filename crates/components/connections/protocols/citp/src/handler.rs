@@ -2,7 +2,7 @@ use std::collections::HashSet;
 
 use anyhow::Context;
 use citp::protocol::pinf::PLoc;
-
+use mizer_connection_contracts::RemoteConnectionStorageHandle;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_status_bus::StatusHandle;
 
@@ -11,7 +11,7 @@ use crate::connection::{CitpConnection, CitpConnectionHandle, CitpConnectionName
 pub struct CitpConnectionHandler {
     connections: HashSet<CitpConnectionName>,
     receiver: flume::Receiver<PLoc>,
-    sender: flume::Sender<CitpConnectionHandle>,
+    sender: RemoteConnectionStorageHandle<CitpConnectionHandle>,
     fixture_manager: Option<FixtureManager>,
     status_handle: StatusHandle,
 }
@@ -19,7 +19,7 @@ pub struct CitpConnectionHandler {
 impl CitpConnectionHandler {
     pub fn new(
         receiver: flume::Receiver<PLoc>,
-        handle_sender: flume::Sender<CitpConnectionHandle>,
+        handle_sender: RemoteConnectionStorageHandle<CitpConnectionHandle>,
         fixture_manager: Option<FixtureManager>,
         status_handle: StatusHandle,
     ) -> anyhow::Result<Self> {
@@ -44,6 +44,7 @@ impl CitpConnectionHandler {
 
     pub(crate) async fn add_connection(&mut self, ploc: PLoc) -> anyhow::Result<()> {
         let peer_name = ploc.name.to_str()?.to_string();
+        let connection_name = peer_name.clone();
         let peer_name = CitpConnectionName(peer_name);
         if self.connections.contains(&peer_name) {
             tracing::trace!("Connection for peer {peer_name} already exists");
@@ -64,7 +65,7 @@ impl CitpConnectionHandler {
                 tracing::error!("Error in connection loop: {:?}", err);
             }
         });
-        self.sender.send_async(handle).await?;
+        self.sender.add_connection(handle, Some(connection_name))?;
 
         Ok(())
     }

@@ -1,21 +1,19 @@
-pub use discovery::WebcamDiscovery;
 use nokhwa::pixel_format::RgbAFormat;
 use nokhwa::utils::{
     CameraControl, CameraInfo, ControlValueDescription, KnownCameraControl, RequestedFormat,
     RequestedFormatType, Resolution,
 };
 use nokhwa::Camera;
+use mizer_connection_contracts::{IConnection, TransmissionStateSender};
+pub use module::WebcamModule;
 
 mod discovery;
+mod module;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct WebcamRef(CameraInfo);
 
 impl WebcamRef {
-    pub(crate) fn new(info: CameraInfo) -> Self {
-        Self(info)
-    }
-
     pub fn name(&self) -> String {
         format!("{} ({})", self.0.human_name(), self.0.description())
     }
@@ -40,6 +38,15 @@ impl WebcamRef {
         camera.open_stream()?;
 
         Ok(Webcam(camera))
+    }
+}
+
+impl IConnection for WebcamRef {
+    type Config = CameraInfo;
+    const TYPE: &'static str = "webcam";
+
+    fn create(camera_info: Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        Ok(Self(camera_info))
     }
 }
 

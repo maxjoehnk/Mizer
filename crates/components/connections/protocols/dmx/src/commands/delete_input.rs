@@ -1,17 +1,16 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, RefMut};
-
-use crate::{DmxConnectionManager, DmxInputConnection};
+use mizer_connection_contracts::{ConnectionStorage, DeletedConnectionHandle, StableConnectionId};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteInputCommand {
-    pub id: String,
+    pub id: StableConnectionId,
 }
 
 impl<'a> Command<'a> for DeleteInputCommand {
-    type Dependencies = RefMut<DmxConnectionManager>;
-    type State = DmxInputConnection;
+    type Dependencies = RefMut<ConnectionStorage>;
+    type State = DeletedConnectionHandle;
     type Result = ();
 
     fn label(&self) -> String {
@@ -20,10 +19,10 @@ impl<'a> Command<'a> for DeleteInputCommand {
 
     fn apply(
         &self,
-        dmx_manager: &mut DmxConnectionManager,
+        dmx_manager: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let input = dmx_manager
-            .delete_input(&self.id)
+            .delete_connection_by_stable(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown input {}", self.id))?;
 
         Ok(((), input))
@@ -31,10 +30,10 @@ impl<'a> Command<'a> for DeleteInputCommand {
 
     fn revert(
         &self,
-        dmx_manager: &mut DmxConnectionManager,
-        input: Self::State,
+        storage: &mut ConnectionStorage,
+        connection: Self::State,
     ) -> anyhow::Result<()> {
-        dmx_manager.add_input(self.id.clone(), input);
+        storage.restore_connection(connection);
 
         Ok(())
     }

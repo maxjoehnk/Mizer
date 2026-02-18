@@ -34,7 +34,7 @@ fn main() -> anyhow::Result<()> {
 fn run_headless(flags: Flags) -> anyhow::Result<()> {
     let runtime = build_tokio_runtime();
 
-    start_runtime(runtime.handle(), flags, None).unwrap();
+    start_runtime(runtime.handle(), flags, None)?;
 
     Ok(())
 }

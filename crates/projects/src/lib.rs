@@ -217,7 +217,8 @@ pub struct FixtureConfig {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ConnectionConfig {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     #[serde(flatten)]
     pub config: ConnectionTypes,
 }

@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
-
-use mizer_devices::DeviceManager;
+use mizer_connections::ConnectionStorage;
 use mizer_node::*;
 use mizer_traktor_kontrol_x1::*;
 
@@ -62,16 +61,14 @@ impl ProcessingNode for TraktorKontrolX1OutputNode {
         if self.device_id.is_empty() || self.element.is_empty() {
             return Ok(());
         }
-        if let Some(device_manager) = context.try_inject::<DeviceManager>() {
-            if let Some(x1) = device_manager.get_x1_mut(&self.device_id) {
-                let button = Button::try_from_str(&self.element)?;
-                if let Some(value) = context.single_input(VALUE_PORT).read_changes() {
-                    x1.write_led(button, value)?;
-                    context.push_history_value(value);
-                }
+        let connection_storage = context.inject::<ConnectionStorage>();
+        let id = self.device_id.parse()?;
+        if let Some(x1) = connection_storage.get_connection_by_stable::<TraktorX1Ref>(&id) {
+            let button = Button::try_from_str(&self.element)?;
+            if let Some(value) = context.single_input(VALUE_PORT).read_changes() {
+                x1.write_led(button, value)?;
+                context.push_history_value(value);
             }
-        } else {
-            anyhow::bail!("Traktor Kontrol X1 Output node is missing DeviceManager");
         }
         Ok(())
     }

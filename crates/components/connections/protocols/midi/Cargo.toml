@@ -16,6 +16,7 @@ mizer-midi-device-profiles = { path = "device-profiles" }
 mizer-util = { path = "../../../../util" }
 mizer-message-bus = { path = "../../../../util/bus" }
 mizer-midi-messages = { path = "messages" }
+mizer-connection-contracts = { path = "../../contracts" }
 regex = "1.10"
 lazy_static = "1.4"
 profiling = "1"

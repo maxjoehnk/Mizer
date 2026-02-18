@@ -104,11 +104,12 @@ bool isFlag(int bits, int flag) {
   return bits & flag == flag;
 }
 
-class ConnectionsPointer {
+@Deprecated("To be replaced by ConnectionsPointer using new ConnectionsStorage")
+class DevicesPointer {
   final FFIBindings _bindings;
   final ffi.Pointer<ConnectionsRef> _ptr;
 
-  ConnectionsPointer(this._bindings, this._ptr);
+  DevicesPointer(this._bindings, this._ptr);
 
   PioneerCdjConnection? readCdjState(String id) {
     var ffiId = id.toNativeUtf8();
@@ -124,4 +125,33 @@ class ConnectionsPointer {
     var pioneerCdjConnection = PioneerCdjConnection.fromBuffer(buffer);
     return pioneerCdjConnection;
   }
+}
+
+class ConnectionsPointer {
+  final FFIBindings _bindings;
+  final ffi.Pointer<ConnectionViewRef> _ptr;
+
+  ConnectionsPointer(this._bindings, this._ptr);
+
+  TransmissionState? readConnectionState(String id) {
+    var ffiId = id.toNativeUtf8();
+    var result = _bindings.read_transmission_state(_ptr, ffiId.cast<ffi.Char>());
+
+    if (result.has_state == 0) {
+      return null;
+    }
+
+    return TransmissionState(receiving: result.receiving > 0, sending: result.sending > 0);
+  }
+  
+  void dispose() {
+    // _bindings.drop
+  }
+}
+
+class TransmissionState {
+  final bool receiving;
+  final bool sending;
+
+  TransmissionState({ this.receiving = false, this.sending = false});
 }

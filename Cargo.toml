@@ -4,6 +4,7 @@ members = [
     "crates/components/command-line",
     "crates/components/console",
     "crates/components/connections",
+    "crates/components/connections/contracts",
     "crates/components/connections/devices",
     "crates/components/connections/devices/g13",
     "crates/components/connections/devices/gamepads",

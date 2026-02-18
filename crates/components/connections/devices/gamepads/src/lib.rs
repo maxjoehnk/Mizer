@@ -3,40 +3,33 @@ use std::fmt::Formatter;
 use std::sync::Arc;
 
 use enum_iterator::{all, Sequence};
-use gilrs::GamepadId;
 use pinboard::NonEmptyPinboard;
-
-pub use crate::discovery::GamepadDiscovery;
+use mizer_connection_contracts::{IConnection, TransmissionStateSender};
 
 mod discovery;
+mod module;
 
 #[derive(Clone, Debug)]
 pub struct GamepadRef {
-    id: GamepadId,
-    name: String,
     state: Arc<NonEmptyPinboard<GamepadState>>,
+}
+
+impl IConnection for GamepadRef {
+    type Config = Arc<NonEmptyPinboard<GamepadState>>;
+    const TYPE: &'static str = "gamepad";
+
+    fn create(state: Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        Ok(Self::new(state))
+    }
 }
 
 impl GamepadRef {
     pub fn new(
-        id: GamepadId,
-        gamepad: gilrs::Gamepad,
         state: Arc<NonEmptyPinboard<GamepadState>>,
     ) -> Self {
         Self {
-            id,
-            name: gamepad.name().to_string(),
             state,
         }
-    }
-
-    pub fn name(&self) -> String {
-        self.name.clone()
-    }
-
-    pub fn id(&self) -> u64 {
-        let id: usize = self.id.into();
-        id as u64
     }
 
     pub fn state(&self) -> GamepadState {

@@ -8,8 +8,7 @@ use tonic::transport::Server;
 
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_command_executor::ICommandExecutor;
-use mizer_connections::{MidiEvent, OscMessage};
-pub use mizer_devices::DeviceManager;
+use mizer_connections::{ConnectionStorageView, MidiEvent, OscMessage};
 pub use mizer_gamepads::GamepadRef;
 use mizer_message_bus::Subscriber;
 use mizer_node::{NodePath, NodeSetting, PortId};
@@ -71,10 +70,7 @@ pub trait RuntimeApi: Clone + Send + Sync + ICommandExecutor {
     )]
     fn get_gamepad_ref(&self, id: String) -> anyhow::Result<Option<GamepadRef>>;
 
-    #[deprecated(
-        note = "this is only used for ffi access but imposes the risk of bypassing the query layer"
-    )]
-    fn get_device_manager(&self) -> DeviceManager;
+    fn get_connections_view(&self) -> ConnectionStorageView;
 
     fn reload_midi_device_profiles(&self) -> anyhow::Result<()>;
     fn reload_fixture_definitions(&self) -> anyhow::Result<()>;

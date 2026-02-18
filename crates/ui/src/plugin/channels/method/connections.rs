@@ -6,7 +6,7 @@ use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel
 use mizer_api::handlers::ConnectionsHandler;
 use mizer_api::proto::connections::*;
 use mizer_api::RuntimeApi;
-use mizer_ui_ffi::{ConnectionsRef, FFIToPointer, GamepadConnectionRef};
+use mizer_ui_ffi::{ConnectionsRef, ConnectionViewRef, FFIToPointer, GamepadConnectionRef};
 
 use crate::plugin::channels::MethodReplyExt;
 use crate::MethodCallExt;
@@ -135,6 +135,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
                 let ptr = self.get_connections_pointer();
                 resp.send_ok(Value::I64(ptr));
             }
+            "getConnectionsViewRef" => {
+                let ptr = self.get_connections_view_pointer();
+                resp.send_ok(Value::I64(ptr));
+            }
             _ => resp.not_implemented(),
         }
     }
@@ -192,8 +196,16 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
 
     fn get_connections_pointer(&self) -> i64 {
         tracing::debug!("Acquiring pointer for connections");
-        let device_manager = self.handler.get_device_manager();
-        let connections_ref = ConnectionsRef(device_manager);
+        let connections_ref = ConnectionsRef();
+        let connections_ref = Arc::new(connections_ref);
+
+        connections_ref.to_pointer() as i64
+    }
+
+    fn get_connections_view_pointer(&self) -> i64 {
+        tracing::debug!("Acquiring pointer for connections view");
+        let connections_view = self.handler.get_connections_view();
+        let connections_ref = ConnectionViewRef(connections_view);
         let connections_ref = Arc::new(connections_ref);
 
         connections_ref.to_pointer() as i64

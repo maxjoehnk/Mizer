@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
-
-use mizer_devices::DeviceManager;
+use mizer_connections::{ConnectionStorage, ProDjLinkExt};
 use mizer_node::*;
 
 use crate::get_cdjs;
@@ -15,7 +14,7 @@ const MASTER_ID: &str = "master";
 pub enum ClockSource {
     #[default]
     Master,
-    Device(String),
+    Device(u8),
 }
 
 impl TryFrom<String> for ClockSource {
@@ -24,7 +23,7 @@ impl TryFrom<String> for ClockSource {
     fn try_from(value: String) -> Result<Self, Self::Error> {
         match value.as_str() {
             MASTER_ID => Ok(ClockSource::Master),
-            _ => Ok(ClockSource::Device(value)),
+            _ => Ok(ClockSource::Device(value.parse::<u8>()?)),
         }
     }
 }
@@ -36,11 +35,11 @@ pub struct ProDjLinkClockNode {
 
 impl ConfigurableNode for ProDjLinkClockNode {
     fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let device_manager = injector.inject::<DeviceManager>();
+        let device_manager = injector.inject::<ConnectionStorage>();
         let sources = get_cdjs(device_manager);
         let current_source = match self.source {
             ClockSource::Master => MASTER_ID.to_string(),
-            ClockSource::Device(ref id) => id.clone(),
+            ClockSource::Device(ref id) => id.to_string(),
         };
 
         vec![setting!(select SOURCE_SETTING, current_source, sources)]
@@ -75,12 +74,12 @@ impl ProcessingNode for ProDjLinkClockNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let device_manager = context.try_inject::<DeviceManager>().unwrap();
+        let connection_storage = context.inject::<ConnectionStorage>();
         let speed = match &self.source {
             ClockSource::Master => None,
             ClockSource::Device(id) => {
-                let cdj = device_manager
-                    .get_cdj(id)
+                let cdj = connection_storage
+                    .get_cdj(*id)
                     .ok_or_else(|| anyhow::anyhow!("No such device {id}"))?;
                 Some(cdj.current_bpm())
             }

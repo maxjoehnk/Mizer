@@ -1,12 +1,12 @@
 use std::path::PathBuf;
-
+use mizer_connections::ConnectionStorage;
 use crate::{ApiCommand, Mizer};
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
-use mizer_processing::{Inject, InjectMut};
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
-use mizer_protocol_osc::{OscConnectionManager, OscMessage};
+use mizer_processing::{Inject, InjectMut};
+use mizer_protocol_osc::{OscConnectionExt, OscMessage};
 use mizer_runtime::Pipeline;
 
 pub struct ApiHandler {
@@ -163,7 +163,8 @@ impl ApiHandler {
 
     fn monitor_osc(&self, mizer: &mut Mizer, id: String) -> anyhow::Result<Subscriber<OscMessage>> {
         let scope = mizer.runtime.injector();
-        let osc_manager = scope.inject::<OscConnectionManager>();
+        let osc_manager = scope.inject::<ConnectionStorage>();
+        let id = id.try_into()?;
         let subscription = osc_manager
             .subscribe(&id)?
             .ok_or_else(|| anyhow::anyhow!("Unknown Osc Connection"))?;

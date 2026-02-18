@@ -1,18 +1,20 @@
-use crate::{MqttAddress, MqttConnectionManager};
+use crate::{MqttAddress};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
 use url::Url;
+use mizer_connection_contracts::{ConnectionStorage, StableConnectionId};
+use crate::connections::MqttConnection;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ConfigureMqttConnectionCommand {
-    pub connection_id: String,
+    pub connection_id: StableConnectionId,
     pub url: String,
     pub username: Option<String>,
     pub password: Option<String>,
 }
 
 impl<'a> Command<'a> for ConfigureMqttConnectionCommand {
-    type Dependencies = RefMut<MqttConnectionManager>;
+    type Dependencies = RefMut<ConnectionStorage>;
     type State = MqttAddress;
     type Result = ();
 
@@ -22,7 +24,7 @@ impl<'a> Command<'a> for ConfigureMqttConnectionCommand {
 
     fn apply(
         &self,
-        mqtt_manager: &mut MqttConnectionManager,
+        mqtt_manager: &mut ConnectionStorage,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let url = Url::parse(&self.url)?;
         let address = MqttAddress {
@@ -30,17 +32,21 @@ impl<'a> Command<'a> for ConfigureMqttConnectionCommand {
             username: self.username.clone(),
             password: self.password.clone(),
         };
-        let previous_address = mqtt_manager.reconfigure_connection(&self.connection_id, address)?;
+        let connection = mqtt_manager.get_connection_by_stable_mut::<MqttConnection>(&self.connection_id)
+            .ok_or_else(|| anyhow::anyhow!("Connection not found"))?;
+        let previous_address = connection.reconfigure(address)?;
 
         Ok(((), previous_address))
     }
 
     fn revert(
         &self,
-        mqtt_manager: &mut MqttConnectionManager,
+        mqtt_manager: &mut ConnectionStorage,
         previous_address: Self::State,
     ) -> anyhow::Result<()> {
-        mqtt_manager.reconfigure_connection(&self.connection_id, previous_address)?;
+        let connection = mqtt_manager.get_connection_by_stable_mut::<MqttConnection>(&self.connection_id)
+            .ok_or_else(|| anyhow::anyhow!("Connection not found"))?;
+        connection.reconfigure(previous_address)?;
 
         Ok(())
     }

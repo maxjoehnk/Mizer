@@ -5,7 +5,6 @@ mod artnet;
 
 #[enum_dispatch(DmxInputConnection)]
 pub trait DmxInput {
-    fn name(&self) -> String;
     fn read_single(&self, universe: u16, channel: u16) -> Option<u8>;
     fn read_bulk(&self, universe: u16) -> Option<Vec<u8>>;
 }

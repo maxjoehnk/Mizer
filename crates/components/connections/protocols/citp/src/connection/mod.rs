@@ -8,7 +8,7 @@ use citp::protocol::*;
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::net::tcp::{OwnedReadHalf, OwnedWriteHalf};
 use tokio::net::TcpStream;
-
+use mizer_connection_contracts::{IConnection, TransmissionStateSender};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_status_bus::{ProjectStatus, StatusHandle};
 
@@ -63,6 +63,15 @@ pub struct CitpConnectionHandle {
     pub name: CitpConnectionName,
     pub kind: CitpKind,
     pub state: String,
+}
+
+impl IConnection for CitpConnectionHandle {
+    type Config = Self;
+    const TYPE: &'static str = "citp";
+
+    fn create(config: Self::Config, transmission_sender: TransmissionStateSender) -> anyhow::Result<Self> {
+        Ok(config)
+    }
 }
 
 impl CitpConnectionId {

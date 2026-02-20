@@ -1,6 +1,6 @@
 pub use argument_type::OscArgumentType;
 pub use input::*;
-use mizer_node::{Inject, SelectVariant};
+use mizer_node::{Injector, SelectVariant};
 use mizer_protocol_osc::OscConnectionManager;
 pub use output::*;
 
@@ -12,9 +12,9 @@ trait OscInjectorExt {
     fn get_connections(&self) -> Vec<SelectVariant>;
 }
 
-impl<T: Inject> OscInjectorExt for T {
+impl OscInjectorExt for Injector {
     fn get_connections(&self) -> Vec<SelectVariant> {
-        let connection_manager = self.inject::<OscConnectionManager>();
+        let connection_manager = self.get::<OscConnectionManager>().unwrap();
 
         connection_manager
             .list_connections()

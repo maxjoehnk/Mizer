@@ -19,7 +19,7 @@ pub struct TraktorKontrolX1OutputNode {
 }
 
 impl ConfigurableNode for TraktorKontrolX1OutputNode {
-    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
         let devices = injector.get_devices();
         let elements = Button::list_variants("");
 
@@ -46,7 +46,7 @@ impl PipelineNode for TraktorKontrolX1OutputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(VALUE_PORT, PortType::Single)]
     }
 

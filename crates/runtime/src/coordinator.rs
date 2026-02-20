@@ -1,11 +1,12 @@
 use std::collections::HashMap;
-use std::ops::Deref;
+use std::ops::{Deref, DerefMut};
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use std::time::Duration;
 
 use itertools::Itertools;
 use pinboard::NonEmptyPinboard;
+
 use mizer_clock::{BoxedClock, Clock, ClockSnapshot, SystemClock};
 use mizer_debug_ui_impl::*;
 use mizer_fixtures::manager::FixtureManager;
@@ -91,7 +92,7 @@ impl CoordinatorRuntime {
     }
 
     pub fn generate_pipeline_graph(&self) -> anyhow::Result<()> {
-        let pipeline = self.injector.borrow::<Pipeline>();
+        let pipeline = self.injector.inject::<Pipeline>();
         pipeline.generate_pipeline_graph()?;
 
         Ok(())
@@ -99,10 +100,6 @@ impl CoordinatorRuntime {
 
     pub fn provide<T: 'static>(&mut self, service: T) {
         self.injector.provide(service);
-    }
-
-    pub fn try_borrow<T: 'static>(&self) -> Option<Borrowed<T>> {
-        self.injector.try_borrow()
     }
 
     pub fn access(&self) -> RuntimeAccess {
@@ -120,7 +117,7 @@ impl CoordinatorRuntime {
     }
 
     pub fn get_preview_ref(&self, path: &NodePath) -> Option<NodePreviewRef> {
-        self.injector.borrow::<Pipeline>().get_preview_ref(path)
+        self.injector.inject::<Pipeline>().get_preview_ref(path)
     }
 
     pub fn get_node_metadata_ref(&self) -> NodeMetadataRef {
@@ -141,7 +138,7 @@ impl CoordinatorRuntime {
             .dedup()
             .collect::<Vec<_>>();
 
-        let pipeline = self.injector.borrow::<Pipeline>();
+        let pipeline = self.injector.inject::<Pipeline>();
 
         let fader_values = nodes
             .iter()
@@ -227,7 +224,7 @@ impl CoordinatorRuntime {
     }
 
     fn get_preset_ids(&self) -> Vec<PresetId> {
-        let fixture_manager = self.injector.borrow::<FixtureManager>();
+        let fixture_manager = self.injector.get::<FixtureManager>().unwrap();
         fixture_manager
             .presets
             .color_presets()
@@ -259,18 +256,16 @@ impl CoordinatorRuntime {
 
     #[profiling::function]
     pub(crate) fn read_node_settings(&mut self, paths: &[NodePath]) {
-        let scope = self.injector.scope();
-        let pipeline = scope.inject_mut::<Pipeline>();
-        pipeline.refresh_settings(&self.injector.read_only_scope(), paths);
+        let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
+        pipeline.refresh_settings(injector, paths);
         let settings = pipeline.get_settings(paths);
         self.node_settings_bus.send(settings);
     }
 
     #[profiling::function]
     pub(crate) fn read_node_metadata(&mut self) {
-        let scope = self.injector.scope();
-        let pipeline = scope.inject_mut::<Pipeline>();
-        pipeline.refresh_metadata(&self.injector.read_only_scope());
+        let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
+        pipeline.refresh_metadata(injector);
     }
 
     /// Should only be used for testing purposes
@@ -278,23 +273,26 @@ impl CoordinatorRuntime {
     #[doc(hidden)]
     #[profiling::function]
     pub fn read_node_ports(&mut self) {
-        let scope = self.injector.scope();
-        let pipeline = scope.inject_mut::<Pipeline>();
-        pipeline.refresh_ports(&self.injector.read_only_scope());
+        let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
+        pipeline.refresh_ports(injector);
     }
 
-    pub fn clock(&self) -> Borrowed<'_, BoxedClock> {
-        self.injector.borrow::<BoxedClock>()
+    pub fn clock(&self) -> &dyn Clock {
+        self.injector.inject::<BoxedClock>().deref()
     }
 
-    pub fn clock_mut(&mut self) -> BorrowedMut<'_, BoxedClock> {
-        self.injector.borrow_mut::<BoxedClock>()
+    pub fn clock_mut(&mut self) -> &mut dyn Clock {
+        self.injector.get_mut::<BoxedClock>().unwrap().deref_mut()
     }
 }
 
 impl Runtime for CoordinatorRuntime {
-    fn injector(&self) -> InjectionScope<'_> {
-        self.injector.scope()
+    fn injector_mut(&mut self) -> &mut Injector {
+        &mut self.injector
+    }
+
+    fn injector(&self) -> &Injector {
+        &self.injector
     }
 
     fn add_processor(&mut self, processor: impl Processor + 'static) {
@@ -305,8 +303,7 @@ impl Runtime for CoordinatorRuntime {
         profiling::scope!("CoordinatorRuntime::process");
         tracing::trace!("tick");
         let (frame, snapshot, fps) = {
-            let scope = self.injector.scope();
-            let clock = scope.inject_mut::<BoxedClock>();
+            let clock = self.clock_mut();
             let frame = clock.tick();
             let snapshot = clock.snapshot();
             let fps = clock.fps();
@@ -323,7 +320,7 @@ impl Runtime for CoordinatorRuntime {
             .iter_mut()
             .sorted_by_key(|processor| processor.priorities().pre_process)
         {
-            processor.pre_process(&self.injector.scope(), frame, fps);
+            processor.pre_process(&mut self.injector, frame, fps);
         }
         tracing::trace!("process");
         for processor in self
@@ -331,7 +328,7 @@ impl Runtime for CoordinatorRuntime {
             .iter_mut()
             .sorted_by_key(|processor| processor.priorities().process)
         {
-            processor.process(&self.injector.scope(), frame);
+            processor.process(&mut self.injector, frame);
         }
         tracing::trace!("post_process");
         for processor in self
@@ -339,7 +336,7 @@ impl Runtime for CoordinatorRuntime {
             .iter_mut()
             .sorted_by_key(|processor| processor.priorities().post_process)
         {
-            processor.post_process(&self.injector.scope(), frame);
+            processor.post_process(&mut self.injector, frame);
         }
         let paths = self.read_node_settings.get_ref();
         self.read_node_settings(&paths);
@@ -350,11 +347,11 @@ impl Runtime for CoordinatorRuntime {
             self.read_node_metadata();
             self.read_node_ports();
         }
-        if let Some(mut ui) = self.injector.try_borrow_mut::<DebugUiImpl>() {
+        if let Some((ui, injector)) = self.injector.get_slice_mut::<DebugUiImpl>() {
             tracing::trace!("Update Debug UI");
             let mut render_handle = ui.pre_render();
-            let pipeline = self.injector.borrow::<Pipeline>();
-            render_handle.draw(&self.injector().scope(), pipeline.deref());
+            let pipeline = injector.inject::<Pipeline>();
+            render_handle.draw(injector, pipeline);
 
             ui.render();
         }
@@ -370,7 +367,7 @@ impl Runtime for CoordinatorRuntime {
     }
 
     fn set_fps(&mut self, fps: f64) {
-        let mut clock = self.clock_mut();
+        let clock = self.clock_mut();
         *clock.fps_mut() = fps;
     }
 }
@@ -380,13 +377,12 @@ impl ProjectManagerMut for CoordinatorRuntime {
         profiling::scope!("CoordinatorRuntime::new_project");
         self.set_fps(DEFAULT_FPS);
         let preset_ids = self.get_preset_ids();
-        let mut pipeline = self.injector.borrow_mut::<Pipeline>();
-        pipeline.new_project(&self.injector);
-        let scope = self.injector.read_only_scope();
+        let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
+        pipeline.new_project(injector);
         for preset_id in preset_ids {
             pipeline
                 .add_node(
-                    &scope,
+                    injector,
                     NodeType::Preset,
                     NodeDesigner {
                         hidden: true,
@@ -402,8 +398,8 @@ impl ProjectManagerMut for CoordinatorRuntime {
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
         profiling::scope!("CoordinatorRuntime::load");
         self.set_fps(project.playback.fps);
-        let mut pipeline = self.injector.borrow_mut::<Pipeline>();
-        pipeline.load(project, &self.injector)?;
+        let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
+        pipeline.load(project, injector)?;
         self.add_layouts(project.layouts.clone());
         self.plans.set(project.plans.clone());
         Ok(())
@@ -412,7 +408,7 @@ impl ProjectManagerMut for CoordinatorRuntime {
     fn save(&self, project: &mut Project) {
         profiling::scope!("CoordinatorRuntime::save");
         project.playback.fps = self.fps();
-        let pipeline = self.injector.borrow::<Pipeline>();
+        let pipeline = self.injector.inject::<Pipeline>();
         pipeline.save(project);
         project.layouts = self
             .layouts
@@ -425,7 +421,7 @@ impl ProjectManagerMut for CoordinatorRuntime {
 
     fn clear(&mut self) {
         self.set_fps(DEFAULT_FPS);
-        let mut pipeline = self.injector.borrow_mut::<Pipeline>();
+        let pipeline = self.injector.get_mut::<Pipeline>().unwrap();
         pipeline.clear();
         self.layouts.set(vec![Layout {
             id: "Default".into(),
@@ -445,7 +441,7 @@ mod tests {
         let mut pipeline = Pipeline::new();
         let node = pipeline
             .add_node(
-                &runner.injector().read_only_scope(),
+                runner.injector(),
                 NodeType::Fader,
                 Default::default(),
                 Default::default(),
@@ -456,7 +452,7 @@ mod tests {
 
         runner.process();
 
-        let pipeline = runner.injector.borrow::<Pipeline>();
+        let pipeline = runner.injector.inject::<Pipeline>();
         let state = pipeline
             .read_state::<<FaderNode as ProcessingNode>::State>(&node.path)
             .unwrap();

@@ -54,7 +54,7 @@ impl PartialEq for PlanScreenNode {
 }
 
 impl ConfigurableNode for PlanScreenNode {
-    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
         let storage = injector.inject::<PlanStorage>();
         let plans = storage.read();
         let screens = plans
@@ -124,7 +124,7 @@ impl PipelineNode for PlanScreenNode {
         }
     }
 
-    fn list_ports(&self, injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(
             INPUT_PORT,
             PortType::Texture,

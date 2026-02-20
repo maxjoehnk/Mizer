@@ -1,12 +1,12 @@
 use std::fmt::{Debug, Formatter};
 
 use mizer_clock::ClockFrame;
-use mizer_processing::{Inject, InjectMut, InjectionScope, ProcessingContext};
+use mizer_processing::{Injector, ProcessingContext};
 
 pub struct CoordinatorRuntimeContext<'a> {
     pub fps: f64,
     pub master_clock: ClockFrame,
-    pub injector: InjectionScope<'a>,
+    pub injector: &'a Injector,
 }
 
 impl<'a> Debug for CoordinatorRuntimeContext<'a> {
@@ -27,7 +27,7 @@ impl<'a> ProcessingContext for CoordinatorRuntimeContext<'a> {
         self.master_clock
     }
 
-    fn injector(&self) -> &InjectionScope {
-        &self.injector
+    fn injector(&self) -> &Injector {
+        self.injector
     }
 }

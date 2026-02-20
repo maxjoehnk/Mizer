@@ -32,8 +32,8 @@ fn default_universe() -> u16 {
 }
 
 impl ConfigurableNode for DmxInputNode {
-    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let dmx_connections = injector.try_inject::<DmxConnectionManager>().unwrap();
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let dmx_connections = injector.get::<DmxConnectionManager>().unwrap();
         let inputs = dmx_connections
             .list_inputs()
             .into_iter()
@@ -71,7 +71,7 @@ impl PipelineNode for DmxInputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(OUTPUT_PORT, PortType::Single)]
     }
 

@@ -32,7 +32,7 @@ impl Default for EncoderNode {
 }
 
 impl ConfigurableNode for EncoderNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(HOLD_RATE_SETTING, self.hold_rate)
                 .min(0.)
@@ -58,7 +58,7 @@ impl PipelineNode for EncoderNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INCREASE_INPUT, PortType::Single),
             input_port!(DECREASE_INPUT, PortType::Single),

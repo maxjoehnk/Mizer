@@ -46,8 +46,8 @@ impl PartialEq<Self> for FixtureNode {
 }
 
 impl ConfigurableNode for FixtureNode {
-    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let fixture_manager = injector.try_inject::<FixtureManager>().unwrap();
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let fixture_manager = injector.get::<FixtureManager>().unwrap();
         let fixtures = fixture_manager
             .get_fixtures()
             .into_iter()
@@ -81,9 +81,9 @@ impl PipelineNode for FixtureNode {
         }
     }
 
-    fn display_name(&self, injector: &ReadOnlyInjectionScope) -> String {
+    fn display_name(&self, injector: &Injector) -> String {
         if let Some(fixture) = injector
-            .try_inject::<FixtureManager>()
+            .get::<FixtureManager>()
             .and_then(|manager| manager.get_fixture(self.fixture_id))
         {
             format!("Fixture ({})", fixture.name)
@@ -92,8 +92,8 @@ impl PipelineNode for FixtureNode {
         }
     }
 
-    fn list_ports(&self, injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
-        let fixture_manager = injector.try_inject::<FixtureManager>();
+    fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+        let fixture_manager = injector.get::<FixtureManager>();
         fixture_manager
             .and_then(|manager| manager.get_fixture(self.fixture_id))
             .map(|fixture| fixture.current_mode.controls.controls().get_ports())

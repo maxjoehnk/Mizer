@@ -1,7 +1,7 @@
 pub use self::immutable_ref::Ref;
 pub use self::mutable_ref::RefMut;
 pub use injector_ref::*;
-use mizer_injector::{Inject, InjectionScope};
+use mizer_injector::{Inject, Injector};
 pub use sub_command::*;
 
 mod immutable_ref;
@@ -13,7 +13,7 @@ mod tuples;
 pub trait ExtractDependencies<'a> {
     type Type;
 
-    fn extract(injector: &'a InjectionScope) -> Self::Type;
+    fn extract(injector: &'a mut Injector) -> Self::Type;
 }
 
 pub trait ExtractDependenciesQuery<'a> {

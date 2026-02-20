@@ -144,7 +144,7 @@ impl Default for VideoTextNode {
 }
 
 impl ConfigurableNode for VideoTextNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         let fonts = SystemSource::new()
             .all_families()
             .unwrap_or_default()
@@ -191,7 +191,7 @@ impl PipelineNode for VideoTextNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_COLOR_PORT, PortType::Color),
             input_port!(INPUT_FONT_SIZE_PORT, PortType::Single),

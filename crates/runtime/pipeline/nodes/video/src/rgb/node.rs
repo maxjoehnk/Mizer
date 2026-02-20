@@ -39,7 +39,7 @@ pub struct RgbState {
 }
 
 impl ConfigurableNode for VideoRgbNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(RED_SETTING, self.red).min(0.0).max_hint(1.0),
             setting!(GREEN_SETTING, self.green).min(0.0).max_hint(1.0),
@@ -65,7 +65,7 @@ impl PipelineNode for VideoRgbNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Texture),
             output_port!(OUTPUT_PORT, PortType::Texture),

@@ -35,8 +35,8 @@ pub struct ProDjLinkClockNode {
 }
 
 impl ConfigurableNode for ProDjLinkClockNode {
-    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let device_manager = injector.inject::<DeviceManager>();
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let device_manager = injector.get::<DeviceManager>().unwrap();
         let sources = get_cdjs(device_manager);
         let current_source = match self.source {
             ClockSource::Master => MASTER_ID.to_string(),
@@ -62,7 +62,7 @@ impl PipelineNode for ProDjLinkClockNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(BPM_OUTPUT, PortType::Single)]
     }
 

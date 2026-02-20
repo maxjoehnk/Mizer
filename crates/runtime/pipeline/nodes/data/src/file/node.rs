@@ -21,7 +21,7 @@ pub struct DataFileNode {
 }
 
 impl ConfigurableNode for DataFileNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Data]),
             setting!(CSV_HEADER_SETTING, self.csv_settings.header),
@@ -57,7 +57,7 @@ impl PipelineNode for DataFileNode {
         NodeType::DataFile
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(OUTPUT_DATA_PORT, PortType::Data)]
     }
 }

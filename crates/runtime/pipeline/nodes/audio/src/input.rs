@@ -24,7 +24,7 @@ impl PipelineNode for AudioInputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(AUDIO_OUTPUT, PortType::Multi)]
     }
 

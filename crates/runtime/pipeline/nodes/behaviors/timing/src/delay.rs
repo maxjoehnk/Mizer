@@ -22,7 +22,7 @@ impl Default for DelayNode {
 }
 
 impl ConfigurableNode for DelayNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![setting!(BUFFER_SIZE_SETTING, self.buffer_size).label("Delay (Beats)")
             .min(0.)
             .max_hint(4.)
@@ -45,7 +45,7 @@ impl PipelineNode for DelayNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_VALUE_PORT, PortType::Single),
             input_port!(BUFFER_SIZE_INPUT, PortType::Single),

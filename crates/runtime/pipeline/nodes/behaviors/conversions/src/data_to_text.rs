@@ -21,7 +21,7 @@ impl PipelineNode for DataToTextNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(VALUE_INPUT, PortType::Data),
             output_port!(VALUE_OUTPUT, PortType::Text),

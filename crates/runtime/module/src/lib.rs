@@ -65,7 +65,9 @@ macro_rules! module_name {
 }
 
 pub trait Runtime {
-    fn injector(&self) -> InjectionScope<'_>;
+    fn injector_mut(&mut self) -> &mut Injector;
+
+    fn injector(&self) -> &Injector;
 
     fn add_processor(&mut self, processor: impl Processor + 'static);
 
@@ -82,7 +84,7 @@ pub trait ModuleContext {
     type DebugUiImpl: DebugUi;
 
     fn provide<T: 'static>(&mut self, service: T);
-    fn try_get<T: 'static>(&self) -> Option<Borrowed<T>>;
+    fn try_get<T: 'static>(&self) -> Option<&T>;
     fn provide_api<T: 'static + Clone + Send + Sync>(&mut self, api: T);
 
     fn add_debug_ui_pane(&mut self, pane: impl DebugUiPane<Self::DebugUiImpl> + 'static);

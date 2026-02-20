@@ -1,6 +1,7 @@
 use crate::fixture::{ChannelValue, ChannelValues, IFixture};
 use crate::manager::FixtureManager;
 use mizer_module::*;
+use mizer_node::Inject;
 
 pub struct FixturesDebugUiPane;
 
@@ -12,7 +13,7 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
     #[tracing::instrument(skip_all)]
     fn render<'a>(
         &mut self,
-        injector: &InjectionScope,
+        injector: &Injector,
         _state_access: &dyn NodeStateAccess,
         ui: &mut TUi::DrawHandle<'a>,
         _textures: &mut <TUi::DrawHandle<'a> as DebugUiDrawHandle<'a>>::TextureMap,

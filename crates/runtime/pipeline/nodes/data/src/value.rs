@@ -21,7 +21,7 @@ impl Default for ValueNode {
 }
 
 impl ConfigurableNode for ValueNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![setting!(VALUE_SETTING, &self.value).multiline()]
     }
 
@@ -41,7 +41,7 @@ impl PipelineNode for ValueNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(VALUE_PORT, PortType::Data)]
     }
 

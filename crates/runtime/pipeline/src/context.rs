@@ -1,5 +1,4 @@
-use std::any::type_name;
-use std::cell::{Ref, RefCell, RefMut};
+use std::cell::RefCell;
 use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
@@ -10,7 +9,7 @@ use mizer_clock::{Clock, ClockFrame, ClockState, Timecode};
 use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
-use mizer_processing::{ProcessingContext, Inject, InjectMut};
+use mizer_processing::ProcessingContext;
 use mizer_util::{rw_lock::RwLock, StructuredData};
 use mizer_wgpu::{TextureRegistry, TextureView};
 
@@ -19,7 +18,6 @@ use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 /// Context for execution of a single node
 pub struct PipelineContext<'a> {
     pub(crate) node_path: &'a NodePath,
-    pub(crate) injection_scope: InjectionScope<'a>,
     pub(crate) processing_context: RefCell<&'a dyn ProcessingContext>,
     pub(crate) senders: Option<&'a NodeSenders>,
     pub(crate) receivers: Option<&'a NodeReceivers>,
@@ -99,13 +97,7 @@ impl NodePreviewState {
 
 impl<'a> Inject for PipelineContext<'a> {
     fn try_inject<T: 'static>(&self) -> Option<&T> {
-        self.injection_scope.try_inject()
-    }
-}
-
-impl<'a> InjectMut for PipelineContext<'a> {
-    fn try_inject_mut<T: 'static>(&self) -> Option<&mut T> {
-        self.injection_scope.try_inject_mut()
+        self.processing_context.borrow().injector().get::<T>()
     }
 }
 

@@ -38,8 +38,8 @@ impl VideoOutputState {
 }
 
 impl ConfigurableNode for VideoOutputNode {
-    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let mut screens = if let Some(event_loop) = injector.try_inject::<EventLoopHandle>() {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let mut screens = if let Some(event_loop) = injector.get::<EventLoopHandle>() {
             // TODO: available screens is currently not available without a window as the internals of winit have changed
             // Fixing this requires a rework of the wgpu and window module
             // let screens = event_loop.available_screens();
@@ -83,7 +83,7 @@ impl PipelineNode for VideoOutputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(INPUT_PORT, PortType::Texture)]
     }
 

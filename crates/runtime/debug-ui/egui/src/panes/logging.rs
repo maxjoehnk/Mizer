@@ -1,8 +1,7 @@
 use crate::draw_handle::DebugUiDrawHandleExt;
 use crate::{get_tracing_collector, EguiDebugUi};
 use egui_tracing::EventCollector;
-use mizer_debug_ui::{DebugUi, DebugUiDrawHandle, DebugUiPane, NodeStateAccess};
-use mizer_module::InjectionScope;
+use mizer_debug_ui::{DebugUi, DebugUiDrawHandle, DebugUiPane, Injector, NodeStateAccess};
 
 pub struct LoggingPane(EventCollector);
 
@@ -19,7 +18,7 @@ impl DebugUiPane<EguiDebugUi> for LoggingPane {
 
     fn render<'a>(
         &mut self,
-        _injector: &InjectionScope,
+        _injector: &Injector,
         _state_access: &dyn NodeStateAccess,
         ui: &mut <EguiDebugUi as DebugUi>::DrawHandle<'a>,
         _textures: &mut <<EguiDebugUi as DebugUi>::DrawHandle<'a> as DebugUiDrawHandle<'a>>::TextureMap,

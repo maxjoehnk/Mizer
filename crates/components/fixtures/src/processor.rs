@@ -22,21 +22,21 @@ impl Processor for FixtureProcessor {
     }
 
     #[tracing::instrument]
-    fn pre_process(&mut self, injector: &InjectionScope, _: ClockFrame, _fps: f64) {
+    fn pre_process(&mut self, injector: &mut Injector, _: ClockFrame, _fps: f64) {
         profiling::scope!("FixtureProcessor::pre_process");
         let fixture_manager = injector.inject::<FixtureManager>();
         fixture_manager.default_fixtures();
     }
 
     #[tracing::instrument]
-    fn process(&mut self, injector: &InjectionScope, _: ClockFrame) {
+    fn process(&mut self, injector: &mut Injector, _: ClockFrame) {
         profiling::scope!("FixtureProcessor::process");
         let fixture_manager = injector.inject::<FixtureManager>();
         fixture_manager.execute_programmers();
     }
 
     #[tracing::instrument]
-    fn post_process(&mut self, injector: &InjectionScope, _frame: ClockFrame) {
+    fn post_process(&mut self, injector: &mut Injector, _frame: ClockFrame) {
         profiling::scope!("FixtureProcessor::post_process");
         let fixture_manager = injector.inject::<FixtureManager>();
         let dmx_manager = injector.inject::<DmxConnectionManager>();

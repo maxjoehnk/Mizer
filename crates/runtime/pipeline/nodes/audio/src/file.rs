@@ -75,7 +75,7 @@ impl Display for PlaybackMode {
 }
 
 impl ConfigurableNode for AudioFileNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(enum PLAYBACK_MODE_SETTING, self.playback_mode),
             setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Audio]),
@@ -99,9 +99,9 @@ impl PipelineNode for AudioFileNode {
         }
     }
 
-    fn display_name(&self, injector: &ReadOnlyInjectionScope) -> String {
+    fn display_name(&self, injector: &Injector) -> String {
         if let Some(document) = injector
-            .try_inject::<MediaServer>()
+            .get::<MediaServer>()
             .zip(MediaId::try_from(self.file.clone()).ok())
             .and_then(|(media_server, media_id)| media_server.get_media_file(media_id))
         {
@@ -111,7 +111,7 @@ impl PipelineNode for AudioFileNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(PLAYBACK_INPUT, PortType::Single),
             input_port!(PAUSE_INPUT, PortType::Single),

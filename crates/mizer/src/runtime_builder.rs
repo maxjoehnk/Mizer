@@ -122,11 +122,8 @@ pub fn build_runtime(
 
     Session::new(remote_api_port, mizer.session_events.clone())?;
 
-    {
-        let scope = mizer.runtime.injector();
-        if let Some(fixture_library) = scope.try_inject::<FixtureLibrary>() {
-            fixture_library.wait_for_load();
-        }
+    if let Some(fixture_library) = mizer.runtime.injector().get::<FixtureLibrary>() {
+        fixture_library.wait_for_load();
     }
 
     open_project(&mut mizer, settings_manager.read().settings)?;

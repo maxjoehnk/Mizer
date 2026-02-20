@@ -69,7 +69,7 @@ impl Default for VideoTransformNode {
 }
 
 impl ConfigurableNode for VideoTransformNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(ROTATION_X_SETTING, self.rotation_x)
                 .category("Rotation")
@@ -131,7 +131,7 @@ impl PipelineNode for VideoTransformNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Texture),
             output_port!(OUTPUT_PORT, PortType::Texture),

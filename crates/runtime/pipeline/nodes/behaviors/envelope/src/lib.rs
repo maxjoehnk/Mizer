@@ -36,7 +36,7 @@ impl Default for EnvelopeNode {
 }
 
 impl ConfigurableNode for EnvelopeNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(ATTACK_SETTING, self.attack)
                 .min(0f64)
@@ -71,7 +71,7 @@ impl PipelineNode for EnvelopeNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(VALUE_INPUT, PortType::Single),
             output_port!(VALUE_OUTPUT, PortType::Single),

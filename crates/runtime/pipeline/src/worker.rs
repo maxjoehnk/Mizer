@@ -466,7 +466,6 @@ impl PipelineWorker {
         profiling::scope!("PipelineWorker::get_context");
         let context = PipelineContext {
             node_path: path,
-            injection_scope: processing_context.injector().scope(),
             processing_context: RefCell::new(processing_context),
             preview: self
                 .previews

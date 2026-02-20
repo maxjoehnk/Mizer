@@ -4,7 +4,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 use mizer_debug_ui::{DebugUiPane, DebugUiRenderHandle, NodeStateAccess};
-use mizer_module::{InjectionScope};
+use mizer_module::Injector;
 
 use crate::draw_handle::EguiDrawHandle;
 use crate::{EguiDebugUi, EguiState, EguiTextureMap};
@@ -19,7 +19,7 @@ pub struct EguiRenderHandle<'a> {
 pub(crate) type Pane = Box<dyn DebugUiPane<EguiDebugUi>>;
 
 struct DockTreeBehavior<'a> {
-    injector: &'a InjectionScope<'a>,
+    injector: &'a Injector,
     textures: &'a mut EguiTextureMap,
     state: Rc<RefCell<EguiState>>,
     state_access: &'a dyn NodeStateAccess,
@@ -48,7 +48,7 @@ impl<'a> DebugUiRenderHandle<'a> for EguiRenderHandle<'a> {
     type DrawHandle<'b> = EguiDrawHandle<'b>;
     type TextureMap = EguiTextureMap;
 
-    fn draw(&mut self, injector: &InjectionScope, state_access: &dyn NodeStateAccess) {
+    fn draw(&mut self, injector: &Injector, state_access: &dyn NodeStateAccess) {
         let mut tree_behavior = DockTreeBehavior {
             injector,
             state: Rc::clone(&self.state),

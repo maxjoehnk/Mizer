@@ -4,7 +4,6 @@ use crate::{ApiCommand, Mizer};
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
-use mizer_processing::{Inject, InjectMut};
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 use mizer_protocol_osc::{OscConnectionManager, OscMessage};
 use mizer_runtime::Pipeline;
@@ -32,8 +31,7 @@ impl ApiHandler {
         match command {
             ApiCommand::WritePort(path, port, value, sender) => {
                 profiling::scope!("ApiCommand::WritePort");
-                let scope = mizer.runtime.injector();
-                let pipeline = scope.inject_mut::<Pipeline>();
+                let pipeline = mizer.runtime.injector_mut().get_mut::<Pipeline>().unwrap();
                 pipeline.write_port(path, port, value);
 
                 sender
@@ -42,8 +40,7 @@ impl ApiHandler {
             }
             ApiCommand::ReadFaderValue(path, sender) => {
                 profiling::scope!("ApiCommand::ReadFaderValue");
-                let scope = mizer.runtime.injector();
-                let pipeline = scope.inject::<Pipeline>();
+                let pipeline = mizer.runtime.injector().get::<Pipeline>().unwrap();
                 let value = pipeline
                     .read_state::<f64>(&path)
                     .copied()
@@ -69,8 +66,7 @@ impl ApiHandler {
             }
             ApiCommand::SetBpm(bpm) => {
                 profiling::scope!("ApiCommand::SetBpm");
-                let mut clock = mizer.runtime.clock_mut();
-                let speed = clock.speed_mut();
+                let speed = mizer.runtime.clock_mut().speed_mut();
                 *speed = bpm;
             }
             ApiCommand::SetFps(fps) => {
@@ -136,7 +132,7 @@ impl ApiHandler {
             ApiCommand::ReloadFixtureLibraries(paths, sender) => {
                 profiling::scope!("ApiCommand::ReloadFixtureLibraries");
                 let injector = mizer.runtime.injector();
-                let library = injector.inject::<FixtureLibrary>();
+                let library = injector.get::<FixtureLibrary>().unwrap();
                 let result = library.reload(paths);
 
                 sender
@@ -151,8 +147,11 @@ impl ApiHandler {
         mizer: &mut Mizer,
         name: String,
     ) -> anyhow::Result<Subscriber<MidiEvent>> {
-        let scope = mizer.runtime.injector();
-        let midi_manager = scope.inject::<MidiConnectionManager>();
+        let midi_manager = mizer
+            .runtime
+            .injector()
+            .get::<MidiConnectionManager>()
+            .unwrap();
         let device = midi_manager
             .request_device(&name)?
             .ok_or_else(|| anyhow::anyhow!("Unknown Midi Device"))?;
@@ -162,8 +161,11 @@ impl ApiHandler {
     }
 
     fn monitor_osc(&self, mizer: &mut Mizer, id: String) -> anyhow::Result<Subscriber<OscMessage>> {
-        let scope = mizer.runtime.injector();
-        let osc_manager = scope.inject::<OscConnectionManager>();
+        let osc_manager = mizer
+            .runtime
+            .injector()
+            .get::<OscConnectionManager>()
+            .unwrap();
         let subscription = osc_manager
             .subscribe(&id)?
             .ok_or_else(|| anyhow::anyhow!("Unknown Osc Connection"))?;

@@ -20,7 +20,7 @@ impl DebugUiRenderHandle<'_> for () {
     type DrawHandle<'b> = ();
     type TextureMap = ();
 
-    fn draw(&mut self, _injector: &InjectionScope, _state_access: &dyn NodeStateAccess) {}
+    fn draw(&mut self, _injector: &Injector, _state_access: &dyn NodeStateAccess) {}
 }
 
 impl DebugUiDrawHandle<'_> for () {

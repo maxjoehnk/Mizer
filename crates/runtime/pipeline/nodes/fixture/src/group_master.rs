@@ -16,8 +16,8 @@ pub struct GroupMasterNode {
 }
 
 impl ConfigurableNode for GroupMasterNode {
-    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let manager = injector.try_inject::<FixtureManager>().unwrap();
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let manager = injector.get::<FixtureManager>().unwrap();
         let groups = manager
             .get_groups()
             .into_iter()
@@ -48,9 +48,9 @@ impl PipelineNode for GroupMasterNode {
         }
     }
 
-    fn display_name(&self, injector: &ReadOnlyInjectionScope) -> String {
+    fn display_name(&self, injector: &Injector) -> String {
         if let Some(group) = injector
-            .try_inject::<FixtureManager>()
+            .get::<FixtureManager>()
             .and_then(|manager| manager.groups.get(&self.group_id))
         {
             format!("Group Master ({})", group.name)
@@ -59,7 +59,7 @@ impl PipelineNode for GroupMasterNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(MASTER_INPUT_PORT, PortType::Single)
         ]

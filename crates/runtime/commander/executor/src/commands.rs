@@ -5,9 +5,9 @@ use derive_more::From;
 use mizer_commander::Command;
 pub use mizer_fixture_commands::*;
 pub use mizer_layout_commands::*;
-use mizer_node::InjectionScope;
 pub use mizer_node_templates::ExecuteNodeTemplateCommand;
 pub use mizer_plan::commands::*;
+use mizer_processing::Injector;
 pub use mizer_protocol_dmx::commands::*;
 pub use mizer_protocol_midi::commands::*;
 pub use mizer_protocol_mqtt::commands::*;
@@ -34,7 +34,7 @@ macro_rules! command_impl {
         impl CommandImpl {
             pub(crate) fn apply(
                 &self,
-                injector: &InjectionScope,
+                injector: &mut Injector,
                 executor: &mut CommandExecutor,
                 command_key: Option<CommandKey>,
             ) -> anyhow::Result<(Box<dyn Any + Send + Sync>, CommandKey)> {
@@ -44,7 +44,7 @@ macro_rules! command_impl {
             }
             pub(crate) fn revert(
                 &self,
-                injector: &InjectionScope,
+                injector: &mut Injector,
                 executor: &mut CommandExecutor,
                 command_key: &CommandKey,
             ) -> anyhow::Result<()> {
@@ -182,7 +182,7 @@ command_impl! {
 impl CommandImpl {
     fn _apply<'a>(
         &self,
-        injector: &'a InjectionScope,
+        injector: &'a mut Injector,
         executor: &'a mut CommandExecutor,
         cmd: &(impl Command<'a> + 'static),
         command_key: Option<CommandKey>,

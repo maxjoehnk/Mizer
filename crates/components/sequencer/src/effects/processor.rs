@@ -8,7 +8,7 @@ use crate::EffectEngine;
 pub(crate) struct EffectsProcessor;
 
 impl Processor for EffectsProcessor {
-    fn process(&mut self, injector: &InjectionScope<'_>, frame: ClockFrame) {
+    fn process(&mut self, injector: &mut Injector, frame: ClockFrame) {
         profiling::scope!("EffectsProcessor::process");
         let engine = injector.inject::<EffectEngine>();
         let fixtures = injector.inject::<FixtureManager>();

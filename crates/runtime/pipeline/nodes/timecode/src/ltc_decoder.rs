@@ -23,7 +23,7 @@ impl Default for LtcDecoderNode {
 }
 
 impl ConfigurableNode for LtcDecoderNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![setting!(FPS_SETTING, self.fps)]
     }
 
@@ -43,11 +43,11 @@ impl PipelineNode for LtcDecoderNode {
         }
     }
 
-    fn display_name(&self, _injector: &ReadOnlyInjectionScope) -> String {
+    fn display_name(&self, _injector: &Injector) -> String {
         format!("LTC Decoder ({} FPS)", self.fps)
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(AUDIO_INPUT, PortType::Multi),
             output_port!(TIMECODE_OUTPUT, PortType::Clock),

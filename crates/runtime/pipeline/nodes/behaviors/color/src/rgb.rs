@@ -21,7 +21,7 @@ impl PipelineNode for RgbColorNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(RED_INPUT, PortType::Single),
             input_port!(GREEN_INPUT, PortType::Single),

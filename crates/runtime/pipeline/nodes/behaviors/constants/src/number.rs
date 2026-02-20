@@ -12,7 +12,7 @@ pub struct ConstantNumberNode {
 }
 
 impl ConfigurableNode for ConstantNumberNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![setting!(VALUE_SETTING, self.value)]
     }
 
@@ -32,7 +32,7 @@ impl PipelineNode for ConstantNumberNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(VALUE_PORT, PortType::Single)]
     }
 

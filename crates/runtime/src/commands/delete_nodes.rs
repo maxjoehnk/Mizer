@@ -206,12 +206,11 @@ mod tests {
     #[test]
     fn delete_node_should_remove_the_connected_links() {
         let injector = Injector::new();
-        let scope = injector.read_only_scope();
         let mut pipeline = Pipeline::new();
         let layout_storage = LayoutStorage::new(NonEmptyPinboard::new(Default::default()));
         let node1 = pipeline
             .add_node(
-                &scope,
+                &injector,
                 NodeType::Fader,
                 Default::default(),
                 Default::default(),
@@ -220,7 +219,7 @@ mod tests {
             .unwrap();
         let node2 = pipeline
             .add_node(
-                &scope,
+                &injector,
                 NodeType::Fader,
                 Default::default(),
                 Default::default(),
@@ -250,12 +249,11 @@ mod tests {
     #[test]
     fn delete_node_should_remove_layout_controls() {
         let injector = Injector::new();
-        let scope = injector.read_only_scope();
         let mut pipeline = Pipeline::new();
         let layout_storage = LayoutStorage::new(NonEmptyPinboard::new(Default::default()));
         let descriptor = pipeline
             .add_node(
-                &scope,
+                &injector,
                 NodeType::Fader,
                 Default::default(),
                 Default::default(),

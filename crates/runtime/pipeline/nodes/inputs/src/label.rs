@@ -14,7 +14,7 @@ pub struct LabelNode {
 }
 
 impl ConfigurableNode for LabelNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![setting!(TEXT_SETTING, self.text.to_string())]
     }
 
@@ -34,7 +34,7 @@ impl PipelineNode for LabelNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(INPUT_TEXT_PORT, PortType::Text)]
     }
 

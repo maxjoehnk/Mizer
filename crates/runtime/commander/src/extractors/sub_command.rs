@@ -1,5 +1,5 @@
 use crate::{Command, ExtractDependencies};
-use mizer_injector::{InjectionScope};
+use mizer_injector::Injector;
 
 pub struct SubCommand<T>(T);
 
@@ -22,7 +22,7 @@ impl<'a, T: Command<'a>> SubCommandRunner<'a, T> {
 impl<'a, T: Command<'a>> ExtractDependencies<'a> for SubCommand<T> {
     type Type = SubCommandRunner<'a, T>;
 
-    fn extract(injector: &'a InjectionScope) -> Self::Type {
+    fn extract(injector: &'a mut Injector) -> Self::Type {
         let dependencies = T::Dependencies::extract(injector);
 
         SubCommandRunner(dependencies)

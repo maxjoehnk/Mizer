@@ -9,11 +9,13 @@ pub(crate) struct SequenceProcessor;
 
 impl Processor for SequenceProcessor {
     #[tracing::instrument]
-    fn process(&mut self, injector: &InjectionScope<'_>, frame: ClockFrame) {
+    fn process(&mut self, injector: &mut Injector, frame: ClockFrame) {
         profiling::scope!("SequenceProcessor::process");
-        let sequencer = injector.inject::<Sequencer>();
-        let fixture_manager = injector.inject::<FixtureManager>();
-        let effect_engine = injector.inject::<EffectEngine>();
+        let sequencer = injector.get::<Sequencer>().unwrap();
+        let fixture_manager = injector
+            .get::<FixtureManager>()
+            .expect("sequencer requires fixtures");
+        let effect_engine = injector.get::<EffectEngine>().unwrap();
         sequencer.run_sequences(fixture_manager, effect_engine, frame);
     }
 }

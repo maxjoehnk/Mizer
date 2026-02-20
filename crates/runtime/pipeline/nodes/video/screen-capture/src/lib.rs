@@ -39,7 +39,7 @@ impl Default for ScreenCaptureNode {
 }
 
 impl ConfigurableNode for ScreenCaptureNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         let displays = match DisplayInfo::all() {
             Ok(displays) => displays,
             Err(err) => {
@@ -80,7 +80,7 @@ impl PipelineNode for ScreenCaptureNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(OUTPUT_PORT, PortType::Texture)]
     }
 

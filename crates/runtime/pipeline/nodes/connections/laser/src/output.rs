@@ -22,8 +22,8 @@ pub struct LaserState {
 }
 
 impl ConfigurableNode for LaserNode {
-    fn settings(&self, injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
-        let device_manager = injector.inject::<DeviceManager>();
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let device_manager = injector.get::<DeviceManager>().unwrap();
         let devices = device_manager
             .current_devices()
             .into_iter()
@@ -53,7 +53,7 @@ impl PipelineNode for LaserNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(INPUT_PORT, PortType::Laser)]
     }
 

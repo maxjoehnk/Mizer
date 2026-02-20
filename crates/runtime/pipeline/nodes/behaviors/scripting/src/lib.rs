@@ -32,7 +32,7 @@ impl<'a> Default for ScriptingNodeState<'a> {
 }
 
 impl ConfigurableNode for ScriptingNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![setting!(SCRIPT_SETTING, &self.script).multiline()]
     }
 
@@ -52,7 +52,7 @@ impl PipelineNode for ScriptingNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!("value", PortType::Single)]
     }
 

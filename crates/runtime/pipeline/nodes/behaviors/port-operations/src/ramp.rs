@@ -42,7 +42,7 @@ impl Default for RampNode {
 }
 
 impl ConfigurableNode for RampNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![setting!(SPLINE_SETTING, self.spline.clone())]
     }
 
@@ -62,7 +62,7 @@ impl PipelineNode for RampNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(VALUE_INPUT, PortType::Single),
             output_port!(VALUE_OUTPUT, PortType::Single),

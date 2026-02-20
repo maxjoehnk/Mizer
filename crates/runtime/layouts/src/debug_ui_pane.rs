@@ -1,6 +1,6 @@
 use crate::LayoutStorage;
 use mizer_debug_ui::*;
-use mizer_node::{Inject, InjectionScope};
+use mizer_node::Inject;
 
 pub struct LayoutsDebugUiPane;
 
@@ -11,7 +11,7 @@ impl<S: DebugUi> DebugUiPane<S> for LayoutsDebugUiPane {
 
     fn render<'a>(
         &mut self,
-        injector: &InjectionScope,
+        injector: &Injector,
         _state_access: &dyn NodeStateAccess,
         ui: &mut S::DrawHandle<'a>,
         _textures: &mut <S::DrawHandle<'a> as DebugUiDrawHandle<'a>>::TextureMap,

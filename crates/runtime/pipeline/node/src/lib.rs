@@ -4,7 +4,7 @@ use std::fmt::Debug;
 use downcast::*;
 
 pub use mizer_debug_ui::DebugUiDrawHandle;
-pub use mizer_injector::{Injector, InjectionScope, ReadOnlyInjectionScope, Inject, InjectMut};
+pub use mizer_injector::Injector;
 pub use mizer_ports::{port_types, Color, PortId, PortType};
 
 pub use self::context::*;
@@ -31,12 +31,12 @@ pub trait PipelineNode: ConfigurableNode + Debug + Send + Sync + Any {
     fn details(&self) -> NodeDetails;
 
     #[allow(unused_variables)]
-    fn display_name(&self, injector: &ReadOnlyInjectionScope) -> String {
+    fn display_name(&self, injector: &Injector) -> String {
         self.details().node_type_name
     }
 
     #[allow(unused_variables)]
-    fn list_ports(&self, injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         tracing::trace!("Returning default ports");
         Default::default()
     }
@@ -51,7 +51,7 @@ pub struct NodeTemplate<TNode> {
 }
 
 pub trait ConfigurableNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![]
     }
 

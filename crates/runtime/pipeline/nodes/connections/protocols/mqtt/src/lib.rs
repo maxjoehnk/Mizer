@@ -1,4 +1,4 @@
-use mizer_node::{Inject, SelectVariant};
+use mizer_node::{Injector, SelectVariant};
 use mizer_protocol_mqtt::MqttConnectionManager;
 
 pub use self::input::*;
@@ -11,9 +11,9 @@ trait MqttInjectorExt {
     fn get_connections(&self) -> Vec<SelectVariant>;
 }
 
-impl<T: Inject> MqttInjectorExt for T {
+impl MqttInjectorExt for Injector {
     fn get_connections(&self) -> Vec<SelectVariant> {
-        let connection_manager = self.inject::<MqttConnectionManager>();
+        let connection_manager = self.get::<MqttConnectionManager>().unwrap();
 
         connection_manager
             .list_connections()

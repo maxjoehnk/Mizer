@@ -1,5 +1,5 @@
 use mizer_commander::{Command, ExtractDependencies, ExtractDependenciesQuery, Query};
-use mizer_processing::{Inject, InjectionScope, Injector};
+use mizer_processing::{Inject, Injector};
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
 use std::time::Instant;
@@ -36,7 +36,7 @@ impl CommandExecutor {
 
     pub(crate) fn apply<'a, T: Command<'a> + 'static>(
         &'a mut self,
-        injector: &'a InjectionScope,
+        injector: &'a mut Injector,
         command: &T,
         command_key: Option<CommandKey>,
     ) -> anyhow::Result<(T::Result, CommandKey)> {
@@ -53,7 +53,7 @@ impl CommandExecutor {
 
     pub(crate) fn revert<'a, T: Command<'a> + 'static>(
         &'a mut self,
-        injector: &'a InjectionScope,
+        injector: &'a mut Injector,
         command: &T,
         command_key: &CommandKey,
     ) -> anyhow::Result<()> {

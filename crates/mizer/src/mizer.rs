@@ -9,7 +9,6 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_message_bus::MessageBus;
 use mizer_module::Runtime;
-use mizer_processing::{Inject, InjectMut};
 use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
 use mizer_protocol_mqtt::MqttConnectionManager;
@@ -74,25 +73,23 @@ impl Mizer {
         self.runtime
             .add_status_message("Creating new project...", None);
         self.close_project();
-        {
-            let injector = self.runtime.injector();
-            let fixture_manager = injector.inject::<FixtureManager>();
-            fixture_manager.new_project();
-            let effects_engine = injector.inject_mut::<EffectEngine>();
-            effects_engine.new_project();
-            let sequencer = injector.inject::<Sequencer>();
-            sequencer.new_project();
-            let timecode_manager = injector.inject::<TimecodeManager>();
-            timecode_manager.new_project();
-            let dmx_manager = injector.inject_mut::<DmxConnectionManager>();
-            dmx_manager.new_project();
-            let mqtt_manager = injector.inject_mut::<MqttConnectionManager>();
-            mqtt_manager.new_project();
-            let osc_manager = injector.inject_mut::<OscConnectionManager>();
-            osc_manager.new_project();
-            let surface_registry = injector.inject_mut::<SurfaceRegistry>();
-            surface_registry.new_project();
-        }
+        let injector = self.runtime.injector_mut();
+        let fixture_manager = injector.get::<FixtureManager>().unwrap();
+        fixture_manager.new_project();
+        let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
+        effects_engine.new_project();
+        let sequencer = injector.get::<Sequencer>().unwrap();
+        sequencer.new_project();
+        let timecode_manager = injector.get::<TimecodeManager>().unwrap();
+        timecode_manager.new_project();
+        let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
+        dmx_manager.new_project();
+        let mqtt_manager = injector.get_mut::<MqttConnectionManager>().unwrap();
+        mqtt_manager.new_project();
+        let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
+        osc_manager.new_project();
+        let surface_registry = injector.get_mut::<SurfaceRegistry>().unwrap();
+        surface_registry.new_project();
         self.runtime.new_project();
         self.send_session_update();
         self.runtime
@@ -118,30 +115,30 @@ impl Mizer {
             tracing::info!("Loading project {:?}...", path);
             let project = Project::load_file(path)?;
             {
-                let scope = self.runtime.injector();
-                let manager: &FixtureManager = scope.inject();
+                let injector = self.runtime.injector_mut();
+                let manager: &FixtureManager = injector.get().unwrap();
                 manager.load(&project).context("loading fixtures")?;
-                let effects_engine = scope.inject_mut::<EffectEngine>();
+                let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
                 effects_engine.load(&project)?;
-                let sequencer = scope.inject::<Sequencer>();
+                let sequencer = injector.get::<Sequencer>().unwrap();
                 sequencer.load(&project).context("loading sequences")?;
-                let timecode_manager = scope.inject::<TimecodeManager>();
+                let timecode_manager = injector.get::<TimecodeManager>().unwrap();
                 timecode_manager
                     .load(&project)
                     .context("loading timecodes")?;
-                let dmx_manager = scope.inject_mut::<DmxConnectionManager>();
+                let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
                 dmx_manager
                     .load(&project)
                     .context("loading dmx connections")?;
-                let mqtt_manager = scope.inject_mut::<MqttConnectionManager>();
+                let mqtt_manager = injector.get_mut::<MqttConnectionManager>().unwrap();
                 mqtt_manager
                     .load(&project)
                     .context("loading mqtt connections")?;
-                let osc_manager = scope.inject_mut::<OscConnectionManager>();
+                let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
                 osc_manager
                     .load(&project)
                     .context("loading osc connections")?;
-                let surface_registry = scope.inject_mut::<SurfaceRegistry>();
+                let surface_registry = injector.get_mut::<SurfaceRegistry>().unwrap();
                 surface_registry
                     .load(&project)
                     .context("loading surfaces")?;
@@ -198,22 +195,22 @@ impl Mizer {
             tracing::info!("Saving project to {:?}...", path);
             let mut project = Project::new();
             self.runtime.save(&mut project);
-            let scope = self.runtime.injector();
-            let fixture_manager = scope.inject::<FixtureManager>();
+            let injector = self.runtime.injector();
+            let fixture_manager = injector.get::<FixtureManager>().unwrap();
             fixture_manager.save(&mut project);
-            let dmx_manager = scope.inject::<DmxConnectionManager>();
+            let dmx_manager = injector.get::<DmxConnectionManager>().unwrap();
             dmx_manager.save(&mut project);
-            let mqtt_manager = scope.inject::<MqttConnectionManager>();
+            let mqtt_manager = injector.get::<MqttConnectionManager>().unwrap();
             mqtt_manager.save(&mut project);
-            let osc_manager = scope.inject::<OscConnectionManager>();
+            let osc_manager = injector.get::<OscConnectionManager>().unwrap();
             osc_manager.save(&mut project);
-            let sequencer = scope.inject::<Sequencer>();
+            let sequencer = injector.get::<Sequencer>().unwrap();
             sequencer.save(&mut project);
-            let timecode_manager = scope.inject::<TimecodeManager>();
+            let timecode_manager = injector.get::<TimecodeManager>().unwrap();
             timecode_manager.save(&mut project);
-            let effects_engine = scope.inject::<EffectEngine>();
+            let effects_engine = injector.get::<EffectEngine>().unwrap();
             effects_engine.save(&mut project);
-            let surface_registry = scope.inject::<SurfaceRegistry>();
+            let surface_registry = injector.get::<SurfaceRegistry>().unwrap();
             surface_registry.save(&mut project);
             self.media_server_api.save(&mut project);
             project.save_file(path)?;
@@ -235,22 +232,22 @@ impl Mizer {
     pub fn close_project(&mut self) {
         mizer_util::message!("Closing Project", 0);
         self.runtime.clear();
-        let scope = self.runtime.injector();
-        let fixture_manager = scope.inject::<FixtureManager>();
+        let injector = self.runtime.injector_mut();
+        let fixture_manager = injector.get::<FixtureManager>().unwrap();
         fixture_manager.clear();
-        let dmx_manager = scope.inject_mut::<DmxConnectionManager>();
+        let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
         dmx_manager.clear();
-        let mqtt_manager = scope.inject_mut::<MqttConnectionManager>();
+        let mqtt_manager = injector.get_mut::<MqttConnectionManager>().unwrap();
         mqtt_manager.clear();
-        let osc_manager = scope.inject_mut::<OscConnectionManager>();
+        let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
         osc_manager.clear();
-        let sequencer = scope.inject::<Sequencer>();
+        let sequencer = injector.get::<Sequencer>().unwrap();
         sequencer.clear();
-        let timecode_manager = scope.inject::<TimecodeManager>();
+        let timecode_manager = injector.get::<TimecodeManager>().unwrap();
         timecode_manager.clear();
         self.project_path = None;
         self.media_server_api.clear();
-        let effects_engine = scope.inject_mut::<EffectEngine>();
+        let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
         effects_engine.clear();
         self.send_session_update();
         self.status_bus.send_current_project(ProjectStatus::None);

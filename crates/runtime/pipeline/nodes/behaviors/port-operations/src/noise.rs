@@ -25,7 +25,7 @@ impl Default for NoiseNode {
 }
 
 impl ConfigurableNode for NoiseNode {
-    fn settings(&self, _injector: &ReadOnlyInjectionScope) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(TICK_RATE_SETTING, self.tick_rate)
                 .min(0u32)
@@ -51,7 +51,7 @@ impl PipelineNode for NoiseNode {
         }
     }
 
-    fn list_ports(&self, _injector: &ReadOnlyInjectionScope) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(VALUE_OUTPUT, PortType::Single)]
     }
 

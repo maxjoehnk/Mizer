@@ -15,7 +15,7 @@ test *args:
 report: clean-report
     npx allure generate results/allure-results -o results/allure-report --open
 
-report-generate: clean-report
+generate-report: clean-report
     npx allure generate results/allure-results -o results/allure-report
 
 [private]

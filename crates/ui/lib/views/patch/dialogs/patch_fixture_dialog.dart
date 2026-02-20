@@ -286,17 +286,17 @@ class _PatchSettingsState extends State<PatchSettings> {
           },
         ),
         NumberField(
-          label: "Universe".i18n,
-          big: true,
-          value: universe,
-          onUpdate: (value) {
-            universe = value.toInt();
-            _emitUpdate();
-          },
-          bar: false,
-          min: 1,
-          max: 524288,
-        ),
+            label: "Universe".i18n,
+            big: true,
+            value: universe,
+            onUpdate: (value) {
+              universe = value.toInt();
+              _emitUpdate();
+            },
+            bar: false,
+            min: 1,
+            max: 524288,
+          ),
         NumberField(
           label: "Channel".i18n,
           big: true,

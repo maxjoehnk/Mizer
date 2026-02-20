@@ -55,33 +55,37 @@ class NavigationBarItem extends StatelessWidget {
     var textTheme = theme.textTheme;
     var color = selected ? theme.colorScheme.secondary : theme.hintColor;
 
-    return PanelGridTile(
-      onTap: onSelect,
-      selected: selected,
-      child: Stack(
-        children: [
-          Center(
-            child: Column(
-              children: [
-                Icon(
-                  icon,
-                  color: color,
-                  size: 24,
-                ),
-                HighContrastText(label, textAlign: TextAlign.center, autoSize: AutoSize(
-                  minFontSize: 12
-                )),
-              ],
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+    return Semantics(
+      checked: selected,
+      child: PanelGridTile(
+        onTap: onSelect,
+        selected: selected,
+        label: label,
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Icon(
+                    icon,
+                    color: color,
+                    size: 24,
+                  ),
+                  HighContrastText(label, textAlign: TextAlign.center, autoSize: AutoSize(
+                    minFontSize: 12
+                  )),
+                ],
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
             ),
-          ),
-          if (hotkeyLabel != null)
-            Align(
-                alignment: Alignment.topRight,
-                child: Text(hotkeyLabel!.toCapitalCase(),
-                    style: textTheme.bodySmall!.copyWith(fontSize: 12))),
-        ],
+            if (hotkeyLabel != null)
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Text(hotkeyLabel!.toCapitalCase(),
+                      style: textTheme.bodySmall!.copyWith(fontSize: 12))),
+          ],
+        ),
       ),
     );
   }

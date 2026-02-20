@@ -7,6 +7,7 @@ import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
 import 'package:mizer/widgets/tabs.dart';
+import 'package:mizer/i18n.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mizer/widgets/field/text_input.dart';
@@ -175,6 +176,7 @@ class _PanelState extends State<Panel> {
               if (widget.onSearch != null)
                 PanelHeaderButton.icon(
                     icon: Icons.search,
+                    label: "Search".i18n,
                     onTap: () => setState(() {
                       this.searchExpanded = !this.searchExpanded;
                       if (!this.searchExpanded) {
@@ -228,7 +230,7 @@ class PanelActionModel {
   final Function()? onClick;
   final String? command;
   final bool disabled;
-  final bool activated;
+  final bool? activated;
   final String? hotkeyId;
   final Menu? menu;
 
@@ -237,7 +239,7 @@ class PanelActionModel {
       this.onClick,
       this.command,
       this.disabled = false,
-      this.activated = false,
+      this.activated,
       this.hotkeyId,
       this.menu});
 }
@@ -281,45 +283,58 @@ class PanelAction extends StatelessWidget {
     var hotkey = _getHotkey(context);
     bool hasAction = action.onClick != null || action.command != null;
     return GestureDetector(
-      onSecondaryTapDown: (event) => _openActionMenu(context, event.globalPosition),
-      onLongPressEnd: (event) => _openActionMenu(context, event.globalPosition),
-      child: Hoverable(
-        disabled: action.disabled || !hasAction,
-        onTap: hasAction
-            ? () {
-                if (action.onClick != null) {
-                  action.onClick!();
-                }
-                if (action.command != null) {
-                  context.read<UiApi>().commandLineExecute(action.command!);
-                }
-              }
-            : null,
-        builder: (hovered) => Container(
-          decoration: BoxDecoration(
-            border: Border(top: BorderSide(color: ActionBorder, width: 2)),
-            color: _getBackground(hovered),
-          ),
-          height: height,
-          width: width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(action.label,
-                  textAlign: TextAlign.center,
-                  style: textTheme.titleSmall!.copyWith(fontSize: 11, color: _getColor())),
-              if (hotkey != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: Text(formatHotkey(hotkey),
-                      style: textTheme.bodySmall!.copyWith(color: _getHotkeyColor(), fontSize: 10)),
-                ),
-            ],
+      onSecondaryTapDown: hasActionMenu ? (event) => _openActionMenu(context, event.globalPosition) : null,
+      onLongPressEnd: hasActionMenu ? (event) => _openActionMenu(context, event.globalPosition) : null,
+      child: Semantics(
+        checked: action.activated,
+        child: Hoverable(
+          label: action.label,
+          disabled: action.disabled || !hasAction,
+          onTap: onTap(context),
+          builder: (hovered) => Container(
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: ActionBorder, width: 2)),
+              color: _getBackground(hovered),
+            ),
+            height: height,
+            width: width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(action.label,
+                    textAlign: TextAlign.center,
+                    style: textTheme.titleSmall!.copyWith(fontSize: 11, color: _getColor())),
+                if (hotkey != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2.0),
+                    child: Text(formatHotkey(hotkey),
+                        style: textTheme.bodySmall!.copyWith(color: _getHotkeyColor(), fontSize: 10)),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  bool get hasActionMenu => action.menu != null && !action.disabled;
+
+  bool get hasAction => action.onClick != null || action.command != null;
+
+  Function()? onTap(BuildContext context) {
+    if (!hasAction) {
+      return null;
+    }
+    return () {
+      if (action.onClick != null) {
+        action.onClick!();
+      }
+      if (action.command != null) {
+        context.read<UiApi>().commandLineExecute(action.command!);
+      }
+    };
   }
 
   void _openActionMenu(BuildContext context, Offset position) {
@@ -339,7 +354,7 @@ class PanelAction extends StatelessWidget {
     if (action.disabled == true) {
       return ActionDisabled;
     }
-    if (action.activated) {
+    if (action.activated == true) {
       return ActionActive;
     }
     if (hovered) {

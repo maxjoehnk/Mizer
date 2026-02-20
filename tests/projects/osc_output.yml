@@ -1,0 +1,567 @@
+---
+version: 6
+playback:
+  fps: 60.0
+nodes:
+  - path: /color-constant-0
+    type: color-constant
+    config:
+      Rgb:
+        red: 1.0
+        green: 0.5
+        blue: 0.0
+    designer:
+      position:
+        x: 12.572960148242359
+        y: 8.802448033520399
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /constant-number-0
+    type: constant-number
+    config:
+      value: 0.5
+    designer:
+      position:
+        x: 11.321788933308532
+        y: -0.5850830915582101
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /constant-number-1
+    type: constant-number
+    config:
+      value: 0.25
+    designer:
+      position:
+        x: 11.615060902858666
+        y: 4.123561308441147
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /osc-output-0
+    type: osc-output
+    config:
+      connection: osc-0
+      path: /test/float
+      argument_type: float
+      only_emit_changes: false
+    designer:
+      position:
+        x: 17.808457012457104
+        y: -0.4164021321344592
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /osc-output-1
+    type: osc-output
+    config:
+      connection: osc-0
+      path: /test/int
+      argument_type: int
+      only_emit_changes: false
+    designer:
+      position:
+        x: 17.808457012457104
+        y: 1.8808949626749154
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /osc-output-2
+    type: osc-output
+    config:
+      connection: osc-0
+      path: /test/double
+      argument_type: double
+      only_emit_changes: false
+    designer:
+      position:
+        x: 17.645528140484807
+        y: 4.015263185511995
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /osc-output-3
+    type: osc-output
+    config:
+      connection: osc-0
+      path: /test/bool
+      argument_type: bool
+      only_emit_changes: false
+    designer:
+      position:
+        x: 17.58035659169589
+        y: 6.9968615426050125
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /osc-output-4
+    type: osc-output
+    config:
+      connection: osc-0
+      path: /test/color
+      argument_type: color
+      only_emit_changes: false
+    designer:
+      position:
+        x: 17.580356591695885
+        y: 9.000886667864254
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /osc-output-5
+    type: osc-output
+    config:
+      connection: osc-0
+      path: /test/string
+      argument_type: string
+      only_emit_changes: false
+    designer:
+      position:
+        x: 17.62923525328758
+        y: 10.727932710770592
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /preset-0
+    type: preset
+    config:
+      id:
+        Color: 7
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-1
+    type: preset
+    config:
+      id:
+        Color: 4
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-10
+    type: preset
+    config:
+      id:
+        Color: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-11
+    type: preset
+    config:
+      id:
+        Color: 3
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-12
+    type: preset
+    config:
+      id:
+        Color: 6
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-13
+    type: preset
+    config:
+      id:
+        Intensity: 3
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-14
+    type: preset
+    config:
+      id:
+        Intensity: 5
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-15
+    type: preset
+    config:
+      id:
+        Intensity: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-16
+    type: preset
+    config:
+      id:
+        Intensity: 4
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-17
+    type: preset
+    config:
+      id:
+        Intensity: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-2
+    type: preset
+    config:
+      id:
+        Color: 11
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-3
+    type: preset
+    config:
+      id:
+        Color: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-4
+    type: preset
+    config:
+      id:
+        Color: 12
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-5
+    type: preset
+    config:
+      id:
+        Color: 10
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-6
+    type: preset
+    config:
+      id:
+        Color: 5
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-7
+    type: preset
+    config:
+      id:
+        Color: 9
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-8
+    type: preset
+    config:
+      id:
+        Color: 8
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /preset-9
+    type: preset
+    config:
+      id:
+        Color: 13
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /transport-0
+    type: transport
+    config: ~
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /value-0
+    type: value
+    config:
+      value: "\"Hello OSC\""
+    designer:
+      position:
+        x: 12.410460148242356
+        y: 10.9024480335204
+      scale: 1.0
+      hidden: false
+      color: ~
+channels:
+  - Value@/constant-number-0 -> Number@/osc-output-0
+  - Value@/constant-number-0 -> Number@/osc-output-1
+  - Value@/constant-number-1 -> Number@/osc-output-2
+  - Value@/constant-number-1 -> Number@/osc-output-3
+  - Output@/value-0 -> Data@/osc-output-5
+  - Color@/color-constant-0 -> Color@/osc-output-4
+media:
+  import_paths: []
+  files: []
+  tags: []
+layouts:
+  Default: []
+connections:
+  - id: osc-0
+    name: Test
+    type: osc
+    protocol: udp
+    output_host: 127.0.0.1
+    output_port: 8000
+    input_port: 7000
+fixtures: []
+groups: []
+presets:
+  intensity:
+    - id: 3
+      label: 50%
+      value: 0.5
+    - id: 5
+      label: 100%
+      value: 1.0
+    - id: 2
+      label: 25%
+      value: 0.25
+    - id: 4
+      label: 75%
+      value: 0.75
+    - id: 1
+      label: 0%
+      value: 0.0
+  shutter: []
+  color:
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
+        - 1.0
+    - id: 4
+      label: Blue
+      value:
+        - 0.0
+        - 0.0
+        - 1.0
+    - id: 11
+      label: Pink
+      value:
+        - 1.0
+        - 0.0
+        - 0.5
+    - id: 2
+      label: Red
+      value:
+        - 1.0
+        - 0.0
+        - 0.0
+    - id: 12
+      label: Mint
+      value:
+        - 0.0
+        - 1.0
+        - 0.5
+    - id: 10
+      label: Purple
+      value:
+        - 0.5
+        - 0.0
+        - 1.0
+    - id: 5
+      label: Yellow
+      value:
+        - 1.0
+        - 1.0
+        - 0.0
+    - id: 9
+      label: Lime
+      value:
+        - 0.5
+        - 1.0
+        - 0.0
+    - id: 8
+      label: Orange
+      value:
+        - 1.0
+        - 0.5
+        - 0.0
+    - id: 13
+      label: Light Blue
+      value:
+        - 0.0
+        - 0.5
+        - 1.0
+    - id: 1
+      label: White
+      value:
+        - 1.0
+        - 1.0
+        - 1.0
+    - id: 3
+      label: Green
+      value:
+        - 0.0
+        - 1.0
+        - 0.0
+    - id: 6
+      label: Magenta
+      value:
+        - 1.0
+        - 0.0
+        - 1.0
+  position: []
+sequences: []
+effects:
+  - id: 1
+    name: Circle
+    channels:
+      - control: Pan
+        steps:
+          - value: 1.0
+            control_point: Simple
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - 1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+      - control: Tilt
+        steps:
+          - value: 0.0
+            control_point: Simple
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - -1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+plans: []
+timecodes:
+  timecodes: []
+  controls: []
+surfaces: []

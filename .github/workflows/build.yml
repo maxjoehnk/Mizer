@@ -209,7 +209,7 @@ jobs:
         working-directory: tests
         run: just generate-report
       - name: Run Allure Action
-        uses: allure-framework/allure-report@v0
+        uses: allure-framework/allure-action@v0
         with:
           report-directory: "tests/results/allure-report"
           github-token: ${{ secrets.GITHUB_TOKEN }}

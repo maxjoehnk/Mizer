@@ -202,6 +202,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: linux-full
+      - uses: taiki-e/install-action@just
       - name: Run tests
         working-directory: tests
         run: just test-headless

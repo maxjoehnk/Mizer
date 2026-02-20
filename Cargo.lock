@@ -5617,6 +5617,7 @@ dependencies = [
  "mizer-api",
  "mizer-clock",
  "mizer-command-executor",
+ "mizer-commander",
  "mizer-connections",
  "mizer-console",
  "mizer-debug-ui-egui",

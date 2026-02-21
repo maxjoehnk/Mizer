@@ -10,7 +10,7 @@ tracing = "0.1"
 mizer-node = { path = "../../../node" }
 serde = { version = "1", features = ["derive"] }
 itertools = "0.13"
-rand = "0.8"
+rand = "0.10"
 mizer-util = { path = "../../../../../util" }
 enum-iterator = "2.0"
 num_enum = "0.7"

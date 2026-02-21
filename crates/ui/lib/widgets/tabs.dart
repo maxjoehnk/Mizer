@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/hoverable.dart';
+import 'package:mizer/i18n.dart';
 
 import 'panel.dart';
 
@@ -122,7 +123,7 @@ class AddTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PanelHeaderButton.icon(icon: Icons.add, onTap: onClick);
+    return PanelHeaderButton.icon(icon: Icons.add, label: "Add Tab".i18n, onTap: onClick);
   }
 }
 
@@ -135,27 +136,33 @@ class TabHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hoverable(
-        onTap: onSelect,
-        builder: (hovered) => Container(
-              height: GRID_2_SIZE,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              color: selected ? Grey500 : (hovered ? Grey700 : Grey800),
-              child: Text(label),
-            ));
+    return Semantics(
+      checked: selected,
+      child: Hoverable(
+          label: label,
+          onTap: onSelect,
+          builder: (hovered) => Container(
+                height: GRID_2_SIZE,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                color: selected ? Grey500 : (hovered ? Grey700 : Grey800),
+                child: Text(label),
+              )),
+    );
   }
 }
 
 class PanelHeaderButton extends StatelessWidget {
   final Function() onTap;
   final Widget? child;
+  final String? label;
 
-  const PanelHeaderButton({required this.onTap, this.child, super.key});
+  const PanelHeaderButton({required this.onTap, this.child, this.label, super.key});
 
-  factory PanelHeaderButton.icon({ required IconData icon, required Function() onTap }) {
+  factory PanelHeaderButton.icon({ required IconData icon, required String label, required Function() onTap }) {
     return PanelHeaderButton(
       child: Icon(icon),
+      label: label,
       onTap: onTap,
     );
   }
@@ -164,6 +171,7 @@ class PanelHeaderButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hoverable(
         onTap: onTap,
+        label: label,
         builder: (hovered) => Container(
           height: GRID_2_SIZE,
           width: GRID_2_SIZE,

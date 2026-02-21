@@ -11,6 +11,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  pull-requests: write
+  checks: write
+
 jobs:
   build-linux:
     runs-on: ubuntu-24.04
@@ -186,6 +190,30 @@ jobs:
       - name: Verify ffmpeg is statically linked
         working-directory: artifact
         run: nm mizer | grep ff_mpeg
+
+  e2e-tests-linux:
+    runs-on: ubuntu-latest
+    needs: build-linux
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Fetch artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-full
+      - uses: taiki-e/install-action@just
+      - name: Run tests
+        working-directory: tests
+        run: just test-headless
+      - name: Generate report
+        working-directory: tests
+        run: just generate-report
+      - name: Run Allure Action
+        uses: allure-framework/allure-action@v0
+        with:
+          report-directory: "tests/results/allure-report"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   build-macos:
     runs-on: macos-latest

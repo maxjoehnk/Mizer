@@ -9,6 +9,7 @@ class Hoverable extends StatefulWidget {
   final void Function()? onSecondaryTap;
   final void Function(TapDownDetails)? onSecondaryTapDown;
   final void Function()? onDoubleTap;
+  final String? label;
   final Widget Function(bool) builder;
 
   const Hoverable(
@@ -19,6 +20,7 @@ class Hoverable extends StatefulWidget {
       this.onSecondaryTap,
       this.onSecondaryTapDown,
       this.onDoubleTap,
+      this.label,
       required this.builder,
       Key? key})
       : super(key: key);
@@ -55,7 +57,13 @@ class _HoverableState extends State<Hoverable> {
         onSecondaryTapDown: _callDetailsWhenNotDisabled(widget.onSecondaryTapDown),
         onDoubleTap: _callWhenNotDisabled(widget.onDoubleTap),
         behavior: HitTestBehavior.opaque,
-        child: widget.builder(hovering),
+        child: Semantics(
+          enabled: !widget.disabled,
+          label: widget.label,
+          button: true,
+          excludeSemantics: widget.label != null,
+          child: widget.builder(hovering),
+        ),
       ),
     );
   }

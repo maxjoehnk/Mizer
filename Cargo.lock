@@ -5617,6 +5617,7 @@ dependencies = [
  "mizer-api",
  "mizer-clock",
  "mizer-command-executor",
+ "mizer-commander",
  "mizer-connections",
  "mizer-console",
  "mizer-debug-ui-egui",
@@ -7634,7 +7635,7 @@ dependencies = [
 [[package]]
 name = "ndi"
 version = "0.1.2"
-source = "git+https://github.com/maxjoehnk/ndi-rs.git?branch=feature%2Fndi-5#25a2356017e315370685998674d6c15491d2ac76"
+source = "git+https://github.com/maxjoehnk/ndi-rs.git?branch=feature%2Fndi-6#818c0cb86e320791ad6065d74a42145390075a44"
 
 [[package]]
 name = "ndk"

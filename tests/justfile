@@ -1,0 +1,23 @@
+image := "mizer-tests"
+
+build:
+    docker build -t {{image}} .
+
+test-headless *args: build
+    docker run --rm \
+        -v $(pwd):/app/tests \
+        -v $(pwd)/mizer.zip:/app/mizer.zip \
+        {{image}} behave -f allure_behave.formatter:AllureFormatter -o results/allure-results {{args}}
+
+test *args:
+    pipenv run behave -f allure_behave.formatter:AllureFormatter -o results/allure-results {{args}}
+
+report: clean-report
+    npx allure generate results/allure-results -o results/allure-report --open
+
+generate-report: clean-report
+    npx allure generate results/allure-results -o results/allure-report
+
+[private]
+clean-report:
+    rm -rf results/allure-report

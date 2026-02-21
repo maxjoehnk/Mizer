@@ -44,3 +44,7 @@ def parse_view(text: str) -> View:
 
 
 register_type(View=parse_view)
+
+@when('I open the programmer')
+def step_impl(context):
+    click_on_text('Programmer')

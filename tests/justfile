@@ -5,8 +5,8 @@ build:
 
 test-headless *args: build
     docker run --rm \
-        -v ./:/app/tests \
-        -v ../mizer.zip:/app/mizer.zip \
+        -v $(pwd):/app/tests \
+        -v $(pwd)/mizer.zip:/app/mizer.zip \
         {{image}} behave -f allure_behave.formatter:AllureFormatter -o results/allure-results {{args}}
 
 test *args:

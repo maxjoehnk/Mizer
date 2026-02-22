@@ -209,8 +209,10 @@ jobs:
       - name: Generate report
         working-directory: tests
         run: just generate-report
+        if: always()
       - name: Run Allure Action
         uses: allure-framework/allure-action@v0
+        if: always()
         with:
           report-directory: "tests/results/allure-report"
           github-token: ${{ secrets.GITHUB_TOKEN }}

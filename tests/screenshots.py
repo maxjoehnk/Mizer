@@ -1,16 +1,9 @@
-from time import sleep
-
-from dogtail import rawinput
-
 import infrastructure.interactions
 from infrastructure.launcher import Mizer
 from infrastructure.views import *
 
 with Mizer() as mizer:
     mizer.start('../examples/demo.yml')
-    sleep(5)
-
-    rawinput.keyCombo('<Super_L>f')
 
     open_view(View.LAYOUT)
     infrastructure.interactions.take_screenshot('../docs/screenshots/layout.png')

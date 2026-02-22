@@ -2,10 +2,12 @@ import base64
 import json
 import os
 import subprocess
+import time
 from pathlib import Path
 
+import cv2
 import dogtail.tree
-import pyautogui
+import numpy as np
 from dogtail import rawinput
 from dogtail.config import config
 from dogtail.tree import Node
@@ -102,16 +104,36 @@ def take_screenshot(file: str):
     subprocess.run(['scrot', '-o', '-u', file], check=True)
 
 
-def assert_snapshot(snapshot_name: str):
+def _take_screenshot_as_image(result_path: str) -> np.ndarray | None:
+    """Capture the full screen, save it to result_path, and return it as a cv2 image.
+
+    Always captures the full screen instead of the focused window because
+    template matching searches for the reference within the screenshot anyway,
+    and scrot -u is unreliable in bare Xvfb without a window manager (it can
+    succeed but capture the root window instead of the application).
+    """
+    try:
+        subprocess.run(['scrot', '-o', result_path], check=True)
+    except subprocess.CalledProcessError:
+        return None
+    return cv2.imread(result_path)
+
+
+def _match_snapshot(screenshot: np.ndarray, reference: np.ndarray, threshold: float) -> tuple[float, tuple[int, int]]:
+    """Find the best template match and return (score, location)."""
+    result = cv2.matchTemplate(screenshot, reference, cv2.TM_CCOEFF_NORMED)
+    _, max_val, _, max_loc = cv2.minMaxLoc(result)
+    return max_val, max_loc
+
+
+def assert_snapshot(snapshot_name: str, timeout: float = 5.0, threshold: float = 0.8):
     """Assert that the reference snapshot is visible on screen.
 
-    Takes a screenshot for debugging, then checks if the reference
-    snapshot from snapshots/ can be found on screen.
+    Repeatedly takes screenshots and uses cv2 template matching to find the
+    reference snapshot. Retries until the match score exceeds the threshold
+    or the timeout expires.
     On failure, attaches expected/actual/diff images to the Allure report.
     """
-    import allure
-    import cv2
-    import numpy as np
 
     result_path = f'results/screenshots/{snapshot_name}.png'
     reference_path = f'snapshots/{snapshot_name}.png'
@@ -124,49 +146,64 @@ def assert_snapshot(snapshot_name: str):
         )
 
     os.makedirs(os.path.dirname(result_path), exist_ok=True)
-    try:
-        location = pyautogui.locateOnScreen(reference_path, minSearchTime=2, confidence=0.9)
-    except pyautogui.ImageNotFoundException:
-        location = None
-    try:
-        take_screenshot(result_path)
-    except subprocess.CalledProcessError:
-        pass
 
-    if location is None:
-        _attach_snapshot_diff(reference_path, result_path, snapshot_name)
+    reference = cv2.imread(reference_path)
+    if reference is None:
+        raise FileNotFoundError(f'Could not read reference snapshot: {reference_path}')
 
-    assert location is not None, (
-        f'Snapshot "{snapshot_name}" not found on screen. '
+    deadline = time.monotonic() + timeout
+    best_score = -1.0
+    best_loc = (0, 0)
+    screenshot = None
+
+    while True:
+        screenshot = _take_screenshot_as_image(result_path)
+        if screenshot is not None:
+            score, loc = _match_snapshot(screenshot, reference, threshold)
+            if score > best_score:
+                best_score = score
+                best_loc = loc
+            if score >= threshold:
+                return
+
+        if time.monotonic() >= deadline:
+            break
+        time.sleep(0.5)
+
+    _attach_snapshot_diff(reference, screenshot, best_loc, snapshot_name)
+
+    assert False, (
+        f'Snapshot "{snapshot_name}" not found on screen (best score: {best_score:.3f}, '
+        f'threshold: {threshold}). '
         f'Screenshot saved to {result_path} for comparison with {reference_path}'
     )
 
 
-def _attach_snapshot_diff(reference_path: str, screenshot_path: str, name: str):
+def _attach_snapshot_diff(
+    reference: np.ndarray,
+    screenshot: np.ndarray | None,
+    best_loc: tuple[int, int],
+    name: str,
+):
     """Attach expected, actual (best-match crop), and diff images to Allure."""
     import allure
-    import cv2
-    import numpy as np
 
     try:
-        ref = cv2.imread(reference_path)
-        screenshot = cv2.imread(screenshot_path)
-        if ref is None or screenshot is None:
+        if reference is None or screenshot is None:
             return
 
-        h, w = ref.shape[:2]
-        result = cv2.matchTemplate(screenshot, ref, cv2.TM_CCOEFF_NORMED)
-        _, _, _, max_loc = cv2.minMaxLoc(result)
-        x, y = max_loc
+        h, w = reference.shape[:2]
+        x, y = best_loc
         crop = screenshot[y:y + h, x:x + w]
-
-        diff = cv2.absdiff(ref, crop)
+        diff = cv2.absdiff(reference, crop)
 
         diff_dir = 'results/screenshots/diffs'
         os.makedirs(diff_dir, exist_ok=True)
+        reference_path = f'{diff_dir}/{name}_expected.png'
         actual_path = f'{diff_dir}/{name}_actual.png'
         diff_path = f'{diff_dir}/{name}_diff.png'
 
+        cv2.imwrite(reference_path, reference)
         cv2.imwrite(actual_path, crop)
         cv2.imwrite(diff_path, diff)
 

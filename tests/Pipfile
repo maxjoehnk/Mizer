@@ -6,8 +6,6 @@ name = "pypi"
 [packages]
 dogtail = "*"
 behave = "==1.3.3"
-pyautogui = "*"
-Pillow = "*"
 opencv-python = "*"
 sacn = "*"
 python-osc = "*"

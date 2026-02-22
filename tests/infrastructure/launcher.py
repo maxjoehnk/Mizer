@@ -44,6 +44,7 @@ def _maximize_window(name: str, retries: int = 10):
                 stack_mode=Xlib.X.Above,
             )
             display.sync()
+            rawinput.keyCombo('<Super_L>f') # maximize on i3
             return
         sleep(0.5)
 

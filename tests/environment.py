@@ -32,12 +32,7 @@ def after_scenario(context, scenario):
     print(f"after_scenario: {scenario.name} - {scenario.status}")
     screenshot_path = f'results/screenshots/{scenario.name}.png'
     try:
-        try:
-            take_screenshot(screenshot_path)
-        except Exception:
-            # Focused-window capture fails when the window is gone (e.g. crash).
-            # Fall back to a full-screen capture.
-            subprocess.run(['scrot', '-o', screenshot_path], check=True)
+        take_screenshot(screenshot_path)
         allure.attach.file(
             screenshot_path,
             name='screenshot',

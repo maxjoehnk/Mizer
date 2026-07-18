@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/dialogs/name_dialog.dart';

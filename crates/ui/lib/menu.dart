@@ -3,7 +3,7 @@ import 'dart:io' as io;
 import 'package:flutter/material.dart' hide View;
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/context_state_extensions.dart';
 import 'package:mizer/i18n.dart';

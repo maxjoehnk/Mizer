@@ -5,7 +5,7 @@ version: 1.2.0+1
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
-  flutter: 3.38.6
+  flutter: 3.44.6
 
 dependencies:
   flutter:
@@ -19,7 +19,7 @@ dependencies:
   bloc: ^8.1.0
   flutter_bloc: ^8.1.1
   provider: ^6.0.0
-  material_design_icons_flutter: ^7.0.0
+  flutter_material_design_icons: ^3.1.0+7447
   file_selector: ^1.0.0
   select_form_field: ^2.2.0
   collection: ^1.16.0

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide View, NavigationBar, Route;
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
 import 'package:mizer/panes/console/console_pane.dart';

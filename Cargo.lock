@@ -3323,10 +3323,11 @@ dependencies = [
 
 [[package]]
 name = "ffmpeg-sys-the-third"
-version = "4.0.0+ffmpeg-8.0"
-source = "git+https://github.com/maxjoehnk/ffmpeg-the-third.git?branch=feature%2Fremove-libpostproc#8708c22aa359c2e97c3789e1a963face5839bed8"
+version = "5.0.0+ffmpeg-8.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b00c204bb97c2b6c0329104c3e8bcf58d4d13cc88a04233326570672e0c2c5c9"
 dependencies = [
- "bindgen 0.69.5",
+ "bindgen 0.72.1",
  "cc",
  "clang",
  "libc",
@@ -3336,9 +3337,9 @@ dependencies = [
 
 [[package]]
 name = "ffmpeg-the-third"
-version = "4.0.1+ffmpeg-8.0"
+version = "5.0.0+ffmpeg-8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e9a3b90ff7c38b228afb4d1abaf9fce9336acb7c0674f7c99fdb4aee157820bb"
+checksum = "791f0d9315e4f0a0861fa5c8ca8d70a1bd099cce72bff111b4f7ed8d6ebe8ba3"
 dependencies = [
  "bitflags 2.10.0",
  "ffmpeg-sys-the-third",

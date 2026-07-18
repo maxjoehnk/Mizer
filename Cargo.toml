@@ -108,6 +108,9 @@ members = [
 default-members = ["crates/mizer"]
 resolver = "2"
 
+[workspace.dependencies]
+ffmpeg-the-third = "5.0"
+
 [profile.bench]
 lto = true
 
@@ -122,5 +125,3 @@ opt-level = 3
 citp = { git = "https://github.com/maxjoehnk/citp.git", branch = "master" }
 # https://github.com/grievouz/egui_tracing/pull/37
 egui_tracing = { git = "https://github.com/maxjoehnk/egui_tracing.git", rev = "38245ee" }
-# https://github.com/shssoichiro/ffmpeg-the-third/pull/120
-ffmpeg-sys-the-third = { git = "https://github.com/maxjoehnk/ffmpeg-the-third.git", branch = "feature/remove-libpostproc" }

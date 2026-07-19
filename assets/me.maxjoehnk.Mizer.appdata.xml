@@ -4,7 +4,7 @@
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>AGPL-3.0</project_license>
     <name>Mizer</name>
-    <summary>A visualization software for live events like concerts and club gigs with a node based workflow</summary>
+    <summary>Node based lighting software</summary>
     <description>
         <p>A visualization software for live events like concerts and club gigs with a node based workflow.
             Use a classic programmer workflow or a modern node workflow to control every device you can imagine. Use it as an adapter layer between multiple applications, remote control for a lighting desk, to control your led pixel fixtures from a lighting desk with limited universes or anything else you can imagine.

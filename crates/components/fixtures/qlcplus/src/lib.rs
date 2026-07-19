@@ -142,6 +142,7 @@ mod tests {
     const GENERIC_CMY_DEFINITION: &str = include_str!("../tests/Generic-Generic-CMY.qxf");
     const GENERIC_SMOKE_DEFINITION: &str = include_str!("../tests/Generic-Generic-Smoke.qxf");
     const XML_EDGECASE: &str = include_str!("../tests/Eurolite-LED-Bar-RGB-252_10_40__Indoor.qxf");
+    const EXPOLITE_TOURLED_42: &str = include_str!("../tests/Expolite-TourLed-42.qxf");
 
     #[test]
     fn generic_rgb() {
@@ -275,5 +276,23 @@ mod tests {
 
         println!("{:#?}", file);
         assert!(file.is_ok());
+    }
+
+    #[test]
+    fn should_properly_parse_color_mixer_of_expolite_tourled_42() {
+        let file = QlcPlusFixtureDefinition::from_str(EXPOLITE_TOURLED_42).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+
+        let definition = map_fixture_definition(file, &resource_reader);
+
+        println!("{:#?}", definition);
+        let mode = definition.modes.into_iter().find(|mode| mode.name == "Tour").unwrap();
+        assert_eq!(mode.controls.color_mixer, Some(ColorGroup::Rgb {
+            red: FixtureControlChannel::Channel("Red | Step Time".into()),
+            green: FixtureControlChannel::Channel("Green | Fade Time".into()),
+            blue: FixtureControlChannel::Channel("Blue".into()),
+            amber: None,
+            white: None,
+        }));
     }
 }

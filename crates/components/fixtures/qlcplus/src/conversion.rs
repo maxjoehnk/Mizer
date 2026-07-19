@@ -141,7 +141,24 @@ fn build_controls<TChannel>(
         let control_channel = control_channel_builder(&channel);
         if let Some(group) = channel.group {
             match group.group {
-                GroupEnumType::Intensity => controls.intensity = Some(control_channel),
+                GroupEnumType::Intensity => {
+                    match channel.color {
+                        Some(ColorType::Red) => color_builder.red(control_channel),
+                        Some(ColorType::Green) => color_builder.green(control_channel),
+                        Some(ColorType::Blue) => color_builder.blue(control_channel),
+                        Some(ColorType::Amber) => color_builder.amber(control_channel),
+                        Some(ColorType::Lime) => color_builder.lime(control_channel),
+                        Some(ColorType::White) => color_builder.white(control_channel),
+                        Some(ColorType::Cyan) => color_builder.cyan(control_channel),
+                        Some(ColorType::Yellow) => color_builder.yellow(control_channel),
+                        Some(ColorType::Magenta) => color_builder.magenta(control_channel),
+                        None => controls.intensity = Some(control_channel),
+                        _ => controls.generic.push(GenericControl {
+                            label: channel.name.to_string(),
+                            channel: control_channel,
+                        }),
+                    }
+                }
                 GroupEnumType::Shutter => controls.shutter = Some(control_channel),
                 GroupEnumType::Prism => controls.prism = Some(control_channel),
                 GroupEnumType::Pan => {

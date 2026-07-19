@@ -737,7 +737,7 @@ fn group_controls(
 impl From<Resource> for GoboImage {
     fn from(resource: Resource) -> Self {
         match resource.image.encoding.as_str() {
-            "utf8" => GoboImage::Svg(resource.image.data),
+            "utf8" | "utf-8" => GoboImage::Svg(resource.image.data),
             _ => {
                 match BASE64_STANDARD.decode(resource.image.data) {
                     Ok(data) => GoboImage::Raster(Box::new(data)),

@@ -180,7 +180,7 @@ jobs:
         with:
           name: linux-full
       - name: Bundle
-        run: make Mizer.appimage
+        run: ./scripts/package-appimage.sh
       - uses: actions/upload-artifact@v4
         with:
           name: Appimage

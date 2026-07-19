@@ -30,6 +30,14 @@ fn main() -> anyhow::Result<()> {
         "crates/components/connections/protocols/midi/device-profiles/profiles",
         "device-profiles/midi",
     )?;
+    artifact.link_source(
+        "assets/me.maxjoehnk.Mizer.desktop",
+        "me.maxjoehnk.Mizer.desktop",
+    )?;
+    artifact.link_source(
+        "assets/logo@512.png",
+        "me.maxjoehnk.Mizer.png",
+    )?;
 
     Ok(())
 }
@@ -184,7 +192,9 @@ impl Artifact {
         let from = self.build_dir.join(from);
         let to = self.artifact_dir.join(to);
 
-        fs::create_dir_all(to.parent().unwrap())?;
+        if let Some(parent) = to.parent() {
+            fs::create_dir_all(parent).context(format!("Unable to create dir {parent:?}"))?;
+        }
 
         copy_all(&from, &to).context(format!("Copying from {from:?} to {to:?}"))?;
 
@@ -196,7 +206,7 @@ impl Artifact {
         let to = self.artifact_dir.join(to);
 
         if let Some(parent) = to.parent() {
-            fs::create_dir_all(parent)?;
+            fs::create_dir_all(parent).context(format!("Unable to create dir {parent:?}"))?;
         }
 
         copy_all(&from, &to).context(format!("Copying from {from:?} to {to:?}"))?;
@@ -235,9 +245,11 @@ impl Artifact {
         let from = self.build_dir.join(from);
         let to = self.artifact_dir.join(to);
 
-        fs::create_dir_all(to.parent().unwrap())?;
+        if let Some(parent) = to.parent() {
+            fs::create_dir_all(parent).context(format!("Unable to create dir {parent:?}"))?;
+        }
 
-        link(&from, &to)?;
+        link(&from, &to).context(format!("Unable to link {from:?} to {to:?}"))?;
 
         Ok(())
     }
@@ -247,10 +259,10 @@ impl Artifact {
         let to = self.artifact_dir.join(to);
 
         if let Some(parent) = to.parent() {
-            fs::create_dir_all(parent)?;
+            fs::create_dir_all(parent).context(format!("Unable to create dir {parent:?}"))?;
         }
 
-        link(&from, &to)?;
+        link(&from, &to).context(format!("Unable to link {from:?} to {to:?}"))?;
 
         Ok(())
     }

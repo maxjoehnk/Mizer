@@ -64,6 +64,10 @@ Mizer_unsigned.dmg: mizer.zip
   		Mizer_unsigned.dmg \
 	 	artifact
 
+Mizer.appimage: artifact
+	rm -rf Mizer.AppDir
+	./scripts/package-appimage.sh
+
 build-in-docker:
 	./.ci/test-local.sh
 

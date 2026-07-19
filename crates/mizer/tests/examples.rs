@@ -1,9 +1,11 @@
 use std::path::PathBuf;
-
+use std::sync::Arc;
+use pinboard::NonEmptyPinboard;
 use test_case::test_case;
 use tracing::Level;
 
-use mizer::{build_runtime, Flags};
+use mizer::{build_runtime, load_settings, Flags};
+use mizer_settings::SettingsManager;
 
 #[test_case("artnet"; "artnet")]
 #[test_case("audio"; "audio")]
@@ -44,6 +46,7 @@ fn test_build_project_pipeline(project: &str) {
         headless: true,
         ..Default::default()
     };
+    let settings = Arc::new(NonEmptyPinboard::new(SettingsManager::new().unwrap()));
 
-    build_runtime(handle, flags).unwrap();
+    build_runtime(handle, settings, flags).unwrap();
 }

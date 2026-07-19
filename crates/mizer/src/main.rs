@@ -14,8 +14,9 @@ mod logger;
 #[cfg(not(feature = "ui"))]
 fn main() -> anyhow::Result<()> {
     let (flags, _logging_guard, _sentry_guard) = init()?;
+    let settings_manager = load_settings()?;
 
-    run_headless(flags)
+    run_headless(flags, settings_manager)
 }
 
 #[cfg(feature = "ui")]

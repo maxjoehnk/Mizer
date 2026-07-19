@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>me.maxjoehnk.Mizer</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>AGPL-3.0</project_license>
+    <name>Mizer</name>
+    <summary>A visualization software for live events like concerts and club gigs with a node based workflow</summary>
+    <description>
+        <p>A visualization software for live events like concerts and club gigs with a node based workflow.
+            Use a classic programmer workflow or a modern node workflow to control every device you can imagine. Use it as an adapter layer between multiple applications, remote control for a lighting desk, to control your led pixel fixtures from a lighting desk with limited universes or anything else you can imagine.
+            It can communicate using Artnet, sACN, OSC, MIDI, MQTT, NDI with other devices and applications.
+        </p>
+    </description>
+    <launchable type="desktop-id">me.maxjoehnk.Mizer.desktop</launchable>
+    <url type="homepage">https://mizer.live</url>
+    <url type="bugtracker">https://github.com/maxjoehnk/Mizer/issues</url>
+    <url type="help">https://docs.mizer.live</url>
+    <screenshots>
+        <screenshot type="default">
+            <image>https://mizer.live/assets/images/layout.png</image>
+        </screenshot>
+    </screenshots>
+    <provides>
+        <id>me.maxjoehnk.Mizer.desktop</id>
+    </provides>
+    <supports>
+        <internet>offline-only</internet>
+    </supports>
+    <developer id="me.maxjoehnk">
+        <name>Max Jöhnk</name>
+    </developer>
+    <content_rating type="oars-1.0" />
+
+</component>

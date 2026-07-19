@@ -135,8 +135,10 @@ impl EffectEngine {
         profiling::scope!("EffectEngine::process_instances");
         let mut instances = self.instances.lock().unwrap();
         for (_, instance) in instances.iter_mut() {
-            let effect = self.effects.get(&instance.effect_id).unwrap();
-            instance.process(effect.value(), fixture_manager, frame);
+            // TODO: do we remove the effect instance here once the effect doesn't exist any more? How does this behave with the undo stack?
+            if let Some(effect) = self.effects.get(&instance.effect_id) {
+                instance.process(effect.value(), fixture_manager, frame);
+            }
         }
         let active_effects = instances.len();
         mizer_util::plot!("Running Effects", active_effects as f64);

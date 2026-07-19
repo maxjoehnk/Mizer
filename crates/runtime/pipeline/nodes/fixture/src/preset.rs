@@ -59,7 +59,7 @@ impl PipelineNode for PresetNode {
         NodeDetails {
             node_type_name: "Preset".into(),
             preview_type: PreviewType::None,
-            category: NodeCategory::None,
+            category: NodeCategory::Fixtures,
         }
     }
 

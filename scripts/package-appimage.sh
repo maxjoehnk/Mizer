@@ -8,8 +8,9 @@ fi
 
 mkdir Mizer.AppDir
 
-cp -aL artifact/* Mizer.AppDir/
+unzip mizer.zip -d Mizer.AppDir
 mv Mizer.AppDir/mizer Mizer.AppDir/AppRun
+chmod +x Mizer.AppDir/AppRun
 
 ./appimagetool-x86_64.AppImage Mizer.AppDir
 

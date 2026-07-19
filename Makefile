@@ -64,7 +64,7 @@ Mizer_unsigned.dmg: mizer.zip
   		Mizer_unsigned.dmg \
 	 	artifact
 
-Mizer.appimage: artifact
+Mizer-x86_64.AppImage: mizer.zip
 	rm -rf Mizer.AppDir
 	./scripts/package-appimage.sh
 

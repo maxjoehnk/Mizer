@@ -738,9 +738,15 @@ impl From<Resource> for GoboImage {
     fn from(resource: Resource) -> Self {
         match resource.image.encoding.as_str() {
             "utf8" => GoboImage::Svg(resource.image.data),
-            _ => GoboImage::Raster(Box::new(
-                BASE64_STANDARD.decode(resource.image.data).unwrap(),
-            )),
+            _ => {
+                match BASE64_STANDARD.decode(resource.image.data) {
+                    Ok(data) => GoboImage::Raster(Box::new(data)),
+                    Err(err) => {
+                        tracing::warn!(err = %err, "Unable to decode gobo image {} ({})", resource.key, resource.name);
+                        GoboImage::Raster(Default::default())
+                    },
+                }
+            },
         }
     }
 }

@@ -2,8 +2,8 @@
 set -e
 
 if [ ! -f appimagetool-x86_64.AppImage ]; then
-  wget https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage
-  chmod +x appimagetool-x86_64.AppImage
+	wget https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage
+	chmod +x appimagetool-x86_64.AppImage
 fi
 
 mkdir Mizer.AppDir

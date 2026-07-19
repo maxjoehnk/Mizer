@@ -70,10 +70,10 @@ fn load_modules(context: &mut SetupContext, flags: &Flags) {
 
 pub fn build_runtime(
     handle: tokio::runtime::Handle,
+    settings_manager: SettingsStore,
     flags: Flags,
 ) -> anyhow::Result<(Mizer, ApiHandler)> {
     tracing::trace!("Building mizer runtime...");
-    let settings_manager = load_settings()?;
     let runtime = DefaultRuntime::new();
     let mut api_injector = ApiInjector::new();
     api_injector.provide(settings_manager.clone());
@@ -131,7 +131,9 @@ pub fn build_runtime(
     Ok((mizer, api_handler))
 }
 
-fn load_settings() -> anyhow::Result<Arc<NonEmptyPinboard<SettingsManager>>> {
+pub type SettingsStore = Arc<NonEmptyPinboard<SettingsManager>>;
+
+pub fn load_settings() -> anyhow::Result<SettingsStore> {
     let mut settings_manager = SettingsManager::new().context("Failed to load default settings")?;
     if let Err(err) = settings_manager
         .load()

@@ -9,6 +9,7 @@ pub fn get_default_settings() -> Settings {
         general: General {
             language: get_system_language().unwrap_or_default(),
             auto_load_last_project: true,
+            keep_screen_awake: true,
         },
         paths: FilePaths {
             media: Media {

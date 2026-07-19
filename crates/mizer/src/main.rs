@@ -2,7 +2,7 @@
 use clap::Parser;
 use std::sync::mpsc;
 
-use mizer::{build_runtime, Api, Flags};
+use mizer::{build_runtime, load_settings, Api, Flags, SettingsStore};
 use mizer_api::handlers::Handlers;
 use mizer_session::Session;
 
@@ -23,18 +23,19 @@ fn main() -> anyhow::Result<()> {
     mizer_ui::init()?;
     let (flags, _logging_guard, _sentry_guard) = init()?;
     let headless = flags.headless;
+    let settings_manager = load_settings()?;
 
     if headless {
-        run_headless(flags)
+        run_headless(flags, settings_manager)
     } else {
-        ui::run(flags)
+        ui::run(flags, settings_manager)
     }
 }
 
-fn run_headless(flags: Flags) -> anyhow::Result<()> {
+fn run_headless(flags: Flags, settings_manager: SettingsStore) -> anyhow::Result<()> {
     let runtime = build_tokio_runtime();
 
-    start_runtime(runtime.handle(), flags, None).unwrap();
+    start_runtime(runtime.handle(), settings_manager, flags, None).unwrap();
 
     Ok(())
 }
@@ -99,6 +100,7 @@ fn build_tokio_runtime() -> tokio::runtime::Runtime {
 
 fn start_runtime(
     runtime: &tokio::runtime::Handle,
+    settings_store: SettingsStore,
     flags: Flags,
     handler_out: Option<mpsc::Sender<Handlers<Api>>>,
 ) -> anyhow::Result<()> {
@@ -107,7 +109,7 @@ fn start_runtime(
 
     let _guard = runtime.enter();
 
-    let (mut mizer, api_handler) = build_runtime(runtime.clone(), flags)?;
+    let (mut mizer, api_handler) = build_runtime(runtime.clone(), settings_store, flags)?;
     if let Some(handler_out) = handler_out {
         handler_out.send(mizer.handlers.clone())?;
     }
@@ -121,16 +123,16 @@ mod ui {
     use std::sync::mpsc;
 
     use anyhow::Context;
-
-    use mizer::{Api, Flags};
+    use mizer::{Api, Flags, SettingsStore};
     use mizer_api::handlers::Handlers;
     use mizer_ui::LifecycleHandler;
 
     use crate::async_runtime::TokioRuntime;
 
-    pub fn run(flags: Flags) -> anyhow::Result<()> {
+    pub fn run(flags: Flags, settings_manager: SettingsStore) -> anyhow::Result<()> {
         let tokio = super::build_tokio_runtime();
-        let handlers = setup_runtime(tokio.handle(), flags)?;
+        keep_screen_awake(settings_manager.clone());
+        let handlers = setup_runtime(tokio.handle(), settings_manager, flags)?;
 
         let handlers = handlers.recv().context("internal api setup")?;
 
@@ -145,6 +147,7 @@ mod ui {
 
     fn setup_runtime(
         handle: &tokio::runtime::Handle,
+        settings_store: SettingsStore,
         flags: Flags,
     ) -> anyhow::Result<mpsc::Receiver<Handlers<Api>>> {
         let (tx, rx) = mpsc::channel();
@@ -152,7 +155,7 @@ mod ui {
         std::thread::Builder::new()
             .name("Pipeline Runtime".into())
             .spawn(move || {
-                if let Err(err) = super::start_runtime(&handle, flags, Some(tx)) {
+                if let Err(err) = super::start_runtime(&handle, settings_store, flags, Some(tx)) {
                     tracing::error!("{err:?}");
                     std::process::exit(1);
                 }
@@ -167,5 +170,50 @@ mod ui {
             // TODO: this is no clean exit.
             self.0.shutdown_background();
         }
+    }
+
+    fn keep_screen_awake(settings_store: SettingsStore) {
+        std::thread::spawn(move || {
+            let mut awake = None;
+            loop {
+                let should_keep_awake = settings_store.read().settings.general.keep_screen_awake;
+                if update_awake_handle(&mut awake, should_keep_awake).is_err() {
+                    return;
+                }
+
+                std::thread::sleep(std::time::Duration::from_mins(5));
+            }
+        });
+    }
+
+    fn update_awake_handle(handle: &mut Option<keepawake::KeepAwake>, should_keep_awake: bool) -> anyhow::Result<()> {
+        if handle.is_some() == should_keep_awake {
+            return Ok(());
+        }
+        if !should_keep_awake {
+            *handle = None;
+            return Ok(());
+        }
+
+        match try_keep_screen_awake() {
+            Ok(awake) => {
+                *handle = Some(awake);
+                Ok(())
+            },
+            Err(err) => {
+                tracing::warn!(err = %err, "Unable to keep display awake");
+                Err(err.into())
+            }
+        }
+
+    }
+
+    fn try_keep_screen_awake() -> keepawake::Result<keepawake::KeepAwake> {
+        keepawake::Builder::default()
+            .display(true)
+            .idle(true)
+            .app_reverse_domain("live.mizer")
+            .app_name("Mizer")
+            .create()
     }
 }

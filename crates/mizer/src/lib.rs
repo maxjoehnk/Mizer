@@ -1,7 +1,7 @@
 pub use crate::api::*;
 pub use crate::flags::Flags;
 pub use crate::mizer::Mizer;
-pub use crate::runtime_builder::build_runtime;
+pub use crate::runtime_builder::{build_runtime, load_settings, SettingsStore};
 
 mod api;
 mod fixture_libraries_loader;

@@ -19,6 +19,8 @@ pub struct General {
     pub language: Languages,
     #[serde(default)]
     pub auto_load_last_project: bool,
+    #[serde(default)]
+    pub keep_screen_awake: bool,
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, Copy, PartialEq, Eq, Facet)]

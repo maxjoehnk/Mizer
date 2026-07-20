@@ -11,13 +11,12 @@ use mizer_ports::PortId;
 use mizer_processing::{Processor, ProcessorPriorities};
 use mizer_project_files::{Channel, Project};
 use pinboard::NonEmptyPinboard;
+use regex::Regex;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::io::Write;
-use std::ops::{Deref, DerefMut};
-use std::str::FromStr;
+use std::ops::DerefMut;
 use std::sync::Arc;
-use regex::Regex;
 
 pub struct Pipeline {
     nodes: IndexMap<NodePath, NodeState>,
@@ -115,14 +114,14 @@ impl Pipeline {
         registration.handle_dyn(node)
     }
 
-    pub(crate) fn duplicate_node(&mut self, path: &NodePath) -> anyhow::Result<NodePath> {
+    pub(crate) fn duplicate_node(&mut self, path: &NodePath, parent: Option<&NodePath>) -> anyhow::Result<NodePath> {
         let state = self
             .nodes
             .get(path)
             .ok_or_else(|| anyhow::anyhow!("Node not found: {}", path))?;
         let node_config: Node = NodeDowncast::downcast(&state.node);
         let node_type = node_config.node_type();
-        let new_path = self.new_node_path(node_type, None);
+        let new_path = self.new_node_path(node_type, parent);
         // add_dyn_node inlined because of borrow checker
         let node = {
             let mut registration = PipelineNodeRegistration {

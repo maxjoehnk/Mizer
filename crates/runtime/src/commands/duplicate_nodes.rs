@@ -25,7 +25,7 @@ impl<'a> Command<'a> for DuplicateNodesCommand {
         let mut new_paths = Vec::with_capacity(self.paths.len());
         let mut new_links = Vec::new();
         for path in &self.paths {
-            let new_path = pipeline.duplicate_node(path)?;
+            let new_path = pipeline.duplicate_node(path, self.parent.as_ref())?;
             add_path_to_container(pipeline, self.parent.as_ref(), &new_path)?;
             new_paths.push(new_path.clone());
         }

@@ -1,6 +1,6 @@
 from enum import Enum
 
-import pyautogui
+from dogtail import rawinput
 
 from infrastructure.interactions import click_on_text
 
@@ -26,29 +26,27 @@ class View(Enum):
 def open_view(view: View):
     match view:
         case View.LAYOUT:
-            pyautogui.hotkey('F1')
+            rawinput.pressKey('F1')
         case View.PLAN:
-            pyautogui.hotkey('F2')
+            rawinput.pressKey('F2')
         case View.NODES:
-            pyautogui.hotkey('F3')
+            rawinput.pressKey('F3')
         case View.SEQUENCER:
-            pyautogui.hotkey('F4')
+            rawinput.pressKey('F4')
         case View.FIXTURES:
-            pyautogui.hotkey('F5')
+            rawinput.pressKey('F5')
         case View.PRESETS:
-            pyautogui.hotkey('F6')
+            rawinput.pressKey('F6')
         case View.EFFECTS:
-            pyautogui.hotkey('F7')
+            rawinput.pressKey('F7')
         case View.MEDIA:
-            pyautogui.hotkey('F8')
+            rawinput.pressKey('F8')
         case View.SURFACES:
-            pyautogui.hotkey('F9')
+            rawinput.pressKey('F9')
         case View.PATCH:
-            # This is required because something else seems to block the hotkey on my machine
-            #pyautogui.hotkey('F10')
             click_on_text('Patch')
         case View.CONNECTIONS:
-            pyautogui.hotkey('F12')
+            rawinput.pressKey('F12')
         case View.TIMECODE:
             click_on_text('Timecode')
         case View.SESSION:

@@ -4,16 +4,11 @@ Feature: Fixture Patch
 
   Scenario: Patch new fixtures
     When I open the Patch view
-    And I wait for 1 seconds
     And I click on "Add Fixture"
-    And I wait for 1 seconds
     And I enter "Root Par 6"
     And I click on "8 Channel"
     And I click on "Next"
-    And I click on "Count"
-    And I press "Ctrl+a"
-    And I enter "10"
-#    And I click on "Add Fixtures"
-    And I press "Enter"
+    And I enter "10" into "Count"
+    And I click on "Add Fixtures"
     Then I expect to see the snapshot "new_fixture_patch"
 

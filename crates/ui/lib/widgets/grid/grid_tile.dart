@@ -11,6 +11,7 @@ class PanelGridTile extends StatelessWidget {
   final bool active;
   final bool selected;
   final bool empty;
+  final String? label;
   final Color? color;
   final int width;
   final int height;
@@ -20,13 +21,14 @@ class PanelGridTile extends StatelessWidget {
   final Function()? onSecondaryTap;
   final Function(TapDownDetails)? onSecondaryTapDown;
 
-  const PanelGridTile({ required this.child, this.width = 1, this.height = 1, this.interactive = true, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.selected = false, this.empty = false, super.key, this.color, this.onTapDown, this.onTapUp});
+  const PanelGridTile({ required this.child, this.width = 1, this.height = 1, this.interactive = true, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.selected = false, this.empty = false, super.key, this.color, this.onTapDown, this.onTapUp, this.label});
 
   PanelGridTile.empty() : this(child: Container(), empty: true);
 
   factory PanelGridTile.idWithText({String? id, required String text, required Function() onTap}) {
     return PanelGridTile(
       onTap: onTap,
+      label: text,
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: Stack(
@@ -46,6 +48,7 @@ class PanelGridTile extends StatelessWidget {
   factory PanelGridTile.media({ required Widget child, required String text, Function()? onTap}) {
     return PanelGridTile(
       onTap: onTap,
+      label: text,
       child: Stack(
         children: [
           Align(
@@ -65,6 +68,7 @@ class PanelGridTile extends StatelessWidget {
     var brightBackground = color != null && color!.computeLuminance() > 0.3;
 
     return Hoverable(
+      label: label,
       onTap: onTap,
       onTapDown: onTapDown,
       onTapUp: onTapUp,

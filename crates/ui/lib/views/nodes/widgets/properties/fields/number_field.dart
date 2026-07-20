@@ -61,7 +61,6 @@ class _NumberFieldState extends State<NumberField> {
   final TextEditingController controller = TextEditingController();
 
   num value;
-  bool isEditing = false;
 
   _NumberFieldState(this.value) {
     this.controller.text = value.toString();
@@ -85,13 +84,6 @@ class _NumberFieldState extends State<NumberField> {
   void initState() {
     super.initState();
     _setValue(value);
-    this.focusNode.addListener(() {
-      if (!focusNode.hasFocus) {
-        setState(() {
-          this.isEditing = false;
-        });
-      }
-    });
     controller.addListener(() {
       var value = num.tryParse(controller.text);
       if (value == null) {
@@ -111,32 +103,25 @@ class _NumberFieldState extends State<NumberField> {
 
   @override
   Widget build(BuildContext context) {
-    if (this.isEditing) {
-      return _editView(context);
-    }
-
-    return _readView(context);
-  }
-
-  num get _maxHint {
-    return widget.maxHint;
-  }
-
-  num get _minHint {
-    return widget.minHint;
-  }
-
-  double get _valueHint {
-    return value.toDouble().lerp(_minHint.toDouble(), _maxHint.toDouble());
-  }
-
-  Widget _readView(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
 
-    var inner = Text(
-      controller.text,
-      style: textStyle,
-      textAlign: TextAlign.center,
+    var inner = TextFieldFocus(
+      child: TextField(
+        focusNode: focusNode,
+        controller: controller,
+        decoration: InputDecoration(
+            border: InputBorder.none,
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+            isDense: true),
+        style: textStyle,
+        textAlign: TextAlign.end,
+        keyboardType: TextInputType.number,
+        inputFormatters: [
+          if (!widget.fractions) FilteringTextInputFormatter.allow(RegExp(r'[0-9\-]')),
+          if (widget.fractions) FilteringTextInputFormatter.allow(RegExp(r'[0-9\-.]')),
+          FilteringTextInputFormatter.singleLineFormatter,
+        ],
+      ),
     );
 
     return MouseRegion(
@@ -150,65 +135,40 @@ class _NumberFieldState extends State<NumberField> {
           }
         },
         child: GestureDetector(
-          onHorizontalDragUpdate: (update) {
-            var delta = (update.primaryDelta ?? 0) * widget.step;
-            var next = this.value + delta;
-            _dragValue(num.parse(next.toStringAsFixed(3)));
-          },
-          onTap: () => setState(() => this.isEditing = true),
-          child: Field(
-            big: widget.big,
-            label: this.widget.label,
-            labelWidth: this.widget.labelWidth,
-            child: widget.bar
-                ? _Bar(value: this._valueHint, child: inner)
-                : Container(
-                    padding: const EdgeInsets.all(8),
-                    alignment: Alignment.centerRight,
-                    child: inner,
-                  ),
-          ),
+            onHorizontalDragUpdate: (update) {
+              var delta = (update.primaryDelta ?? 0) * widget.step;
+              var next = this.value + delta;
+              _dragValue(num.parse(next.toStringAsFixed(3)));
+            },
+            child: Field(
+                label: this.widget.label,
+                labelWidth: this.widget.labelWidth,
+                big: widget.big,
+                child: widget.bar
+                    ? _Bar(
+                  value: this._valueHint,
+                  child: inner,
+                )
+                    : Container(
+                  padding: const EdgeInsets.all(8),
+                  alignment: Alignment.centerRight,
+                  child: inner,
+                ))
         ),
       ),
     );
   }
 
-  Widget _editView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
+  num get _maxHint {
+    return widget.maxHint;
+  }
 
-    var inner = TextFieldFocus(
-      child: EditableText(
-        focusNode: focusNode,
-        controller: controller,
-        cursorColor: Colors.black87,
-        backgroundCursorColor: Colors.black12,
-        style: textStyle,
-        textAlign: TextAlign.end,
-        selectionColor: Colors.black38,
-        keyboardType: TextInputType.number,
-        autofocus: true,
-        inputFormatters: [
-          if (!widget.fractions) FilteringTextInputFormatter.allow(RegExp(r'[0-9\-]')),
-          if (widget.fractions) FilteringTextInputFormatter.allow(RegExp(r'[0-9\-.]')),
-          FilteringTextInputFormatter.singleLineFormatter,
-        ],
-      ),
-    );
+  num get _minHint {
+    return widget.minHint;
+  }
 
-    return Field(
-        label: this.widget.label,
-        labelWidth: this.widget.labelWidth,
-        big: widget.big,
-        child: widget.bar
-            ? _Bar(
-                value: this._valueHint,
-                child: inner,
-              )
-            : Container(
-                padding: const EdgeInsets.all(8),
-                alignment: Alignment.centerRight,
-                child: inner,
-              ));
+  double get _valueHint {
+    return value.toDouble().lerp(_minHint.toDouble(), _maxHint.toDouble());
   }
 
   void _dragValue(num value) {

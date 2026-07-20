@@ -68,16 +68,16 @@ class ApplicationMenu extends StatelessWidget {
                     .toList(),
               ))),
               const MenuPlaceholder(),
-              MenuButton.icon(MdiIcons.undo, onTap: () async {
+              MenuButton.icon(MdiIcons.undo, label: "Undo".i18n, onTap: () async {
                 await context.read<SessionApi>().undo();
                 _refreshViews(context);
               }),
-              MenuButton.icon(MdiIcons.redo, onTap: () async {
+              MenuButton.icon(MdiIcons.redo, label: "Redo".i18n, onTap: () async {
                 await context.read<SessionApi>().redo();
                 _refreshViews(context);
               }),
               const MenuPlaceholder(),
-              MenuButton.icon(Icons.monitor, onTap: () async {
+              MenuButton.icon(Icons.monitor, label: "New Window".i18n, onTap: () async {
                 Window.create({});
               }),
               const MenuPlaceholder(),
@@ -96,7 +96,7 @@ class ApplicationMenu extends StatelessWidget {
               MenuButton.text("Fixture Library".i18n, active: activeView == View.FixtureDefinitions,
                   onTap: () => changeView(View.FixtureDefinitions)),
               const MenuPlaceholder(),
-              MenuButton.icon(MdiIcons.cog, active: activeView == View.Preferences,
+              MenuButton.icon(MdiIcons.cog, label: "Preferences".i18n, active: activeView == View.Preferences,
                   onTap: () => changeView(View.Preferences)),
               MenuButton.icon(MdiIcons.power, onTap: () {
                 ApplicationPluginApi applicationApi = context.read();
@@ -166,17 +166,19 @@ class MenuBarTitle extends StatelessWidget {
 
 class MenuButton extends StatelessWidget {
   final Widget child;
+  final String? label;
   final double width;
-  final bool active;
+  final bool? active;
   final Function()? onTap;
   final WidgetBuilder? popupBuilder;
 
   const MenuButton(
-      { required this.child, required this.width, super.key, this.onTap, this.popupBuilder, this.active = false });
+      { required this.child, this.label, required this.width, super.key, this.onTap, this.popupBuilder, this.active });
 
   factory MenuButton.text(String text,
-      { bool active = false, Function()? onTap, WidgetBuilder? popupBuilder }) {
+      { bool? active, Function()? onTap, WidgetBuilder? popupBuilder }) {
     return MenuButton(child: Text(text),
+        label: text,
         width: GRID_5_SIZE,
         onTap: onTap,
         popupBuilder: popupBuilder,
@@ -184,9 +186,10 @@ class MenuButton extends StatelessWidget {
   }
 
   factory MenuButton.icon(IconData icon,
-      { bool active = false, Function()? onTap, WidgetBuilder? popupBuilder }) {
+      { bool? active, String? label, Function()? onTap, WidgetBuilder? popupBuilder }) {
     return MenuButton(child: Icon(icon),
         width: GRID_2_SIZE,
+        label: label,
         onTap: onTap,
         popupBuilder: popupBuilder,
         active: active);
@@ -194,25 +197,29 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hoverable(
-      onTap: onTap,
-      onTapDown: popupBuilder == null
-          ? null
-          : (details) {
-            Navigator.of(context).push(
-              MizerPopupRoute(position: context.globalPaintBounds!.bottomLeft, child: popupBuilder!(context)));
-          },
-      builder: (hovered) =>
-          Container(
-            height: GRID_2_SIZE,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(BORDER_RADIUS),
-              color: active ? Grey600 : (hovered ? Grey700 : Grey800),
+    return Semantics(
+      checked: active,
+      child: Hoverable(
+        label: label,
+        onTap: onTap,
+        onTapDown: popupBuilder == null
+            ? null
+            : (details) {
+              Navigator.of(context).push(
+                MizerPopupRoute(position: context.globalPaintBounds!.bottomLeft, child: popupBuilder!(context)));
+            },
+        builder: (hovered) =>
+            Container(
+              height: GRID_2_SIZE,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(BORDER_RADIUS),
+                color: active == true ? Grey600 : (hovered ? Grey700 : Grey800),
+              ),
+              width: width,
+              alignment: Alignment.center,
+              child: child,
             ),
-            width: width,
-            alignment: Alignment.center,
-            child: child,
-          ),
+      ),
     );
   }
 }

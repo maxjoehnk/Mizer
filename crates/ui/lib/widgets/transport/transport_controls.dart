@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/consts.dart';
@@ -129,32 +130,36 @@ class PlaybackBarButton extends StatelessWidget {
     var textTheme = theme.textTheme;
     var hotkey = _getHotkey(context);
 
-    return Hoverable(
-      onTap: onTap,
-      builder: (hovered) =>
-          Container(
-            height: GRID_2_SIZE,
-            width: GRID_5_SIZE,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(BORDER_RADIUS),
-              color: active ? Grey600 : (hovered ? Grey700 : Grey800),
+    return Semantics(
+      checked: active,
+      child: Hoverable(
+        onTap: onTap,
+        label: label,
+        builder: (hovered) =>
+            Container(
+              height: GRID_2_SIZE,
+              width: GRID_5_SIZE,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(BORDER_RADIUS),
+                color: active ? Grey600 : (hovered ? Grey700 : Grey800),
+              ),
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(label,
+                      textAlign: TextAlign.center),
+                  if (hotkey != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Text(formatHotkey(hotkey),
+                          style: textTheme.bodySmall!.copyWith(color: Colors.white54, fontSize: 10)),
+                    ),
+                ],
+              ),
             ),
-            alignment: Alignment.center,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(label,
-                    textAlign: TextAlign.center),
-                if (hotkey != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: Text(formatHotkey(hotkey),
-                        style: textTheme.bodySmall!.copyWith(color: Colors.white54, fontSize: 10)),
-                  ),
-              ],
-            ),
-          ),
+      ),
     );
   }
 
@@ -178,16 +183,19 @@ class TransportControl extends StatelessWidget {
         builder: (context, snapshot) => Row(children: [
               TransportButton(
                   child: AspectRatio(aspectRatio: 1, child: Icon(Icons.stop)),
+                  label: "Stop".i18n,
                   onClick: () => api.setState(TransportState.STOPPED),
                   active: snapshot.data == TransportState.STOPPED),
               SizedBox(width: 2),
               TransportButton(
                   child: AspectRatio(aspectRatio: 1, child: Icon(Icons.pause)),
+                  label: "Pause".i18n,
                   onClick: () => api.setState(TransportState.PAUSED),
                   active: snapshot.data == TransportState.PAUSED),
               SizedBox(width: 2),
               TransportButton(
                   child: AspectRatio(aspectRatio: 1, child: Icon(Icons.play_arrow)),
+                  label: "Play".i18n,
                   onClick: () => api.setState(TransportState.PLAYING),
                   active: snapshot.data == TransportState.PLAYING),
             ]));
@@ -196,16 +204,19 @@ class TransportControl extends StatelessWidget {
 
 class TransportButton extends StatelessWidget {
   final Widget child;
+  final String? label;
   final Function() onClick;
   final bool active;
 
   const TransportButton(
-      {super.key, required this.child, required this.onClick, this.active = false});
+      {super.key, required this.child, required this.onClick, this.active = false, this.label});
 
   @override
   Widget build(BuildContext context) {
     return Hoverable(
-        onTap: active ? null : onClick,
+        label: label,
+        disabled: active,
+        onTap: onClick,
         builder: (hover) => Container(
               color: active ? Colors.deepOrange : (hover ? Colors.white10 : Colors.transparent),
               child: child,

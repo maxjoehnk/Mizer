@@ -70,6 +70,7 @@ mizer-util = { path = "../util" }
 mizer-message-bus = { path = "../util/bus" }
 mizer-settings = { path = "../runtime/settings" }
 mizer-status-bus = { path = "../runtime/status" }
+mizer-commander = { path = "../runtime/commander" }
 mizer-command-executor = { path = "../runtime/commander/executor" }
 mizer-ui-api = { path = "../components/ui" }
 mizer-vector = { path = "../components/vector" }

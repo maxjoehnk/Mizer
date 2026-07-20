@@ -3,6 +3,7 @@ import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
+import 'package:mizer/i18n.dart';
 
 final Color BACKGROUND = Grey900;
 final Color ACTION_COLOR = Grey800;
@@ -72,7 +73,7 @@ class PopupContainer extends StatelessWidget {
                     if (closeButton) PanelHeaderDivider(),
                     if (closeButton)
                       PanelHeaderButton.icon(
-                          icon: Icons.close, onTap: () => Navigator.of(context).pop()),
+                          icon: Icons.close, label: "Close".i18n, onTap: () => Navigator.of(context).pop()),
                   ],
                 )),
             _child,

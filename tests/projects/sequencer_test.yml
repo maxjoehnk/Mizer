@@ -1,0 +1,193 @@
+---
+version: 6
+playback:
+  fps: 60.0
+nodes:
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /transport-0
+    type: transport
+    config: ~
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+channels: []
+media:
+  import_paths: []
+  files: []
+  tags: []
+layouts:
+  Default: []
+connections:
+  - id: dmx-0
+    name: sACN Output
+    type: sacn
+    priority: 100
+fixtures:
+  - id: 1
+    name: Wild Wash 1
+    fixture: "ofl:stairville:wild-wash-132-led-rgb-dmx"
+    channel: 1
+    universe: 1
+    mode: 6-channel
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+      limits: {}
+groups: []
+presets:
+  intensity: []
+  shutter: []
+  color: []
+  position: []
+sequences:
+  - id: 1
+    name: Basic Sequence
+    fixtures:
+      - 1
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control: Intensity
+            value: 1.0
+            fixtures:
+              fixtures:
+                - 1
+              block_size: ~
+              groups: ~
+              wings: ~
+        effects: []
+        presets: []
+        cue_fade: ~
+        cue_delay: ~
+      - id: 2
+        name: Cue 2
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control: Intensity
+            value: 0.0
+            fixtures:
+              fixtures:
+                - 1
+              block_size: ~
+              groups: ~
+              wings: ~
+        effects: []
+        presets: []
+        cue_fade: ~
+        cue_delay: ~
+    wrap_around: false
+    stop_on_last_cue: false
+    priority:
+      LTP: Normal
+  - id: 2
+    name: Follow Sequence
+    fixtures:
+      - 1
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control: Intensity
+            value: 1.0
+            fixtures:
+              fixtures:
+                - 1
+              block_size: ~
+              groups: ~
+              wings: ~
+        effects: []
+        presets: []
+        cue_fade: ~
+        cue_delay: ~
+      - id: 2
+        name: Cue 2
+        trigger: Follow
+        trigger_time:
+          unit: seconds
+          value: 3.0
+        controls:
+          - control: Intensity
+            value: 0.0
+            fixtures:
+              fixtures:
+                - 1
+              block_size: ~
+              groups: ~
+              wings: ~
+        effects: []
+        presets: []
+        cue_fade: ~
+        cue_delay: ~
+    wrap_around: false
+    stop_on_last_cue: false
+    priority:
+      LTP: Normal
+  - id: 3
+    name: Wrap Sequence
+    fixtures:
+      - 1
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control: Intensity
+            value: 1.0
+            fixtures:
+              fixtures:
+                - 1
+              block_size: ~
+              groups: ~
+              wings: ~
+        effects: []
+        presets: []
+        cue_fade: ~
+        cue_delay: ~
+      - id: 2
+        name: Cue 2
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control: Intensity
+            value: 0.0
+            fixtures:
+              fixtures:
+                - 1
+              block_size: ~
+              groups: ~
+              wings: ~
+        effects: []
+        presets: []
+        cue_fade: ~
+        cue_delay: ~
+    wrap_around: true
+    stop_on_last_cue: false
+    priority:
+      LTP: Normal
+effects: []
+plans: []
+timecodes:
+  timecodes: []
+  controls: []
+surfaces: []

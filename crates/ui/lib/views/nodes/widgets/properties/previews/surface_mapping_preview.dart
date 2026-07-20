@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/surfaces_bloc.dart';
 import 'package:mizer/widgets/controls/button.dart';
+import 'package:mizer/i18n.dart';
 import 'package:provider/provider.dart';
 
 class SurfaceMappingSettingsPreview extends StatelessWidget {

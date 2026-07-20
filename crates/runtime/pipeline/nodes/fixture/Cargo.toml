@@ -12,6 +12,7 @@ mizer-node = { path = "../../node" }
 mizer-fixtures = { path = "../../../../components/fixtures" }
 ringbuffer = "0.15"
 profiling = "1"
+itertools = "0.13"
 
 [dev-dependencies]
 mockall = "0.13"

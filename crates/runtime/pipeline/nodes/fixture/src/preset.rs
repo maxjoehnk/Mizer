@@ -1,10 +1,10 @@
-use serde::{Deserialize, Serialize};
-use std::str::FromStr;
-
+use itertools::Itertools;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{Preset, PresetId, PresetValue};
 use mizer_node::edge::Edge;
 use mizer_node::*;
+use serde::{Deserialize, Serialize};
+use std::str::FromStr;
 
 const CALL_PORT: &str = "Call";
 const COLOR_OUTPUT: &str = "Color";
@@ -166,6 +166,7 @@ fn convert_presets_to_select_variants<TValue>(
     presets
         .into_iter()
         .filter(|(_, preset)| matches!(preset.value, PresetValue::Universal(_)))
+        .sorted_by(|(lhs, _), (rhs, _)| lhs.cmp(rhs))
         .map(|(id, preset)| SelectVariant::Item {
             value: id.to_string().into(),
             label: preset.label.unwrap_or_else(|| id.to_string()).into(),

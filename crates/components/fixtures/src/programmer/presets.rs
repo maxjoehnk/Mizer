@@ -262,7 +262,7 @@ pub enum PresetValue<TValue> {
     Selective(HashMap<FixtureId, TValue>),
 }
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum PresetId {
     Intensity(u32),
     Shutter(u32),

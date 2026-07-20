@@ -6095,6 +6095,7 @@ name = "mizer-fixture-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "itertools 0.13.0",
  "mizer-fixtures",
  "mizer-node",
  "mockall",

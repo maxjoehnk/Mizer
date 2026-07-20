@@ -80,7 +80,11 @@ class _LayoutControlViewState extends State<LayoutControlView> {
       return Container();
     }
 
-    var supportsMappings = node?.type == "button" || node?.type == "fader";
+    var supportsMidiMapping = node?.type == "button" || node?.type == "fader";
+    var supportsHotkeyBinding = node?.type == "button" || widget.control.hasSequencer();
+
+    var supportsMapping = supportsMidiMapping || supportsHotkeyBinding;
+
     return ContextMenu(
       menu: Menu(items: [
         MenuItem(label: "Rename".i18n, action: () => _renameControl(context)),
@@ -90,11 +94,11 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         MenuItem(label: "Delete".i18n, action: () => _deleteControl(context)),
         if (widget.control.hasSequencer())
           MenuItem(label: "Behavior".i18n, action: () => _editSequencerBehavior(context)),
-        if (supportsMappings) MenuDivider(),
-        if (supportsMappings)
+        if (supportsMapping) MenuDivider(),
+        if (supportsMapping)
           SubMenu(title: "Mappings".i18n, children: [
-            MenuItem(label: "Add MIDI Mapping".i18n, action: () => _addMappingForControl(context)),
-            if (node?.type == "button") MenuItem(label: "Bind Hotkey".i18n, action: () => _bindHotkeyForControl(context)),
+            if (supportsMidiMapping) MenuItem(label: "Add MIDI Mapping".i18n, action: () => _addMappingForControl(context)),
+            if (supportsHotkeyBinding) MenuItem(label: "Bind Hotkey".i18n, action: () => _bindHotkeyForControl(context)),
           ]),
       ]),
       child: RepaintBoundary(child: _getControl(node, nodesApi)),
@@ -104,7 +108,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
   Widget? _getControl(Node? node, NodesApi apiClient) {
     if (widget.control.hasSequencer()) {
       return SequencerControl(
-        label: widget.control.label,
+        control: widget.control,
         color: _color,
         sequenceId: widget.control.sequencer.sequenceId,
         state: widget.sequencerState,

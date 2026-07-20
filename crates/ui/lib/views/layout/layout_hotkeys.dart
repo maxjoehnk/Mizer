@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_manager.dart';
 import 'package:provider/provider.dart';
@@ -62,14 +63,23 @@ class _LayoutHotkeysState extends State<LayoutHotkeys> {
   }
 
   Map<String, Function()> get _hotkeyActions {
-    NodesApi apiClient = context.read();
+    NodesApi nodesApi = context.read();
+    SequencerApi sequencerApi = context.read();
     var controlsWithHotkeys = widget.layout.controls.where((c) => c.hasHotkey());
 
     return Map.fromIterable(controlsWithHotkeys, key: (c) => c.id, value: (c) {
+      LayoutControl control = c;
       return () async {
-        await apiClient.writeControlValue(path: c.node.path, port: "Input", value: 1);
-        await Future.delayed(Duration(milliseconds: 100));
-        await apiClient.writeControlValue(path: c.node.path, port: "Input", value: 0);
+        if (control.hasSequencer()) {
+          // TODO: Implement behavior selection
+          // This was not implemented here because it would require the hotkey callback to know the current state of all sequences
+          // Instead the logic for the behavior of sequence layout controls should move into the backend
+          sequencerApi.sequenceGoForward(control.sequencer.sequenceId);
+        }else {
+          await nodesApi.writeControlValue(path: c.node.path, port: "Input", value: 1);
+          await Future.delayed(Duration(milliseconds: 100));
+          await nodesApi.writeControlValue(path: c.node.path, port: "Input", value: 0);
+        }
       };
     });
   }

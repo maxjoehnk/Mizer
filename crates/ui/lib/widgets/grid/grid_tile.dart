@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
+import 'package:mizer/widgets/hotkey_label.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
 const double activeBarHeight = 2;
 
 class PanelGridTile extends StatelessWidget {
   final Widget child;
+  final String? hotkeyLabel;
   final bool interactive;
   final bool active;
   final bool selected;
@@ -20,7 +22,7 @@ class PanelGridTile extends StatelessWidget {
   final Function()? onSecondaryTap;
   final Function(TapDownDetails)? onSecondaryTapDown;
 
-  const PanelGridTile({ required this.child, this.width = 1, this.height = 1, this.interactive = true, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.selected = false, this.empty = false, super.key, this.color, this.onTapDown, this.onTapUp});
+  const PanelGridTile({ required this.child, this.hotkeyLabel, this.width = 1, this.height = 1, this.interactive = true, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.selected = false, this.empty = false, super.key, this.color, this.onTapDown, this.onTapUp});
 
   PanelGridTile.empty() : this(child: Container(), empty: true);
 
@@ -87,6 +89,8 @@ class PanelGridTile extends StatelessWidget {
           color: color ?? (empty ? Grey800 : (selected ? Grey500 : Grey700)),
         ),
         child: Stack(children: [
+          if (hotkeyLabel != null)
+            Align(alignment: Alignment.topRight, child: HotkeyLabel(hotkey: hotkeyLabel!)),
           child,
           if (hovered && brightBackground) Container(
             width: widthInPixel,

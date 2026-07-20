@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/protos/layouts.pb.dart'
-    show ControlSize, SequencerControlBehavior, SequencerControlBehavior_ClickBehavior;
+    show ControlSize, SequencerControlBehavior, SequencerControlBehavior_ClickBehavior, LayoutControl;
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
 import 'package:provider/provider.dart';
 
 class SequencerControl extends StatelessWidget {
-  final String label;
+  final LayoutControl control;
   final Color? color;
   final int sequenceId;
   final Map<int, SequenceState> state;
@@ -17,7 +17,7 @@ class SequencerControl extends StatelessWidget {
   final SequencerControlBehavior behavior;
 
   const SequencerControl(
-      {required this.label,
+      {required this.control,
       this.color,
       required this.sequenceId,
       required this.state,
@@ -35,11 +35,13 @@ class SequencerControl extends StatelessWidget {
         future: sequencerApi.getSequence(sequenceId),
         builder: (context, state) {
           return PanelGridTile(
-              color: color,
+            hotkeyLabel: control.hotkey,
+            color: color,
             width: size.width.toInt(),
             height: size.height.toInt(),
             active: this.state[sequenceId]?.active ?? false,
             onTap: () {
+              // TODO: move this decision into backend
               if (behavior.clickBehavior == SequencerControlBehavior_ClickBehavior.TOGGLE) {
                 _sequenceToggle(sequencerApi);
               }

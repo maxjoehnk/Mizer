@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
-import 'package:mizer/widgets/hotkey_label.dart';
 
 class ButtonInput extends StatefulWidget {
   final Function(double) onValue;
@@ -25,6 +24,7 @@ class _ButtonInputState extends State<ButtonInput> {
   @override
   Widget build(BuildContext context) {
     return PanelGridTile(
+      hotkeyLabel: widget.hotkey,
       color: widget.color,
       active: this.pressed || (widget.pressed ?? false),
       width: widget.width ?? 1,
@@ -39,8 +39,6 @@ class _ButtonInputState extends State<ButtonInput> {
       },
       child: Stack(
         children: [
-          if (widget.hotkey != null)
-            Align(alignment: Alignment.topRight, child: HotkeyLabel(hotkey: widget.hotkey!)),
           if (widget.image != null)
             Positioned.fill(child: Image(image: widget.image!, fit: BoxFit.cover)),
           if (widget.label != null)

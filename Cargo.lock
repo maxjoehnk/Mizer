@@ -5093,6 +5093,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8b4baf93f58d4425749ca49a51c50ebab072c5df6994d08fed93541c331481dc"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5730,7 +5739,7 @@ dependencies = [
  "flume",
  "futures",
  "indexmap 2.13.0",
- "itertools 0.13.0",
+ "itertools 0.15.0",
  "lazy_static",
  "mizer-clock",
  "mizer-command-executor",
@@ -6095,7 +6104,7 @@ name = "mizer-fixture-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "itertools 0.13.0",
+ "itertools 0.15.0",
  "mizer-fixtures",
  "mizer-node",
  "mockall",
@@ -6136,7 +6145,7 @@ dependencies = [
  "enum-iterator",
  "futures",
  "indexmap 2.13.0",
- "itertools 0.13.0",
+ "itertools 0.15.0",
  "mizer-commander",
  "mizer-message-bus",
  "mizer-module",
@@ -6660,7 +6669,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
- "itertools 0.13.0",
+ "itertools 0.15.0",
  "mizer-commander",
  "mizer-fixtures",
  "mizer-module",
@@ -6695,7 +6704,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "itertools 0.13.0",
+ "itertools 0.15.0",
  "mizer-node",
  "mizer-protocol-laser",
  "mizer-util",
@@ -6941,7 +6950,7 @@ dependencies = [
  "flume",
  "indexmap 2.13.0",
  "insta",
- "itertools 0.13.0",
+ "itertools 0.15.0",
  "mizer-clock",
  "mizer-commander",
  "mizer-debug-ui-impl",
@@ -7006,7 +7015,7 @@ dependencies = [
  "dashmap",
  "geo-nd",
  "indexmap 2.13.0",
- "itertools 0.13.0",
+ "itertools 0.15.0",
  "mizer-fixtures",
  "mizer-module",
  "mizer-protocol-dmx",
@@ -7081,7 +7090,7 @@ dependencies = [
  "enum-iterator",
  "facet",
  "heck 0.5.0",
- "itertools 0.14.0",
+ "itertools 0.15.0",
  "serde",
  "toml 0.9.11+spec-1.1.0",
  "tracing",

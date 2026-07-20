@@ -145,6 +145,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                     }
                 }
             }
+            "bindHotkey" => {
+                if let Err(err) = call.arguments().and_then(|req| self.bind_hotkey(req)) {
+                    resp.respond_error(err);
+                }else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             "getLayoutsPointer" => match self.get_layouts_pointer() {
                 Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                 Err(err) => resp.respond_error(err),
@@ -246,5 +253,9 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
         let layouts = Arc::new(layouts);
 
         Ok(layouts.to_pointer() as i64)
+    }
+
+    fn bind_hotkey(&self, req: BindHotkeyRequest) -> anyhow::Result<()> {
+        self.handler.bind_hotkey(req.layout_id, req.control_id, req.hotkey)
     }
 }

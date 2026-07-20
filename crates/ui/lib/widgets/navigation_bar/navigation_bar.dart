@@ -3,9 +3,9 @@ import 'dart:math' as Math;
 import 'package:flutter/material.dart' hide View;
 import 'package:mizer/actions/actions.dart';
 import 'package:mizer/consts.dart';
-import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
+import 'package:mizer/widgets/hotkey_label.dart';
 
 class NavigationBar extends StatelessWidget {
   final List<Widget> children;
@@ -77,10 +77,7 @@ class NavigationBarItem extends StatelessWidget {
             ),
           ),
           if (hotkeyLabel != null)
-            Align(
-                alignment: Alignment.topRight,
-                child: Text(hotkeyLabel!.toCapitalCase(),
-                    style: textTheme.bodySmall!.copyWith(fontSize: 12))),
+            Align(alignment: Alignment.topRight, child: HotkeyLabel(hotkey: hotkeyLabel!)),
         ],
       ),
     );

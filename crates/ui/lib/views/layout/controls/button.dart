@@ -60,6 +60,7 @@ class _ButtonControlState extends State<ButtonControl> with SingleTickerProvider
     NodesApi apiClient = context.read();
 
     return ButtonInput(
+      hotkey: widget.control.hasHotkey() ? widget.control.hotkey : null,
       label: widget.control.label,
       color: color ?? widget.color,
       image: widget.image,

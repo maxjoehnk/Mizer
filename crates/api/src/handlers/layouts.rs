@@ -261,6 +261,18 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
+    pub fn bind_hotkey(&self, layout_id: String, control_id: String, hotkey: String) -> anyhow::Result<()> {
+        self.runtime.run_command(BindLayoutControlHotkeyCommand {
+            layout_id,
+            control_id: control_id.try_into()?,
+            hotkey: Some(hotkey),
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn read_fader_value(&self, node_path: NodePath) -> Option<f64> {
         match self.runtime.read_fader_value(node_path) {
             Ok(value) => Some(value),

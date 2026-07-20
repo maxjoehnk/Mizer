@@ -10,9 +10,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'programmer.pb.dart' as $1;
-
 import 'layouts.pbenum.dart';
+import 'programmer.pb.dart' as $1;
 
 export 'layouts.pbenum.dart';
 
@@ -1002,6 +1001,81 @@ class AddPresetControlRequest extends $pb.GeneratedMessage {
   ControlPosition ensurePosition() => $_ensure(2);
 }
 
+class BindHotkeyRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BindHotkeyRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hotkey')
+    ..hasRequiredFields = false
+  ;
+
+  BindHotkeyRequest._() : super();
+  factory BindHotkeyRequest({
+    $core.String? layoutId,
+    $core.String? controlId,
+    $core.String? hotkey,
+  }) {
+    final _result = create();
+    if (layoutId != null) {
+      _result.layoutId = layoutId;
+    }
+    if (controlId != null) {
+      _result.controlId = controlId;
+    }
+    if (hotkey != null) {
+      _result.hotkey = hotkey;
+    }
+    return _result;
+  }
+  factory BindHotkeyRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BindHotkeyRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  BindHotkeyRequest clone() => BindHotkeyRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BindHotkeyRequest copyWith(void Function(BindHotkeyRequest) updates) => super.copyWith((message) => updates(message as BindHotkeyRequest)) as BindHotkeyRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static BindHotkeyRequest create() => BindHotkeyRequest._();
+  BindHotkeyRequest createEmptyInstance() => create();
+  static $pb.PbList<BindHotkeyRequest> createRepeated() => $pb.PbList<BindHotkeyRequest>();
+  @$core.pragma('dart2js:noInline')
+  static BindHotkeyRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BindHotkeyRequest>(create);
+  static BindHotkeyRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get layoutId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set layoutId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLayoutId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLayoutId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get controlId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set controlId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasControlId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearControlId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get hotkey => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set hotkey($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasHotkey() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearHotkey() => clearField(3);
+}
+
 class Layouts extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Layouts', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
     ..pc<Layout>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layouts', $pb.PbFieldType.PM, subBuilder: Layout.create)
@@ -1316,6 +1390,7 @@ class LayoutControl extends $pb.GeneratedMessage {
     ..aOM<LayoutControl_SequencerControlType>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencer', subBuilder: LayoutControl_SequencerControlType.create)
     ..aOM<LayoutControl_GroupControlType>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'group', subBuilder: LayoutControl_GroupControlType.create)
     ..aOM<LayoutControl_PresetControlType>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preset', subBuilder: LayoutControl_PresetControlType.create)
+    ..aOS(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hotkey')
     ..hasRequiredFields = false
   ;
 
@@ -1331,6 +1406,7 @@ class LayoutControl extends $pb.GeneratedMessage {
     LayoutControl_SequencerControlType? sequencer,
     LayoutControl_GroupControlType? group,
     LayoutControl_PresetControlType? preset,
+    $core.String? hotkey,
   }) {
     final _result = create();
     if (id != null) {
@@ -1362,6 +1438,9 @@ class LayoutControl extends $pb.GeneratedMessage {
     }
     if (preset != null) {
       _result.preset = preset;
+    }
+    if (hotkey != null) {
+      _result.hotkey = hotkey;
     }
     return _result;
   }
@@ -1494,6 +1573,15 @@ class LayoutControl extends $pb.GeneratedMessage {
   void clearPreset() => clearField(10);
   @$pb.TagNumber(10)
   LayoutControl_PresetControlType ensurePreset() => $_ensure(9);
+
+  @$pb.TagNumber(11)
+  $core.String get hotkey => $_getSZ(10);
+  @$pb.TagNumber(11)
+  set hotkey($core.String v) { $_setString(10, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasHotkey() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearHotkey() => clearField(11);
 }
 
 class ControlPosition extends $pb.GeneratedMessage {

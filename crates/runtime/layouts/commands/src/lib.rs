@@ -1,5 +1,6 @@
 pub use add_layout::*;
 pub use add_layout_control::*;
+pub use bind_layout_control_hotkey::*;
 pub use delete_layout_control::*;
 pub use move_layout_control::*;
 pub use remove_layout::*;
@@ -13,6 +14,7 @@ use mizer_layouts::{ControlConfig, ControlId, Layout, LayoutStorage};
 
 mod add_layout;
 mod add_layout_control;
+mod bind_layout_control_hotkey;
 mod delete_layout_control;
 mod move_layout_control;
 mod remove_layout;

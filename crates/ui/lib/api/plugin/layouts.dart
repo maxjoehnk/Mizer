@@ -1,11 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/layouts.dart';
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/programmer.pb.dart';
-
-import 'package:mizer/api/plugin/ffi/api.dart';
-import 'package:mizer/api/plugin/ffi/bindings.dart';
 
 export 'ffi/layout.dart' show LayoutsRefPointer;
 
@@ -135,5 +134,11 @@ class LayoutsPluginApi implements LayoutsApi {
     int pointer = await channel.invokeMethod("getLayoutsPointer");
 
     return this.bindings.openLayoutsRef(pointer);
+  }
+
+  @override
+  Future<void> bindHotkey(String layoutId, String controlId, String hotkey) async {
+    var request = BindHotkeyRequest(layoutId: layoutId, controlId: controlId, hotkey: hotkey);
+    await channel.invokeMethod("bindHotkey", request.writeToBuffer());
   }
 }

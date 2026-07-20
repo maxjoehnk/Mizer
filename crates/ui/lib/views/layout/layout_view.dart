@@ -21,14 +21,14 @@ import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
+import 'package:mizer/views/layout/add_control_popup.dart';
+import 'package:mizer/views/layout/control.dart';
 import 'package:mizer/views/layout/dialogs/delete_layout_dialog.dart';
+import 'package:mizer/views/layout/layout_hotkeys.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
-
-import 'package:mizer/views/layout/add_control_popup.dart';
-import 'package:mizer/views/layout/control.dart';
 
 const double MULTIPLIER = GRID_4_SIZE;
 const String MovingNodeIndicatorLayoutId = "MovingNodeIndicator";
@@ -118,7 +118,12 @@ class LayoutView extends StatelessWidget {
       context: context,
       useRootNavigator: false,
       builder: (_) => NameDialog(),
-    ).then((name) => layoutsBloc.add(AddLayout(name: name)));
+    ).then((name) {
+      if (name == null) {
+        return;
+      }
+      layoutsBloc.add(AddLayout(name: name));
+    });
   }
 
   void _onDelete(BuildContext context, Layout layout, LayoutsBloc bloc) async {
@@ -156,83 +161,86 @@ class _ControlLayoutState extends State<ControlLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SequencerBloc, SequencerState>(builder: (context, sequences) {
-      return BlocBuilder<PresetsBloc, PresetsState>(
-        builder: (context, presets) {
-          return BlocBuilder<NodesBloc, PipelineState>(builder: (context, nodes) {
-            return Container(
-              width: 20 * MULTIPLIER,
-              height: 15 * MULTIPLIER,
-              child: Listener(
-                behavior: HitTestBehavior.translucent,
-                onPointerHover: (event) {
-                  _moveNode(event);
-                  _resizeNode(event);
-                },
-                onPointerDown: (e) {
-                  if (_movingNode == null && _resizingNode == null) {
-                    return;
-                  }
-                  _placeNode();
-                },
-                child: Stack(
-                  children: [
-                    GestureDetector(
-                      onSecondaryTapDown: (details) {
-                        LayoutsBloc bloc = context.read();
-                        int x = (details.localPosition.dx / MULTIPLIER).floor();
-                        int y = (details.localPosition.dy / MULTIPLIER).floor();
-                        var position = ControlPosition(x: Int64(x), y: Int64(y));
-                        Navigator.of(context).push(MizerPopupRoute(
-                            position: details.globalPosition,
-                            child: AddControlPopup(
-                              nodes: nodes.allNodes.where((node) {
-                                var control = widget.layout.controls
-                                    .firstWhereOrNull((c) => c.node.path == node.path);
+    return LayoutHotkeys(
+      layout: widget.layout,
+      child: BlocBuilder<SequencerBloc, SequencerState>(builder: (context, sequences) {
+        return BlocBuilder<PresetsBloc, PresetsState>(
+          builder: (context, presets) {
+            return BlocBuilder<NodesBloc, PipelineState>(builder: (context, nodes) {
+              return Container(
+                width: 20 * MULTIPLIER,
+                height: 15 * MULTIPLIER,
+                child: Listener(
+                  behavior: HitTestBehavior.translucent,
+                  onPointerHover: (event) {
+                    _moveNode(event);
+                    _resizeNode(event);
+                  },
+                  onPointerDown: (e) {
+                    if (_movingNode == null && _resizingNode == null) {
+                      return;
+                    }
+                    _placeNode();
+                  },
+                  child: Stack(
+                    children: [
+                      GestureDetector(
+                        onSecondaryTapDown: (details) {
+                          LayoutsBloc bloc = context.read();
+                          int x = (details.localPosition.dx / MULTIPLIER).floor();
+                          int y = (details.localPosition.dy / MULTIPLIER).floor();
+                          var position = ControlPosition(x: Int64(x), y: Int64(y));
+                          Navigator.of(context).push(MizerPopupRoute(
+                              position: details.globalPosition,
+                              child: AddControlPopup(
+                                nodes: nodes.allNodes.where((node) {
+                                  var control = widget.layout.controls
+                                      .firstWhereOrNull((c) => c.node.path == node.path);
 
-                                return control == null;
-                              }).toList(),
-                              sequences: sequences.sequences,
-                              groups: presets.groups,
-                              presets: presets.presets,
-                              onCreateControl: (controlType) => bloc.add(AddControl(
-                                  layoutId: widget.layout.id,
-                                  controlType: controlType,
-                                  position: position)),
-                              onAddControlForExisting: (node) => bloc.add(AddExistingControl(
-                                  layoutId: widget.layout.id, node: node, position: position)),
-                              onCreateGroupControl: (group) => bloc.add(AddExistingControl.group(
-                                  layoutId: widget.layout.id, groupId: group, position: position)),
-                              onCreatePresetControl: (presetId) => bloc.add(
-                                  AddExistingControl.preset(
-                                      layoutId: widget.layout.id,
-                                      presetId: presetId,
-                                      position: position)),
-                              onCreateSequenceControl: (sequenceId) => bloc.add(
-                                  AddExistingControl.sequence(
-                                      layoutId: widget.layout.id,
-                                      sequenceId: sequenceId,
-                                      position: position)),
-                            )));
-                      },
-                    ),
-                    _ControlsContainer(
-                        pointer: widget.pointer,
-                        layout: widget.layout,
-                        startMove: _startMove,
-                        startResize: _startResize,
-                        movingNode: _movingNode,
-                        movingNodePosition: _movingNodePosition,
-                        resizingNode: _resizingNode,
-                        resizingNodeSize: _resizingNodeSize),
-                  ],
+                                  return control == null;
+                                }).toList(),
+                                sequences: sequences.sequences,
+                                groups: presets.groups,
+                                presets: presets.presets,
+                                onCreateControl: (controlType) => bloc.add(AddControl(
+                                    layoutId: widget.layout.id,
+                                    controlType: controlType,
+                                    position: position)),
+                                onAddControlForExisting: (node) => bloc.add(AddExistingControl(
+                                    layoutId: widget.layout.id, node: node, position: position)),
+                                onCreateGroupControl: (group) => bloc.add(AddExistingControl.group(
+                                    layoutId: widget.layout.id, groupId: group, position: position)),
+                                onCreatePresetControl: (presetId) => bloc.add(
+                                    AddExistingControl.preset(
+                                        layoutId: widget.layout.id,
+                                        presetId: presetId,
+                                        position: position)),
+                                onCreateSequenceControl: (sequenceId) => bloc.add(
+                                    AddExistingControl.sequence(
+                                        layoutId: widget.layout.id,
+                                        sequenceId: sequenceId,
+                                        position: position)),
+                              )));
+                        },
+                      ),
+                      _ControlsContainer(
+                          pointer: widget.pointer,
+                          layout: widget.layout,
+                          startMove: _startMove,
+                          startResize: _startResize,
+                          movingNode: _movingNode,
+                          movingNodePosition: _movingNodePosition,
+                          resizingNode: _resizingNode,
+                          resizingNodeSize: _resizingNodeSize),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          });
-        },
-      );
-    });
+              );
+            });
+          },
+        );
+      }),
+    );
   }
 
   _startMove(LayoutControl control) {

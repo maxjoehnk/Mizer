@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
+import 'package:mizer/widgets/hotkey_label.dart';
 
 class ButtonInput extends StatefulWidget {
   final Function(double) onValue;
+  final String? hotkey;
   final String? label;
   final Color? color;
   final MemoryImage? image;
@@ -11,7 +13,7 @@ class ButtonInput extends StatefulWidget {
   final int? width;
   final int? height;
 
-  ButtonInput({this.label, required this.onValue, this.color, this.width, this.height, this.image, this.pressed});
+  ButtonInput({this.label, this.hotkey, required this.onValue, this.color, this.width, this.height, this.image, this.pressed});
 
   @override
   _ButtonInputState createState() => _ButtonInputState();
@@ -37,6 +39,8 @@ class _ButtonInputState extends State<ButtonInput> {
       },
       child: Stack(
         children: [
+          if (widget.hotkey != null)
+            Align(alignment: Alignment.topRight, child: HotkeyLabel(hotkey: widget.hotkey!)),
           if (widget.image != null)
             Positioned.fill(child: Image(image: widget.image!, fit: BoxFit.cover)),
           if (widget.label != null)

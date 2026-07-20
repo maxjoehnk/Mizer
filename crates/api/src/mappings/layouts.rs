@@ -25,6 +25,7 @@ impl From<mizer_layouts::ControlConfig> for LayoutControl {
             size: Some(config.size.into()),
             decoration: Some(config.decoration.into()),
             behavior: Some(config.behavior.into()),
+            hotkey: config.hotkey,
         }
     }
 }

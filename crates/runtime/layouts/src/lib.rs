@@ -63,6 +63,8 @@ pub struct ControlConfig {
     pub decoration: ControlDecorations,
     #[serde(default)]
     pub behavior: ControlBehavior,
+    #[serde(default)]
+    pub hotkey: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]

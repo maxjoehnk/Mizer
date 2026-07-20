@@ -82,6 +82,12 @@ message AddPresetControlRequest {
   ControlPosition position = 3;
 }
 
+message BindHotkeyRequest {
+  string layout_id = 1;
+  string control_id = 2;
+  string hotkey = 3;
+}
+
 message Layouts {
   repeated Layout layouts = 1;
 }
@@ -104,6 +110,7 @@ message LayoutControl {
     GroupControlType group = 9;
     PresetControlType preset = 10;
   }
+  optional string hotkey = 11;
 
   message NodeControlType {
     string path = 1;

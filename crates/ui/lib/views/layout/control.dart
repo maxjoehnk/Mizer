@@ -14,10 +14,6 @@ import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
-import 'package:mizer/views/mappings/midi_mapping.dart';
-import 'package:mizer/widgets/platform/context_menu.dart';
-import 'package:provider/provider.dart';
-
 import 'package:mizer/views/layout/controls/button.dart';
 import 'package:mizer/views/layout/controls/dial.dart';
 import 'package:mizer/views/layout/controls/fader.dart';
@@ -26,6 +22,11 @@ import 'package:mizer/views/layout/controls/label.dart';
 import 'package:mizer/views/layout/controls/preset.dart';
 import 'package:mizer/views/layout/controls/sequencer.dart';
 import 'package:mizer/views/layout/controls/timecode.dart';
+import 'package:mizer/views/mappings/midi_mapping.dart';
+import 'package:mizer/widgets/hotkey_selector/hotkey_selector.dart';
+import 'package:mizer/widgets/platform/context_menu.dart';
+import 'package:provider/provider.dart';
+
 import 'dialogs/delete_control_dialog.dart';
 import 'dialogs/edit_control_dialog.dart';
 import 'dialogs/edit_sequencer_control_behavior_dialog.dart';
@@ -92,7 +93,8 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         if (supportsMappings) MenuDivider(),
         if (supportsMappings)
           SubMenu(title: "Mappings".i18n, children: [
-            MenuItem(label: "Add MIDI Mapping".i18n, action: () => _addMappingForControl(context))
+            MenuItem(label: "Add MIDI Mapping".i18n, action: () => _addMappingForControl(context)),
+            if (node?.type == "button") MenuItem(label: "Bind Hotkey".i18n, action: () => _bindHotkeyForControl(context)),
           ]),
       ]),
       child: RepaintBoundary(child: _getControl(node, nodesApi)),
@@ -190,6 +192,16 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         context,
         "Add MIDI Mapping for Control ${widget.control.label.isNotEmpty ? widget.control.label : widget.control.node}",
         request);
+  }
+
+  _bindHotkeyForControl(BuildContext context) async {
+    LayoutsBloc layoutsBloc = context.read();
+    String? hotkey = await showDialog(context: context, builder: (context) => HotkeySelectorDialog());
+    if (hotkey == null) {
+      return;
+    }
+
+    layoutsBloc.add(BindControlHotkey(layoutId: widget.layoutId, controlId: widget.control.id, hotkey: hotkey));
   }
 
   _editSequencerBehavior(BuildContext context) async {

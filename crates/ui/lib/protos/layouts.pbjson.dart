@@ -1,4 +1,5 @@
 ///
+import 'dart:convert' as $convert;
 //  Generated code. Do not modify.
 //  source: layouts.proto
 //
@@ -6,7 +7,6 @@
 // ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
-import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
 @$core.Deprecated('Use controlTypeDescriptor instead')
 const ControlType$json = const {
@@ -185,6 +185,18 @@ const AddPresetControlRequest$json = const {
 
 /// Descriptor for `AddPresetControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addPresetControlRequestDescriptor = $convert.base64Decode('ChdBZGRQcmVzZXRDb250cm9sUmVxdWVzdBIbCglsYXlvdXRfaWQYASABKAlSCGxheW91dElkEjcKCXByZXNldF9pZBgCIAEoCzIaLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0SWRSCHByZXNldElkEjoKCHBvc2l0aW9uGAMgASgLMh4ubWl6ZXIubGF5b3V0cy5Db250cm9sUG9zaXRpb25SCHBvc2l0aW9u');
+@$core.Deprecated('Use bindHotkeyRequestDescriptor instead')
+const BindHotkeyRequest$json = const {
+  '1': 'BindHotkeyRequest',
+  '2': const [
+    const {'1': 'layout_id', '3': 1, '4': 1, '5': 9, '10': 'layoutId'},
+    const {'1': 'control_id', '3': 2, '4': 1, '5': 9, '10': 'controlId'},
+    const {'1': 'hotkey', '3': 3, '4': 1, '5': 9, '10': 'hotkey'},
+  ],
+};
+
+/// Descriptor for `BindHotkeyRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List bindHotkeyRequestDescriptor = $convert.base64Decode('ChFCaW5kSG90a2V5UmVxdWVzdBIbCglsYXlvdXRfaWQYASABKAlSCGxheW91dElkEh0KCmNvbnRyb2xfaWQYAiABKAlSCWNvbnRyb2xJZBIWCgZob3RrZXkYAyABKAlSBmhvdGtleQ==');
 @$core.Deprecated('Use layoutsDescriptor instead')
 const Layouts$json = const {
   '1': 'Layouts',
@@ -220,10 +232,12 @@ const LayoutControl$json = const {
     const {'1': 'sequencer', '3': 8, '4': 1, '5': 11, '6': '.mizer.layouts.LayoutControl.SequencerControlType', '9': 0, '10': 'sequencer'},
     const {'1': 'group', '3': 9, '4': 1, '5': 11, '6': '.mizer.layouts.LayoutControl.GroupControlType', '9': 0, '10': 'group'},
     const {'1': 'preset', '3': 10, '4': 1, '5': 11, '6': '.mizer.layouts.LayoutControl.PresetControlType', '9': 0, '10': 'preset'},
+    const {'1': 'hotkey', '3': 11, '4': 1, '5': 9, '9': 1, '10': 'hotkey', '17': true},
   ],
   '3': const [LayoutControl_NodeControlType$json, LayoutControl_SequencerControlType$json, LayoutControl_GroupControlType$json, LayoutControl_PresetControlType$json],
   '8': const [
     const {'1': 'control_type'},
+    const {'1': '_hotkey'},
   ],
 };
 
@@ -260,7 +274,7 @@ const LayoutControl_PresetControlType$json = const {
 };
 
 /// Descriptor for `LayoutControl`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List layoutControlDescriptor = $convert.base64Decode('Cg1MYXlvdXRDb250cm9sEg4KAmlkGAEgASgJUgJpZBI6Cghwb3NpdGlvbhgCIAEoCzIeLm1pemVyLmxheW91dHMuQ29udHJvbFBvc2l0aW9uUghwb3NpdGlvbhIuCgRzaXplGAMgASgLMhoubWl6ZXIubGF5b3V0cy5Db250cm9sU2l6ZVIEc2l6ZRIUCgVsYWJlbBgEIAEoCVIFbGFiZWwSQQoKZGVjb3JhdGlvbhgFIAEoCzIhLm1pemVyLmxheW91dHMuQ29udHJvbERlY29yYXRpb25zUgpkZWNvcmF0aW9uEjoKCGJlaGF2aW9yGAYgASgLMh4ubWl6ZXIubGF5b3V0cy5Db250cm9sQmVoYXZpb3JSCGJlaGF2aW9yEkIKBG5vZGUYByABKAsyLC5taXplci5sYXlvdXRzLkxheW91dENvbnRyb2wuTm9kZUNvbnRyb2xUeXBlSABSBG5vZGUSUQoJc2VxdWVuY2VyGAggASgLMjEubWl6ZXIubGF5b3V0cy5MYXlvdXRDb250cm9sLlNlcXVlbmNlckNvbnRyb2xUeXBlSABSCXNlcXVlbmNlchJFCgVncm91cBgJIAEoCzItLm1pemVyLmxheW91dHMuTGF5b3V0Q29udHJvbC5Hcm91cENvbnRyb2xUeXBlSABSBWdyb3VwEkgKBnByZXNldBgKIAEoCzIuLm1pemVyLmxheW91dHMuTGF5b3V0Q29udHJvbC5QcmVzZXRDb250cm9sVHlwZUgAUgZwcmVzZXQaJQoPTm9kZUNvbnRyb2xUeXBlEhIKBHBhdGgYASABKAlSBHBhdGgaNwoUU2VxdWVuY2VyQ29udHJvbFR5cGUSHwoLc2VxdWVuY2VfaWQYASABKA1SCnNlcXVlbmNlSWQaLQoQR3JvdXBDb250cm9sVHlwZRIZCghncm91cF9pZBgBIAEoDVIHZ3JvdXBJZBpMChFQcmVzZXRDb250cm9sVHlwZRI3CglwcmVzZXRfaWQYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkUghwcmVzZXRJZEIOCgxjb250cm9sX3R5cGU=');
+final $typed_data.Uint8List layoutControlDescriptor = $convert.base64Decode('Cg1MYXlvdXRDb250cm9sEg4KAmlkGAEgASgJUgJpZBI6Cghwb3NpdGlvbhgCIAEoCzIeLm1pemVyLmxheW91dHMuQ29udHJvbFBvc2l0aW9uUghwb3NpdGlvbhIuCgRzaXplGAMgASgLMhoubWl6ZXIubGF5b3V0cy5Db250cm9sU2l6ZVIEc2l6ZRIUCgVsYWJlbBgEIAEoCVIFbGFiZWwSQQoKZGVjb3JhdGlvbhgFIAEoCzIhLm1pemVyLmxheW91dHMuQ29udHJvbERlY29yYXRpb25zUgpkZWNvcmF0aW9uEjoKCGJlaGF2aW9yGAYgASgLMh4ubWl6ZXIubGF5b3V0cy5Db250cm9sQmVoYXZpb3JSCGJlaGF2aW9yEkIKBG5vZGUYByABKAsyLC5taXplci5sYXlvdXRzLkxheW91dENvbnRyb2wuTm9kZUNvbnRyb2xUeXBlSABSBG5vZGUSUQoJc2VxdWVuY2VyGAggASgLMjEubWl6ZXIubGF5b3V0cy5MYXlvdXRDb250cm9sLlNlcXVlbmNlckNvbnRyb2xUeXBlSABSCXNlcXVlbmNlchJFCgVncm91cBgJIAEoCzItLm1pemVyLmxheW91dHMuTGF5b3V0Q29udHJvbC5Hcm91cENvbnRyb2xUeXBlSABSBWdyb3VwEkgKBnByZXNldBgKIAEoCzIuLm1pemVyLmxheW91dHMuTGF5b3V0Q29udHJvbC5QcmVzZXRDb250cm9sVHlwZUgAUgZwcmVzZXQSGwoGaG90a2V5GAsgASgJSAFSBmhvdGtleYgBARolCg9Ob2RlQ29udHJvbFR5cGUSEgoEcGF0aBgBIAEoCVIEcGF0aBo3ChRTZXF1ZW5jZXJDb250cm9sVHlwZRIfCgtzZXF1ZW5jZV9pZBgBIAEoDVIKc2VxdWVuY2VJZBotChBHcm91cENvbnRyb2xUeXBlEhkKCGdyb3VwX2lkGAEgASgNUgdncm91cElkGkwKEVByZXNldENvbnRyb2xUeXBlEjcKCXByZXNldF9pZBgBIAEoCzIaLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0SWRSCHByZXNldElkQg4KDGNvbnRyb2xfdHlwZUIJCgdfaG90a2V5');
 @$core.Deprecated('Use controlPositionDescriptor instead')
 const ControlPosition$json = const {
   '1': 'ControlPosition',

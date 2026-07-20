@@ -129,6 +129,7 @@ command_impl! {
     ResizeLayoutControlCommand,
     UpdateLayoutControlDecorationsCommand,
     UpdateLayoutControlBehaviorCommand,
+    BindLayoutControlHotkeyCommand,
     AddSequenceCommand,
     DeleteSequenceCommand,
     StoreProgrammerInSequenceCommand,

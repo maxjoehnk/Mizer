@@ -48,6 +48,7 @@ impl<'a> Command<'a> for AddLayoutControlCommand {
                 size,
                 decoration: Default::default(),
                 behavior: Default::default(),
+                hotkey: Default::default(),
             });
 
             Ok(())

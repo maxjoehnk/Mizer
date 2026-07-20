@@ -126,6 +126,14 @@ class SelectLayoutTab implements LayoutsEvent {
   SelectLayoutTab({required this.tabIndex});
 }
 
+class BindControlHotkey implements LayoutsEvent {
+  final String layoutId;
+  final String controlId;
+  final String hotkey;
+
+  BindControlHotkey({ required this.layoutId, required this.controlId, required this.hotkey });
+}
+
 class LayoutState {
   final List<Layout> layouts;
   final int tabIndex;
@@ -221,6 +229,11 @@ class LayoutsBloc extends Bloc<LayoutsEvent, LayoutState> {
     });
     on<SelectLayoutTab>((event, emit) async {
       emit(state.copyWith(tabIndex: event.tabIndex));
+    });
+    on<BindControlHotkey>((event, emit) async {
+      await api.bindHotkey(event.layoutId, event.controlId, event.hotkey);
+      var layouts = await api.getLayouts();
+      emit(state.copyWith(layouts: layouts.layouts));
     });
   }
 }

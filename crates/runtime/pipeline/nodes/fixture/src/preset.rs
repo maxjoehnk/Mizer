@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::str::FromStr;
 
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{Preset, PresetId, PresetValue};
@@ -50,7 +51,25 @@ impl ConfigurableNode for PresetNode {
 
         let id = self.id.to_string();
 
-        vec![setting!(select "Preset", id, presets).disabled()]
+        vec![setting!(select "Preset", id, presets)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(select setting, "Preset", self.id, |id: String| {
+            if let Some(id) = id.strip_prefix("Preset I.").and_then(|v| u32::from_str(v.trim()).ok()) {
+                Ok(PresetId::Intensity(id))
+            }else if let Some(id) = id.strip_prefix("Preset C.").and_then(|v| u32::from_str(v.trim()).ok()) {
+                Ok(PresetId::Color(id))
+            }else if let Some(id) = id.strip_prefix("Preset P.").and_then(|v| u32::from_str(v.trim()).ok()) {
+                Ok(PresetId::Position(id))
+            }else if let Some(id) = id.strip_prefix("Preset S.").and_then(|v| u32::from_str(v.trim()).ok()) {
+                Ok(PresetId::Shutter(id))
+            }else {
+                anyhow::bail!("Invalid PresetId")
+            }
+        });
+
+        update_fallback!(setting)
     }
 }
 

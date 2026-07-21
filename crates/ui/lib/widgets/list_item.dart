@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mizer/consts.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
 class ListItem extends StatelessWidget {
@@ -34,12 +34,13 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MizerTheme theme = Theme.of(context).mizerTheme;
     return Hoverable(
         onTap: onTap,
         builder: (hovered) => Container(
               color: (selected ?? false)
-                  ? Grey800
-                  : (hovered ? Grey700 : null),
+                  ? theme.panelAction
+                  : (hovered ? theme.panelActionHovered : null),
               padding: const EdgeInsets.all(8),
               child: child,
             ));

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/theme.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 const double GRID_SIZE = GRID_2_SIZE;
-
-final Paint _gridPaint = Paint()
-  ..style = PaintingStyle.stroke
-  ..color = Colors.white10;
 
 class CanvasBackgroundLayer extends StatelessWidget {
   final Matrix4 transform;
@@ -16,20 +13,26 @@ class CanvasBackgroundLayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(painter: BackgroundPainter(transform, gridSize), size: Size.infinite);
+    var mizerTheme = Theme.of(context).mizerTheme;
+    return CustomPaint(painter: BackgroundPainter(transform, gridSize, mizerTheme.grid), size: Size.infinite);
   }
 }
 
 class BackgroundPainter extends CustomPainter {
   final Matrix4 transform;
   final double gridSize;
+  final Color color;
 
   late final Vector3 translation;
   late final double scale;
+  late final Paint _gridPaint;
 
-  BackgroundPainter(this.transform, this.gridSize) {
+  BackgroundPainter(this.transform, this.gridSize, this.color) {
     translation = transform.getTranslation();
     scale = transform.getMaxScaleOnAxis();
+    _gridPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = color;
   }
 
   @override

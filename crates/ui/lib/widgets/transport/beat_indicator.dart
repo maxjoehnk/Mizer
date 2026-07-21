@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/api/plugin/ffi/transport.dart';
+import 'package:mizer/theme.dart';
 
 const PADDING = 1;
 
@@ -88,6 +89,7 @@ class _BeatIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).mizerTheme;
     return AspectRatio(
         aspectRatio: 1,
         child: Padding(
@@ -95,15 +97,17 @@ class _BeatIndicator extends StatelessWidget {
           child: Container(
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(0)),
               clipBehavior: Clip.antiAlias,
-              child: CustomPaint(painter: BeatIndicatorPainter(activeBeat: activeBeat.floor()))),
+              child: CustomPaint(painter: BeatIndicatorPainter(activeBeat: activeBeat.floor(), activeColor: theme.primary, inactiveColor: theme.menuBarHovered))),
         ));
   }
 }
 
 class BeatIndicatorPainter extends CustomPainter {
   int activeBeat;
+  Color activeColor;
+  Color inactiveColor;
 
-  BeatIndicatorPainter({this.activeBeat = 0});
+  BeatIndicatorPainter({this.activeBeat = 0, required this.activeColor, required this.inactiveColor});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -112,7 +116,7 @@ class BeatIndicatorPainter extends CustomPainter {
 
     void _draw(int i, int x, int y) {
       var paint = Paint()
-        ..color = i == activeBeat ? Colors.deepOrange.shade500 : Colors.white10
+        ..color = i == activeBeat ? activeColor : inactiveColor
         ..style = PaintingStyle.fill;
       canvas.drawRect(
           Rect.fromLTWH(

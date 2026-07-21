@@ -11,10 +11,9 @@ class SmartWindow extends WindowState {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWindowState(
-        child: WindowLayoutProbe(
-            child: LanguageSwitcher(
-                child: GlobalHotkeyConfiguration(child: Scaffold(body: SmartViewWrapper())))));
+    return WindowLayoutProbe(
+        child: LanguageSwitcher(
+            child: GlobalHotkeyConfiguration(child: Scaffold(body: SmartViewWrapper()))));
   }
 
   @override

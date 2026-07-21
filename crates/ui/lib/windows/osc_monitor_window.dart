@@ -13,7 +13,7 @@ class OscMonitorWindow extends WindowState {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWindowState(child: WindowLayoutProbe(child: LanguageSwitcher(child: Scaffold(body: OscMonitor(connection)))));
+    return WindowLayoutProbe(child: LanguageSwitcher(child: Scaffold(body: OscMonitor(connection))));
   }
 
   @override

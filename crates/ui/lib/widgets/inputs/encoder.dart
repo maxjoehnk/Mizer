@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
-import 'package:mizer/consts.dart';
 import 'package:mizer/panes/programmer/sheets/fixture_group_control.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
 import 'package:mizer/widgets/popup/popup_programmer_input.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
@@ -60,6 +60,7 @@ class _EncoderInputState extends State<EncoderInput> {
   Widget build(BuildContext context) {
     var percentage = (value * 100).toStringAsFixed(1);
     var textTheme = Theme.of(context).textTheme;
+    var theme = Theme.of(context).mizerTheme;
     ProgrammerApi programmerApi = context.read();
     return LayoutBuilder(
       builder: (context, constraints) => Listener(
@@ -112,7 +113,7 @@ class _EncoderInputState extends State<EncoderInput> {
               ))),
           child: Container(
             decoration: BoxDecoration(
-              color: widget.color ?? Grey700
+              color: widget.color ?? theme.tileBackground
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

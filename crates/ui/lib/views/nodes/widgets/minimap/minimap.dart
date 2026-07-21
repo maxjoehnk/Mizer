@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/views/nodes/consts.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
+import 'package:mizer/views/nodes/widgets/minimap/scale_indicator.dart';
+import 'package:mizer/views/nodes/widgets/node_preview.dart';
 import 'package:provider/provider.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
-
-import 'package:mizer/views/nodes/widgets/node_preview.dart';
-import 'package:mizer/views/nodes/widgets/minimap/scale_indicator.dart';
 
 class Minimap extends StatelessWidget {
   final TransformationController transformationController;
@@ -16,6 +16,7 @@ class Minimap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MizerTheme theme = Theme.of(context).mizerTheme;
     return Consumer<NodeEditorModel>(
         builder: (context, model, _child)
     {
@@ -27,7 +28,7 @@ class Minimap extends StatelessWidget {
         height: 150,
         width: 200,
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(color: Grey800, borderRadius: BorderRadius.circular(BORDER_RADIUS)),
+        decoration: BoxDecoration(color: theme.dropdownBackground, borderRadius: BorderRadius.circular(BORDER_RADIUS)),
         foregroundDecoration: BoxDecoration(border: Border.all(color: Grey700, width: 2), borderRadius: BorderRadius.circular(BORDER_RADIUS)),
         child: Stack(
           children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/list_extensions.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 
@@ -92,6 +92,7 @@ class _MizerTableRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mizerTheme = Theme.of(context).mizerTheme;
     return SizedBox(
       height: TABLE_ROW_HEIGHT,
       child: Hoverable(
@@ -102,18 +103,18 @@ class _MizerTableRow extends StatelessWidget {
             spacing: 1,
             children: row.cells
                 .mapEnumerated(
-                    (cell, index) => _tableCell(_wrapCell(cell, row, isHovered: hovered), columnWidths?[index]))
+                    (cell, index) => _tableCell(_wrapCell(cell, row, mizerTheme, isHovered: hovered), columnWidths?[index]))
                 .toList()),
       ),
     );
   }
 
-  Widget _wrapCell(Widget cell, MizerTableRow row, {bool isHovered = false}) {
+  Widget _wrapCell(Widget cell, MizerTableRow row, MizerTheme theme, {bool isHovered = false}) {
     Widget cellContent = Container(
         alignment: row.alignment,
         color: row.selected
-            ? Grey800
-            : (isHovered ? Grey700 : (row.highlight ? Colors.deepOrange.withOpacity(0.1) : null)),
+            ? theme.tableSelected
+            : (isHovered ? theme.tableHovered : (row.highlight ? Colors.deepOrange.withOpacity(0.1) : null)),
         padding: row.padding,
         child: cell);
 

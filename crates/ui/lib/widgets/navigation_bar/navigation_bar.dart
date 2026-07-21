@@ -52,7 +52,6 @@ class NavigationBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
     var color = selected ? theme.colorScheme.secondary : theme.hintColor;
 
     return PanelGridTile(

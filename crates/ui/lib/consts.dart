@@ -1,5 +1,4 @@
 import 'dart:ui' show Color;
-import 'package:flutter/material.dart' show Colors;
 
 const double _GRID_BASE_SIZE = 20;
 
@@ -43,17 +42,12 @@ const Color Grey300 = Color(0xFF777777);
 const Color Grey200 = Color(0xFF888888);
 const Color Grey100 = Color(0xFF999999);
 
-const Color Primary = Colors.deepOrange;
-
-const Color TileBorder = Grey400;
-const Color TileBackground = Grey700;
-const Color TileDisabled = Grey800;
-const Color TileSelected = Grey500;
-const Color TileSelectedBorder = White;
-const Color TileHover = Grey600;
-
-const Color ActionBorder = Grey400;
-const Color ActionDisabled = Grey800;
-const Color ActionBackground = Grey700;
-const Color ActionHover = Grey600;
-const Color ActionActive = Grey500;
+const Color White900 = Color(0xFFEEEEEE);
+const Color White800 = Color(0xFFDDDDDD);
+const Color White700 = Color(0xFFCCCCCC);
+const Color White600 = Color(0xFFBBBBBB);
+const Color White500 = Color(0xFFAAAAAA);
+const Color White400 = Color(0xFF999999);
+const Color White300 = Color(0xFF888888);
+const Color White200 = Color(0xFF777777);
+const Color White100 = Color(0xFF666666);

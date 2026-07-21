@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
 import 'panel.dart';
@@ -135,15 +136,25 @@ class TabHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).mizerTheme;
     return Hoverable(
         onTap: onSelect,
-        builder: (hovered) => Container(
+        builder: (hovered) {
+          var color = theme.panelAction;
+          if (hovered) {
+            color = theme.panelActionHovered;
+          }
+          if (selected) {
+            color = theme.panelActionActive;
+          }
+          return Container(
               height: GRID_2_SIZE,
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              color: selected ? Grey500 : (hovered ? Grey700 : Grey800),
+              color: color,
               child: Text(label),
-            ));
+            );
+        });
   }
 }
 
@@ -162,6 +173,7 @@ class PanelHeaderButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).mizerTheme;
     return Hoverable(
         onTap: onTap,
         builder: (hovered) => Container(
@@ -169,7 +181,7 @@ class PanelHeaderButton extends StatelessWidget {
           width: GRID_2_SIZE,
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          color: hovered ? Grey700 : Grey800,
+          color: hovered ? theme.panelActionHovered : theme.panelAction,
           child: child,
         ));
   }

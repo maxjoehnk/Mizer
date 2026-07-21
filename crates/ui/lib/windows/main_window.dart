@@ -1,11 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:mizer/dialogs/backend_dialog_controller.dart';
+import 'package:mizer/home.dart';
 import 'package:mizer/session/window_title_updater.dart';
 import 'package:mizer/widgets/global_hotkeys.dart';
-import 'package:nativeshell/nativeshell.dart';
-
-import 'package:mizer/home.dart';
 import 'package:mizer/windows/base_window_state.dart';
+import 'package:nativeshell/nativeshell.dart';
 
 const double WIDTH = 800;
 const double HEIGHT = 700;
@@ -13,14 +12,12 @@ const double HEIGHT = 700;
 class MainWindowState extends WindowState {
   @override
   Widget build(BuildContext context) {
-    return BaseWindowState(
-      child: WindowLayoutProbe(
-        child: LanguageSwitcher(
-          child: GlobalHotkeyConfiguration(
-            child: BackendDialogController(
-              child: WindowTitleUpdater(
-                child: Home(),
-              ),
+    return WindowLayoutProbe(
+      child: LanguageSwitcher(
+        child: GlobalHotkeyConfiguration(
+          child: BackendDialogController(
+            child: WindowTitleUpdater(
+              child: Home(),
             ),
           ),
         ),

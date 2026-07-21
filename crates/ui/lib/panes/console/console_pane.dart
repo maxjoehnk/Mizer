@@ -2,17 +2,11 @@ import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:mizer/state/console_bloc.dart';
-import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/console.pb.dart';
-
-final Map<ConsoleLevel, Color> levelColors = {
-  ConsoleLevel.DEBUG: Colors.white30,
-  ConsoleLevel.INFO: Colors.green.shade300,
-  ConsoleLevel.WARNING: Colors.orange.shade300,
-  ConsoleLevel.ERROR: Colors.red.shade300,
-};
+import 'package:mizer/state/console_bloc.dart';
+import 'package:mizer/theme.dart';
+import 'package:mizer/widgets/panel.dart';
 
 class ConsolePane extends StatefulWidget {
   const ConsolePane({super.key});
@@ -55,6 +49,7 @@ class ConsoleMessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MizerTheme theme = Theme.of(context).mizerTheme;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -63,7 +58,7 @@ class ConsoleMessageItem extends StatelessWidget {
           child: Text(
             message.level.name.toTitleCase(),
             style: TextStyle(
-              color: levelColors[message.level],
+              color: theme.levelColors[message.level],
             ),
           ),
         ),
@@ -73,7 +68,7 @@ class ConsoleMessageItem extends StatelessWidget {
             message.message,
             softWrap: true,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.8),
+              color: theme.text.withOpacity(0.8),
             ),
           ),
         ),
@@ -92,7 +87,7 @@ class ConsoleMessageItem extends StatelessWidget {
         Text(
           DateFormat.Hms().format(DateTime.fromMillisecondsSinceEpoch(message.timestamp.toInt())),
           style: TextStyle(
-            color: Colors.white54,
+            color: theme.textDimmed,
           ),
         ),
         SizedBox(width: 4),

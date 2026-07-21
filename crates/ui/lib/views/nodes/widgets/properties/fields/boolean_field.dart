@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
-import 'package:toggle_switch/toggle_switch.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/field/field.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class BooleanField extends StatelessWidget {
   final String label;
@@ -16,6 +17,7 @@ class BooleanField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mizerTheme = Theme.of(context).mizerTheme;
     return Field(
         label: label,
         labelWidth: labelWidth,
@@ -30,11 +32,11 @@ class BooleanField extends StatelessWidget {
             labels: ['On', 'Off'],
             totalSwitches: 2,
             activeBgColors: [
-              [Colors.deepOrange],
-              [Colors.grey.shade700]
+              [mizerTheme.primary],
+              [mizerTheme.actionActive]
             ],
             minWidth: 50,
-            inactiveBgColor: Colors.grey.shade900,
+            inactiveBgColor: mizerTheme.actionBackground,
             initialLabelIndex: value ? 0 : 1,
             onToggle: (index) => onUpdate(index == 0),
             changeOnTap: true,

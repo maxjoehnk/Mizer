@@ -4,13 +4,13 @@ import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
+import 'package:mizer/theme.dart';
+import 'package:mizer/widgets/field/text_input.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
+import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
 import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
-
-import 'package:mizer/widgets/field/text_input.dart';
-import 'package:mizer/widgets/hoverable.dart';
 
 class Panel extends StatefulWidget {
   final String? label;
@@ -93,11 +93,13 @@ class _PanelState extends State<Panel> {
 
   @override
   Widget build(BuildContext context) {
-    const border = BorderSide(color: Grey700, width: 2);
+    MizerTheme theme = Theme.of(context).mizerTheme;
+
+    var border = BorderSide(color: theme.panelBorder, width: 2);
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-          color: Grey900,
+          color: theme.panelBackground,
           borderRadius: BorderRadius.circular(BORDER_RADIUS),
           border: Border(
             left: border,
@@ -131,8 +133,10 @@ class _PanelState extends State<Panel> {
       return Container();
     }
     TextTheme textTheme = Theme.of(context).textTheme;
+    MizerTheme mizerTheme = Theme.of(context).mizerTheme;
+
     return Container(
-        color: Grey700,
+        color: mizerTheme.panelBorder,
         height: PANEL_HEADER_HEIGHT,
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -163,7 +167,7 @@ class _PanelState extends State<Panel> {
               if (widget.onSearch != null && searchExpanded)
                 Expanded(
                     child: Container(
-                        color: Grey800,
+                        color: mizerTheme.panelAction,
                         constraints: BoxConstraints(maxWidth: 200),
                         padding: const EdgeInsets.only(left: 4.0),
                         alignment: Alignment.centerLeft,
@@ -218,7 +222,7 @@ class PanelHeaderDivider extends StatelessWidget {
     return Container(
       width: PANEL_GAP_SIZE,
       height: GRID_2_SIZE,
-      color: Grey900,
+      color: Theme.of(context).mizerTheme.panelBackground,
     );
   }
 }
@@ -278,6 +282,7 @@ class PanelAction extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
+    var mizerTheme = theme.mizerTheme;
     var hotkey = _getHotkey(context);
     bool hasAction = action.onClick != null || action.command != null;
     return GestureDetector(
@@ -297,8 +302,8 @@ class PanelAction extends StatelessWidget {
             : null,
         builder: (hovered) => Container(
           decoration: BoxDecoration(
-            border: Border(top: BorderSide(color: ActionBorder, width: 2)),
-            color: _getBackground(hovered),
+            border: Border(top: BorderSide(color: mizerTheme.actionBorder, width: 2)),
+            color: _getBackground(mizerTheme, hovered),
           ),
           height: height,
           width: width,
@@ -308,12 +313,12 @@ class PanelAction extends StatelessWidget {
             children: [
               Text(action.label,
                   textAlign: TextAlign.center,
-                  style: textTheme.titleSmall!.copyWith(fontSize: 11, color: _getColor())),
+                  style: textTheme.titleSmall!.copyWith(fontSize: 11, color: _getColor(mizerTheme))),
               if (hotkey != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 2.0),
                   child: Text(formatHotkey(hotkey),
-                      style: textTheme.bodySmall!.copyWith(color: _getHotkeyColor(), fontSize: 10)),
+                      style: textTheme.bodySmall!.copyWith(color: _getHotkeyColor(mizerTheme), fontSize: 10)),
                 ),
             ],
           ),
@@ -335,30 +340,30 @@ class PanelAction extends StatelessWidget {
     return hotkeys?.mappings?[action.hotkeyId];
   }
 
-  Color _getBackground(bool hovered) {
+  Color _getBackground(MizerTheme theme, bool hovered) {
     if (action.disabled == true) {
-      return ActionDisabled;
+      return theme.actionDisabled;
     }
     if (action.activated) {
-      return ActionActive;
+      return theme.actionActive;
     }
     if (hovered) {
-      return ActionHover;
+      return theme.actionHover;
     }
-    return ActionBackground;
+    return theme.actionBackground;
   }
 
-  Color _getColor() {
+  Color _getColor(MizerTheme theme) {
     if (action.disabled == true) {
-      return Colors.white54;
+      return theme.textDimmed;
     }
-    return Colors.white;
+    return theme.text;
   }
 
-  Color _getHotkeyColor() {
+  Color _getHotkeyColor(MizerTheme theme) {
     if (action.disabled == true) {
-      return Colors.white24;
+      return theme.textDisabled;
     }
-    return Colors.white54;
+    return theme.textDimmed;
   }
 }

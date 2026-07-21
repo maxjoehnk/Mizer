@@ -4,6 +4,7 @@ import 'package:mizer/api/contracts/ui.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/context_state_extensions.dart';
 import 'package:mizer/i18n.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/text_field_focus.dart';
 import 'package:provider/provider.dart';
 
@@ -23,10 +24,11 @@ class _CommandLineInputState extends State<CommandLineInput> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+    MizerTheme mizerTheme = Theme.of(context).mizerTheme;
     return Container(
       height: TRANSPORT_CONTROLS_HEIGHT - 8,
       decoration: BoxDecoration(
-        color: Grey700,
+        color: mizerTheme.fieldLabel,
         borderRadius: BorderRadius.circular(BORDER_RADIUS),
       ),
       margin: const EdgeInsets.all(4),
@@ -35,8 +37,7 @@ class _CommandLineInputState extends State<CommandLineInput> {
         children: [
           if (!focusNode.hasFocus && controller.text.isEmpty)
             Center(
-                child: Text("Command Line".i18n,
-                    style: textTheme.bodyMedium!.copyWith(color: Colors.white54))),
+                child: Text("Command Line".i18n, style: textTheme.bodyMedium!.copyWith(color: mizerTheme.textDimmed))),
           if (success) Positioned(child: Icon(Icons.check, color: Colors.green), right: 4),
           if (error)
             Positioned(child: Icon(Icons.warning_amber_outlined, color: Colors.red), right: 4),

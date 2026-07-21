@@ -1,9 +1,9 @@
+use crate::hotkeys::Hotkeys;
+use facet::Facet;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fmt::Formatter;
 use std::path::PathBuf;
-use facet::{Facet};
-use serde::{Deserialize, Serialize};
-use crate::hotkeys::Hotkeys;
 
 #[derive(Debug, Clone, Deserialize, Serialize, Facet)]
 pub struct Settings {
@@ -21,6 +21,8 @@ pub struct General {
     pub auto_load_last_project: bool,
     #[serde(default)]
     pub keep_screen_awake: bool,
+    #[serde(default)]
+    pub theme: Theme,
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, Copy, PartialEq, Eq, Facet)]
@@ -41,6 +43,25 @@ impl fmt::Display for Languages {
         match self {
             Languages::English => write!(f, "en"),
             Languages::German => write!(f, "de"),
+        }
+    }
+}
+
+#[derive(Default, Debug, Clone, Deserialize, Serialize, Copy, PartialEq, Eq, Facet)]
+#[repr(C)]
+#[serde(rename_all = "kebab-case")]
+#[facet(rename_all = "kebab-case")]
+pub enum Theme {
+    #[default]
+    Dark,
+    Light,
+}
+
+impl fmt::Display for Theme {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Dark => write!(f, "dark"),
+            Self::Light => write!(f, "light"),
         }
     }
 }

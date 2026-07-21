@@ -7,18 +7,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:mizer/api/contracts/status.dart';
 import 'package:mizer/api/plugin/ffi/status.dart';
-import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/state/status_bar_bloc.dart';
+import 'package:mizer/theme.dart';
 
 class StatusBar extends StatelessWidget {
   const StatusBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    MizerTheme theme = Theme.of(context).mizerTheme;
     return Container(
       height: 24,
-      color: Grey900,
+      color: theme.statusBarBackground,
       child: BlocBuilder<StatusBarCubit, StatusBarState>(
         builder: (context, state) => Row(
           children: [
@@ -34,7 +35,7 @@ class StatusBar extends StatelessWidget {
             ),
             Container(
               width: 1,
-              color: Colors.grey.shade600,
+              color: theme.statusBarSeparator,
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8),
@@ -145,6 +146,7 @@ class _StatusBarBatteryState extends State<StatusBarBattery> {
         return Container();
       }
 
+      MizerTheme theme = Theme.of(context).mizerTheme;
       return Row(mainAxisSize: MainAxisSize.min, children: [
         Container(
           padding: EdgeInsets.symmetric(horizontal: 8),
@@ -156,7 +158,7 @@ class _StatusBarBatteryState extends State<StatusBarBattery> {
         ),
         Container(
           width: 1,
-          color: Colors.grey.shade600,
+          color: theme.statusBarSeparator,
         ),
       ]);
     });

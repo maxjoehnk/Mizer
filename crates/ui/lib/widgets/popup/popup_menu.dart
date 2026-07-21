@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/field/text_input.dart';
 
 const MAX_ROWS = 10;
@@ -57,13 +57,14 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
 
   @override
   Widget build(BuildContext context) {
+    MizerTheme theme = Theme.of(context).mizerTheme;
     return FocusScope(
       debugLabel: "PopupMenu",
       autofocus: true,
       child: Container(
           constraints: BoxConstraints(maxHeight: 300, maxWidth: 450),
           decoration: BoxDecoration(
-              color: Grey700,
+              color: theme.dropdownBackground,
               borderRadius: BorderRadius.all(Radius.circular(2)),
               boxShadow: [BoxShadow(color: Colors.black26, offset: Offset(2, 2), blurRadius: 4)]),
           child: Column(

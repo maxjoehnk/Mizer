@@ -10,3 +10,10 @@ tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../node" }
 mizer-sequencer = { path = "../../../../components/sequencer" }
+
+[dev-dependencies]
+mizer_pipeline_nodes = { path = ".." }
+
+[[test]]
+name = "is_cue_active_test"
+path = "tests/is_cue_active_test.rs"

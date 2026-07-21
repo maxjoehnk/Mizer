@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mizer/consts.dart';
+import 'package:mizer/theme.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class MizerSwitch extends StatelessWidget {
@@ -12,13 +12,14 @@ class MizerSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mizerTheme = Theme.of(context).mizerTheme;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: ToggleSwitch(
         labels: [onText!, offText!],
         totalSwitches: 2,
         activeBgColors: [[Colors.green.shade700], [Colors.red.shade800]],
-        inactiveBgColor: Grey800,
+        inactiveBgColor: mizerTheme.actionBackground,
         initialLabelIndex: value ? 0 : 1,
         onToggle: (index) => onChanged(index == 0),
         changeOnTap: true,

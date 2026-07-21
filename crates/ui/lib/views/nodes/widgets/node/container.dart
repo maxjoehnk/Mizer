@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mizer/consts.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-
+import 'package:mizer/theme.dart';
 import 'package:mizer/views/nodes/consts.dart';
 
 class NodeContainer extends StatelessWidget {
@@ -20,6 +19,7 @@ class NodeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MizerTheme theme = Theme.of(context).mizerTheme;
     return MouseRegion(
       cursor: SystemMouseCursors.move,
       child: Container(
@@ -34,7 +34,7 @@ class NodeContainer extends StatelessWidget {
         ),
         child: Container(
           decoration: ShapeDecoration(
-              color: designer.hasColor() ? DESIGNER_COLORS[designer.color] : Grey800,
+              color: designer.hasColor() ? DESIGNER_COLORS[designer.color] : theme.tileBackground,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(INNER_RADIUS)),
               )),

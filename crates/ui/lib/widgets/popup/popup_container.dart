@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
-
-final Color BACKGROUND = Grey900;
-final Color ACTION_COLOR = Grey800;
 
 class PopupContainer extends StatelessWidget {
   final String title;
@@ -29,13 +27,14 @@ class PopupContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const border = BorderSide(color: Grey600, width: 2);
+    MizerTheme mizerTheme = Theme.of(context).mizerTheme;
+    var border = BorderSide(color: mizerTheme.panelBorder, width: 2);
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-          color: BACKGROUND,
+          color: mizerTheme.panelBackground,
           border: Border(
             left: border,
             right: border,
@@ -58,7 +57,7 @@ class PopupContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-                color: Grey600,
+                color: mizerTheme.panelBorder,
                 height: PANEL_HEADER_HEIGHT,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,7 +82,7 @@ class PopupContainer extends StatelessWidget {
                     spacing: PANEL_GAP_SIZE,
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: actions!.map(_action).toList()),
+                    children: actions!.map((a) => _action(mizerTheme, a)).toList()),
               )
           ],
         ),
@@ -102,13 +101,13 @@ class PopupContainer extends StatelessWidget {
     return innerChild;
   }
 
-  Widget _action(PopupAction action) {
+  Widget _action(MizerTheme mizerTheme, PopupAction action) {
     return Hoverable(
       onTap: action.onClick,
       builder: (hover) => Container(
           height: GRID_2_SIZE,
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          color: hover ? Grey500 : Grey600,
+          color: hover ? mizerTheme.tileHover : mizerTheme.tileBackground,
           alignment: Alignment.center,
           child: Text(action.text)),
     );

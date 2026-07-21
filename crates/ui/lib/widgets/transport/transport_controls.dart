@@ -5,10 +5,10 @@ import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/transport/beat_indicator.dart';
-
 import 'package:mizer/widgets/transport/command_line.dart';
 import 'package:mizer/widgets/transport/fps_control.dart';
 import 'package:mizer/widgets/transport/speed_control.dart';
@@ -47,6 +47,7 @@ class _TransportControlsState extends State<TransportControls> {
   @override
   Widget build(BuildContext context) {
     TransportApi apiClient = context.read();
+    MizerTheme theme = Theme.of(context).mizerTheme;
 
     return Container(
         height: TRANSPORT_CONTROLS_HEIGHT,
@@ -54,7 +55,7 @@ class _TransportControlsState extends State<TransportControls> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Grey800,
+                color: theme.menuBarBackground,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(BORDER_RADIUS),
                   bottomRight: Radius.circular(BORDER_RADIUS),
@@ -127,6 +128,7 @@ class PlaybackBarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
+    var mizerTheme = theme.mizerTheme;
     var hotkey = _getHotkey(context);
 
     return Hoverable(
@@ -137,7 +139,7 @@ class PlaybackBarButton extends StatelessWidget {
             width: GRID_5_SIZE,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(BORDER_RADIUS),
-              color: active ? Grey600 : (hovered ? Grey700 : Grey800),
+              color: active ? mizerTheme.menuBarActive : (hovered ? mizerTheme.menuBarHovered : mizerTheme.menuBarBackground),
             ),
             alignment: Alignment.center,
             child: Column(
@@ -150,7 +152,7 @@ class PlaybackBarButton extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0),
                     child: Text(formatHotkey(hotkey),
-                        style: textTheme.bodySmall!.copyWith(color: Colors.white54, fontSize: 10)),
+                        style: textTheme.bodySmall!.copyWith(fontSize: 10)),
                   ),
               ],
             ),
@@ -204,10 +206,11 @@ class TransportButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).mizerTheme;
     return Hoverable(
         onTap: active ? null : onClick,
         builder: (hover) => Container(
-              color: active ? Colors.deepOrange : (hover ? Colors.white10 : Colors.transparent),
+              color: active ? theme.primary : (hover ? theme.menuBarHovered : Colors.transparent),
               child: child,
             ));
   }
@@ -220,6 +223,8 @@ class _Divider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(width: 2, color: Grey700);
+    MizerTheme theme = Theme.of(context).mizerTheme;
+
+    return Container(width: 2, color: theme.menuBarSeparator);
   }
 }

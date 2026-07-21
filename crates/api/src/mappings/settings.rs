@@ -1,17 +1,18 @@
 use crate::proto::settings as model;
 use facet::{Facet, Peek};
+use indexmap::IndexMap;
 use mizer_connections::midi_device_profile;
 use mizer_settings as settings;
 use mizer_settings::HotkeyGroup;
 use std::collections::HashMap;
 use std::hash::Hash;
 use std::path::PathBuf;
-use indexmap::IndexMap;
 
 impl From<(settings::Settings, Vec<settings::Preference>)> for model::Settings {
     fn from((settings, preferences): (settings::Settings, Vec<settings::Preference>)) -> Self {
         let mut ui: model::UiSettings = settings.hotkeys.into();
         ui.language = settings.general.language.to_string();
+        ui.theme = settings.general.theme.to_string();
 
         let mut settings = Self {
             ui: Some(ui),
@@ -112,6 +113,7 @@ impl From<settings::Hotkeys> for model::UiSettings {
 
         Self {
             language: Default::default(),
+            theme: Default::default(),
             hotkeys: map,
         }
     }

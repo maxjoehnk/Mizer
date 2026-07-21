@@ -8,24 +8,24 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/views/nodes/consts.dart';
+import 'package:mizer/views/nodes/models/node_editor_model.dart';
+import 'package:mizer/views/nodes/models/node_model.dart';
 import 'package:mizer/views/nodes/node_documenter.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/drag_selection_layer.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/graph_paint_layer.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/nodes_layer.dart';
 import 'package:mizer/views/nodes/widgets/minimap/minimap.dart';
 import 'package:mizer/views/nodes/widgets/node/base_node.dart';
+import 'package:mizer/views/nodes/widgets/node/preview.dart';
+import 'package:mizer/views/nodes/widgets/properties/properties_pane.dart';
 import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/interactive_surface/interactive_surface.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/popup/popup_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:provider/provider.dart';
-
-import 'package:mizer/views/nodes/models/node_editor_model.dart';
-import 'package:mizer/views/nodes/models/node_model.dart';
-import 'package:mizer/views/nodes/widgets/editor_layers/drag_selection_layer.dart';
-import 'package:mizer/views/nodes/widgets/editor_layers/graph_paint_layer.dart';
-import 'package:mizer/views/nodes/widgets/editor_layers/nodes_layer.dart';
-import 'package:mizer/views/nodes/widgets/node/preview.dart';
-import 'package:mizer/views/nodes/widgets/properties/properties_pane.dart';
 
 const double SidebarWidth = 302;
 const double PathBreadcrumbHeight = 32;
@@ -66,6 +66,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       afterLayout(context);
     });
+    MizerTheme theme = Theme.of(context).mizerTheme;
 
     return HotkeyConfiguration(
       hotkeyGroupSelector: (hotkeys) => hotkeys["nodes"],
@@ -126,7 +127,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                       left: 0,
                       height: PathBreadcrumbHeight,
                       child: Container(
-                          color: Grey800,
+                          color: theme.panelBorder,
                           child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
                             MizerButton(
                                 child: Padding(

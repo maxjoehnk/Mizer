@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
 const double _textSize = 13;
@@ -45,6 +46,7 @@ class HorizontalField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).mizerTheme;
     var height = big ? BIG_INPUT_FIELD_HEIGHT : INPUT_FIELD_HEIGHT;
     return SizedBox(
       height: height,
@@ -58,7 +60,7 @@ class HorizontalField extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Grey700,
+                    color: theme.fieldLabel,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(BORDER_RADIUS),
                         bottomLeft: Radius.circular(BORDER_RADIUS)),
@@ -70,7 +72,7 @@ class HorizontalField extends StatelessWidget {
               fit: FlexFit.tight,
               child: Container(
                   decoration: BoxDecoration(
-                    color: Grey600,
+                    color: theme.fieldValue,
                     borderRadius: label == null
                         ? BorderRadius.circular(BORDER_RADIUS)
                         : BorderRadius.only(
@@ -81,7 +83,7 @@ class HorizontalField extends StatelessWidget {
           if (suffix != null) suffix!,
           ...actions.map((action) => Container(
             decoration: BoxDecoration(
-              color: Grey700,
+              color: theme.fieldAction,
               borderRadius: BorderRadius.circular(BORDER_RADIUS),
             ),
             margin: EdgeInsets.only(left: 2),
@@ -104,6 +106,7 @@ class VerticalField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).mizerTheme;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -115,7 +118,7 @@ class VerticalField extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Grey700,
+                  color: theme.fieldLabel,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(BORDER_RADIUS),
                       topRight: Radius.circular(BORDER_RADIUS)),
@@ -124,7 +127,7 @@ class VerticalField extends StatelessWidget {
               )),
         Container(
             decoration: BoxDecoration(
-              color: Grey600,
+              color: theme.fieldValue,
               borderRadius: label == null
                   ? BorderRadius.circular(BORDER_RADIUS)
                   : BorderRadius.only(
@@ -146,10 +149,11 @@ class FieldAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).mizerTheme;
     return Hoverable(
         onTap: onTap,
         builder: (hovered) => Container(
-              color: hovered ? Grey500 : Grey700,
+              color: hovered ? theme.fieldActionHovered : theme.fieldAction,
               alignment: Alignment.center,
               child: child,
             ));

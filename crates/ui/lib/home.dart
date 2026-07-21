@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart' hide View, NavigationBar, Route;
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
+import 'package:mizer/actions/actions.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
 import 'package:mizer/panes/console/console_pane.dart';
+import 'package:mizer/panes/programmer/programmer_view.dart';
+import 'package:mizer/panes/selection/selection_pane.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/views/connections/connections_view.dart';
+import 'package:mizer/views/dmx_output/dmx_output.dart';
 import 'package:mizer/views/effects/effects_view.dart';
 import 'package:mizer/views/fixture_definitions/fixture_definitions_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
@@ -25,12 +30,6 @@ import 'package:mizer/widgets/navigation_bar/navigation_bar.dart';
 import 'package:mizer/widgets/status_bar.dart';
 import 'package:mizer/widgets/transport/transport_controls.dart';
 import 'package:provider/provider.dart';
-
-import 'package:mizer/actions/actions.dart';
-import 'package:mizer/consts.dart';
-import 'package:mizer/panes/programmer/programmer_view.dart';
-import 'package:mizer/panes/selection/selection_pane.dart';
-import 'package:mizer/views/dmx_output/dmx_output.dart';
 
 const double SHEET_SIZE = 150;
 const double SHEET_PADDING = 0;
@@ -81,7 +80,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Black,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: HotkeyConfiguration(
           hotkeyGroupSelector: (hotkeys) => hotkeys["global"],
           hotkeyMap: _getShortcuts(routes),

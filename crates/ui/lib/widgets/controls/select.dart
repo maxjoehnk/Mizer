@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
 class MizerSelect<T> extends StatefulWidget {
@@ -196,13 +197,14 @@ class _MizerSelectList<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
+    var mizerTheme = Theme.of(context).mizerTheme;
 
     return DefaultTextStyle(
         style: theme.bodyMedium!,
         child: Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
             decoration: BoxDecoration(
-              color: Colors.grey.shade900,
+              color: mizerTheme.dropdownBackground,
               borderRadius: BorderRadius.circular(2),
             ),
             constraints: BoxConstraints(
@@ -240,11 +242,12 @@ class _MizerSelectOption<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mizerTheme = Theme.of(context).mizerTheme;
     return Hoverable(
         onTap: onSelect,
         builder: (hovering) => Container(
               padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-              color: hovering ? Colors.grey.shade800 : null,
+              color: hovering ? mizerTheme.actionHover : null,
               child: Row(
                 children: [
                   Expanded(child: Text(option.label, textAlign: TextAlign.start)),

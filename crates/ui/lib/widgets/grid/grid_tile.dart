@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
 import 'package:mizer/widgets/hotkey_label.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -65,6 +66,7 @@ class PanelGridTile extends StatelessWidget {
     var widthInPixel = GRID_4_SIZE * width + ((width - 1) * 2);
     var heightInPixel = GRID_4_SIZE * height + ((height - 1) * 2);
     var brightBackground = color != null && color!.computeLuminance() > 0.3;
+    var theme = Theme.of(context).mizerTheme;
 
     return Hoverable(
       onTap: onTap,
@@ -82,11 +84,11 @@ class PanelGridTile extends StatelessWidget {
               top: BorderSide(
             color: active
                 ? Colors.deepOrange.shade700
-                : (selected ? White : (interactive ? TileBorder : Colors.transparent)),
+                : (selected ? White : (interactive ? theme.tileBorder : Colors.transparent)),
             width: 2,
           )),
           borderRadius: BorderRadius.circular(0),
-          color: color ?? (empty ? Grey800 : (selected ? Grey500 : Grey700)),
+          color: color ?? (empty ? theme.tileDisabled : (selected ? theme.tileSelected : theme.tileBackground)),
         ),
         child: Stack(children: [
           if (hotkeyLabel != null)

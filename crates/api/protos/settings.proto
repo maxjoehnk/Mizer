@@ -10,6 +10,7 @@ message Settings {
 message UiSettings {
   string language = 1;
   map<string, Hotkeys> hotkeys = 2;
+  string theme = 3;
 }
 
 message SettingsCategory {

@@ -1,6 +1,6 @@
 use crate::settings::*;
-use std::path::PathBuf;
 use crate::system_locale::get_system_language;
+use std::path::PathBuf;
 
 mod hotkeys;
 
@@ -10,6 +10,7 @@ pub fn get_default_settings() -> Settings {
             language: get_system_language().unwrap_or_default(),
             auto_load_last_project: true,
             keep_screen_awake: true,
+            theme: Theme::Dark,
         },
         paths: FilePaths {
             media: Media {

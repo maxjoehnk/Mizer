@@ -4,21 +4,22 @@ import 'package:flutter/material.dart' hide View;
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
+import 'package:mizer/actions/actions.dart';
+import 'package:mizer/api/contracts/session.dart';
+import 'package:mizer/api/plugin/app.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/context_state_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/project_files.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/state/session_bloc.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:mizer/widgets/popup/popup_select.dart';
 import 'package:nativeshell/nativeshell.dart' show Window;
 
-import 'package:mizer/actions/actions.dart';
-import 'package:mizer/api/contracts/session.dart';
-import 'package:mizer/api/plugin/app.dart';
 import 'dialogs/power_dialog.dart';
 
 class ApplicationMenu extends StatelessWidget {
@@ -155,7 +156,7 @@ class MenuBarTitle extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(BORDER_RADIUS),
-        color: Grey800,
+        color: Theme.of(context).mizerTheme.menuBarBackground,
       ),
       width: GRID_4_SIZE,
       alignment: Alignment.center,
@@ -194,6 +195,7 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).mizerTheme;
     return Hoverable(
       onTap: onTap,
       onTapDown: popupBuilder == null
@@ -202,17 +204,25 @@ class MenuButton extends StatelessWidget {
             Navigator.of(context).push(
               MizerPopupRoute(position: context.globalPaintBounds!.bottomLeft, child: popupBuilder!(context)));
           },
-      builder: (hovered) =>
-          Container(
+      builder: (hovered) {
+        var color = theme.menuBarBackground;
+        if (hovered) {
+          color = theme.menuBarHovered;
+        }
+        if (active) {
+          color = theme.menuBarActive;
+        }
+        return Container(
             height: GRID_2_SIZE,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(BORDER_RADIUS),
-              color: active ? Grey600 : (hovered ? Grey700 : Grey800),
+              color: color,
             ),
             width: width,
             alignment: Alignment.center,
             child: child,
-          ),
+          );
+      },
     );
   }
 }
@@ -223,7 +233,7 @@ class MenuPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Grey800,
+      color: Theme.of(context).mizerTheme.menuBarBackground,
       width: 4,
     );
   }

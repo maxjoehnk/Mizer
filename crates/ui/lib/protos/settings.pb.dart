@@ -70,6 +70,7 @@ class UiSettings extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UiSettings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'language')
     ..m<$core.String, Hotkeys>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hotkeys', entryClassName: 'UiSettings.HotkeysEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OM, valueCreator: Hotkeys.create, packageName: const $pb.PackageName('mizer.settings'))
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'theme')
     ..hasRequiredFields = false
   ;
 
@@ -77,6 +78,7 @@ class UiSettings extends $pb.GeneratedMessage {
   factory UiSettings({
     $core.String? language,
     $core.Map<$core.String, Hotkeys>? hotkeys,
+    $core.String? theme,
   }) {
     final _result = create();
     if (language != null) {
@@ -84,6 +86,9 @@ class UiSettings extends $pb.GeneratedMessage {
     }
     if (hotkeys != null) {
       _result.hotkeys.addAll(hotkeys);
+    }
+    if (theme != null) {
+      _result.theme = theme;
     }
     return _result;
   }
@@ -119,6 +124,15 @@ class UiSettings extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.Map<$core.String, Hotkeys> get hotkeys => $_getMap(1);
+
+  @$pb.TagNumber(3)
+  $core.String get theme => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set theme($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasTheme() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTheme() => clearField(3);
 }
 
 class SettingsCategory extends $pb.GeneratedMessage {

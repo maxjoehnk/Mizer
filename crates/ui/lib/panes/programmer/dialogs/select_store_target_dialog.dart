@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mizer/i18n.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/dialog/dialog_tile.dart';
 import 'package:mizer/widgets/dialog/grid_dialog.dart';
-import 'package:mizer/i18n.dart';
 
 enum StoreTarget {
   Group,
@@ -80,19 +81,20 @@ class StoreTargetTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MizerTheme theme = Theme.of(context).mizerTheme;
     var name = storeTargetNames[target]!();
-    return DialogTile(child: Center(child: RichText(text: _highlightHotkey(name))), onClick: onSelect);
+    return DialogTile(child: Center(child: RichText(text: _highlightHotkey(name, theme.text))), onClick: onSelect);
   }
 
-  InlineSpan _highlightHotkey(String text) {
+  InlineSpan _highlightHotkey(String text, Color color) {
     return TextSpan(
       children: [
         TextSpan(
           text: text[0],
           style: TextStyle(
-              decoration: TextDecoration.underline, fontWeight: FontWeight.bold, fontSize: 16),
+              decoration: TextDecoration.underline, fontWeight: FontWeight.bold, fontSize: 16, color: color),
         ),
-        TextSpan(text: text.substring(1), style: TextStyle(fontSize: 16)),
+        TextSpan(text: text.substring(1), style: TextStyle(fontSize: 16, color: color)),
       ],
     );
   }

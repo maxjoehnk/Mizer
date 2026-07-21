@@ -1,4 +1,5 @@
 ///
+import 'dart:convert' as $convert;
 //  Generated code. Do not modify.
 //  source: settings.proto
 //
@@ -6,7 +7,6 @@
 // ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
-import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
 @$core.Deprecated('Use settingsDescriptor instead')
 const Settings$json = const {
@@ -25,6 +25,7 @@ const UiSettings$json = const {
   '2': const [
     const {'1': 'language', '3': 1, '4': 1, '5': 9, '10': 'language'},
     const {'1': 'hotkeys', '3': 2, '4': 3, '5': 11, '6': '.mizer.settings.UiSettings.HotkeysEntry', '10': 'hotkeys'},
+    const {'1': 'theme', '3': 3, '4': 1, '5': 9, '10': 'theme'},
   ],
   '3': const [UiSettings_HotkeysEntry$json],
 };
@@ -40,7 +41,7 @@ const UiSettings_HotkeysEntry$json = const {
 };
 
 /// Descriptor for `UiSettings`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List uiSettingsDescriptor = $convert.base64Decode('CgpVaVNldHRpbmdzEhoKCGxhbmd1YWdlGAEgASgJUghsYW5ndWFnZRJBCgdob3RrZXlzGAIgAygLMicubWl6ZXIuc2V0dGluZ3MuVWlTZXR0aW5ncy5Ib3RrZXlzRW50cnlSB2hvdGtleXMaUwoMSG90a2V5c0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5Ei0KBXZhbHVlGAIgASgLMhcubWl6ZXIuc2V0dGluZ3MuSG90a2V5c1IFdmFsdWU6AjgB');
+final $typed_data.Uint8List uiSettingsDescriptor = $convert.base64Decode('CgpVaVNldHRpbmdzEhoKCGxhbmd1YWdlGAEgASgJUghsYW5ndWFnZRJBCgdob3RrZXlzGAIgAygLMicubWl6ZXIuc2V0dGluZ3MuVWlTZXR0aW5ncy5Ib3RrZXlzRW50cnlSB2hvdGtleXMSFAoFdGhlbWUYAyABKAlSBXRoZW1lGlMKDEhvdGtleXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRItCgV2YWx1ZRgCIAEoCzIXLm1pemVyLnNldHRpbmdzLkhvdGtleXNSBXZhbHVlOgI4AQ==');
 @$core.Deprecated('Use settingsCategoryDescriptor instead')
 const SettingsCategory$json = const {
   '1': 'SettingsCategory',

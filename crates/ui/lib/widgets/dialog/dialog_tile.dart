@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
-
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
 class DialogTile extends StatelessWidget {
@@ -12,14 +12,15 @@ class DialogTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MizerTheme mizerTheme = Theme.of(context).mizerTheme;
     return Hoverable(
         builder: (hovered) {
           return Container(
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-                border: Border.all(color: Grey700, width: 2),
+                border: Border.all(color: mizerTheme.tileBorder, width: 2),
                 borderRadius: BorderRadius.circular(BORDER_RADIUS),
-                color: hovered ? Grey700 : Grey800),
+                color: hovered ? mizerTheme.tileHover : mizerTheme.tileBackground),
             width: DIALOG_TILE_SIZE,
             height: DIALOG_TILE_SIZE,
             child: IntrinsicWidth(

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
-import 'package:mizer/consts.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/models/node_model.dart';
-import 'package:mizer/widgets/hoverable.dart';
-
+import 'package:mizer/theme.dart';
 import 'package:mizer/views/nodes/consts.dart';
+import 'package:mizer/views/nodes/models/node_model.dart';
 import 'package:mizer/views/nodes/widgets/node/tabs.dart';
+import 'package:mizer/widgets/hoverable.dart';
 
 class NodeFooter extends StatelessWidget {
   final Function(NodeTab) onSelectTab;
@@ -25,9 +24,10 @@ class NodeFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    MizerTheme theme = Theme.of(context).mizerTheme;
     return Container(
       decoration: BoxDecoration(
-        color: Grey700,
+        color: theme.tileBorder,
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(INNER_RADIUS)),
       ),
       height: 24,
@@ -45,13 +45,14 @@ class NodeFooter extends StatelessWidget {
 
   Widget _tab(BuildContext context, IconData icon, NodeTab display) {
     var selected = display == selectedTab;
+    MizerTheme theme = Theme.of(context).mizerTheme;
 
     return Hoverable(
       onTap: () => onSelectTab(display),
       builder: (hovered) {
         var color = selected ? Colors.white : Colors.white54;
         var background =
-            selected ? Grey500 : (hovered ? Grey600 : Colors.transparent);
+            selected ? theme.tileSelected : (hovered ? theme.tileHover : Colors.transparent);
 
         return Container(
             padding: const EdgeInsets.all(4),

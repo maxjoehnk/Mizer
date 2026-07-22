@@ -99,6 +99,10 @@ impl ProcessingNode for EnvelopeNode {
             state.calculate_phase(&adsr, value, clock.delta);
         }
 
+        if let EnvelopePhase::Attack { to, .. } = state.phase && adsr.attack == 0. {
+            state.phase = EnvelopePhase::Decay { from: to };
+        }
+
         let value = match state.phase {
             EnvelopePhase::Attack { to, from } => {
                 if adsr.attack == 0. {
@@ -119,14 +123,16 @@ impl ProcessingNode for EnvelopeNode {
                 from * release
             }
             EnvelopePhase::Decay { from } => {
+                let sustain = adsr.sustain * state.previous_target;
+
                 if adsr.decay == 0. {
-                    adsr.sustain
+                    sustain
                 } else {
                     let beat = state.beat - adsr.attack;
-                    beat.linear_extrapolate((0., adsr.decay), (from, adsr.sustain))
+                    beat.linear_extrapolate((0., adsr.decay), (from, sustain))
                 }
             }
-            EnvelopePhase::Sustain => adsr.sustain,
+            EnvelopePhase::Sustain => adsr.sustain * state.previous_target,
         };
         context.write_port(VALUE_OUTPUT, value);
         context.push_history_value(value);
@@ -451,6 +457,37 @@ mod tests {
             ..ClockFrame::default()
         });
         context.when_read_port(VALUE_INPUT).returns(Some(1.0));
+        node.process(&context, &mut state)?;
+        context.when_clock().returns(ClockFrame {
+            frame: 1.0,
+            delta: 1.0,
+            ..ClockFrame::default()
+        });
+
+        node.process(&context, &mut state)?;
+
+        context.expect_write_port(VALUE_OUTPUT, expected);
+        Ok(())
+    }
+
+    #[test_case(0.5, 1.0, 0.5)]
+    #[test_case(1.0, 0.5, 0.5)]
+    #[test_case(0.5, 0.5, 0.25)]
+    fn process_should_multiply_sustain_by_input(input: f64, sustain: f64, expected: f64) -> anyhow::Result<()> {
+        let node = EnvelopeNode {
+            release: 0.,
+            attack: 0.,
+            decay: 0.,
+            sustain,
+        };
+        let mut state = node.create_state();
+        let mut context = NodeContextMock::new();
+        context.when_clock().returns(ClockFrame {
+            frame: 0.0,
+            delta: 0.0,
+            ..ClockFrame::default()
+        });
+        context.when_read_port(VALUE_INPUT).returns(Some(input));
         node.process(&context, &mut state)?;
         context.when_clock().returns(ClockFrame {
             frame: 1.0,

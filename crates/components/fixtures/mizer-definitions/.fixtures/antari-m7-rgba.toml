@@ -1,0 +1,54 @@
+[definition]
+name = "M-7"
+manufacturer = "Antari"
+tags = ["Fogger"]
+
+[[mode]]
+name = "Default"
+channels = [
+    "Fog",
+    "Red",
+    "Green",
+    "Blue",
+    "Amber",
+    "Chase",
+    "Chase Speed",
+    "Master Dimmer",
+    "Strobe"
+]
+
+[[channel]]
+name = "Fog"
+control = "generic"
+
+[[channel]]
+name = "Red"
+control = "color_red"
+
+[[channel]]
+name = "Green"
+control = "color_green"
+
+[[channel]]
+name = "Blue"
+control = "color_blue"
+
+[[channel]]
+name = "Amber"
+control = "color_amber"
+
+[[channel]]
+name = "Chase"
+control = "generic"
+
+[[channel]]
+name = "Chase Speed"
+control = "generic"
+
+[[channel]]
+name = "Master Dimmer"
+control = "intensity"
+
+[[channel]]
+name = "Strobe"
+control = "shutter"

@@ -1,0 +1,157 @@
+[definition]
+name = "SunX.10"
+manufacturer = "Litecraft"
+tags = ["Pixel Bar"]
+
+[[mode]]
+name = "10 Channels"
+
+[[mode.pixel]]
+name = "Pixel 1"
+channels = ["Pixel 1"]
+
+[[mode.pixel]]
+name = "Pixel 2"
+channels = ["Pixel 2"]
+
+[[mode.pixel]]
+name = "Pixel 3"
+channels = ["Pixel 3"]
+
+[[mode.pixel]]
+name = "Pixel 4"
+channels = ["Pixel 4"]
+
+[[mode.pixel]]
+name = "Pixel 5"
+channels = ["Pixel 5"]
+
+[[mode.pixel]]
+name = "Pixel 6"
+channels = ["Pixel 6"]
+
+[[mode.pixel]]
+name = "Pixel 7"
+channels = ["Pixel 7"]
+
+[[mode.pixel]]
+name = "Pixel 8"
+channels = ["Pixel 8"]
+
+[[mode.pixel]]
+name = "Pixel 9"
+channels = ["Pixel 9"]
+
+[[mode.pixel]]
+name = "Pixel 10"
+channels = ["Pixel 10"]
+
+[[mode]]
+name = "15 Channels"
+channels = [
+"Program",
+    "Speed",
+    "Master",
+    "Strobe",
+    "Dimmer Curve"
+]
+
+[[mode.pixel]]
+name = "Pixel 1"
+channels = ["Pixel 1"]
+
+[[mode.pixel]]
+name = "Pixel 2"
+channels = ["Pixel 2"]
+
+[[mode.pixel]]
+name = "Pixel 3"
+channels = ["Pixel 3"]
+
+[[mode.pixel]]
+name = "Pixel 4"
+channels = ["Pixel 4"]
+
+[[mode.pixel]]
+name = "Pixel 5"
+channels = ["Pixel 5"]
+
+[[mode.pixel]]
+name = "Pixel 6"
+channels = ["Pixel 6"]
+
+[[mode.pixel]]
+name = "Pixel 7"
+channels = ["Pixel 7"]
+
+[[mode.pixel]]
+name = "Pixel 8"
+channels = ["Pixel 8"]
+
+[[mode.pixel]]
+name = "Pixel 9"
+channels = ["Pixel 9"]
+
+[[mode.pixel]]
+name = "Pixel 10"
+channels = ["Pixel 10"]
+
+[[channel]]
+name = "Pixel 1"
+control = "intensity"
+
+[[channel]]
+name = "Pixel 2"
+control = "intensity"
+
+[[channel]]
+name = "Pixel 3"
+control = "intensity"
+
+[[channel]]
+name = "Pixel 4"
+control = "intensity"
+
+[[channel]]
+name = "Pixel 5"
+control = "intensity"
+
+[[channel]]
+name = "Pixel 6"
+control = "intensity"
+
+[[channel]]
+name = "Pixel 7"
+control = "intensity"
+
+[[channel]]
+name = "Pixel 8"
+control = "intensity"
+
+[[channel]]
+name = "Pixel 9"
+control = "intensity"
+
+[[channel]]
+name = "Pixel 10"
+control = "intensity"
+
+[[channel]]
+name = "Program"
+control = "generic"
+
+[[channel]]
+name = "Speed"
+control = "generic"
+
+[[channel]]
+name = "Master"
+control = "intensity"
+
+[[channel]]
+name = "Strobe"
+control = "shutter"
+
+[[channel]]
+name = "Dimmer Curve"
+control = "generic"

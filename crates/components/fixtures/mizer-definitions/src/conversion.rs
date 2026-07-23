@@ -65,6 +65,9 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                         MizerFixtureControl::ColorBlue => {
                             fixture_color_builder.blue(FixtureControlChannel::Channel(ch))
                         }
+                        MizerFixtureControl::ColorAmber => {
+                            fixture_color_builder.amber(FixtureControlChannel::Channel(ch))
+                        }
                         MizerFixtureControl::Pan => {
                             fixture_controls.pan = Some(AxisGroup {
                                 channel: FixtureControlChannel::Channel(ch),
@@ -139,6 +142,9 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                                 }
                                 MizerFixtureControl::ColorBlue => {
                                     color_builder.blue(SubFixtureControlChannel::Channel(ch))
+                                }
+                                MizerFixtureControl::ColorAmber => {
+                                    color_builder.amber(SubFixtureControlChannel::Channel(ch))
                                 }
                                 MizerFixtureControl::Pan => {
                                     controls.pan = Some(AxisGroup {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/popup/popup_dmx_address_input.dart';
 import 'package:mizer/widgets/popup/popup_input.dart';
 import 'package:mizer/widgets/popup/popup_select.dart';
@@ -106,9 +107,10 @@ Widget addressField(BuildContext context, Fixture fixture, Function(FixtureAddre
 
 Widget invertedAxisField(
     BuildContext context, String title, bool inverted, Function(bool) onUpdate) {
+  var mizerTheme = Theme.of(context).mizerTheme;
   return PopupTableCell(
       child: Text(inverted ? "Inverted".i18n : "Normal".i18n,
-          style: inverted ? null : TextStyle(color: Colors.white54)),
+          style: TextStyle(color: inverted ? mizerTheme.text : mizerTheme.textDimmed)),
       popup: PopupSelect(title: title, items: [
         SelectItem(
             title: "Normal".i18n,
@@ -121,9 +123,10 @@ Widget invertedAxisField(
 
 Widget reversePixelField(
     BuildContext context, String title, bool reversed, Function(bool) onUpdate) {
+  var mizerTheme = Theme.of(context).mizerTheme;
   return PopupTableCell(
       child: Text(reversed ? "Reversed".i18n : "Normal".i18n,
-          style: reversed ? null : TextStyle(color: Colors.white54)),
+          style: TextStyle(color: reversed ? mizerTheme.text : mizerTheme.textDimmed)),
       popup: PopupSelect(title: title, items: [
         SelectItem(
             title: "Normal".i18n,

@@ -173,7 +173,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: hovered?.description != null
-                        ? [Text(hovered!.description!, style: TextStyle(color: Colors.white70))]
+                        ? [Text(hovered!.description!, style: TextStyle(color: Theme.of(context).mizerTheme.textDimmed))]
                         : []),
               ),
             ),

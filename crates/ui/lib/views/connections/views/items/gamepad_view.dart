@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/api/plugin/ffi/connections.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/theme.dart';
 import 'package:provider/provider.dart';
 
 class GamepadConnectionView extends StatefulWidget {
@@ -335,15 +336,16 @@ class Misc extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: CustomPaint(painter: MiscPainter(state), size: Size(50, 100)),
+      child: CustomPaint(painter: MiscPainter(state, Theme.of(context).mizerTheme), size: Size(50, 100)),
     );
   }
 }
 
 class MiscPainter extends CustomPainter {
+  final MizerTheme theme;
   final GamepadState state;
 
-  MiscPainter(this.state);
+  MiscPainter(this.state, this.theme);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -366,7 +368,7 @@ class MiscPainter extends CustomPainter {
       canvas.drawRRect(buttonRect.deflate(4), pressedPaint);
     }
     var painter = TextPainter(
-        text: TextSpan(text: text, style: TextStyle(color: Colors.white54)),
+        text: TextSpan(text: text, style: TextStyle(color: theme.textDimmed)),
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.center);
     painter.layout(maxWidth: size.width);
@@ -378,6 +380,7 @@ class MiscPainter extends CustomPainter {
   bool shouldRepaint(MiscPainter oldDelegate) {
     return oldDelegate.state.select != state.select ||
         oldDelegate.state.start != state.start ||
-        oldDelegate.state.mode != state.mode;
+        oldDelegate.state.mode != state.mode ||
+        theme != oldDelegate.theme;
   }
 }

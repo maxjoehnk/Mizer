@@ -20,7 +20,7 @@ class PropertyGroup extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             alignment: Alignment.centerLeft,
             height: GRID_2_SIZE,
-            color: theme.tileBorder,
+            color: theme.fieldGroupBackground,
             child: Text(this.title)),
         SizedBox(height: PANEL_GAP_SIZE),
         ...children

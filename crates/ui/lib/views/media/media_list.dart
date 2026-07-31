@@ -68,7 +68,7 @@ class _MediaListState extends State<MediaList> {
                   children: widget.tags
                       .map((e) => FilterChip(
                           label: Text(e.name),
-                          selectedColor: Colors.blueGrey.shade500,
+                          selectedColor: Colors.blueGrey.shade500, // TODO: change color
                           selected: _selectedTags.contains(e),
                           onSelected: (selected) => setState(() {
                                 if (selected) {

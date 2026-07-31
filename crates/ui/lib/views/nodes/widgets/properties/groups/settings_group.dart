@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/extensions/map_extensions.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:protobuf/protobuf.dart';
 
@@ -46,11 +47,16 @@ class NodeSettingsPane extends StatelessWidget {
   }
 
   Iterable<Widget> getSettings(BuildContext context) {
+    MizerTheme theme = Theme.of(context).mizerTheme;
     return settings
         .groupListsBy((setting) => setting.hasCategory() ? setting.category : "")
         .mapToList((category, settings) {
           return [
-            if (category.isNotEmpty) Text(category, style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white.withOpacity(0.9))),
+            if (category.isNotEmpty) Container(
+              padding: const EdgeInsets.all(4.0),
+              color: theme.fieldGroupBackground,
+              child: Text(category, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleSmall),
+            ),
             ...settings.map((setting) => getSetting(setting)),
           ];
         })

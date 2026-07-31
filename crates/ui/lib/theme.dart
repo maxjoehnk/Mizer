@@ -65,6 +65,7 @@ class MizerTheme extends ThemeExtension<MizerTheme> {
   final Color fieldValue;
   final Color fieldAction;
   final Color fieldActionHovered;
+  final Color fieldGroupBackground;
 
   final Color tableSelected;
   final Color tableHovered;
@@ -81,6 +82,11 @@ class MizerTheme extends ThemeExtension<MizerTheme> {
   final Color commandLineInfo;
   final Color commandLineWarning;
   final Color commandLineError;
+
+  final Color controlColor;
+  final Color controlBackground;
+  final Color controlHoverBackground;
+  final Color controlHighlightColor;
 
   late final Map<ConsoleLevel, Color> levelColors;
 
@@ -112,12 +118,22 @@ class MizerTheme extends ThemeExtension<MizerTheme> {
       required this.fieldValue,
       required this.fieldAction,
       required this.fieldActionHovered,
+      required this.fieldGroupBackground,
       required this.tableSelected,
       required this.tableHovered,
       required this.dropdownBackground,
       required this.text,
       required this.textDimmed,
-      required this.textDisabled, required this.grid, required this.commandLineDebug, required this.commandLineInfo, required this.commandLineWarning, required this.commandLineError}) {
+      required this.textDisabled,
+      required this.grid,
+      required this.commandLineDebug,
+      required this.commandLineInfo,
+      required this.commandLineWarning,
+      required this.commandLineError,
+      required this.controlColor,
+      required this.controlBackground,
+      required this.controlHoverBackground,
+      required this.controlHighlightColor}) {
     levelColors = {
       ConsoleLevel.DEBUG: this.commandLineDebug,
       ConsoleLevel.INFO: this.commandLineInfo,
@@ -155,6 +171,7 @@ class MizerTheme extends ThemeExtension<MizerTheme> {
       fieldValue: Grey600,
       fieldAction: Grey700,
       fieldActionHovered: Grey500,
+      fieldGroupBackground: Grey800,
       tableSelected: Grey800,
       tableHovered: Grey700,
       dropdownBackground: Grey800,
@@ -166,6 +183,10 @@ class MizerTheme extends ThemeExtension<MizerTheme> {
       commandLineInfo: Colors.green.shade300,
       commandLineWarning: Colors.orange.shade300,
       commandLineError: Colors.red.shade300,
+      controlColor: Grey800,
+      controlBackground: Grey700,
+      controlHoverBackground: Grey700,
+      controlHighlightColor: Grey900,
     );
   }
 
@@ -198,6 +219,7 @@ class MizerTheme extends ThemeExtension<MizerTheme> {
       fieldValue: White600,
       fieldAction: White700,
       fieldActionHovered: White500,
+      fieldGroupBackground: White800,
       tableSelected: White800,
       tableHovered: White700,
       dropdownBackground: White800,
@@ -209,6 +231,10 @@ class MizerTheme extends ThemeExtension<MizerTheme> {
       commandLineInfo: Colors.green.shade800,
       commandLineWarning: Colors.yellow.shade800,
       commandLineError: Colors.red.shade900,
+      controlColor: White800,
+      controlBackground: White700,
+      controlHoverBackground: White700,
+      controlHighlightColor: White900,
     );
   }
 
@@ -250,6 +276,7 @@ class MizerTheme extends ThemeExtension<MizerTheme> {
       fieldLabel: Color.lerp(fieldLabel, other.fieldLabel, t)!,
       fieldValue: Color.lerp(fieldValue, other.fieldValue, t)!,
       fieldAction: Color.lerp(fieldAction, other.fieldAction, t)!,
+      fieldGroupBackground: Color.lerp(fieldGroupBackground, other.fieldGroupBackground, t)!,
       fieldActionHovered: Color.lerp(fieldActionHovered, other.fieldActionHovered, t)!,
       tableSelected: Color.lerp(tableSelected, other.tableSelected, t)!,
       tableHovered: Color.lerp(tableHovered, other.tableHovered, t)!,
@@ -262,6 +289,10 @@ class MizerTheme extends ThemeExtension<MizerTheme> {
       commandLineInfo: Color.lerp(commandLineInfo, other.commandLineInfo, t)!,
       commandLineWarning: Color.lerp(commandLineWarning, other.commandLineWarning, t)!,
       commandLineError: Color.lerp(commandLineError, other.commandLineError, t)!,
+      controlColor: Color.lerp(controlColor, other.controlColor, t)!,
+      controlBackground: Color.lerp(controlBackground, other.controlBackground, t)!,
+      controlHoverBackground: Color.lerp(controlHoverBackground, other.controlHoverBackground, t)!,
+      controlHighlightColor: Color.lerp(controlHighlightColor, other.controlHighlightColor, t)!,
     );
   }
 }

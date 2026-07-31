@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/field/field.dart';
 import 'package:mizer/widgets/text_field_focus.dart';
 
@@ -249,6 +250,7 @@ class _Bar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MizerTheme theme = Theme.of(context).mizerTheme;
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 2),
         alignment: Alignment.center,
@@ -260,8 +262,8 @@ class _Bar extends StatelessWidget {
           gradient: LinearGradient(colors: [
             Colors.deepOrange.shade500,
             Colors.deepOrange.shade500,
-            Grey600,
-            Grey600,
+            theme.fieldValue,
+            theme.fieldValue,
           ], stops: [
             0,
             this.value,

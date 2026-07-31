@@ -113,7 +113,7 @@ class _EncoderInputState extends State<EncoderInput> {
               ))),
           child: Container(
             decoration: BoxDecoration(
-              color: widget.color ?? theme.tileBackground
+              color: widget.color ?? theme.controlBackground
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -122,8 +122,8 @@ class _EncoderInputState extends State<EncoderInput> {
                   Container(
                       height: 30,
                       color: widget.highlight == true
-                          ? HIGHLIGHT_CONTROL_COLOR
-                          : DEFAULT_CONTROL_COLOR,
+                          ? theme.controlHighlightColor
+                          : theme.controlColor,
                       child: Center(
                         child: HighContrastText(widget.label ?? "",
                             textAlign: TextAlign.center,
@@ -146,14 +146,14 @@ class _EncoderInputState extends State<EncoderInput> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: widget.highlight == true
-                                    ? HIGHLIGHT_CONTROL_COLOR
-                                    : DEFAULT_CONTROL_COLOR,
+                                    ? theme.controlHighlightColor
+                                    : theme.controlColor,
                               ),
                             ),
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 gradient: SweepGradient(
-                                    colors: [Colors.deepOrange, DEFAULT_CONTROL_COLOR],
+                                    colors: [Colors.deepOrange, theme.controlColor],
                                     stops: [correctedValue, correctedValue],
                                     transform: GradientRotation(-1 * pi))),
                             alignment: AlignmentDirectional.center),

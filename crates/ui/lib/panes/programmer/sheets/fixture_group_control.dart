@@ -187,8 +187,9 @@ class FixtureControlPresets extends StatelessWidget {
   }
 
   Widget _child(BuildContext context, ControlPreset preset) {
+    bool darkMode = Theme.of(context).brightness == Brightness.dark;
     if (preset.image != null) {
-      return _image(preset.image!);
+      return _image(preset.image!, darkMode);
     }
     if (preset.colors != null && preset.colors!.isNotEmpty) {
       var colors = List.generate(preset.colors!.length, (index) {
@@ -206,11 +207,11 @@ class FixtureControlPresets extends StatelessWidget {
     return Container();
   }
 
-  Widget _image(ControlPresetImage image) {
+  Widget _image(ControlPresetImage image, bool darkMode) {
     if (image.raster != null) {
       return Image.memory(image.raster!);
     } else {
-      return SvgPicture.string(image.svg!, color: Colors.white);
+      return SvgPicture.string(image.svg!, color: darkMode ? Colors.white : Colors.black);
     }
   }
 }

@@ -13,6 +13,7 @@ class HighContrastText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Stack(
       children: [
         AutoSizeText(text,
@@ -21,8 +22,8 @@ class HighContrastText extends StatelessWidget {
             style: TextStyle(
               fontSize: fontSize,
               foreground: Paint()
-                ..color = Colors.black
-                ..strokeWidth = 3
+                ..color = isDark ? Colors.black : Colors.white
+                ..strokeWidth = isDark ? 3 : 2
                 ..style = PaintingStyle.stroke,
             ),
             overflow: overflow,
@@ -33,7 +34,7 @@ class HighContrastText extends StatelessWidget {
             wrapWords: this.autoSize?.wrapWords ?? true,
             style: TextStyle(
               fontSize: fontSize,
-              color: Colors.white,
+              color: isDark ? Colors.white : Colors.black
             ),
             overflow: overflow,
             textAlign: textAlign,

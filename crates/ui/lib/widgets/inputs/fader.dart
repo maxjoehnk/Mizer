@@ -1,10 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mizer/consts.dart';
+import 'package:mizer/theme.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
-
-import 'decoration.dart';
 
 class FaderInput extends StatefulWidget {
   final Function(double)? onValue;
@@ -45,6 +43,7 @@ class _FaderInputState extends State<FaderInput> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).mizerTheme;
     double y = 1 - (this.value * 2);
     var percentage = (value * 100).toStringAsFixed(1);
     return Listener(
@@ -68,8 +67,8 @@ class _FaderInputState extends State<FaderInput> {
             Container(
                 height: 30,
                 color: widget.highlight == true
-                    ? HIGHLIGHT_CONTROL_COLOR
-                    : Grey800,
+                    ? theme.controlHighlightColor
+                    : theme.controlColor,
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
                 child: Center(
                   child: HighContrastText(
@@ -87,7 +86,9 @@ class _FaderInputState extends State<FaderInput> {
                   onVerticalDragUpdate: (update) => _onInput(constraints, update.localPosition),
                   onTapDown: (update) => _onInput(constraints, update.localPosition),
                   child: Container(
-                    decoration: BoxDecoration(color: Grey700),
+                    decoration: BoxDecoration(
+                        color: widget.color ?? theme.controlBackground
+                    ),
                     // decoration: ControlDecoration(
                     //     gradient: widget.gradient, color: widget.color, highlight: widget.highlight),
                     child: MouseRegion(
@@ -96,8 +97,8 @@ class _FaderInputState extends State<FaderInput> {
                           alignment: AlignmentDirectional(0, y),
                           child: Container(
                               color: widget.highlight == true
-                                  ? HIGHLIGHT_CONTROL_COLOR
-                                  : DEFAULT_CONTROL_COLOR,
+                                  ? theme.controlHighlightColor
+                                  : theme.controlColor,
                               alignment: AlignmentDirectional.center,
                               constraints: BoxConstraints.expand(height: 30),
                               child: Text("$percentage%", textAlign: TextAlign.center))),

@@ -2,7 +2,7 @@
 
 <img src="assets/logo@512.png" width="128px" alt="Mizer Logo" />
 
-A node based visualization tool for live scenarios (e.g. concerts and clubs).
+A node-based lighting control software.
 
 ![Nodes View](docs/screenshots/nodes.png)
 

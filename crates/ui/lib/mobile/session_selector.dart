@@ -2,7 +2,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/mobile/dialogs/direct_connect.dart';
+import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/table/table.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 
 class SessionSelector extends StatefulWidget {
@@ -50,36 +53,41 @@ class _SessionSelectorState extends State<SessionSelector> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Session'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => _refresh(),
-          ),
-        ],
+        backgroundColor: Grey800,
+        shadowColor: Colors.transparent,
+        title: Text('Mizer'),
       ),
-      body: ListView(children: [
-        for (final session in _sessions)
-          ListTile(
-            title: Text(session.project ?? ""),
-            isThreeLine: true,
-            subtitle: Text("${session.host.name}\n${session.host.host}"),
-            onTap: () {
+      body: Panel(
+        label: "Connect to Session",
+        actions: [
+          PanelActionModel(
+            label: "Refresh",
+            onClick: () => _refresh(),
+          ),
+          PanelActionModel(
+            label: "Direct Connect",
+            onClick: () async {
+            Session? session = await showDialog(context: context, builder: (context) => DirectConnectDialog());
+            if (session != null) {
               setState(() {
                 _session = session;
               });
-            },
-          ),
-        SizedBox(height: 16),
-        TextButton(onPressed: () async {
-          Session? session = await showDialog(context: context, builder: (context) => DirectConnectDialog());
-          if (session != null) {
-            setState(() {
-              _session = session;
-            });
-          }
-        }, child: Text("Direct Connect"))
-      ]),
+            }
+          }),
+        ],
+        child: MizerTable(rows: [
+          for (final session in _sessions)
+            MizerTableRow(
+              cells: [
+                Text(session.project ?? ""),
+                Text("${session.host.name} (${session.host.host})"),
+              ],
+              onTap: () => setState(() {
+                  _session = session;
+                })
+            )
+        ], columns: [Text("Project"), Text("Host")]),
+      ),
     );
   }
 

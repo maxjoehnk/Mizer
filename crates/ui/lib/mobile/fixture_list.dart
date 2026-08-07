@@ -1,11 +1,12 @@
+import 'package:async/async.dart' show StreamGroup;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
-import 'package:async/async.dart' show StreamGroup;
 
 class FixtureList extends StatefulWidget {
   @override
@@ -84,31 +85,27 @@ class _FixtureListState extends State<FixtureList> {
   }
 
   Widget _child(List<Fixture> fixtures, ProgrammerState programmerState) {
-    return ListView(
-        children: fixtures.map((fixture) {
+    return MizerTable.builder(itemBuilder: (context, i) {
+      var fixture = fixtures[i];
       var selected = programmerState.activeFixtures.contains(FixtureId(fixture: fixture.id));
-      return ListTile(
-        title: Text(fixture.name),
-        subtitle: Text("${fixture.universe}.${fixture.channel.toString().padLeft(3, '0')}"),
-        leading: Text(fixture.id.toString()),
-        selected: selected,
-        selectedColor: Colors.deepOrangeAccent,
-        dense: true,
-        visualDensity: VisualDensity.compact,
-        onTap: () {
-          if (selected) {
-            _programmerApi.unselectFixtures([FixtureId(fixture: fixture.id)]);
-          } else {
-            _programmerApi.selectFixtures([FixtureId(fixture: fixture.id)]);
-          }
-        },
-        onLongPress: () {
-          _programmerApi.selectFixtures(fixtures
-              .where((f) => f.manufacturer == fixture.manufacturer && f.model == fixture.model)
-              .map((f) => FixtureId(fixture: f.id))
-              .toList());
-        },
-      );
-    }).toList());
+      return MizerTableRow(cells: [
+        Text(fixture.id.toString()),
+        Text(fixture.name),
+        Text("${fixture.universe}.${fixture.channel.toString().padLeft(3, '0')}")
+      ], selected: selected, onTap: () {
+        if (selected) {
+          _programmerApi.unselectFixtures([FixtureId(fixture: fixture.id)]);
+        } else {
+          _programmerApi.selectFixtures([FixtureId(fixture: fixture.id)]);
+        }
+      });
+    }, columns: [
+      Text("Id"),
+      Text("Name"),
+      Text("Address"),
+    ], columnWidths: {
+      0: FixedColumnWidth(70),
+      2: FixedColumnWidth(100),
+    }, childCount: fixtures.length);
   }
 }

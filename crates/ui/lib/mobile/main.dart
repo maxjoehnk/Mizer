@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:mizer/api/mobile/provider.dart';
 import 'package:mizer/app.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/mobile/fixture_list.dart';
 import 'package:mizer/mobile/navigation.dart';
@@ -31,6 +32,8 @@ class MizerMobileUi extends StatelessWidget {
             builder: (context, connection) => MobileApiProvider(
                 child: Scaffold(
                   appBar: AppBar(
+                    backgroundColor: Grey800,
+                    shadowColor: Colors.transparent,
                     title: Text('Mizer'),
                     actions: [
                       PopupMenuButton(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/navigation_bar/navigation_bar.dart';
 
 class MobileTab {
@@ -28,12 +28,12 @@ class _NavigationState extends State<Navigation> {
       children: [
         Expanded(child: widget.tabs[_selectedIndex].child),
         Container(
+            height: NAVIGATION_BAR_SIZE,
             color: Colors.grey.shade800,
-            height: 56,
             child: Row(children: [
               for (final (i, tab) in widget.tabs.indexed)
                 SizedBox(
-                  width: 64,
+                  width: NAVIGATION_BAR_SIZE,
                   child: NavigationBarItem(
                       icon: tab.icon,
                       label: tab.title,

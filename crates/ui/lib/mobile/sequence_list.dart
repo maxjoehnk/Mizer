@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/mobile/sequencer.dart';
 import 'package:mizer/protos/sequencer.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
@@ -37,24 +39,35 @@ class _SequenceListState extends State<SequenceList> {
   }
 
   Widget _list(BuildContext context, List<SequenceState> sequences) {
-    return GridView(
-      padding: const EdgeInsets.all(4),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 100,
-        mainAxisExtent: 100,
-        crossAxisSpacing: 4,
-        mainAxisSpacing: 4,
-        childAspectRatio: 1,
-      ),
-      children: sequences
-          .map((sequence) => _sequenceTile(context, sequence))
-          .toList(),
+    return PanelGrid(
+      children: sequences.map((sequence) => _sequenceTile(context, sequence)).toList(),
     );
   }
 
   Widget _sequenceTile(BuildContext context, SequenceState sequence) {
     double rate = sequence.rate;
     bool active = sequence.active;
+
+    return PanelGridTile(
+      active: active,
+      onTap: () {
+        if (active) {
+          context.read<SequencerRemoteApi>().sequenceStop(sequence.sequence);
+        } else {
+          context.read<SequencerRemoteApi>().sequenceGoForward(sequence.sequence);
+        }
+      },
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Row(children: [
+          Expanded(child: Text(sequence.sequence.toString(), textAlign: TextAlign.start)),
+          Text((rate * 100).toStringAsFixed(0) + "%"),
+        ]),
+        Spacer(),
+        AutoSizeText(sequence.name, textAlign: TextAlign.center, maxLines: 2),
+        Spacer(),
+      ]),
+    );
+
     return GestureDetector(
       child: Hoverable(
         onTap: () {

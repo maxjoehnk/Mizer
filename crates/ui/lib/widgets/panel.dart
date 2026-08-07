@@ -4,13 +4,12 @@ import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
+import 'package:mizer/widgets/field/text_input.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
+import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
 import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
-
-import 'package:mizer/widgets/field/text_input.dart';
-import 'package:mizer/widgets/hoverable.dart';
 
 class Panel extends StatefulWidget {
   final String? label;
@@ -297,7 +296,7 @@ class PanelAction extends StatelessWidget {
             : null,
         builder: (hovered) => Container(
           decoration: BoxDecoration(
-            border: Border(top: BorderSide(color: ActionBorder, width: 2)),
+            border: Border(top: BorderSide(color: action.activated ? Primary : ActionBorder, width: 2)),
             color: _getBackground(hovered),
           ),
           height: height,

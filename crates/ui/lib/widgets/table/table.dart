@@ -26,8 +26,9 @@ class MizerTable extends StatefulWidget {
       required this.columns,
       this.columnWidths,
       this.headerAlignment = AlignmentDirectional.centerStart,
+      int? childCount,
       Key? key})
-      : childrenDelegate = SliverTableRowChildBuilderDelegate(itemBuilder, columnWidths),
+      : childrenDelegate = SliverTableRowChildBuilderDelegate(itemBuilder, columnWidths, childCount),
         super();
 
   @override
@@ -41,8 +42,8 @@ class SliverTableRowListDelegate extends SliverChildListDelegate {
 
 class SliverTableRowChildBuilderDelegate extends SliverChildBuilderDelegate {
   SliverTableRowChildBuilderDelegate(MizerTableRow Function(BuildContext, int) itemBuilder,
-      Map<int, TableColumnWidth>? columnWidths)
-      : super((context, int) => _MizerTableRow(itemBuilder(context, int), columnWidths));
+      Map<int, TableColumnWidth>? columnWidths, int? childCount)
+      : super((context, int) => _MizerTableRow(itemBuilder(context, int), columnWidths), childCount: childCount);
 }
 
 class _MizerTableState extends State<MizerTable> {

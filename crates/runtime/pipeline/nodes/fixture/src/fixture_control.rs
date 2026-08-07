@@ -1,3 +1,4 @@
+use itertools::Itertools;
 use mizer_fixtures::definition::{ColorChannel, FixtureControl, FixtureFaderControl};
 use serde::{Deserialize, Serialize};
 
@@ -59,6 +60,7 @@ impl ConfigurableNode for FixtureControlNode {
         let fixtures = fixture_manager
             .get_fixtures()
             .into_iter()
+            .sorted_by_cached_key(|fixture| fixture.name.clone())
             .map(|fixture| IdVariant {
                 value: fixture.id,
                 label: fixture.name.clone(),

@@ -18,11 +18,12 @@ const ControlType$json = const {
     const {'1': 'DIAL', '2': 3},
     const {'1': 'LABEL', '2': 4},
     const {'1': 'TIMECODE', '2': 5},
+    const {'1': 'STEP_SEQUENCER', '2': 6},
   ],
 };
 
 /// Descriptor for `ControlType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List controlTypeDescriptor = $convert.base64Decode('CgtDb250cm9sVHlwZRIICgROT05FEAASCgoGQlVUVE9OEAESCQoFRkFERVIQAhIICgRESUFMEAMSCQoFTEFCRUwQBBIMCghUSU1FQ09ERRAF');
+final $typed_data.Uint8List controlTypeDescriptor = $convert.base64Decode('CgtDb250cm9sVHlwZRIICgROT05FEAASCgoGQlVUVE9OEAESCQoFRkFERVIQAhIICgRESUFMEAMSCQoFTEFCRUwQBBIMCghUSU1FQ09ERRAFEhIKDlNURVBfU0VRVUVOQ0VSEAY=');
 @$core.Deprecated('Use addLayoutRequestDescriptor instead')
 const AddLayoutRequest$json = const {
   '1': 'AddLayoutRequest',

@@ -1,21 +1,27 @@
 import 'dart:ffi' as ffi;
 import 'dart:io' as io;
 
-import 'package:mizer/api/plugin/ffi/status.dart';
-import 'package:mizer/api/plugin/ffi/timecode.dart';
-
 import 'package:mizer/api/plugin/ffi/bindings.dart';
 import 'package:mizer/api/plugin/ffi/connections.dart';
 import 'package:mizer/api/plugin/ffi/history.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/api/plugin/ffi/nodes.dart';
+import 'package:mizer/api/plugin/ffi/sequencer.dart';
+import 'package:mizer/api/plugin/ffi/status.dart';
+import 'package:mizer/api/plugin/ffi/timecode.dart';
+import 'package:mizer/api/plugin/ffi/transport.dart';
+
 import 'plans.dart';
 import 'programmer.dart';
-import 'package:mizer/api/plugin/ffi/sequencer.dart';
-import 'package:mizer/api/plugin/ffi/transport.dart';
 
 extension DoubleArray on Array_f64 {
   List<double> toList() {
+    return array.asTypedList(len);
+  }
+}
+
+extension BoolArray on Array_u8 {
+  List<int> toList() {
     return array.asTypedList(len);
   }
 }

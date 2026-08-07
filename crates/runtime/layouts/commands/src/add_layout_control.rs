@@ -86,6 +86,10 @@ fn get_default_size_for_node_type(node_type: NodeType) -> ControlSize {
             height: 2,
             width: 2,
         },
+        NodeType::StepSequencer => ControlSize {
+            width: 16,
+            height: 1
+        },
         _ => ControlSize::default(),
     }
 }

@@ -21,6 +21,7 @@ import 'package:mizer/views/layout/controls/group.dart';
 import 'package:mizer/views/layout/controls/label.dart';
 import 'package:mizer/views/layout/controls/preset.dart';
 import 'package:mizer/views/layout/controls/sequencer.dart';
+import 'package:mizer/views/layout/controls/step_sequencer.dart';
 import 'package:mizer/views/layout/controls/timecode.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/widgets/hotkey_selector/hotkey_selector.dart';
@@ -148,6 +149,8 @@ class _LayoutControlViewState extends State<LayoutControlView> {
       return LabelControl(pointer: widget.pointer, control: widget.control, color: _color);
     } else if (node?.type == "timecode") {
       return TimecodeControl(pointer: widget.pointer, control: widget.control, color: _color);
+    } else if (node?.type == "step-sequencer") {
+      return StepSequencerControl(pointer: widget.pointer, control: widget.control, color: _color);
     }
     return null;
   }

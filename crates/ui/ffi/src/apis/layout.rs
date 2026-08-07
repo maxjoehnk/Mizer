@@ -1,5 +1,5 @@
 use crate::apis::transport::Timecode;
-use crate::types::{drop_pointer, FFIFromPointer};
+use crate::types::{drop_pointer, Array, FFIFromPointer};
 use mizer_node::NodePath;
 use mizer_runtime::LayoutsView;
 use parking_lot::Mutex;
@@ -137,6 +137,21 @@ pub extern "C" fn read_control_color(
 }
 
 #[no_mangle]
+pub extern "C" fn read_step_sequencer_value(ptr: *const LayoutRef, path: *const c_char) -> FFIStepSequencerValue {
+    let path = unsafe { CStr::from_ptr(path) };
+    let path = path.to_str().unwrap();
+    let node_path = NodePath::from(path);
+    let ffi = Arc::from_pointer(ptr);
+
+    let (value, beat) = ffi.view.get_step_sequencer_value(&node_path).unwrap_or_default();
+    let value = value.into_iter().map(|v| v as u8).collect();
+
+    std::mem::forget(ffi);
+
+    FFIStepSequencerValue { value, beat }
+}
+
+#[no_mangle]
 pub extern "C" fn drop_layout_pointer(ptr: *const LayoutRef) {
     drop_pointer(ptr);
 }
@@ -157,4 +172,10 @@ pub struct FFIDialValue {
     pub min: f64,
     pub max: f64,
     pub is_percentage: u8,
+}
+
+#[repr(C)]
+pub struct FFIStepSequencerValue {
+    pub value: Array<u8>,
+    pub beat: u8,
 }

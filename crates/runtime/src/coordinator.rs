@@ -221,6 +221,17 @@ impl CoordinatorRuntime {
             .collect::<HashMap<_, _>>();
 
         self.layout_fader_view.write_control_colors(button_colors);
+
+        let step_sequencer_values = nodes
+            .iter()
+            .filter_map(|path| {
+                pipeline
+                    .get_node_with_state::<StepSequencerNode>(path)
+                    .map(|(node, state)| (path.clone(), (node.value(state), node.beat(state))))
+            })
+            .collect::<HashMap<_, _>>();
+
+        self.layout_fader_view.write_step_sequencer_values(step_sequencer_values);
     }
 
     fn get_preset_ids(&self) -> Vec<PresetId> {

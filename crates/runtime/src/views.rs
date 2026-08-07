@@ -31,6 +31,7 @@ pub struct LayoutsView {
     faders: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
     buttons: Arc<NonEmptyPinboard<HashMap<NodePath, bool>>>,
     dials: Arc<NonEmptyPinboard<HashMap<NodePath, Dial>>>,
+    step_sequencers: Arc<NonEmptyPinboard<HashMap<NodePath, ([bool; 16], u8)>>>,
     labels: Arc<NonEmptyPinboard<HashMap<NodePath, Arc<String>>>>,
     colors: Arc<NonEmptyPinboard<HashMap<NodePath, Color>>>,
     clocks: Arc<NonEmptyPinboard<HashMap<NodePath, Timecode>>>,
@@ -42,6 +43,7 @@ impl Default for LayoutsView {
             faders: Arc::new(NonEmptyPinboard::new(Default::default())),
             buttons: Arc::new(NonEmptyPinboard::new(Default::default())),
             dials: Arc::new(NonEmptyPinboard::new(Default::default())),
+            step_sequencers: Arc::new(NonEmptyPinboard::new(Default::default())),
             labels: Arc::new(NonEmptyPinboard::new(Default::default())),
             colors: Arc::new(NonEmptyPinboard::new(Default::default())),
             clocks: Arc::new(NonEmptyPinboard::new(Default::default())),
@@ -108,5 +110,15 @@ impl LayoutsView {
         let values = self.colors.read();
 
         values.get(path).copied()
+    }
+
+    pub fn get_step_sequencer_value(&self, path: &NodePath) -> Option<([bool; 16], u8)> {
+        let values = self.step_sequencers.read();
+
+        values.get(path).copied()
+    }
+
+    pub(crate) fn write_step_sequencer_values(&self, values: HashMap<NodePath, ([bool; 16], u8)>) {
+        self.step_sequencers.set(values);
     }
 }

@@ -198,6 +198,7 @@ impl From<ControlType> for mizer_node::NodeType {
             ControlType::Dial => Self::Dial,
             ControlType::Label => Self::Label,
             ControlType::Timecode => Self::Timecode,
+            ControlType::StepSequencer => Self::StepSequencer,
         }
     }
 }

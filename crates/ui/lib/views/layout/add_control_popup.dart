@@ -68,6 +68,7 @@ class AddControlPopup extends StatelessWidget {
             PopupItem(ControlType.DIAL, "Dial".i18n),
             PopupItem(ControlType.LABEL, "Label".i18n),
             PopupItem(ControlType.TIMECODE, "Timecode".i18n),
+            PopupItem(ControlType.STEP_SEQUENCER, "Step Sequencer".i18n),
           ]),
           if (controlNodes.isNotEmpty)
             PopupCategory(
@@ -120,6 +121,7 @@ List<String> CONTROL_NODES = [
   "button",
   "label",
   "timecode",
+  "step-sequencer"
 ];
 
 bool isControlNode(Node node) {

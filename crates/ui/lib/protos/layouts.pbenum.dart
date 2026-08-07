@@ -7,6 +7,7 @@
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
+
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class ControlType extends $pb.ProtobufEnum {
@@ -16,6 +17,7 @@ class ControlType extends $pb.ProtobufEnum {
   static const ControlType DIAL = ControlType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DIAL');
   static const ControlType LABEL = ControlType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LABEL');
   static const ControlType TIMECODE = ControlType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE');
+  static const ControlType STEP_SEQUENCER = ControlType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STEP_SEQUENCER');
 
   static const $core.List<ControlType> values = <ControlType> [
     NONE,
@@ -24,6 +26,7 @@ class ControlType extends $pb.ProtobufEnum {
     DIAL,
     LABEL,
     TIMECODE,
+    STEP_SEQUENCER,
   ];
 
   static final $core.Map<$core.int, ControlType> _byValue = $pb.ProtobufEnum.initByValue(values);

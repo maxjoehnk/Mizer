@@ -1,10 +1,11 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:mizer/protos/layouts.pb.dart';
-
 import 'package:mizer/api/plugin/ffi/bindings.dart';
 import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
+import 'package:mizer/protos/layouts.pb.dart';
+
+import 'api.dart';
 
 class LayoutsRefPointer extends FFIPointer<LayoutRef> {
   final FFIBindings _bindings;
@@ -60,8 +61,22 @@ class LayoutsRefPointer extends FFIPointer<LayoutRef> {
     );
   }
 
+  StepSequencerValue readStepSequencerValue(String path) {
+    var ffiPath = path.toNativeUtf8();
+    FFIStepSequencerValue result = this._bindings.read_step_sequencer_value(ptr, ffiPath.cast<ffi.Char>());
+
+    return StepSequencerValue(result.value.toList().map((e) => e > 0).toList(), result.beat);
+  }
+
   @override
   void disposePointer(ffi.Pointer<LayoutRef> _ptr) {
     this._bindings.drop_layout_pointer(_ptr);
   }
+}
+
+class StepSequencerValue {
+  final List<bool> values;
+  final int beat;
+
+  StepSequencerValue(this.values, this.beat);
 }

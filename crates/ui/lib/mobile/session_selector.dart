@@ -92,6 +92,9 @@ class _SessionSelectorState extends State<SessionSelector> {
   }
 
   void _refresh() {
+    setState(() {
+      _sessions.clear();
+    });
     _mdns.stop();
     _mdns.start().then((value) {
       log("Starting mdns lookup");
@@ -103,27 +106,35 @@ class _SessionSelectorState extends State<SessionSelector> {
             .first
             .then((value) {
           return InternetAddress.lookup(value.target).then((addresses) {
+            var ipv4 = addresses.where((a) => a.type == InternetAddressType.IPv4).firstOrNull;
+            var ipv6 = addresses.where((a) => a.type == InternetAddressType.IPv6).firstOrNull;
+            var ipAddress = ipv4 ?? ipv6 ?? addresses.first;
 
-            return Host(value.target, addresses.first.address, value.port);
+            return Host(
+                value.target,
+                ipAddress.address,
+                value.port);
           });
         });
 
-        var project = _mdns
+        Future<String> project = _mdns
             .lookup<TxtResourceRecord>(ResourceRecordQuery.text(ptr.domainName))
             .first
             .then((value) {
+              var path = value.text.replaceFirst("project=", "").trim();
 
-          return value;
+              return path.split("/").last.replaceAll(".yml", "");
         });
 
         return Future.wait([host, project]);
       }).forEach((values) {
         var host = values[0] as Host;
-        var project = values[1] as TxtResourceRecord;
-        var projectName = project.text.replaceFirst("project=", "").trim();
-        var session = Session(host, project: projectName);
+        var project = values[1] as String;
+        var session = Session(host, project: project);
         setState(() {
-          if (_sessions.any((s) => s.project == session.project)) {
+          var match = _sessions.indexWhere((s) => s.project == session.project);
+          if (match != -1) {
+            _sessions[match] = session;
             return;
           }
           print("Found session $session");

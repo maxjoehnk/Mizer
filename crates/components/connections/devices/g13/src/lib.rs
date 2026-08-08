@@ -1,7 +1,7 @@
 use flume::{unbounded, Receiver, Sender, TryRecvError};
 use futures::Stream;
 pub use g13::Keys;
-use g13::{G13Error, G13Manager, ModeLeds, Response, G13};
+use g13::{G13Manager, ModeLeds, Response, G13};
 use pinboard::Pinboard;
 use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
@@ -40,11 +40,7 @@ impl G13State {
     }
 
     fn update(&mut self) -> anyhow::Result<()> {
-        let response = self.device.read(Duration::from_millis(10));
-        if matches!(response, Err(G13Error::Libusb(rusb::Error::Timeout))) {
-            return Ok(());
-        }
-        let response = response?;
+        let response = self.device.read(Duration::from_millis(10))?;
         self.state.set(response);
 
         Ok(())

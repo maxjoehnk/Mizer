@@ -1,7 +1,7 @@
-use std::ops::Deref;
 use mizer_fixtures::definition::{ColorChannel, FixtureControl, FixtureFaderControl};
 use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 use serde::{Deserialize, Serialize};
+use std::ops::Deref;
 use std::time::Duration;
 
 use crate::contracts::FixtureController;
@@ -185,7 +185,7 @@ impl ProcessingNode for GroupControlNode {
             return Ok(());
         }
         if manager.get_group(self.group_id).is_none() {
-            tracing::error!("could not find group for id {}", self.group_id);
+            tracing::debug!("could not find group for id {}", self.group_id);
             return Ok(());
         };
 

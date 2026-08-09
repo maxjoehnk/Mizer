@@ -37,6 +37,13 @@ pub fn parse<TContext: CommandLineContext>(
             }
             .boxed())
         }
+        [Token::Action(Action::Delete), Token::Keyword(Keyword::Group), Token::Range(ref from, ref to)] => {
+            Ok(ast::Delete {
+                target_type: ast::Groups,
+                target_entity: ast::Range { from: from.as_id()?, to: to.as_id()? },
+            }
+                .boxed())
+        }
         [Token::Action(Action::Delete), Token::Keyword(Keyword::Sequence), Token::Value(ref value)] => {
             Ok(ast::Delete {
                 target_type: ast::Sequences,

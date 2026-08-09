@@ -109,7 +109,7 @@ default-members = ["crates/mizer"]
 resolver = "2"
 
 [workspace.dependencies]
-ffmpeg-the-third = "5.0"
+ffmpeg-the-third = "6.0"
 
 [profile.bench]
 lto = true

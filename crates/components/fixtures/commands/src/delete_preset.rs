@@ -36,12 +36,13 @@ impl<'a> Command<'a> for DeletePresetCommand {
             .delete_preset(self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown preset {}", self.id))?;
 
-        let path = pipeline
-            .find_node_path::<PresetNode>(|node| node.id == self.id)
+        let paths = pipeline
+            .find_node_paths::<PresetNode>(|node| node.id == self.id)
+            .into_iter()
             .cloned()
-            .ok_or_else(|| anyhow::anyhow!("Missing node for preset {}", self.id))?;
+            .collect();
 
-        let sub_cmd = DeleteNodesCommand { paths: vec![path] };
+        let sub_cmd = DeleteNodesCommand { paths };
         let (_, state) = delete_node_runner.apply(sub_cmd)?;
 
         Ok(((), (preset, state)))

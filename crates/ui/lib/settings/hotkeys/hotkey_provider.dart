@@ -3,10 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/settings/hotkeys/hotkey_manager.dart';
+import 'package:mizer/settings/hotkeys/keymap.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:provider/provider.dart';
-
-import 'package:mizer/settings/hotkeys/keymap.dart';
 
 const List<LogicalKeyboardKey> _modifierKeys = [
   LogicalKeyboardKey.control,
@@ -76,7 +75,7 @@ class _HotkeyShortcutsMappingState extends State<HotkeyShortcutsMapping> {
         var standardKeys = keys.where((element) => !_modifierKeys.contains(element)).toList();
 
         if (standardKeys.length != 1) {
-          throw Exception("Only one standard key is allowed");
+          throw Exception("Only one standard key is allowed, got ${key}");
         }
 
         return MapEntry(

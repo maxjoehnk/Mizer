@@ -50,8 +50,8 @@ pub fn get_programmer_hotkey(hotkey: ProgrammerHotkey) -> &'static str {
         ProgrammerHotkey::Store => "insert",
         ProgrammerHotkey::Highlight => "home",
         ProgrammerHotkey::AssignGroup => "ctrl+g",
-        ProgrammerHotkey::Next => "next",
-        ProgrammerHotkey::Prev => "prev",
+        ProgrammerHotkey::Next => "right",
+        ProgrammerHotkey::Prev => "left",
         ProgrammerHotkey::Shuffle => "ctrl+r",
     }
 }

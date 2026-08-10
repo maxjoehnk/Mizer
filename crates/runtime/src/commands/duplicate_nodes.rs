@@ -49,11 +49,11 @@ impl<'a> Command<'a> for DuplicateNodesCommand {
             }
         }
 
-
         let links = pipeline.list_links();
         let mut links: HashMap<_, _> = links
             .filter(|link| paths.contains(&link.source) && paths.contains(&link.target))
             .cloned()
+            .sorted_by_cached_key(|link| link.source.clone())
             .chunk_by(|link| link.source.clone())
             .into_iter()
             .map(|(path, links)| (path, links.collect::<Vec<_>>()))
@@ -91,5 +91,92 @@ impl<'a> Command<'a> for DuplicateNodesCommand {
         }
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::commands::{DuplicateNodesCommand, StaticNodeDescriptor};
+    use crate::Pipeline;
+    use itertools::Itertools;
+    use mizer_commander::Command;
+    use mizer_node::*;
+
+    #[test]
+    fn links_missing_when_duplicating() -> anyhow::Result<()> {
+        let injector = Injector::new();
+        let mut pipeline = Pipeline::new();
+        let button_0 = pipeline.add(&injector, NodeType::Button)?;
+        let button_1 = pipeline.add(&injector, NodeType::Button)?;
+        let oscillator_0 = pipeline.add(&injector, NodeType::Oscillator)?;
+        let oscillator_1 = pipeline.add(&injector, NodeType::Oscillator)?;
+        let merge_0 = pipeline.add(&injector, NodeType::Merge)?;
+        let merge_1 = pipeline.add(&injector, NodeType::Merge)?;
+        let merge_2 = pipeline.add(&injector, NodeType::Merge)?;
+        pipeline.link(&button_0, &merge_0, "Output", "Inputs")?;
+        pipeline.link(&oscillator_1, &merge_0, "Value", "Inputs")?;
+        pipeline.link(&oscillator_0, &merge_0, "Value", "Inputs")?;
+        pipeline.link(&button_1, &merge_0, "Output", "Inputs")?;
+        pipeline.link(&button_0, &merge_1, "Output", "Inputs")?;
+        pipeline.link(&button_1, &merge_1, "Output", "Inputs")?;
+        pipeline.link(&merge_1, &oscillator_0, "Output", "Max")?;
+        pipeline.link(&button_0, &merge_2, "Output", "Inputs")?;
+        pipeline.link(&button_1, &merge_2, "Output", "Inputs")?;
+        pipeline.link(&merge_2, &oscillator_1, "Output", "Max")?;
+        let cmd = DuplicateNodesCommand {
+            parent: None,
+            paths: vec![
+                button_0.path.clone(),
+                button_1.path.clone(),
+                merge_0.path.clone(),
+                merge_1.path.clone(),
+                merge_2.path.clone(),
+                oscillator_0.path.clone(),
+                oscillator_1.path.clone(),
+            ]
+        };
+
+        let _ = cmd.apply(&mut pipeline)?;
+
+        pipeline.assert_contains_link("/button-2", "/merge-4", "Output", "Inputs");
+        pipeline.assert_contains_link("/button-2", "/merge-5", "Output", "Inputs");
+        pipeline.assert_contains_link("/button-3", "/merge-4", "Output", "Inputs");
+        pipeline.assert_contains_link("/button-3", "/merge-5", "Output", "Inputs");
+        pipeline.assert_contains_link("/merge-4", "/oscillator-2", "Output", "Max");
+        pipeline.assert_contains_link("/merge-5", "/oscillator-3", "Output", "Max");
+        pipeline.assert_contains_link("/button-2", "/merge-3", "Output", "Inputs");
+        pipeline.assert_contains_link("/button-3", "/merge-3", "Output", "Inputs");
+        pipeline.assert_contains_link("/oscillator-2", "/merge-3", "Value", "Inputs");
+        pipeline.assert_contains_link("/oscillator-3", "/merge-3", "Value", "Inputs");
+        Ok(())
+    }
+
+    trait PipelineTestExtensions {
+        fn add(&mut self, injector: &Injector, node_type: NodeType) -> anyhow::Result<StaticNodeDescriptor>;
+        fn link(&mut self, source: &StaticNodeDescriptor, target: &StaticNodeDescriptor, source_port: &str, target_port: &str) -> anyhow::Result<()>;
+        fn assert_contains_link(&self, source: &str, target: &str, source_port: &str, target_port: &str);
+    }
+
+    impl PipelineTestExtensions for Pipeline {
+        fn add(&mut self, injector: &Injector, node_type: NodeType) -> anyhow::Result<StaticNodeDescriptor> {
+            self.add_node(injector, node_type, Default::default(), Default::default(), Default::default())
+        }
+        fn link(&mut self, source: &StaticNodeDescriptor, target: &StaticNodeDescriptor, source_port: &str, target_port: &str) -> anyhow::Result<()> {
+            self.add_link(NodeLink { source: source.path.clone(), target: target.path.clone(), source_port: PortId::from(source_port), target_port: PortId::from(target_port), local: true, port_type: PortType::Single })?;
+
+            Ok(())
+        }
+
+        fn assert_contains_link(&self, source: &str, target: &str, source_port: &str, target_port: &str) {
+            let result = self.list_links().contains(&NodeLink {
+                source: NodePath::from(source),
+                target: NodePath::from(target),
+                source_port: PortId::from(source_port),
+                target_port: PortId::from(target_port),
+                local: true,
+                port_type: PortType::Single,
+            });
+            assert!(result, "Link not found: source={}, target={}, source_port={}, target_port={}", source, target, source_port, target_port);
+        }
     }
 }

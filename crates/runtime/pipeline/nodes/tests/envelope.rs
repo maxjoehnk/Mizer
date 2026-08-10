@@ -35,7 +35,7 @@ fn envelope_with_value_changes() -> anyhow::Result<()> {
         } else if i <= 120 {
             0.5
         } else if i <= 180 {
-            0.75
+            0.25
         } else {
             1.
         }

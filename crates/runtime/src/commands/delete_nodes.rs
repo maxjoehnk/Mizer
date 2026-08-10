@@ -135,7 +135,7 @@ impl DeleteNodesCommand {
     ) -> anyhow::Result<Vec<(NodePath, Node)>> {
         let mut update_node_commands = Vec::new();
         for (path, container) in
-            pipeline.find_nodes::<ContainerNode>(|node| node.nodes.contains(node_path))
+            pipeline.find_nodes::<ContainerNode>(|_path, node| node.nodes.contains(node_path))
         {
             let container = ContainerNode {
                 nodes: container

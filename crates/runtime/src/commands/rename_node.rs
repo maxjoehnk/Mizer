@@ -73,7 +73,7 @@ impl RenameNodeCommand {
     ) -> anyhow::Result<Vec<(NodePath, Node)>> {
         let mut update_node_commands = Vec::new();
         for (path, container) in
-            pipeline.find_nodes::<ContainerNode>(|node| node.nodes.contains(&self.path))
+            pipeline.find_nodes::<ContainerNode>(|_path, node| node.nodes.contains(&self.path))
         {
             let new_config = ContainerNode {
                 nodes: container

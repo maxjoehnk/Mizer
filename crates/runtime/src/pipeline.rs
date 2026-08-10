@@ -56,7 +56,7 @@ impl Pipeline {
         parent: Option<&NodePath>,
     ) -> anyhow::Result<StaticNodeDescriptor> {
         let node = node.unwrap_or_else(|| node_type.into());
-        let path = self.new_node_path(node_type, parent);
+        let path = self.new_node_path(node_type, parent, None);
 
         self.add_node_with_path(injector, path, designer, node, parent)
     }
@@ -121,7 +121,7 @@ impl Pipeline {
             .ok_or_else(|| anyhow::anyhow!("Node not found: {}", path))?;
         let node_config: Node = NodeDowncast::downcast(&state.node);
         let node_type = node_config.node_type();
-        let new_path = self.new_node_path(node_type, parent);
+        let new_path = self.new_node_path(node_type, parent, Some(path));
         // add_dyn_node inlined because of borrow checker
         let node = {
             let mut registration = PipelineNodeRegistration {
@@ -166,7 +166,15 @@ impl Pipeline {
         Ok(())
     }
 
-    fn new_node_path(&self, node_type: NodeType, parent: Option<&NodePath>) -> NodePath {
+    fn new_node_path(&self, node_type: NodeType, parent: Option<&NodePath>, old_path: Option<&NodePath>) -> NodePath {
+        if let Some((old_path, parent)) = old_path.zip(parent) {
+            if !old_path.starts_with(parent.as_str()) {
+                if let Some(without_parent) = old_path.split("/").last() {
+                    return parent.join(&NodePath::from(without_parent));
+                }
+            }
+        }
+
         let node_type_name = node_type.get_name();
         let id = self.get_next_id(node_type);
         let node_name = format!("{}-{}", node_type_name, id).into();
@@ -349,9 +357,9 @@ impl Pipeline {
 
     pub fn find_nodes<TNode: PipelineNode>(
         &self,
-        matches: impl Fn(&TNode) -> bool,
+        matches: impl Fn(&NodePath, &TNode) -> bool,
     ) -> Vec<(&NodePath, &TNode)> {
-        self.matching_nodes(matches).collect()
+        self.matching_nodes_with_path(matches).collect()
     }
 
     pub fn update_node(&mut self, path: &NodePath, config: Node) -> anyhow::Result<Node> {
@@ -373,6 +381,17 @@ impl Pipeline {
             let node = state.node.downcast_ref::<TNode>().ok()?;
 
             matches(node).then_some((path, node))
+        })
+    }
+
+    fn matching_nodes_with_path<TNode: PipelineNode, TMatches: Fn(&NodePath, &TNode) -> bool>(
+        &self,
+        matches: TMatches,
+    ) -> impl Iterator<Item = (&NodePath, &TNode)> {
+        self.nodes.iter().filter_map(move |(path, state)| {
+            let node = state.node.downcast_ref::<TNode>().ok()?;
+
+            matches(path, node).then_some((path, node))
         })
     }
 
@@ -783,5 +802,39 @@ struct NodeStatePortReader<'a>(&'a IndexMap<NodePath, NodeState>);
 impl<'a> NodePortReader for NodeStatePortReader<'a> {
     fn list_ports(&self, path: &NodePath) -> Option<Vec<(PortId, PortMetadata)>> {
         self.0.get(path).map(|state| state.ports.clone())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::Pipeline;
+    use mizer_node::{NodePath, NodeType};
+
+    #[test_case::test_case(NodeType::Oscillator, "/oscillator-0")]
+    #[test_case::test_case(NodeType::Fader, "/fader-0")]
+    fn new_node_path_for_blank_node(node_type: NodeType, expected: &str) {
+        let pipeline = Pipeline::new();
+
+        let path = pipeline.new_node_path(node_type, None, None);
+
+        assert_eq!(path, NodePath::from(expected));
+    }
+
+    #[test]
+    fn new_node_in_container_should_add_prefix() {
+        let pipeline = Pipeline::new();
+
+        let path = pipeline.new_node_path(NodeType::Oscillator, Some(&NodePath::from("/container")), None);
+
+        assert_eq!(path, NodePath::from("/container/oscillator-0"));
+    }
+
+    #[test]
+    fn new_node_in_new_container_should_keep_own_name() {
+        let pipeline = Pipeline::new();
+
+        let path = pipeline.new_node_path(NodeType::Oscillator, Some(&NodePath::from("/container-1")), Some(&NodePath::from("/container-0/sine-wave")));
+
+        assert_eq!(path, NodePath::from("/container-1/sine-wave"));
     }
 }

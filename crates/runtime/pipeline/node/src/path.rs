@@ -63,10 +63,18 @@ impl Default for NodePath {
 
 impl NodePath {
     pub fn join(&self, other: &NodePath) -> Self {
-        if other.starts_with("/") || self.ends_with("/") {
+        if other.deref().starts_with("/") || self.ends_with("/") {
             format!("{}{}", self, other).into()
         } else {
             format!("{}/{}", self, other).into()
         }
+    }
+
+    pub fn starts_with(&self, other: &NodePath) -> bool {
+        self.0.starts_with(&other.0)
+    }
+
+    pub fn replace_prefix(&self, prefix: &NodePath, new_prefix: &NodePath) -> Self {
+        self.0.replace(&prefix.0, &new_prefix.0).into()
     }
 }

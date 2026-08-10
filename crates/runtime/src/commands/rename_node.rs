@@ -26,6 +26,7 @@ impl<'a> Command<'a> for RenameNodeCommand {
         (pipeline, layout_storage): (&mut Pipeline, &LayoutStorage),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         pipeline.rename_node(&self.path, self.new_name.clone())?;
+        self.rename_container_children(pipeline)?;
         let previous_containers = self.rename_node_in_containers(pipeline)?;
         self.rename_node_in_layouts(layout_storage, &self.path, &self.new_name);
 
@@ -99,5 +100,28 @@ impl RenameNodeCommand {
                 previous.map(|previous| (path, previous))
             })
             .collect()
+    }
+
+    fn rename_container_children(
+        &self,
+        pipeline: &mut Pipeline,
+    ) -> anyhow::Result<Vec<(NodePath, NodePath)>> {
+        let Some(container) = pipeline.get_node::<ContainerNode>(&self.new_name) else {
+            return Ok(Default::default());
+        };
+        let paths = container.nodes.clone();
+        let mut renamed_paths = Vec::new();
+        for path in paths {
+            if path.starts_with(&self.path) {
+                let new_path = path.replace_prefix(&self.path, &self.new_name);
+                pipeline.rename_node(&path, new_path.clone())?;
+                renamed_paths.push((path, new_path));
+            }
+        }
+        if let Some(container) = pipeline.get_node_mut::<ContainerNode>(&self.new_name) {
+            container.nodes = renamed_paths.iter().map(|(_, path)| path.clone()).collect();
+        }
+
+        Ok(renamed_paths)
     }
 }

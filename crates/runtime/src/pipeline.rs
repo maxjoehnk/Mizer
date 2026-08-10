@@ -168,7 +168,7 @@ impl Pipeline {
 
     fn new_node_path(&self, node_type: NodeType, parent: Option<&NodePath>, old_path: Option<&NodePath>) -> NodePath {
         if let Some((old_path, parent)) = old_path.zip(parent) {
-            if !old_path.starts_with(parent.as_str()) {
+            if !old_path.starts_with(parent) {
                 if let Some(without_parent) = old_path.split("/").last() {
                     return parent.join(&NodePath::from(without_parent));
                 }

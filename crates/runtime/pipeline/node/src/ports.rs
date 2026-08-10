@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 use crate::path::NodePath;
 use mizer_ports::{PortId, PortType};
@@ -11,6 +12,12 @@ pub struct NodeLink {
     pub target_port: PortId,
     pub port_type: PortType,
     pub local: bool,
+}
+
+impl Display for NodeLink {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}@{} -> {}@{}", self.source_port, self.source, self.target_port, self.target)
+    }
 }
 
 #[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]

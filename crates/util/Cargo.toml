@@ -15,7 +15,7 @@ mizer-clock = { path = "../runtime/clock", optional = true }
 futures = "0.3"
 palette = "0.7"
 profiling = "1"
-tracy-client = { version = "0.17", optional = true, features = ["sampling", "code-transfer", "system-tracing", "context-switch-tracing"] }
+tracy-client = { version = "0.18", optional = true, features = ["sampling", "code-transfer", "system-tracing", "context-switch-tracing"] }
 serde = { version = "1", features = ["derive", "rc"] }
 bezier-rs = "0.4"
 uuid = { version = "1.8", features = ["v4"] }

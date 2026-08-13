@@ -75,6 +75,7 @@ class _HotkeyShortcutsMappingState extends State<HotkeyShortcutsMapping> {
         var standardKeys = keys.where((element) => !_modifierKeys.contains(element)).toList();
 
         if (standardKeys.length != 1) {
+          // TODO: Don't throw exception, just skip entry
           throw Exception("Only one standard key is allowed, got ${key}");
         }
 

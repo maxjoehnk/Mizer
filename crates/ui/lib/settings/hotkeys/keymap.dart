@@ -62,9 +62,17 @@ const Map<String, LogicalKeyboardKey> keyMappings = {
   "pgUp": LogicalKeyboardKey.pageUp,
   "pgDown": LogicalKeyboardKey.pageDown,
   "down": LogicalKeyboardKey.arrowDown,
+  "arrow down": LogicalKeyboardKey.arrowDown,
   "up": LogicalKeyboardKey.arrowUp,
+  "arrow up": LogicalKeyboardKey.arrowUp,
   "left": LogicalKeyboardKey.arrowLeft,
+  "arrow left": LogicalKeyboardKey.arrowLeft,
   "right": LogicalKeyboardKey.arrowRight,
+  "arrow right": LogicalKeyboardKey.arrowRight,
+  "space": LogicalKeyboardKey.space,
+  ",": LogicalKeyboardKey.comma,
+  ".": LogicalKeyboardKey.period,
+  "-": LogicalKeyboardKey.minus,
 };
 
 Set<LogicalKeyboardKey> convertKeyMap(String value) {

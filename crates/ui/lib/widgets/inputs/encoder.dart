@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'decoration.dart';
 
 const double EncoderSize = 30;
+const double InlineEncoderSize = 45;
 const double EncoderBorderWidth = 3;
 
 class EncoderInput extends StatefulWidget {
@@ -25,6 +27,7 @@ class EncoderInput extends StatefulWidget {
   final bool highlight;
   final bool percentage;
   final double maxValue;
+  final bool labelInDial;
   final List<Preset>? globalPresets;
   final List<ControlPreset>? controlPresets;
 
@@ -37,7 +40,8 @@ class EncoderInput extends StatefulWidget {
       this.percentage = true,
       this.maxValue = 1,
       this.globalPresets,
-      this.controlPresets});
+      this.controlPresets,
+      this.labelInDial = false});
 
   @override
   _EncoderInputState createState() => _EncoderInputState(value);
@@ -66,10 +70,10 @@ class _EncoderInputState extends State<EncoderInput> {
         onPointerPanZoomUpdate: (event) {
           var multiplier = 0.01;
           if (HardwareKeyboard.instance.logicalKeysPressed.any((key) => [
-            LogicalKeyboardKey.shift,
-            LogicalKeyboardKey.shiftLeft,
-            LogicalKeyboardKey.shiftRight,
-          ].contains(key))) {
+                LogicalKeyboardKey.shift,
+                LogicalKeyboardKey.shiftLeft,
+                LogicalKeyboardKey.shiftRight,
+              ].contains(key))) {
             multiplier = 0.001;
           }
           if (event.kind == PointerDeviceKind.trackpad) {
@@ -79,10 +83,10 @@ class _EncoderInputState extends State<EncoderInput> {
         onPointerSignal: (event) {
           var delta = 0.1;
           if (HardwareKeyboard.instance.logicalKeysPressed.any((key) => [
-            LogicalKeyboardKey.shift,
-            LogicalKeyboardKey.shiftLeft,
-            LogicalKeyboardKey.shiftRight,
-          ].contains(key))) {
+                LogicalKeyboardKey.shift,
+                LogicalKeyboardKey.shiftLeft,
+                LogicalKeyboardKey.shiftRight,
+              ].contains(key))) {
             delta = 0.01;
           }
           if (event is PointerScrollEvent) {
@@ -103,7 +107,7 @@ class _EncoderInputState extends State<EncoderInput> {
                     if (event.hasDirect()) {
                       if (widget.percentage) {
                         _emitUpdate(event.direct / 100);
-                      }else {
+                      } else {
                         _emitUpdate(event.direct / widget.maxValue);
                       }
                     }
@@ -111,9 +115,7 @@ class _EncoderInputState extends State<EncoderInput> {
                 ),
               ))),
           child: Container(
-            decoration: BoxDecoration(
-              color: widget.color ?? Grey700
-            ),
+            decoration: BoxDecoration(color: widget.color ?? Grey700),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -124,46 +126,82 @@ class _EncoderInputState extends State<EncoderInput> {
                           ? HIGHLIGHT_CONTROL_COLOR
                           : DEFAULT_CONTROL_COLOR,
                       child: Center(
-                        child: HighContrastText(widget.label ?? "",
-                            textAlign: TextAlign.center,
-                            ),
+                        child: HighContrastText(
+                          widget.label ?? "",
+                          textAlign: TextAlign.center,
+                        ),
                       )),
                 Expanded(
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            margin: const EdgeInsets.only(left: 16),
-                            width: EncoderSize,
-                            height: EncoderSize,
-                            child: Container(
-                              padding: const EdgeInsets.all(EncoderBorderWidth),
-                              width: EncoderSize - (EncoderBorderWidth * 2),
-                              height: EncoderSize - (EncoderBorderWidth * 2),
+                    child: widget.labelInDial
+                        ? Center(
+                          child: Container(
+                              width: InlineEncoderSize,
+                              height: InlineEncoderSize,
+                              child: Container(
+                                  padding: const EdgeInsets.all(EncoderBorderWidth),
+                                  width: InlineEncoderSize - (EncoderBorderWidth * 2),
+                                  height: InlineEncoderSize - (EncoderBorderWidth * 2),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: widget.highlight == true
+                                        ? HIGHLIGHT_CONTROL_COLOR
+                                        : DEFAULT_CONTROL_COLOR,
+                                  ),
+                                  child: Center(
+                                    child: AutoSizeText(
+                                      widget.percentage
+                                          ? "$percentage\n%"
+                                          : value.toStringAsFixed(2),
+                                      minFontSize: 10,
+                                      wrapWords: false,
+                                      maxLines: widget.percentage ? 2 : 1,
+                                      textAlign: TextAlign.center,
+                                      style: textTheme.titleMedium,
+                                    ),
+                                  )),
                               decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: widget.highlight == true
-                                    ? HIGHLIGHT_CONTROL_COLOR
-                                    : DEFAULT_CONTROL_COLOR,
-                              ),
-                            ),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: SweepGradient(
-                                    colors: [Colors.deepOrange, DEFAULT_CONTROL_COLOR],
-                                    stops: [correctedValue, correctedValue],
-                                    transform: GradientRotation(-1 * pi))),
-                            alignment: AlignmentDirectional.center),
-                        Expanded(
-                            child: Text(
-                          widget.percentage ? "$percentage%" : value.toStringAsFixed(2),
-                          textAlign: TextAlign.center,
-                          style: textTheme.titleMedium,
-                        ))
-                      ],
-                    ),
+                                  shape: BoxShape.circle,
+                                  gradient: SweepGradient(
+                                      colors: [Colors.deepOrange, DEFAULT_CONTROL_COLOR],
+                                      stops: [correctedValue, correctedValue],
+                                      transform: GradientRotation(-1 * pi))),
+                              alignment: AlignmentDirectional.center),
+                        )
+                        : Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                  margin: const EdgeInsets.only(left: 16),
+                                  width: EncoderSize,
+                                  height: EncoderSize,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(EncoderBorderWidth),
+                                    width: EncoderSize - (EncoderBorderWidth * 2),
+                                    height: EncoderSize - (EncoderBorderWidth * 2),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: widget.highlight == true
+                                          ? HIGHLIGHT_CONTROL_COLOR
+                                          : DEFAULT_CONTROL_COLOR,
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      gradient: SweepGradient(
+                                          colors: [Colors.deepOrange, DEFAULT_CONTROL_COLOR],
+                                          stops: [correctedValue, correctedValue],
+                                          transform: GradientRotation(-1 * pi))),
+                                  alignment: AlignmentDirectional.center),
+                              Expanded(
+                                  child: Text(
+                                widget.percentage ? "$percentage%" : value.toStringAsFixed(2),
+                                textAlign: TextAlign.center,
+                                style: textTheme.titleMedium,
+                              ))
+                            ],
+                          ),
                   ),
                 ),
               ],

@@ -48,6 +48,14 @@ class LayoutsPluginApi implements LayoutsApi {
   }
 
   @override
+  Future<Layouts> duplicateLayout(String id, String name) async {
+    var request = DuplicateLayoutRequest(id: id, name: name);
+    var response = await channel.invokeMethod("duplicateLayout", request.writeToBuffer());
+
+    return Layouts.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
   Future<void> deleteControl(String layoutId, String id) async {
     var request = RemoveControlRequest(controlId: id, layoutId: layoutId);
     await channel.invokeMethod("removeControl", request.writeToBuffer());

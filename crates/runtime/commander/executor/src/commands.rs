@@ -120,6 +120,7 @@ command_impl! {
     AddPlanScreenCommand,
     AddLayoutCommand,
     RenameLayoutCommand,
+    DuplicateLayoutCommand,
     RemoveLayoutCommand,
     AddLayoutControlCommand,
     AddLayoutControlWithNodeCommand,

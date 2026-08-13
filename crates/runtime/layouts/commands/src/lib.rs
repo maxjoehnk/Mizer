@@ -2,6 +2,7 @@ pub use add_layout::*;
 pub use add_layout_control::*;
 pub use bind_layout_control_hotkey::*;
 pub use delete_layout_control::*;
+pub use duplicate_layout::*;
 pub use move_layout_control::*;
 pub use remove_layout::*;
 pub use rename_layout::*;
@@ -23,6 +24,7 @@ mod rename_layout_control;
 mod resize_layout_control;
 mod update_layout_control_behavior;
 mod update_layout_control_decorations;
+mod duplicate_layout;
 
 pub(crate) fn update_layout<Cb: FnOnce(&mut Layout) -> anyhow::Result<()>>(
     layout_storage: &LayoutStorage,

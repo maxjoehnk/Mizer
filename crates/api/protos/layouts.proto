@@ -17,6 +17,11 @@ message RenameLayoutRequest {
   string name = 2;
 }
 
+message DuplicateLayoutRequest {
+  string id = 1;
+  string name = 2;
+}
+
 message RenameControlRequest {
   string layout_id = 1;
   string control_id = 2;

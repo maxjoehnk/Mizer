@@ -27,6 +27,13 @@ class RenameLayout implements LayoutsEvent {
   RenameLayout({required this.id, required this.name});
 }
 
+class DuplicateLayout implements LayoutsEvent {
+  final String id;
+  final String name;
+
+  DuplicateLayout({required this.id, required this.name});
+}
+
 class RenameControl implements LayoutsEvent {
   final String layoutId;
   final String controlId;
@@ -173,6 +180,11 @@ class LayoutsBloc extends Bloc<LayoutsEvent, LayoutState> {
     });
     on<RenameLayout>((event, emit) async {
       await api.renameLayout(event.id, event.name);
+      var layouts = await api.getLayouts();
+      emit(state.copyWith(layouts: layouts.layouts));
+    });
+    on<DuplicateLayout>((event, emit) async {
+      await api.duplicateLayout(event.id, event.name);
       var layouts = await api.getLayouts();
       emit(state.copyWith(layouts: layouts.layouts));
     });

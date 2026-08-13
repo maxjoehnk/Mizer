@@ -98,6 +98,9 @@ class LayoutView extends StatelessWidget {
                             label: "Rename".i18n,
                             action: () => _onRename(context, layout, layoutsBloc)),
                         MenuItem(
+                            label: "Duplicate".i18n,
+                            action: () => _onDuplicate(context, layout, layoutsBloc)),
+                        MenuItem(
                             label: "Delete".i18n,
                             action: () => _onDelete(context, layout, layoutsBloc)),
                       ]),
@@ -139,6 +142,14 @@ class LayoutView extends StatelessWidget {
         await showDialog(context: context, builder: (context) => NameDialog(name: layout.id));
     if (result != null) {
       bloc.add(RenameLayout(id: layout.id, name: result));
+    }
+  }
+
+  void _onDuplicate(BuildContext context, Layout layout, LayoutsBloc bloc) async {
+    String? result =
+    await showDialog(context: context, builder: (context) => NameDialog(name: layout.id));
+    if (result != null) {
+      bloc.add(DuplicateLayout(id: layout.id, name: result));
     }
   }
 }

@@ -50,6 +50,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
 
                 resp.respond_result(response);
             }
+            "duplicateLayout" => {
+                let response = call
+                    .arguments()
+                    .map(|req: DuplicateLayoutRequest| self.duplicate_layout(req.id, req.name));
+
+                resp.respond_result(response);
+            }
             "removeControl" => {
                 if let Err(err) = call.arguments().map(|req| self.remove_control(req)) {
                     resp.respond_error(err);
@@ -184,6 +191,10 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
 
     fn rename_layout(&self, id: String, name: String) -> Layouts {
         self.handler.rename_layout(id, name)
+    }
+
+    fn duplicate_layout(&self, id: String, name: String) -> Layouts {
+        self.handler.duplicate_layout(id, name)
     }
 
     fn remove_control(&self, req: RemoveControlRequest) {

@@ -7,6 +7,7 @@ abstract class LayoutsApi {
   Future<Layouts> addLayout(String name);
   Future<Layouts> removeLayout(String id);
   Future<Layouts> renameLayout(String id, String name);
+  Future<Layouts> duplicateLayout(String id, String name);
 
   Future<void> addControl(String layoutId, ControlType controlType, ControlPosition position);
   Future<void> addControlForNode(String layoutId, String nodeId, ControlPosition position);

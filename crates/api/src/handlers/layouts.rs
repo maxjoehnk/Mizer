@@ -55,6 +55,16 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
+    pub fn duplicate_layout(&self, id: String, name: String) -> Layouts {
+        self.runtime
+            .run_command(DuplicateLayoutCommand { id, name })
+            .unwrap();
+
+        self.get_layouts()
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn remove_control(&self, layout_id: String, control_id: String) {
         tracing::debug!("Removing control {} in layout {}", control_id, layout_id);
         self.runtime

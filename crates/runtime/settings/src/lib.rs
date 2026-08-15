@@ -1,7 +1,6 @@
 use std::io::{Read, Write};
 use std::path::PathBuf;
 
-use directories_next::ProjectDirs;
 use crate::defaults::get_default_settings;
 pub use crate::settings::*;
 pub use crate::hotkeys::*;
@@ -105,7 +104,6 @@ impl SettingsManager {
     }
 
     fn get_config_path() -> Option<PathBuf> {
-        ProjectDirs::from("live", "mizer", "Mizer")
-            .map(|dirs| dirs.config_dir().join("settings.toml"))
+        mizer_util::config_dir().map(|dir| dir.join("settings.toml"))
     }
 }

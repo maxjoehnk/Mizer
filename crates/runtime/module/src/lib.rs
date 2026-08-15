@@ -1,5 +1,6 @@
 use std::fmt::Display;
 use std::future::Future;
+use std::path::Path;
 use std::time::Duration;
 
 pub use mizer_processing::*;
@@ -91,6 +92,8 @@ pub trait ModuleContext {
 
     fn add_processor(&mut self, processor: impl Processor + 'static);
 
+    fn add_event_processor(&mut self, processor: impl EventProcessor + 'static);
+
     fn settings(&self) -> &Settings;
 
     fn block_on<F: Future>(&self, future: F) -> F::Output;
@@ -102,4 +105,16 @@ pub trait ModuleContext {
         <F as Future>::Output: Send;
 
     fn status_handle(&self) -> StatusHandle;
+}
+
+pub trait EventProcessor {
+    fn new_project(&self, injector: &Injector) -> anyhow::Result<()> {
+        Ok(())
+    }
+    fn load_project(&self, injector: &Injector, path: &Path) -> anyhow::Result<()> {
+        Ok(())
+    }
+    fn save_project(&self, injector: &Injector, path: &Path) -> anyhow::Result<()> {
+        Ok(())
+    }
 }

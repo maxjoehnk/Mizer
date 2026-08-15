@@ -8,5 +8,6 @@ abstract class SessionApi {
   Future<void> saveProjectAs(String path);
   Future<void> undo();
   Future<void> redo();
+  Future<void> applyWal();
   Stream<History> getHistory();
 }

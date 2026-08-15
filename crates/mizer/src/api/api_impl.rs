@@ -70,6 +70,10 @@ impl ICommandExecutor for Api {
 
         Ok(())
     }
+
+    fn apply_wal(&self) -> anyhow::Result<()> {
+        self.command_executor_api.apply_wal()
+    }
 }
 
 impl RuntimeApi for Api {

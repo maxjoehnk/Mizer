@@ -58,4 +58,9 @@ class SessionPluginApi implements SessionApi {
       return History.fromBuffer(_convertBuffer(buffer));
     });
   }
+
+  @override
+  Future<void> applyWal() async {
+    await channel.invokeMethod("applyWal");
+  }
 }

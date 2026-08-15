@@ -13,9 +13,7 @@ pub struct ProjectHistory;
 
 impl ProjectHistory {
     fn folder(&self) -> anyhow::Result<PathBuf> {
-        let project_dirs = directories_next::ProjectDirs::from("live", "mizer", "Mizer")
-            .ok_or_else(|| anyhow::anyhow!("Unknown data dir"))?;
-        let data_dir = project_dirs.data_local_dir().to_path_buf();
+        let data_dir = mizer_util::data_dir().ok_or_else(|| anyhow::anyhow!("Unknown data dir"))?;
 
         Ok(data_dir)
     }

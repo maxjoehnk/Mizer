@@ -1,4 +1,5 @@
 use std::path::{Path, PathBuf};
+use directories_next::ProjectDirs;
 
 const IMPORT_BASE_PATH_ENV: &str = "MIZER_IMPORT_PATH";
 
@@ -27,4 +28,20 @@ pub fn find_path<P: AsRef<Path>>(file: P) -> Option<PathBuf> {
     tracing::trace!("Looking for file: {}. Found: {:?}", file.display(), paths);
 
     paths.into_iter().find(|path| path.exists())
+}
+
+pub fn cache_dir() -> Option<PathBuf> {
+    Some(dir()?.cache_dir().to_owned())
+}
+
+pub fn config_dir() -> Option<PathBuf> {
+    Some(dir()?.config_dir().to_owned())
+}
+
+pub fn data_dir() -> Option<PathBuf> {
+    Some(dir()?.data_local_dir().to_owned())
+}
+
+fn dir() -> Option<ProjectDirs> {
+    ProjectDirs::from("live", "mizer", "Mizer")
 }

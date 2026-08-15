@@ -1,5 +1,4 @@
 use anyhow::Context;
-use directories_next::ProjectDirs;
 use rolling_file::{BasicRollingFileAppender, RollingConditionBasic, RollingFileAppender};
 use std::fs;
 use std::path::PathBuf;
@@ -86,8 +85,8 @@ fn file_layer<S: Subscriber + for<'a> LookupSpan<'a>>(
 pub struct LoggingGuard(Option<WorkerGuard>);
 
 fn file_target() -> anyhow::Result<RollingFileAppender<RollingConditionBasic>> {
-    let path = if let Some(dir) = ProjectDirs::from("live", "mizer", "Mizer") {
-        dir.data_dir().join("mizer.log")
+    let path = if let Some(dir) = mizer_util::data_dir() {
+        dir.join("mizer.log")
     } else {
         PathBuf::from("mizer.log")
     };

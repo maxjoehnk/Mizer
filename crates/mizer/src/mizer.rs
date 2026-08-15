@@ -8,7 +8,7 @@ use mizer_console::ConsoleCategory;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_message_bus::MessageBus;
-use mizer_module::Runtime;
+use mizer_module::{EventProcessor, Runtime};
 use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
 use mizer_protocol_mqtt::MqttConnectionManager;
@@ -32,6 +32,7 @@ pub struct Mizer {
     pub session_events: MessageBus<SessionState>,
     pub project_history: ProjectHistory,
     pub status_bus: StatusBus,
+    pub event_processors: Vec<Box<dyn EventProcessor>>,
 }
 
 impl Mizer {
@@ -90,6 +91,12 @@ impl Mizer {
         osc_manager.new_project();
         let surface_registry = injector.get_mut::<SurfaceRegistry>().unwrap();
         surface_registry.new_project();
+        for processor in &self.event_processors {
+            if let Err(err) = processor.new_project(injector) {
+                tracing::error!("Failed to run event processor for new project: {}", err);
+            }
+        }
+
         self.runtime.new_project();
         self.send_session_update();
         self.runtime
@@ -148,7 +155,16 @@ impl Mizer {
                 .context("loading media files")?;
             start_media_discovery(&project.media.import_paths, &self.media_server_api)
                 .context("starting media discovery")?;
+
             self.runtime.load(&project).context("loading project")?;
+            {
+                let injector = self.runtime.injector_mut();
+                for processor in &self.event_processors {
+                    if let Err(err) = processor.load_project(injector, path) {
+                        tracing::error!("Failed to run event processor for load project: {}", err);
+                    }
+                }
+            }
             tracing::info!("Loading project...Done");
 
             if self.flags.generate_graph {
@@ -214,6 +230,11 @@ impl Mizer {
             surface_registry.save(&mut project);
             self.media_server_api.save(&mut project);
             project.save_file(path)?;
+            for processor in &self.event_processors {
+                if let Err(err) = processor.save_project(injector, path) {
+                    tracing::error!("Failed to run event processor for save project: {}", err);
+                }
+            }
             tracing::info!("Saving project...Done");
             self.runtime.add_status_message(
                 format!("Project saved ({path:?})"),

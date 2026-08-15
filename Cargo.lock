@@ -5679,7 +5679,6 @@ dependencies = [
  "criterion",
  "dashmap",
  "derive_more",
- "directories-next",
  "ffmpeg-the-third",
  "flume",
  "futures",
@@ -6771,7 +6770,6 @@ name = "mizer-project-files"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "directories-next",
  "enum-iterator",
  "enum_dispatch",
  "fs2",
@@ -6791,6 +6789,7 @@ dependencies = [
  "mizer-sequencer",
  "mizer-surfaces",
  "mizer-timecode",
+ "mizer-util",
  "profiling",
  "regex",
  "serde",
@@ -7098,11 +7097,11 @@ name = "mizer-settings"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "directories-next",
  "enum-iterator",
  "facet",
  "heck 0.5.0",
  "itertools 0.15.0",
+ "mizer-util",
  "serde",
  "toml 0.9.11+spec-1.1.0",
  "tracing",
@@ -7339,6 +7338,7 @@ dependencies = [
  "base64 0.22.1",
  "bezier-rs",
  "chrono",
+ "directories-next",
  "futures",
  "indexmap 2.13.0",
  "mizer-clock",

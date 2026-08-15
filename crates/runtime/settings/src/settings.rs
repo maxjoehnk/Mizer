@@ -20,6 +20,8 @@ pub struct General {
     #[serde(default)]
     pub auto_load_last_project: bool,
     #[serde(default)]
+    pub auto_apply_wal: bool,
+    #[serde(default)]
     pub keep_screen_awake: bool,
 }
 

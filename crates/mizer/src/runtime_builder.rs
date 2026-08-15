@@ -5,8 +5,8 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_api::handlers::Handlers;
 use mizer_api::start_remote_api;
-use mizer_command_executor::{CommandExecutorApi, CommandExecutorModule};
-use mizer_console::ConsoleModule;
+use mizer_command_executor::{CommandExecutorApi, CommandExecutorModule, WriteAheadLog};
+use mizer_console::{ConsoleCategory, ConsoleModule};
 #[cfg(feature = "debug-ui")]
 use mizer_debug_ui_egui::EguiDebugUiModule;
 use mizer_devices::DeviceModule;
@@ -83,6 +83,7 @@ pub fn build_runtime(
         settings: settings_manager.read().settings,
         handle: handle.clone(),
         debug_ui_panes: Vec::new(),
+        event_processors: Vec::new(),
     };
 
     load_modules(&mut context, &flags);
@@ -118,6 +119,7 @@ pub fn build_runtime(
         session_events: MessageBus::new(),
         project_history: ProjectHistory,
         status_bus,
+        event_processors: context.event_processors,
     };
 
     Session::new(remote_api_port, mizer.session_events.clone())?;
@@ -127,6 +129,19 @@ pub fn build_runtime(
     }
 
     open_project(&mut mizer, settings_manager.read().settings)?;
+
+    // TODO: The user should be asked if the wal should be applied
+    if let Ok(false) = WriteAheadLog::is_empty() {
+        if settings_manager.read().settings.general.auto_apply_wal {
+            tracing::info!("Applying unsaved change from last session");
+
+            if let Err(err) = WriteAheadLog::apply_log(mizer.runtime.injector_mut()) {
+                tracing::error!("Failed to apply WAL: {err:?}");
+            } else {
+                mizer_console::info!(ConsoleCategory::Projects, "Applied unsaved change from last session");
+            }
+        }
+    }
 
     Ok((mizer, api_handler))
 }

@@ -10,7 +10,7 @@ pub use crate::history::CommandHistory;
 use crate::in_main_loop_executor::{InMainLoopExecutionWorker, InMainLoopExecutor};
 pub use crate::module::CommandExecutorModule;
 pub use crate::processor::CommandProcessor;
-
+pub use crate::write_ahead_log::WriteAheadLog;
 pub use self::commands::*;
 pub use self::queries::*;
 
@@ -22,6 +22,7 @@ mod in_main_loop_executor;
 mod module;
 mod processor;
 mod queries;
+mod write_ahead_log;
 
 pub trait ICommandExecutor {
     fn run_command<'a, T: SendableCommand<'a> + 'static>(
@@ -38,6 +39,8 @@ pub trait ICommandExecutor {
 
     fn undo(&self) -> anyhow::Result<()>;
     fn redo(&self) -> anyhow::Result<()>;
+
+    fn apply_wal(&self) -> anyhow::Result<()>;
 }
 
 #[derive(Clone)]
@@ -58,6 +61,10 @@ impl ICommandExecutor for CommandExecutorApi {
         let result: anyhow::Result<_> =
             self.executor.run_in_main_loop(move |executor, injector| {
                 let (result, key) = cmd.apply(injector, executor, None)?;
+                let write_ahead_log = injector.get_mut::<WriteAheadLog>().unwrap();
+                if let Err(err) = write_ahead_log.append(&cmd) {
+                    tracing::error!("Failed to append command to write ahead log: {err:?}");
+                }
                 let history = injector.get_mut::<CommandHistory>().unwrap();
                 history.add_entry(cmd, key);
 
@@ -113,6 +120,21 @@ impl ICommandExecutor for CommandExecutorApi {
             let history = injector1.get_mut::<CommandHistory>().unwrap();
             history.redo(executor, injector)
         })??;
+
+        Ok(())
+    }
+
+    fn apply_wal(&self) -> anyhow::Result<()> {
+        let log = WriteAheadLog.read()?;
+        for cmd in log {
+            self.executor.run_in_main_loop::<anyhow::Result<_>>(move |executor, injector| {
+                let (_, key) = cmd.apply(injector, executor, None)?;
+                let history = injector.get_mut::<CommandHistory>().unwrap();
+                history.add_entry(cmd, key);
+
+                Ok(())
+            })??;
+        }
 
         Ok(())
     }

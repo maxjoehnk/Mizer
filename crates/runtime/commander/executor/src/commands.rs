@@ -26,7 +26,7 @@ impl<'a, T: Command<'a> + Into<CommandImpl> + Send + Sync> SendableCommand<'a> f
 
 macro_rules! command_impl {
     ($($x:ident,)*) => {
-        #[derive(Debug, From)]
+        #[derive(::serde::Serialize, ::serde::Deserialize, Debug, From)]
         pub enum CommandImpl {
             $($x($x),)*
         }

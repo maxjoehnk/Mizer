@@ -72,6 +72,10 @@ impl<R: RuntimeApi> SessionHandler<R> {
     pub fn redo(&self) -> anyhow::Result<()> {
         self.runtime.redo()
     }
+    
+    pub fn apply_wal(&self) -> anyhow::Result<()> {
+        self.runtime.apply_wal()
+    }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]

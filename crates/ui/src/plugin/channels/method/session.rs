@@ -51,6 +51,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SessionChannel<R> {
                 Ok(()) => resp.send_ok(Value::Null),
                 Err(e) => resp.respond_error(e),
             },
+            "applyWal" => match self.handler.apply_wal() {
+                Ok(()) => resp.send_ok(Value::Null),
+                Err(e) => resp.respond_error(e),
+            },
             _ => resp.not_implemented(),
         }
     }

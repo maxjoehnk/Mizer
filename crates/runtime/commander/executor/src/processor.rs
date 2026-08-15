@@ -3,7 +3,6 @@ use mizer_processing::*;
 use crate::{CommandExecutor, InMainLoopExecutionWorker};
 
 pub struct CommandProcessor {
-    executor: CommandExecutor,
     worker: InMainLoopExecutionWorker,
 }
 
@@ -14,15 +13,16 @@ impl std::fmt::Debug for CommandProcessor {
 }
 
 impl CommandProcessor {
-    pub(crate) fn new(executor: CommandExecutor, worker: InMainLoopExecutionWorker) -> Self {
-        Self { executor, worker }
+    pub(crate) fn new(worker: InMainLoopExecutionWorker) -> Self {
+        Self { worker }
     }
 }
 
 impl Processor for CommandProcessor {
     #[tracing::instrument]
     fn pre_process(&mut self, injector: &mut Injector, _: ClockFrame, _fps: f64) {
-        if let Err(err) = self.worker.process_callbacks(&mut self.executor, injector) {
+        let (executor, injector) = injector.get_slice_mut::<CommandExecutor>().expect("Missing CommandExecutor in injector");
+        if let Err(err) = self.worker.process_callbacks(executor, injector) {
             tracing::error!("Error processing commands {:?}", err);
         }
     }

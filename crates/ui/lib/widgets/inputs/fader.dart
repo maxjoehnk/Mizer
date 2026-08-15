@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
 
 import 'decoration.dart';
@@ -87,20 +88,28 @@ class _FaderInputState extends State<FaderInput> {
                   onVerticalDragUpdate: (update) => _onInput(constraints, update.localPosition),
                   onTapDown: (update) => _onInput(constraints, update.localPosition),
                   child: Container(
-                    decoration: BoxDecoration(color: Grey700),
-                    // decoration: ControlDecoration(
-                    //     gradient: widget.gradient, color: widget.color, highlight: widget.highlight),
+                    decoration: BoxDecoration(color: widget.color?.dimmed ?? Grey700),
                     child: MouseRegion(
                       cursor: SystemMouseCursors.click,
-                      child: Align(
-                          alignment: AlignmentDirectional(0, y),
-                          child: Container(
-                              color: widget.highlight == true
-                                  ? HIGHLIGHT_CONTROL_COLOR
-                                  : DEFAULT_CONTROL_COLOR,
-                              alignment: AlignmentDirectional.center,
-                              constraints: BoxConstraints.expand(height: 30),
-                              child: Text("$percentage%", textAlign: TextAlign.center))),
+                      child: Stack(
+                        alignment: AlignmentGeometry.bottomCenter,
+                        children: [
+                          Container(
+                            color: widget.color ?? Grey600,
+                            alignment: AlignmentGeometry.bottomCenter,
+                            height: this.value * constraints.maxHeight,
+                          ),
+                          Align(
+                              alignment: AlignmentDirectional(0, y),
+                              child: Container(
+                                  color: widget.highlight == true
+                                      ? HIGHLIGHT_CONTROL_COLOR
+                                      : DEFAULT_CONTROL_COLOR,
+                                  alignment: AlignmentDirectional.center,
+                                  constraints: BoxConstraints.expand(height: 30),
+                                  child: Text("$percentage%", textAlign: TextAlign.center))),
+                        ],
+                      ),
                     ),
                   ),
                 );

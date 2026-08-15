@@ -4,4 +4,8 @@ abstract class StatusApi {
   Future<StatusPointer?> getStatusPointer();
 
   Stream<String?> getStatusMessages();
+
+  Future<double> getCpuUsage();
+
+  Future<double> getMemoryUsage();
 }

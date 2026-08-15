@@ -22,7 +22,7 @@ import 'package:mizer/views/session/session_view.dart';
 import 'package:mizer/views/surfaces/surfaces_view.dart';
 import 'package:mizer/views/timecode/timecode_view.dart';
 import 'package:mizer/widgets/navigation_bar/navigation_bar.dart';
-import 'package:mizer/widgets/status_bar.dart';
+import 'package:mizer/widgets/status_bar/status_bar.dart';
 import 'package:mizer/widgets/transport/transport_controls.dart';
 import 'package:provider/provider.dart';
 

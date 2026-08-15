@@ -25,4 +25,14 @@ class StatusPluginApi implements StatusApi {
       return buffer as String?;
     });
   }
+
+  @override
+  Future<double> getCpuUsage() async {
+    return await channel.invokeMethod("getCpuUsage");
+  }
+
+  @override
+  Future<double> getMemoryUsage() async {
+    return await channel.invokeMethod("getMemoryUsage");
+  }
 }

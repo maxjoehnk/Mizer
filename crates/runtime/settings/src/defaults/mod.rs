@@ -11,6 +11,11 @@ pub fn get_default_settings() -> Settings {
             auto_load_last_project: true,
             auto_apply_wal: false,
             keep_screen_awake: true,
+            status_bar: StatusBar {
+                battery_level: true,
+                cpu_usage: true,
+                memory_usage: true,
+            }
         },
         paths: FilePaths {
             media: Media {

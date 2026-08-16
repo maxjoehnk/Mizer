@@ -25,6 +25,7 @@ const UiSettings$json = const {
   '2': const [
     const {'1': 'language', '3': 1, '4': 1, '5': 9, '10': 'language'},
     const {'1': 'hotkeys', '3': 2, '4': 3, '5': 11, '6': '.mizer.settings.UiSettings.HotkeysEntry', '10': 'hotkeys'},
+    const {'1': 'status_bar', '3': 3, '4': 1, '5': 11, '6': '.mizer.settings.StatusBarSettings', '10': 'statusBar'},
   ],
   '3': const [UiSettings_HotkeysEntry$json],
 };
@@ -40,7 +41,19 @@ const UiSettings_HotkeysEntry$json = const {
 };
 
 /// Descriptor for `UiSettings`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List uiSettingsDescriptor = $convert.base64Decode('CgpVaVNldHRpbmdzEhoKCGxhbmd1YWdlGAEgASgJUghsYW5ndWFnZRJBCgdob3RrZXlzGAIgAygLMicubWl6ZXIuc2V0dGluZ3MuVWlTZXR0aW5ncy5Ib3RrZXlzRW50cnlSB2hvdGtleXMaUwoMSG90a2V5c0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5Ei0KBXZhbHVlGAIgASgLMhcubWl6ZXIuc2V0dGluZ3MuSG90a2V5c1IFdmFsdWU6AjgB');
+final $typed_data.Uint8List uiSettingsDescriptor = $convert.base64Decode('CgpVaVNldHRpbmdzEhoKCGxhbmd1YWdlGAEgASgJUghsYW5ndWFnZRJBCgdob3RrZXlzGAIgAygLMicubWl6ZXIuc2V0dGluZ3MuVWlTZXR0aW5ncy5Ib3RrZXlzRW50cnlSB2hvdGtleXMSQAoKc3RhdHVzX2JhchgDIAEoCzIhLm1pemVyLnNldHRpbmdzLlN0YXR1c0JhclNldHRpbmdzUglzdGF0dXNCYXIaUwoMSG90a2V5c0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5Ei0KBXZhbHVlGAIgASgLMhcubWl6ZXIuc2V0dGluZ3MuSG90a2V5c1IFdmFsdWU6AjgB');
+@$core.Deprecated('Use statusBarSettingsDescriptor instead')
+const StatusBarSettings$json = const {
+  '1': 'StatusBarSettings',
+  '2': const [
+    const {'1': 'battery_level', '3': 1, '4': 1, '5': 8, '10': 'batteryLevel'},
+    const {'1': 'cpu_usage', '3': 2, '4': 1, '5': 8, '10': 'cpuUsage'},
+    const {'1': 'memory_usage', '3': 3, '4': 1, '5': 8, '10': 'memoryUsage'},
+  ],
+};
+
+/// Descriptor for `StatusBarSettings`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List statusBarSettingsDescriptor = $convert.base64Decode('ChFTdGF0dXNCYXJTZXR0aW5ncxIjCg1iYXR0ZXJ5X2xldmVsGAEgASgIUgxiYXR0ZXJ5TGV2ZWwSGwoJY3B1X3VzYWdlGAIgASgIUghjcHVVc2FnZRIhCgxtZW1vcnlfdXNhZ2UYAyABKAhSC21lbW9yeVVzYWdl');
 @$core.Deprecated('Use settingsCategoryDescriptor instead')
 const SettingsCategory$json = const {
   '1': 'SettingsCategory',

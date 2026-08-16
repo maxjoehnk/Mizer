@@ -70,6 +70,7 @@ class UiSettings extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UiSettings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'language')
     ..m<$core.String, Hotkeys>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hotkeys', entryClassName: 'UiSettings.HotkeysEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OM, valueCreator: Hotkeys.create, packageName: const $pb.PackageName('mizer.settings'))
+    ..aOM<StatusBarSettings>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'statusBar', subBuilder: StatusBarSettings.create)
     ..hasRequiredFields = false
   ;
 
@@ -77,6 +78,7 @@ class UiSettings extends $pb.GeneratedMessage {
   factory UiSettings({
     $core.String? language,
     $core.Map<$core.String, Hotkeys>? hotkeys,
+    StatusBarSettings? statusBar,
   }) {
     final _result = create();
     if (language != null) {
@@ -84,6 +86,9 @@ class UiSettings extends $pb.GeneratedMessage {
     }
     if (hotkeys != null) {
       _result.hotkeys.addAll(hotkeys);
+    }
+    if (statusBar != null) {
+      _result.statusBar = statusBar;
     }
     return _result;
   }
@@ -119,6 +124,92 @@ class UiSettings extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.Map<$core.String, Hotkeys> get hotkeys => $_getMap(1);
+
+  @$pb.TagNumber(3)
+  StatusBarSettings get statusBar => $_getN(2);
+  @$pb.TagNumber(3)
+  set statusBar(StatusBarSettings v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasStatusBar() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearStatusBar() => clearField(3);
+  @$pb.TagNumber(3)
+  StatusBarSettings ensureStatusBar() => $_ensure(2);
+}
+
+class StatusBarSettings extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StatusBarSettings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'batteryLevel')
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cpuUsage')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'memoryUsage')
+    ..hasRequiredFields = false
+  ;
+
+  StatusBarSettings._() : super();
+  factory StatusBarSettings({
+    $core.bool? batteryLevel,
+    $core.bool? cpuUsage,
+    $core.bool? memoryUsage,
+  }) {
+    final _result = create();
+    if (batteryLevel != null) {
+      _result.batteryLevel = batteryLevel;
+    }
+    if (cpuUsage != null) {
+      _result.cpuUsage = cpuUsage;
+    }
+    if (memoryUsage != null) {
+      _result.memoryUsage = memoryUsage;
+    }
+    return _result;
+  }
+  factory StatusBarSettings.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StatusBarSettings.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StatusBarSettings clone() => StatusBarSettings()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StatusBarSettings copyWith(void Function(StatusBarSettings) updates) => super.copyWith((message) => updates(message as StatusBarSettings)) as StatusBarSettings; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StatusBarSettings create() => StatusBarSettings._();
+  StatusBarSettings createEmptyInstance() => create();
+  static $pb.PbList<StatusBarSettings> createRepeated() => $pb.PbList<StatusBarSettings>();
+  @$core.pragma('dart2js:noInline')
+  static StatusBarSettings getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StatusBarSettings>(create);
+  static StatusBarSettings? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get batteryLevel => $_getBF(0);
+  @$pb.TagNumber(1)
+  set batteryLevel($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasBatteryLevel() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearBatteryLevel() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get cpuUsage => $_getBF(1);
+  @$pb.TagNumber(2)
+  set cpuUsage($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCpuUsage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCpuUsage() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get memoryUsage => $_getBF(2);
+  @$pb.TagNumber(3)
+  set memoryUsage($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMemoryUsage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMemoryUsage() => clearField(3);
 }
 
 class SettingsCategory extends $pb.GeneratedMessage {

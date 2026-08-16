@@ -23,6 +23,7 @@ pub struct General {
     pub auto_apply_wal: bool,
     #[serde(default)]
     pub keep_screen_awake: bool,
+    pub status_bar: StatusBar,
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, Copy, PartialEq, Eq, Facet)]
@@ -45,6 +46,14 @@ impl fmt::Display for Languages {
             Languages::German => write!(f, "de"),
         }
     }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, Facet)]
+#[facet(pod)]
+pub struct StatusBar {
+    pub battery_level: bool,
+    pub cpu_usage: bool,
+    pub memory_usage: bool,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, Facet)]

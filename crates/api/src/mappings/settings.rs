@@ -12,6 +12,7 @@ impl From<(settings::Settings, Vec<settings::Preference>)> for model::Settings {
     fn from((settings, preferences): (settings::Settings, Vec<settings::Preference>)) -> Self {
         let mut ui: model::UiSettings = settings.hotkeys.into();
         ui.language = settings.general.language.to_string();
+        ui.status_bar = Some(settings.general.status_bar.into());
 
         let mut settings = Self {
             ui: Some(ui),
@@ -112,7 +113,18 @@ impl From<settings::Hotkeys> for model::UiSettings {
 
         Self {
             language: Default::default(),
+            status_bar: Default::default(),
             hotkeys: map,
+        }
+    }
+}
+
+impl From<settings::StatusBar> for model::StatusBarSettings {
+    fn from(value: settings::StatusBar) -> Self {
+        Self {
+            battery_level: value.battery_level,
+            cpu_usage: value.cpu_usage,
+            memory_usage: value.memory_usage,
         }
     }
 }

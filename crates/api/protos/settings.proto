@@ -10,6 +10,14 @@ message Settings {
 message UiSettings {
   string language = 1;
   map<string, Hotkeys> hotkeys = 2;
+  StatusBarSettings status_bar = 3;
+}
+
+
+message StatusBarSettings {
+  bool battery_level = 1;
+  bool cpu_usage = 2;
+  bool memory_usage = 3;
 }
 
 message SettingsCategory {

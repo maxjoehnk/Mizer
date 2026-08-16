@@ -19,6 +19,7 @@ import 'package:mizer/views/layout/controls/dial.dart';
 import 'package:mizer/views/layout/controls/fader.dart';
 import 'package:mizer/views/layout/controls/group.dart';
 import 'package:mizer/views/layout/controls/label.dart';
+import 'package:mizer/views/layout/controls/level.dart';
 import 'package:mizer/views/layout/controls/preset.dart';
 import 'package:mizer/views/layout/controls/sequencer.dart';
 import 'package:mizer/views/layout/controls/step_sequencer.dart';
@@ -151,6 +152,8 @@ class _LayoutControlViewState extends State<LayoutControlView> {
       return TimecodeControl(pointer: widget.pointer, control: widget.control, color: _color);
     } else if (node?.type == "step-sequencer") {
       return StepSequencerControl(pointer: widget.pointer, control: widget.control, color: _color);
+    } else if (node?.type == "level") {
+      return LevelControl(pointer: widget.pointer, control: widget.control, color: _color);
     }
     return null;
   }

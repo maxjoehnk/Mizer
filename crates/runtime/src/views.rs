@@ -35,6 +35,7 @@ pub struct LayoutsView {
     labels: Arc<NonEmptyPinboard<HashMap<NodePath, Arc<String>>>>,
     colors: Arc<NonEmptyPinboard<HashMap<NodePath, Color>>>,
     clocks: Arc<NonEmptyPinboard<HashMap<NodePath, Timecode>>>,
+    levels: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
 }
 
 impl Default for LayoutsView {
@@ -47,6 +48,7 @@ impl Default for LayoutsView {
             labels: Arc::new(NonEmptyPinboard::new(Default::default())),
             colors: Arc::new(NonEmptyPinboard::new(Default::default())),
             clocks: Arc::new(NonEmptyPinboard::new(Default::default())),
+            levels: Arc::new(NonEmptyPinboard::new(Default::default())),
         }
     }
 }
@@ -120,5 +122,14 @@ impl LayoutsView {
 
     pub(crate) fn write_step_sequencer_values(&self, values: HashMap<NodePath, ([bool; 16], u8)>) {
         self.step_sequencers.set(values);
+    }
+    pub fn get_level_value(&self, path: &NodePath) -> Option<f64> {
+        let values = self.levels.read();
+
+        values.get(path).copied()
+    }
+
+    pub(crate) fn write_level_values(&self, values: HashMap<NodePath, f64>) {
+        self.levels.set(values);
     }
 }

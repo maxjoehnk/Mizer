@@ -1,26 +1,23 @@
-//
+///
 //  Generated code. Do not modify.
 //  source: layouts.proto
 //
 // @dart = 2.12
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
-// ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
-
+// ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
-
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class ControlType extends $pb.ProtobufEnum {
-  static const ControlType NONE = ControlType._(0, _omitEnumNames ? '' : 'NONE');
-  static const ControlType BUTTON = ControlType._(1, _omitEnumNames ? '' : 'BUTTON');
-  static const ControlType FADER = ControlType._(2, _omitEnumNames ? '' : 'FADER');
-  static const ControlType DIAL = ControlType._(3, _omitEnumNames ? '' : 'DIAL');
-  static const ControlType LABEL = ControlType._(4, _omitEnumNames ? '' : 'LABEL');
-  static const ControlType TIMECODE = ControlType._(5, _omitEnumNames ? '' : 'TIMECODE');
-  static const ControlType STEP_SEQUENCER = ControlType._(6, _omitEnumNames ? '' : 'STEP_SEQUENCER');
+  static const ControlType NONE = ControlType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NONE');
+  static const ControlType BUTTON = ControlType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BUTTON');
+  static const ControlType FADER = ControlType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FADER');
+  static const ControlType DIAL = ControlType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DIAL');
+  static const ControlType LABEL = ControlType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LABEL');
+  static const ControlType TIMECODE = ControlType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE');
+  static const ControlType STEP_SEQUENCER = ControlType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STEP_SEQUENCER');
+  static const ControlType LEVEL = ControlType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEVEL');
 
   static const $core.List<ControlType> values = <ControlType> [
     NONE,
@@ -30,6 +27,7 @@ class ControlType extends $pb.ProtobufEnum {
     LABEL,
     TIMECODE,
     STEP_SEQUENCER,
+    LEVEL,
   ];
 
   static final $core.Map<$core.int, ControlType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -39,8 +37,8 @@ class ControlType extends $pb.ProtobufEnum {
 }
 
 class SequencerControlBehavior_ClickBehavior extends $pb.ProtobufEnum {
-  static const SequencerControlBehavior_ClickBehavior GO_FORWARD = SequencerControlBehavior_ClickBehavior._(0, _omitEnumNames ? '' : 'GO_FORWARD');
-  static const SequencerControlBehavior_ClickBehavior TOGGLE = SequencerControlBehavior_ClickBehavior._(1, _omitEnumNames ? '' : 'TOGGLE');
+  static const SequencerControlBehavior_ClickBehavior GO_FORWARD = SequencerControlBehavior_ClickBehavior._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GO_FORWARD');
+  static const SequencerControlBehavior_ClickBehavior TOGGLE = SequencerControlBehavior_ClickBehavior._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TOGGLE');
 
   static const $core.List<SequencerControlBehavior_ClickBehavior> values = <SequencerControlBehavior_ClickBehavior> [
     GO_FORWARD,
@@ -53,5 +51,3 @@ class SequencerControlBehavior_ClickBehavior extends $pb.ProtobufEnum {
   const SequencerControlBehavior_ClickBehavior._($core.int v, $core.String n) : super(v, n);
 }
 
-
-const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

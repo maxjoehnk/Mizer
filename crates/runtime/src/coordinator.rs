@@ -232,6 +232,18 @@ impl CoordinatorRuntime {
             .collect::<HashMap<_, _>>();
 
         self.layout_fader_view.write_step_sequencer_values(step_sequencer_values);
+
+        let level_values = nodes
+            .iter()
+            .filter_map(|path| {
+                pipeline
+                    .get_node_with_state::<LevelNode>(path)
+                    .map(|(node, state)| node.value(state))
+                    .map(|value| (path.clone(), value))
+            })
+            .collect::<HashMap<_, _>>();
+
+        self.layout_fader_view.write_level_values(level_values);
     }
 
     fn get_preset_ids(&self) -> Vec<PresetId> {

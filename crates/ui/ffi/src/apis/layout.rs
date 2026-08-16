@@ -152,6 +152,21 @@ pub extern "C" fn read_step_sequencer_value(ptr: *const LayoutRef, path: *const 
 }
 
 #[no_mangle]
+pub extern "C" fn read_level_value(ptr: *const LayoutRef, path: *const c_char) -> f64 {
+    let path = unsafe { CStr::from_ptr(path) };
+    let path = path.to_str().unwrap();
+    let node_path = NodePath::from(path);
+    let ffi = Arc::from_pointer(ptr);
+
+    let value = ffi.view.get_level_value(&node_path).unwrap_or_default();
+
+    std::mem::forget(ffi);
+
+    value
+}
+
+
+#[no_mangle]
 pub extern "C" fn drop_layout_pointer(ptr: *const LayoutRef) {
     drop_pointer(ptr);
 }

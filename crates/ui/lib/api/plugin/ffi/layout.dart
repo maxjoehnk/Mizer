@@ -68,6 +68,13 @@ class LayoutsRefPointer extends FFIPointer<LayoutRef> {
     return StepSequencerValue(result.value.toList().map((e) => e > 0).toList(), result.beat);
   }
 
+  double readLevelValue(String path) {
+    var ffiPath = path.toNativeUtf8();
+    var result = this._bindings.read_level_value(ptr, ffiPath.cast<ffi.Char>());
+
+    return result;
+  }
+
   @override
   void disposePointer(ffi.Pointer<LayoutRef> _ptr) {
     this._bindings.drop_layout_pointer(_ptr);

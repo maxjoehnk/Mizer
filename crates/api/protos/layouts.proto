@@ -186,4 +186,5 @@ enum ControlType {
   LABEL = 4;
   TIMECODE = 5;
   STEP_SEQUENCER = 6;
+  LEVEL = 7;
 }

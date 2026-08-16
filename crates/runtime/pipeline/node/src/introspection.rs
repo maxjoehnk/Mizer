@@ -76,6 +76,7 @@ node_type_name! {
         Dial,
         Label,
         Timecode,
+        Level,
         DmxInput,
         DmxOutput,
         Oscillator,

@@ -257,8 +257,7 @@ class _ControlLayoutState extends State<ControlLayout> {
   _startMove(LayoutControl control) {
     setState(() {
       _movingNode = control;
-      _movingNodePosition =
-          Offset(control.position.x.toDouble(), control.position.y.toDouble()) / 10 * MULTIPLIER;
+      _movingNodePosition = control.position.toScreen();
     });
   }
 
@@ -274,8 +273,7 @@ class _ControlLayoutState extends State<ControlLayout> {
   _startResize(LayoutControl control) {
     setState(() {
       _resizingNode = control;
-      _resizingNodeSize =
-          Size(control.size.width.toDouble(), control.size.height.toDouble()) / 10 * MULTIPLIER;
+      _resizingNodeSize = control.size.toScreen();
     });
   }
 
@@ -283,11 +281,8 @@ class _ControlLayoutState extends State<ControlLayout> {
     if (_resizingNode == null) {
       return;
     }
-    var corner =
-        Offset(_resizingNode!.position.x.toDouble(), _resizingNode!.position.y.toDouble()) / 10 *
-            MULTIPLIER;
     setState(() {
-      _resizingNodeSize = Rect.fromPoints(corner, event.localPosition).size;
+      _resizingNodeSize = Rect.fromPoints(_resizingNode!.position.toScreen(), event.localPosition).size;
     });
   }
 
@@ -405,14 +400,13 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     for (var control in layout.controls) {
-      var controlSize =
-          Size(control.size.width.toDouble(), control.size.height.toDouble()) / 10 * MULTIPLIER + (Offset(control.size.width.toDouble() - 1, control.size.height.toDouble() - 1) / 10 * GRID_GAP_SIZE);
+      var controlSize = control.size.toScreen() + control.size.toLayoutGaps();
       layoutChild(control.id, BoxConstraints.tight(controlSize));
       var controlOffset = movingControlId == control.id
           ? movingControlPosition!
-          : Offset(control.position.x.toDouble(), control.position.y.toDouble()) / 10 * MULTIPLIER;
+          : control.position.toScreen();
 
-      controlOffset += Offset(control.position.x.toDouble(), control.position.y.toDouble()) / 10 * GRID_GAP_SIZE;
+      controlOffset += control.position.toScreen(multiplier: GRID_GAP_SIZE);
       positionChild(control.id, controlOffset);
       if (movingControlId != null && movingControlId == control.id) {
         layoutChild(MovingNodeIndicatorLayoutId, BoxConstraints.tight(controlSize));
@@ -421,8 +415,7 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
       }
       if (resizingControlId != null && resizingControlId == control.id) {
         var size = screenToLayoutSize(resizingControlSize!);
-        layoutChild(ResizingNodeIndicatorLayoutId,
-            BoxConstraints.tight(size * MULTIPLIER + (Offset(size.width.toDouble() - 1, size.height.toDouble() - 1) / 10 * GRID_GAP_SIZE)));
+        layoutChild(ResizingNodeIndicatorLayoutId, BoxConstraints.tight(size * MULTIPLIER + size.toLayoutGaps()));
         positionChild(ResizingNodeIndicatorLayoutId, controlOffset);
       }
     }

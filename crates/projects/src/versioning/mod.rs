@@ -15,6 +15,7 @@ migrations! {
     MigratePositionPresets,
     AdaptFaderConfig,
     DmxOutputChannel,
+    FineLayoutPositioning,
 }
 
 impl Migrations {

@@ -198,8 +198,8 @@ class _ControlLayoutState extends State<ControlLayout> {
                       GestureDetector(
                         onSecondaryTapDown: (details) {
                           LayoutsBloc bloc = context.read();
-                          int x = (details.localPosition.dx / MULTIPLIER).floor();
-                          int y = (details.localPosition.dy / MULTIPLIER).floor();
+                          int x = (details.localPosition.dx / MULTIPLIER).floor() * 10;
+                          int y = (details.localPosition.dy / MULTIPLIER).floor() * 10;
                           var position = ControlPosition(x: Int64(x), y: Int64(y));
                           Navigator.of(context).push(MizerPopupRoute(
                               position: details.globalPosition,
@@ -258,7 +258,7 @@ class _ControlLayoutState extends State<ControlLayout> {
     setState(() {
       _movingNode = control;
       _movingNodePosition =
-          Offset(control.position.x.toDouble(), control.position.y.toDouble()) * MULTIPLIER;
+          Offset(control.position.x.toDouble(), control.position.y.toDouble()) / 10 * MULTIPLIER;
     });
   }
 
@@ -275,7 +275,7 @@ class _ControlLayoutState extends State<ControlLayout> {
     setState(() {
       _resizingNode = control;
       _resizingNodeSize =
-          Size(control.size.width.toDouble(), control.size.height.toDouble()) * MULTIPLIER;
+          Size(control.size.width.toDouble(), control.size.height.toDouble()) / 10 * MULTIPLIER;
     });
   }
 
@@ -284,7 +284,7 @@ class _ControlLayoutState extends State<ControlLayout> {
       return;
     }
     var corner =
-        Offset(_resizingNode!.position.x.toDouble(), _resizingNode!.position.y.toDouble()) *
+        Offset(_resizingNode!.position.x.toDouble(), _resizingNode!.position.y.toDouble()) / 10 *
             MULTIPLIER;
     setState(() {
       _resizingNodeSize = Rect.fromPoints(corner, event.localPosition).size;
@@ -406,13 +406,13 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
   void performLayout(Size size) {
     for (var control in layout.controls) {
       var controlSize =
-          Size(control.size.width.toDouble(), control.size.height.toDouble()) * MULTIPLIER + (Offset(control.size.width.toDouble() - 1, control.size.height.toDouble() - 1) * GRID_GAP_SIZE);
+          Size(control.size.width.toDouble(), control.size.height.toDouble()) / 10 * MULTIPLIER + (Offset(control.size.width.toDouble() - 1, control.size.height.toDouble() - 1) / 10 * GRID_GAP_SIZE);
       layoutChild(control.id, BoxConstraints.tight(controlSize));
       var controlOffset = movingControlId == control.id
           ? movingControlPosition!
-          : Offset(control.position.x.toDouble(), control.position.y.toDouble()) * MULTIPLIER;
+          : Offset(control.position.x.toDouble(), control.position.y.toDouble()) / 10 * MULTIPLIER;
 
-      controlOffset += Offset(control.position.x.toDouble(), control.position.y.toDouble()) * GRID_GAP_SIZE;
+      controlOffset += Offset(control.position.x.toDouble(), control.position.y.toDouble()) / 10 * GRID_GAP_SIZE;
       positionChild(control.id, controlOffset);
       if (movingControlId != null && movingControlId == control.id) {
         layoutChild(MovingNodeIndicatorLayoutId, BoxConstraints.tight(controlSize));
@@ -422,7 +422,7 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
       if (resizingControlId != null && resizingControlId == control.id) {
         var size = screenToLayoutSize(resizingControlSize!);
         layoutChild(ResizingNodeIndicatorLayoutId,
-            BoxConstraints.tight(size * MULTIPLIER + (Offset(size.width.toDouble() - 1, size.height.toDouble() - 1) * GRID_GAP_SIZE)));
+            BoxConstraints.tight(size * MULTIPLIER + (Offset(size.width.toDouble() - 1, size.height.toDouble() - 1) / 10 * GRID_GAP_SIZE)));
         positionChild(ResizingNodeIndicatorLayoutId, controlOffset);
       }
     }
@@ -439,15 +439,15 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
 }
 
 Offset screenToLayoutPosition(Offset offset) {
-  double x = (offset.dx / MULTIPLIER).round().clamp(0, 100).toDouble();
-  double y = (offset.dy / MULTIPLIER).round().clamp(0, 100).toDouble();
+  double x = (offset.dx / MULTIPLIER).round().clamp(0, 100).toDouble() * 10;
+  double y = (offset.dy / MULTIPLIER).round().clamp(0, 100).toDouble() * 10;
 
   return Offset(x, y);
 }
 
 Size screenToLayoutSize(Size size) {
-  double width = (size.width / MULTIPLIER).round().clamp(1, 100).toDouble();
-  double height = (size.height / MULTIPLIER).round().clamp(1, 100).toDouble();
+  double width = (size.width / MULTIPLIER).round().clamp(1, 100).toDouble() * 10;
+  double height = (size.height / MULTIPLIER).round().clamp(1, 100).toDouble() * 10;
 
   return Size(width, height);
 }

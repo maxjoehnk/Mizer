@@ -13,11 +13,14 @@ class NodesPointer extends FFIPointer<NodesRef> {
   List<NodePortMetadata> readPortMetadata() {
     var state = this._bindings.read_node_port_metadata(ptr);
     var metadata = new List.generate(state.len, (index) => state.array.elementAt(index).ref);
-
-    return metadata.map((metadata) {
+    var list = metadata.map((metadata) {
       return NodePortMetadata(metadata.node_path.cast<Utf8>().toDartString(),
           metadata.port_id.cast<Utf8>().toDartString(), metadata.pushed_value == 1);
     }).toList();
+
+    _bindings.drop_node_port_metadata(state);
+
+    return list;
   }
 
   @override

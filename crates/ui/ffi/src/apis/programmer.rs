@@ -1,31 +1,22 @@
-use crate::types::{drop_pointer, Array, FFIFromPointer};
+use crate::types::{drop_array, drop_pointer, Array, FFIFromPointer};
 use mizer_fixtures::definition::FixtureControlValue;
 use mizer_fixtures::programmer::{
     Color, PresetId, ProgrammedEffect, ProgrammerChannel, ProgrammerControlValue, ProgrammerState,
     ProgrammerView,
 };
 use mizer_fixtures::FixtureId;
-use parking_lot::Mutex;
-use std::collections::HashMap;
 use std::ffi::CString;
 use std::os::raw::c_char;
 use std::sync::Arc;
 
 pub struct Programmer {
     view: ProgrammerView,
-    ffi_state: Mutex<ProgrammerFFIState>,
-}
-
-#[derive(Default)]
-struct ProgrammerFFIState {
-    generic_channels: HashMap<*const c_char, CString>,
 }
 
 impl Programmer {
     pub fn new(view: ProgrammerView) -> Self {
         Self {
             view,
-            ffi_state: Mutex::new(Default::default()),
         }
     }
 }
@@ -36,11 +27,7 @@ pub extern "C" fn read_programmer_state(ptr: *const Programmer) -> FFIProgrammer
 
     let state = ffi.view.read();
 
-    let state = {
-        let mut ffi_state = ffi.ffi_state.lock();
-
-        FFIProgrammerState::from(state, &mut ffi_state)
-    };
+    let state = FFIProgrammerState::from(state);
 
     std::mem::forget(ffi);
 
@@ -52,15 +39,23 @@ pub extern "C" fn drop_programmer_pointer(ptr: *const Programmer) {
     drop_pointer(ptr);
 }
 
-// TODO: currently this is not used, investigate if we're currently leaking memory here
 #[no_mangle]
-pub extern "C" fn drop_generic_channel(ptr: *const Programmer, channel: FFIGenericValue) {
-    let ffi = Arc::from_pointer(ptr);
-    {
-        let mut ffi_state = ffi.ffi_state.lock();
-        ffi_state.generic_channels.remove(&channel.channel);
+pub extern "C" fn drop_programmer_state(state: FFIProgrammerState) {
+    drop_array(state.active_fixtures);
+    drop_array(state.active_groups);
+    drop_array(state.fixtures);
+    let selection = state.selection.into_vec();
+    for item in selection {
+        drop_array(item);
     }
-    std::mem::forget(ffi);
+    let channels = state.channels.into_vec();
+    for item in channels {
+        drop_array(item.fixtures);
+        if item.control == FFIFixtureFaderControl::Generic {
+            let _ = unsafe { CString::from_raw(item.value.generic.channel) };
+        }
+    }
+    drop_array(state.effects);
 }
 
 #[repr(C)]
@@ -79,7 +74,7 @@ pub struct FFIProgrammerState {
 }
 
 impl FFIProgrammerState {
-    fn from(state: ProgrammerState, ffi_state: &mut ProgrammerFFIState) -> Self {
+    fn from(state: ProgrammerState) -> Self {
         Self {
             active_fixtures: state
                 .active_fixtures
@@ -114,7 +109,7 @@ impl FFIProgrammerState {
             channels: state
                 .channels
                 .into_iter()
-                .map(|chan| FFIProgrammerChannel::from(chan, ffi_state))
+                .map(|chan| FFIProgrammerChannel::from(chan))
                 .collect::<Vec<_>>()
                 .into(),
             highlight: u8::from(state.highlight),
@@ -161,7 +156,7 @@ pub struct FFIProgrammerChannel {
 }
 
 impl FFIProgrammerChannel {
-    fn from(channel: ProgrammerChannel, ffi_state: &mut ProgrammerFFIState) -> Self {
+    fn from(channel: ProgrammerChannel) -> Self {
         use FixtureControlValue::*;
         use ProgrammerControlValue::*;
         let preset = matches!(channel.value, Preset(_));
@@ -217,14 +212,12 @@ impl FFIProgrammerChannel {
                 ProgrammerChannelValue { fader: value },
             ),
             Control(Generic(channel, value)) => {
-                let channel = CString::new(channel).unwrap();
-                let channel_pointer = channel.as_ptr();
-                ffi_state.generic_channels.insert(channel_pointer, channel);
+                let channel = CString::new(channel).unwrap_or_default().into_raw();
                 (
                     FFIFixtureFaderControl::Generic,
                     ProgrammerChannelValue {
                         generic: FFIGenericValue {
-                            channel: channel_pointer,
+                            channel,
                             value,
                         },
                     },
@@ -295,7 +288,7 @@ impl From<Color> for FFIColorValue {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct FFIGenericValue {
-    pub channel: *const c_char,
+    pub channel: *mut c_char,
     pub value: f64,
 }
 
@@ -319,6 +312,7 @@ impl From<PresetId> for FFIPresetId {
     }
 }
 
+#[derive(PartialEq)]
 #[repr(C)]
 pub enum FFIFixtureFaderControl {
     Intensity = 0,

@@ -1,12 +1,11 @@
 import 'dart:ffi' as ffi;
 
 import 'package:flutter/widgets.dart' as widgets;
+import 'package:mizer/api/plugin/ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
 import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/layouts.pb.dart';
-
-import 'package:mizer/api/plugin/ffi/bindings.dart';
-import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
 
 class FixtureState {
   final double? brightness;
@@ -84,8 +83,11 @@ class FixturesRefPointer extends FFIPointer<FixturesRef> {
         tilt: fixture.has_tilt == 1 ? fixture.tilt : null
       );
     });
+    var fixturesState = FixturesState(fixtureStates: fixtureStates);
 
-    return FixturesState(fixtureStates: fixtureStates);
+    _bindings.drop_fixture_states(states);
+
+    return fixturesState;
   }
 
   @override

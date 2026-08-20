@@ -37,7 +37,7 @@ class ProgrammerStatePointer extends FFIPointer<Programmer> implements IProgramm
     var activeGroups = _readGroupSelection(state.active_groups);
     var effects = _readEffects(state.effects);
 
-    return ProgrammerState(
+    var programmerState = ProgrammerState(
       activeFixtures: activeFixtures,
       activeGroups: activeGroups,
       fixtures: fixtures,
@@ -50,6 +50,10 @@ class ProgrammerStatePointer extends FFIPointer<Programmer> implements IProgramm
       wings: state.wings,
       effects: effects,
     );
+
+    this._bindings.drop_programmer_state(state);
+
+    return programmerState;
   }
 
   List<FixtureId> _readFixtureSelection(Array_FFIFixtureId result) {

@@ -15,9 +15,13 @@ class SequencerPointer extends FFIPointer<bindings.Sequencer> {
 
     var states = new List.generate(result.len, (index) => result.array.elementAt(index).ref);
 
-    return states
+    var sequenceStates = states
         .asMap()
         .map((key, value) => MapEntry(value.sequence_id, SequenceState.fromBinding(value)));
+
+    _bindings.drop_sequence_state(result);
+
+    return sequenceStates;
   }
 
   @override

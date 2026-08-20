@@ -8,9 +8,15 @@ pub struct Array<T> {
     array: *const T,
 }
 
+impl<T> Array<T> {
+    pub(crate) fn into_vec(self) -> Vec<T> {
+        unsafe { Vec::<T>::from_raw_parts(self.array.cast_mut(), self.len, self.len) }
+    }
+}
+
 impl<T> From<Vec<T>> for Array<T> {
-    fn from(mut vec: Vec<T>) -> Self {
-        vec.shrink_to_fit();
+    fn from(vec: Vec<T>) -> Self {
+        let vec = vec.into_boxed_slice();
         let array = Array {
             len: vec.len(),
             array: vec.as_ptr(),
@@ -58,6 +64,11 @@ pub fn drop_pointer<T>(ptr: *const T) {
     drop(ffi);
 }
 
+pub fn drop_array<T>(array: Array<T>) {
+    let vec = array.into_vec();
+    drop(vec);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -91,5 +102,14 @@ mod tests {
         std::mem::forget(content);
 
         assert_eq!(Arc::strong_count(&data), 2);
+    }
+
+    #[test]
+    fn drop_array_frees_the_underlying_vec() {
+        let vec = vec![1, 2, 3, 4];
+        let array = Array::from(vec);
+
+        drop_array(array);
+
     }
 }

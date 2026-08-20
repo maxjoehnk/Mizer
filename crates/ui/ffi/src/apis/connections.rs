@@ -9,9 +9,10 @@ use mizer_api::Message;
 use mizer_devices::DeviceManager;
 use mizer_gamepads::{Axis, Button, GamepadRef, GamepadState};
 
-use crate::types::{Array, FFIFromPointer};
+use crate::types::{drop_pointer, Array, FFIFromPointer};
 
 pub struct GamepadConnectionRef(pub GamepadRef);
+// No drop method for this pointer as it is kept open for the whole runtime of the ui
 pub struct ConnectionsRef(pub DeviceManager);
 
 #[no_mangle]
@@ -115,4 +116,9 @@ bitflags! {
         const DOWN = 0b0100;
         const LEFT = 0b1000;
     }
+}
+
+#[no_mangle]
+pub extern "C" fn drop_gamepad_pointer(pointer: *const GamepadConnectionRef) {
+    drop_pointer(pointer)
 }

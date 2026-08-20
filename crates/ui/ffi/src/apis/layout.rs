@@ -1,5 +1,5 @@
 use crate::apis::transport::Timecode;
-use crate::types::{drop_pointer, Array, FFIFromPointer};
+use crate::types::{drop_array, drop_pointer, Array, FFIFromPointer};
 use mizer_node::NodePath;
 use mizer_runtime::LayoutsView;
 use parking_lot::Mutex;
@@ -169,6 +169,11 @@ pub extern "C" fn read_level_value(ptr: *const LayoutRef, path: *const c_char) -
 #[no_mangle]
 pub extern "C" fn drop_layout_pointer(ptr: *const LayoutRef) {
     drop_pointer(ptr);
+}
+
+#[no_mangle]
+pub extern "C" fn drop_step_sequencer_value(value: FFIStepSequencerValue) {
+    drop_array(value.value);
 }
 
 #[derive(Default)]

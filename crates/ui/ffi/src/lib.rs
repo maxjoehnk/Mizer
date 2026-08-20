@@ -11,5 +11,4 @@ pub use apis::transport::Transport;
 pub use types::FFIToPointer;
 
 mod apis;
-mod pointer_inventory;
 mod types;

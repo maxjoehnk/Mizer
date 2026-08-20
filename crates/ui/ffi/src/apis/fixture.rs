@@ -1,5 +1,5 @@
 use crate::apis::programmer::{FFIColorValue, FFIFixtureId};
-use crate::types::{drop_pointer, Array, FFIFromPointer};
+use crate::types::{drop_array, drop_pointer, Array, FFIFromPointer};
 use mizer_fixtures::{FixtureId, FixtureState, FixtureStates};
 use std::sync::Arc;
 
@@ -59,6 +59,11 @@ pub extern "C" fn read_fixture_states(ptr: *const FixturesRef) -> FFIFixtureStat
 #[no_mangle]
 pub extern "C" fn drop_fixture_pointer(ptr: *const FixturesRef) {
     drop_pointer(ptr);
+}
+
+#[no_mangle]
+pub extern "C" fn drop_fixture_states(fixture_states: FFIFixtureStates) {
+    drop_array(fixture_states.fixture_values);
 }
 
 #[derive(Default)]

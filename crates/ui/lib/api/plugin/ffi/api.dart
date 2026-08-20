@@ -15,13 +15,13 @@ import 'plans.dart';
 import 'programmer.dart';
 
 extension DoubleArray on Array_f64 {
-  List<double> toList() {
+  List<double> asList() {
     return array.asTypedList(len);
   }
 }
 
 extension BoolArray on Array_u8 {
-  List<int> toList() {
+  List<int> asList() {
     return array.asTypedList(len);
   }
 }

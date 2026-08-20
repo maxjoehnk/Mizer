@@ -1,12 +1,11 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:mizer/api/plugin/ffi/transport.dart';
-import 'package:mizer/widgets/inputs/color.dart';
-
 import 'package:mizer/api/plugin/ffi/api.dart';
 import 'package:mizer/api/plugin/ffi/bindings.dart';
 import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
+import 'package:mizer/api/plugin/ffi/transport.dart';
+import 'package:mizer/widgets/inputs/color.dart';
 
 class NodeHistoryPointer extends FFIPointer<NodeHistory> implements TimecodeReader {
   final FFIBindings _bindings;
@@ -15,14 +14,20 @@ class NodeHistoryPointer extends FFIPointer<NodeHistory> implements TimecodeRead
 
   List<double> readHistory() {
     var result = this._bindings.read_node_history(ptr);
+    var list = result.asList().toList(growable: false);
 
-    return result.toList();
+    _bindings.drop_double_array(result);
+
+    return list;
   }
 
   StructuredData readData() {
     var result = this._bindings.read_node_data_preview(ptr);
+    var structuredData = _convertData(result);
 
-    return _convertData(result);
+    _bindings.drop_structured_data(result);
+
+    return structuredData;
   }
 
   StructuredData _convertData(FFIStructuredData data) {
@@ -70,8 +75,11 @@ class NodeHistoryPointer extends FFIPointer<NodeHistory> implements TimecodeRead
 
   List<double> readMulti() {
     var result = this._bindings.read_node_multi_preview(ptr);
+    var list = result.asList().toList(growable: false);
 
-    return result.toList();
+    _bindings.drop_double_array(result);
+
+    return list;
   }
 
   @override

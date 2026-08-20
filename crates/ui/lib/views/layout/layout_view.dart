@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:collection/collection.dart';
 import 'package:fixnum/fixnum.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
@@ -288,8 +288,9 @@ class _ControlLayoutState extends State<ControlLayout> {
 
   _placeNode() {
     LayoutsBloc bloc = context.read();
+    bool fine = HardwareKeyboard.instance.isShiftPressed;
     if (_movingNode != null) {
-      var position = screenToLayoutPosition(_movingNodePosition!).toControlPosition();
+      var position = screenToLayoutPosition(_movingNodePosition!, fine: fine).toControlPosition();
       bloc.add(
           MoveControl(layoutId: widget.layout.id, controlId: _movingNode!.id, position: position));
 
@@ -299,7 +300,7 @@ class _ControlLayoutState extends State<ControlLayout> {
       });
     }
     if (_resizingNode != null) {
-      var size = screenToLayoutSize(_resizingNodeSize!).toControlSize();
+      var size = screenToLayoutSize(_resizingNodeSize!, fine: fine).toControlSize();
       bloc.add(ResizeControl(layoutId: widget.layout.id, controlId: _resizingNode!.id, size: size));
 
       setState(() {
@@ -408,14 +409,16 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
 
       controlOffset += control.position.toScreen(multiplier: GRID_GAP_SIZE);
       positionChild(control.id, controlOffset);
+      bool fine = HardwareKeyboard.instance.isShiftPressed;
       if (movingControlId != null && movingControlId == control.id) {
+        print("layout for moving node: $controlSize, $movingControlPosition");
         layoutChild(MovingNodeIndicatorLayoutId, BoxConstraints.tight(controlSize));
-        positionChild(MovingNodeIndicatorLayoutId,
-            screenToLayoutPosition(movingControlPosition!) * MULTIPLIER + screenToLayoutPosition(movingControlPosition!) * GRID_GAP_SIZE);
+        positionChild(MovingNodeIndicatorLayoutId, fine ? movingControlPosition! : (
+            alignPositionToGrid(movingControlPosition!) * MULTIPLIER + alignPositionToGrid(movingControlPosition!) * GRID_GAP_SIZE));
       }
       if (resizingControlId != null && resizingControlId == control.id) {
-        var size = screenToLayoutSize(resizingControlSize!);
-        layoutChild(ResizingNodeIndicatorLayoutId, BoxConstraints.tight(size * MULTIPLIER + size.toLayoutGaps()));
+        var size = fine ? resizingControlSize! : alignSizeToGrid(resizingControlSize!) * MULTIPLIER;
+        layoutChild(ResizingNodeIndicatorLayoutId, BoxConstraints.tight(size + size.toLayoutGaps()));
         positionChild(ResizingNodeIndicatorLayoutId, controlOffset);
       }
     }
@@ -431,16 +434,47 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
   }
 }
 
-Offset screenToLayoutPosition(Offset offset) {
-  double x = (offset.dx / MULTIPLIER).round().clamp(0, 100).toDouble() * 10;
-  double y = (offset.dy / MULTIPLIER).round().clamp(0, 100).toDouble() * 10;
+Offset alignPositionToGrid(Offset offset) {
+  double x = ((offset.dx / MULTIPLIER).round()).clamp(0, 100).toDouble();
+  double y = ((offset.dy / MULTIPLIER).round()).clamp(0, 100).toDouble();
 
   return Offset(x, y);
 }
 
-Size screenToLayoutSize(Size size) {
+Offset screenToLayoutPosition(Offset offset, { bool fine = false }) {
+  if (fine) {
+    double x = ((offset.dx * 10) / MULTIPLIER).round().clamp(1, 1000).toDouble();
+    double y = ((offset.dy * 10) / MULTIPLIER).round().clamp(1, 1000).toDouble();
+    print("${offset} => ${Offset(x, y)}");
+
+    return Offset(x, y);
+  }
+
+  double x = ((offset.dx / MULTIPLIER).round()).clamp(0, 100).toDouble() * 10;
+  double y = ((offset.dy / MULTIPLIER).round()).clamp(0, 100).toDouble() * 10;
+
+  return Offset(x, y);
+}
+
+Size alignSizeToGrid(Size size, { bool fine = false}) {
+  double width = (size.width / MULTIPLIER).round().clamp(1, 100).toDouble();
+  double height = (size.height / MULTIPLIER).round().clamp(1, 100).toDouble();
+
+  return Size(width, height);
+}
+
+Size screenToLayoutSize(Size size, { bool fine = false }) {
+  if (fine) {
+    double width = ((size.width * 10) / MULTIPLIER).round().clamp(1, 1000).toDouble();
+    double height = ((size.height * 10) / MULTIPLIER).round().clamp(1, 1000).toDouble();
+    print("${size} => ${Size(width, height)}");
+
+    return Size(width, height);
+  }
+
   double width = (size.width / MULTIPLIER).round().clamp(1, 100).toDouble() * 10;
   double height = (size.height / MULTIPLIER).round().clamp(1, 100).toDouble() * 10;
+  print("${size} => ${Size(width, height)}");
 
   return Size(width, height);
 }

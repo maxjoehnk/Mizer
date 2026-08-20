@@ -1,10 +1,9 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:mizer/protos/connections.pb.dart';
-
 import 'package:mizer/api/plugin/ffi/bindings.dart';
 import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
+import 'package:mizer/protos/connections.pb.dart';
 
 class GamepadStatePointer extends FFIPointer<GamepadConnectionRef> {
   final FFIBindings _bindings;
@@ -36,7 +35,7 @@ class GamepadStatePointer extends FFIPointer<GamepadConnectionRef> {
 
   @override
   void disposePointer(ffi.Pointer<GamepadConnectionRef> _ptr) {
-    // this._bindings.drop_gamepad_pointer(_ptr);
+    this._bindings.drop_gamepad_pointer(_ptr);
   }
 }
 
@@ -104,24 +103,31 @@ bool isFlag(int bits, int flag) {
   return bits & flag == flag;
 }
 
-class ConnectionsPointer {
+class ConnectionsPointer extends FFIPointer<ConnectionsRef> {
   final FFIBindings _bindings;
-  final ffi.Pointer<ConnectionsRef> _ptr;
 
-  ConnectionsPointer(this._bindings, this._ptr);
+  ConnectionsPointer(this._bindings, ffi.Pointer<ConnectionsRef> ptr) : super(ptr);
 
   PioneerCdjConnection? readCdjState(String id) {
-    var ffiId = id.toNativeUtf8();
-    var result = _bindings.read_cdj_state(_ptr, ffiId.cast<ffi.Char>());
-    var buffer = new List.generate(result.len, (index) => result.array.elementAt(index))
-        .map((e) => e.value)
-        .toList();
+    return using((arena) {
+      var ffiId = id.toNativeUtf8(allocator: arena);
+      var result = _bindings.read_cdj_state(ptr, ffiId.cast<ffi.Char>());
+      List<int> buffer = result.array.asTypedList(result.len);
 
-    if (buffer.isEmpty) {
-      return null;
-    }
+      if (buffer.isEmpty) {
+        return null;
+      }
 
-    var pioneerCdjConnection = PioneerCdjConnection.fromBuffer(buffer);
-    return pioneerCdjConnection;
+      var pioneerCdjConnection = PioneerCdjConnection.fromBuffer(buffer);
+
+      _bindings.drop_byte_array(result);
+
+      return pioneerCdjConnection;
+    });
+  }
+
+  @override
+  void disposePointer(ffi.Pointer<ConnectionsRef> _ptr) {
+    _bindings.drop_connections_pointer(_ptr);
   }
 }

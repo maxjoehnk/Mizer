@@ -1,4 +1,4 @@
-use crate::types::{drop_pointer, Array, FFIFromPointer};
+use crate::types::{drop_array, drop_pointer, Array, FFIFromPointer};
 use mizer_sequencer::SequencerView;
 use std::sync::Arc;
 
@@ -37,4 +37,9 @@ pub extern "C" fn read_sequencer_state(ptr: *const Sequencer) -> Array<SequenceS
 #[no_mangle]
 pub extern "C" fn drop_sequencer_pointer(ptr: *const Sequencer) {
     drop_pointer(ptr);
+}
+
+#[no_mangle]
+pub extern "C" fn drop_sequence_state(array: Array<SequenceState>) {
+    drop_array(array)
 }

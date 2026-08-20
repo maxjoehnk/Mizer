@@ -1,60 +1,46 @@
-use std::ffi::c_char;
+use std::ffi::{c_char, CString};
 use std::sync::Arc;
-
-use parking_lot::Mutex;
 
 use mizer_runtime::NodePreviewRef;
 use mizer_util::StructuredData;
 
 use crate::apis::programmer::FFIColorValue;
 use crate::apis::transport::Timecode;
-use crate::pointer_inventory::PointerInventory;
 use crate::types::{drop_pointer, Array, FFIFromPointer};
 
 pub struct NodeHistory {
     preview_ref: NodePreviewRef,
-    pointer_inventory: Mutex<PointerInventory>,
 }
 
 impl NodeHistory {
     pub fn new(preview_ref: NodePreviewRef) -> Self {
         Self {
             preview_ref,
-            pointer_inventory: Default::default(),
         }
     }
 
-    // TODO: This should probably drop old inventory after 2 generations
     fn convert(&self, data: StructuredData) -> FFIStructuredData {
-        let mut inventory = self.pointer_inventory.lock();
-        convert_with_inventory(data, &mut inventory)
-    }
-}
-
-fn convert_with_inventory(
-    data: StructuredData,
-    inventory: &mut PointerInventory,
-) -> FFIStructuredData {
-    match data {
-        StructuredData::Boolean(bool) => FFIStructuredData::boolean(bool),
-        StructuredData::Float(float) => FFIStructuredData::float(float),
-        StructuredData::Int(int) => FFIStructuredData::int(int),
-        StructuredData::Text(text) => FFIStructuredData::text(inventory.allocate_string(text)),
-        StructuredData::Array(array) => FFIStructuredData::array(
-            array
-                .into_iter()
-                .map(|item| convert_with_inventory(item, inventory))
-                .collect(),
-        ),
-        StructuredData::Object(map) => FFIStructuredData::object(
-            map.into_iter()
-                .map(|(key, value)| FFIStructuredDataObjectEntry {
-                    key: inventory.allocate_string(key),
-                    value: convert_with_inventory(value, inventory),
-                })
-                .collect(),
-        ),
-        StructuredData::Null => FFIStructuredData::null(),
+        match data {
+            StructuredData::Boolean(bool) => FFIStructuredData::boolean(bool),
+            StructuredData::Float(float) => FFIStructuredData::float(float),
+            StructuredData::Int(int) => FFIStructuredData::int(int),
+            StructuredData::Text(text) => FFIStructuredData::text(CString::new(text).unwrap_or_default().into_raw()),
+            StructuredData::Array(array) => FFIStructuredData::array(
+                array
+                    .into_iter()
+                    .map(|item| self.convert(item))
+                    .collect(),
+            ),
+            StructuredData::Object(map) => FFIStructuredData::object(
+                map.into_iter()
+                    .map(|(key, value)| FFIStructuredDataObjectEntry {
+                        key: CString::new(key).unwrap_or_default().into_raw(),
+                        value: self.convert(value),
+                    })
+                    .collect(),
+            ),
+            StructuredData::Null => FFIStructuredData::null(),
+        }
     }
 }
 
@@ -66,7 +52,7 @@ pub struct FFIStructuredData {
 }
 
 impl FFIStructuredData {
-    fn text(text: *const c_char) -> Self {
+    fn text(text: *mut c_char) -> Self {
         Self {
             r#type: FFIStructuredDataType::Text,
             value: FFIStructuredDataValue { text },
@@ -118,6 +104,30 @@ impl FFIStructuredData {
             value: FFIStructuredDataValue { null: () },
         }
     }
+
+    pub(crate) fn as_array(&self) -> Option<Array<FFIStructuredData>> {
+        if let FFIStructuredDataType::Array = self.r#type {
+            Some(unsafe { self.value.array })
+        } else {
+            None
+        }
+    }
+
+    pub(crate) fn as_object(&self) -> Option<Array<FFIStructuredDataObjectEntry>> {
+        if let FFIStructuredDataType::Object = self.r#type {
+            Some(unsafe { self.value.object })
+        } else {
+            None
+        }
+    }
+
+    pub(crate) fn as_text(&self) -> Option<CString> {
+        if let FFIStructuredDataType::Text = self.r#type {
+            Some(unsafe { CString::from_raw(self.value.text) })
+        } else {
+            None
+        }
+    }
 }
 
 #[derive(Clone, Copy)]
@@ -135,7 +145,7 @@ pub enum FFIStructuredDataType {
 #[derive(Clone, Copy)]
 #[repr(C)]
 pub union FFIStructuredDataValue {
-    pub text: *const c_char,
+    pub text: *mut c_char,
     pub floating_point: f64,
     pub integer: i64,
     pub boolean: u8,
@@ -147,7 +157,7 @@ pub union FFIStructuredDataValue {
 #[derive(Clone, Copy)]
 #[repr(C)]
 pub struct FFIStructuredDataObjectEntry {
-    pub key: *const c_char,
+    pub key: *mut c_char,
     pub value: FFIStructuredData,
 }
 
@@ -214,4 +224,23 @@ pub extern "C" fn read_node_multi_preview(ptr: *const NodeHistory) -> Array<f64>
     std::mem::forget(ffi);
 
     values.into()
+}
+
+#[no_mangle]
+pub extern "C" fn drop_structured_data(data: FFIStructuredData) {
+    if let Some(array) = data.as_array() {
+        let vec = array.into_vec();
+        for item in vec {
+            drop_structured_data(item);
+        }
+    }else if let Some(object) = data.as_object() {
+        let vec = object.into_vec();
+        for item in vec {
+            let key = unsafe { CString::from_raw(item.key) };
+            drop(key);
+            drop_structured_data(item.value);
+        }
+    }else if let Some(text) = data.as_text() {
+        drop(text)
+    }
 }

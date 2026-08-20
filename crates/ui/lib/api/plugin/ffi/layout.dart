@@ -13,66 +13,86 @@ class LayoutsRefPointer extends FFIPointer<LayoutRef> {
   LayoutsRefPointer(this._bindings, ffi.Pointer<LayoutRef> ptr) : super(ptr);
 
   double readFaderValue(String path) {
-    var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_fader_value(ptr, ffiPath.cast<ffi.Char>());
+    return using((arena) {
+      var ffiPath = path.toNativeUtf8(allocator: arena);
+      var result = this._bindings.read_fader_value(ptr, ffiPath.cast<ffi.Char>());
 
-    return result;
+      return result;
+    });
   }
 
   FFIDialValue readDialValue(String path) {
-    var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_dial_value(ptr, ffiPath.cast<ffi.Char>());
+    return using((arena) {
+      var ffiPath = path.toNativeUtf8(allocator: arena);
+      var result = this._bindings.read_dial_value(ptr, ffiPath.cast<ffi.Char>());
 
-    return result;
+      return result;
+    });
   }
 
   bool readButtonValue(String path) {
-    var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_button_value(ptr, ffiPath.cast<ffi.Char>());
+    return using((arena) {
+      var ffiPath = path.toNativeUtf8(allocator: arena);
+      var result = this._bindings.read_button_value(ptr, ffiPath.cast<ffi.Char>());
 
-    return result == 1;
+      return result == 1;
+    });
   }
 
   String readLabelValue(String path) {
-    var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_label_value(ptr, ffiPath.cast<ffi.Char>());
+    return using((arena) {
+      var ffiPath = path.toNativeUtf8(allocator: arena);
+      var result = this._bindings.read_label_value(ptr, ffiPath.cast<ffi.Char>());
 
-    return result.cast<Utf8>().toDartString();
+      return result.cast<Utf8>().toDartString();
+    });
   }
 
   Timecode readClockValue(String path) {
-    var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_clock_value(ptr, ffiPath.cast<ffi.Char>());
+    return using((arena) {
+      var ffiPath = path.toNativeUtf8(allocator: arena);
+      var result = this._bindings.read_clock_value(ptr, ffiPath.cast<ffi.Char>());
 
-    return result;
+      return result;
+    });
   }
 
   Color? readControlColor(String path) {
-    var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_control_color(ptr, ffiPath.cast<ffi.Char>());
+    return using((arena) {
+      var ffiPath = path.toNativeUtf8(allocator: arena);
+      var result = this._bindings.read_control_color(ptr, ffiPath.cast<ffi.Char>());
 
-    if (result.has_color == 0) {
-      return null;
-    }
-    return Color(
-      red: result.color_red,
-      green: result.color_green,
-      blue: result.color_blue,
-    );
+      if (result.has_color == 0) {
+        return null;
+      }
+      return Color(
+        red: result.color_red,
+        green: result.color_green,
+        blue: result.color_blue,
+      );
+    });
   }
 
   StepSequencerValue readStepSequencerValue(String path) {
-    var ffiPath = path.toNativeUtf8();
-    FFIStepSequencerValue result = this._bindings.read_step_sequencer_value(ptr, ffiPath.cast<ffi.Char>());
+    return using((arena) {
+      var ffiPath = path.toNativeUtf8(allocator: arena);
+      FFIStepSequencerValue result = this._bindings.read_step_sequencer_value(ptr, ffiPath.cast<ffi.Char>());
 
-    return StepSequencerValue(result.value.toList().map((e) => e > 0).toList(), result.beat);
+      var value = StepSequencerValue(result.value.asList().map((e) => e > 0).toList(), result.beat);
+
+      this._bindings.drop_step_sequencer_value(result);
+
+      return value;
+    });
   }
 
   double readLevelValue(String path) {
-    var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_level_value(ptr, ffiPath.cast<ffi.Char>());
+    return using((arena) {
+      var ffiPath = path.toNativeUtf8(allocator: arena);
+      var result = this._bindings.read_level_value(ptr, ffiPath.cast<ffi.Char>());
 
-    return result;
+      return result;
+    });
   }
 
   @override

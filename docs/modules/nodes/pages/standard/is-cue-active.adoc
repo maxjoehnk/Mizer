@@ -1,0 +1,18 @@
+= Is Cue Active
+
+Category: Standard
+
+Track if given cue in given sequence is active.
+
+== Properties
+
+* *Sequence* [Select]: The sequence to monitor.
+* *Cue* [Select]: The cue within the selected sequence to monitor.
+
+== Inputs
+
+None.
+
+== Outputs
+
+* *Active* [Single]: Emits 1.0 if the selected cue is active, 0.0 otherwise.

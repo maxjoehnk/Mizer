@@ -110,6 +110,7 @@ node_type_name! {
         FixtureControl,
         Programmer,
         Sequencer,
+        IsCueActive,
         Group,
         GroupControl,
         GroupMaster,

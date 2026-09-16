@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://c1rqxm5npxlbi"]
+
+[ext_resource type="Theme" uid="uid://d1tr3c5tvrl3a" path="res://StatusBarTheme.tres" id="1_c111m"]
+
+[node name="StatusBar" type="MizerStatusBar" unique_id=1985363282]
+custom_minimum_size = Vector2(0, 24)
+offset_right = 11.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+theme = ExtResource("1_c111m")
+
+[node name="Message" type="Label" parent="." unique_id=2105857408]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Message Placeholder"
+vertical_alignment = 1
+
+[node name="Battery" type="Label" parent="." unique_id=1944483611]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "BAT 100%"
+
+[node name="VSeparator" type="VSeparator" parent="." unique_id=1014814182]
+layout_mode = 2
+theme = ExtResource("1_c111m")
+theme_override_constants/separation = 4
+
+[node name="FPS" type="Label" parent="." unique_id=1282017671]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "FPS 60.00"
+
+[node name="VSeparator2" type="VSeparator" parent="." unique_id=1028806478]
+layout_mode = 2
+theme = ExtResource("1_c111m")
+theme_override_constants/separation = 4
+
+[node name="Time" type="Label" parent="." unique_id=972276902]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "12:00"

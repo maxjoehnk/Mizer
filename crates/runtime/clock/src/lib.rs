@@ -208,7 +208,7 @@ impl Display for Timecode {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "{}{}:{}:{}.{}",
+            "{}{:02}:{:02}:{:02}.{:02}",
             if self.negative { "-" } else { "" },
             self.hours,
             self.minutes,

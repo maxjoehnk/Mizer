@@ -10,13 +10,16 @@ pub struct Flags {
     #[arg(name = "FILE")]
     pub file: Option<PathBuf>,
     /// Open the debug ui
-    #[cfg(feature = "debug-ui")]
+    // #[cfg(feature = "debug-ui")]
     #[arg(long)]
     pub debug: bool,
     /// Join an existing session or start a new session
     #[arg(long)]
     pub join: bool,
-    #[cfg(feature = "ui")]
+    // #[cfg(any(feature = "ui", feature = "godot-ui"))]
     #[arg(long)]
     pub headless: bool,
+    // #[cfg(feature = "godot-ui")]
+    #[arg(long)]
+    pub experimental_godot_ui: bool,
 }

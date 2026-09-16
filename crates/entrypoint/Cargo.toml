@@ -1,0 +1,63 @@
+[[bin]]
+name = "mizer"
+path = "src/main.rs"
+bench = false
+
+[package]
+name = "mizer-entrypoint"
+description = "A node based visualization tool for live scenarios (e.g. concerts and clubs)."
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+license = "GNU AGPLv3"
+
+[features]
+default = ["ui"]
+build-ffmpeg = ["ffmpeg-the-third/build"]
+static-link-ffmpeg = ["ffmpeg-the-third/static"]
+ui = ["mizer-ui", "keepawake"]
+godot-ui = ["mizer-godot-ui", "keepawake"]
+tracing = ["profiling/profile-with-tracy", "mizer-util/tracing"]
+oslog = ["tracing-oslog"]
+
+[dependencies]
+derive_more = { version = "2.0", features = ["from"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+tracing-appender = "0.2"
+tracing = { version = "0.1", features = ["release_max_level_debug"] }
+anyhow = "1"
+clap = { version = "4.5", features = ["derive"] }
+metrics = "0.24"
+mizer = { path = "../mizer" }
+mizer-ui = { path = "../ui", optional = true }
+mizer-godot-ui = { path = "../godot", optional = true }
+mizer-api = { path = "../api" }
+mizer-session = { path = "../runtime/session" }
+mizer-util = { path = "../util" }
+tokio = { version = "1.37", features = ["rt-multi-thread", "macros", "time", "rt"] }
+futures = "0.3"
+pinboard = "2.2"
+dashmap = "6"
+flume = "0.11"
+profiling = "1.0"
+rayon = "1.10"
+serde = { version = "1", features = ["rc"] }
+sentry = { version = "0.36", features = ["anyhow", "tracing", "log"] }
+sentry-tracing = "0.36"
+spin_sleep = "1.2"
+ffmpeg-the-third = { workspace = true }
+rolling-file = "0.2"
+keepawake = { version = "0.6", optional = true }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+tracing-oslog = { version = "0.2", optional = true }
+coremidi-hotplug-notification = "0.1"
+
+[target.'cfg(target_os = "windows")'.build-dependencies]
+winresource = "0.1"
+winapi = { version = "0.3", features = ["winnt"] }
+
+[package.metadata.winresource]
+ProductName = "Mizer"
+FileDescription = "Mizer"
+OriginalFilename = "mizer.exe"

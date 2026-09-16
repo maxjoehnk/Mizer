@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://c2frq1t1slnsk"]
+
+[ext_resource type="Theme" uid="uid://bnhxg5idw5e2n" path="res://resources/menu_bar_theme.tres" id="1_3ciy2"]
+[ext_resource type="Texture2D" uid="uid://bmjepbra33o18" path="res://assets/icons/undo.svg" id="2_wjle8"]
+[ext_resource type="Texture2D" uid="uid://b3trn04fqbd84" path="res://assets/icons/redo.svg" id="3_npew6"]
+[ext_resource type="Texture2D" uid="uid://pf52i1elpicg" path="res://assets/icons/cog.svg" id="4_055gy"]
+[ext_resource type="Texture2D" uid="uid://bnwb173s8ls3t" path="res://assets/icons/power.svg" id="5_7j175"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wjle8"]
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="MenuBar" type="MizerMenuBar" unique_id=1022235424]
+custom_minimum_size = Vector2(0, 40)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme = ExtResource("1_3ciy2")
+
+[node name="Label" type="Label" parent="." unique_id=1059290738]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_wjle8")
+text = "Mizer"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="." unique_id=1316452029]
+layout_mode = 2
+
+[node name="ProjectMenu" type="MenuButton" parent="." unique_id=1727213593]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Project"
+flat = false
+item_count = 4
+popup/item_0/text = "New"
+popup/item_0/id = 0
+popup/item_1/text = "Open"
+popup/item_1/id = 1
+popup/item_2/text = "Save"
+popup/item_2/id = 2
+popup/item_3/text = "Save As"
+popup/item_3/id = 3
+
+[node name="ProjectSelector" type="MenuButton" parent="." unique_id=82488936]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Project Name"
+flat = false
+item_count = 4
+popup/item_0/text = "New"
+popup/item_0/id = 0
+popup/item_1/text = "Open"
+popup/item_1/id = 1
+popup/item_2/text = "Save"
+popup/item_2/id = 2
+popup/item_3/text = "Save As"
+popup/item_3/id = 3
+
+[node name="VSeparator2" type="VSeparator" parent="." unique_id=467136070]
+layout_mode = 2
+
+[node name="Undo" type="Button" parent="." unique_id=864920235]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+icon = ExtResource("2_wjle8")
+icon_alignment = 1
+
+[node name="Redo" type="Button" parent="." unique_id=1177800646]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+icon = ExtResource("3_npew6")
+icon_alignment = 1
+
+[node name="VSeparator3" type="VSeparator" parent="." unique_id=365432743]
+layout_mode = 2
+
+[node name="ConfigurationItems" type="HBoxContainer" parent="." unique_id=616305023]
+layout_mode = 2
+
+[node name="Patch" type="Button" parent="ConfigurationItems" unique_id=422828356]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Patch"
+
+[node name="Patch2" type="Button" parent="ConfigurationItems" unique_id=497993328]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Connections"
+
+[node name="VSeparator4" type="VSeparator" parent="." unique_id=1555371961]
+layout_mode = 2
+
+[node name="Settings" type="Button" parent="." unique_id=516011582]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+icon = ExtResource("4_055gy")
+icon_alignment = 1
+
+[node name="Power" type="Button" parent="." unique_id=8382569]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+icon = ExtResource("5_7j175")
+icon_alignment = 1
+
+[node name="OpenDialog" type="FileDialog" parent="." unique_id=1415091968]
+oversampling_override = 1.0
+title = "Open a File"
+file_mode = 0
+display_mode = 1
+access = 2
+filters = PackedStringArray("*.yml")
+use_native_dialog = true
+
+[node name="SaveDialog" type="FileDialog" parent="." unique_id=1383869196]
+oversampling_override = 1.0
+display_mode = 1
+access = 2
+filters = PackedStringArray("*.yml")
+use_native_dialog = true

@@ -1,0 +1,18 @@
+[gd_resource type="Theme" format=3 uid="uid://d1tr3c5tvrl3a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3wlmu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d4hbw"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ux85f"]
+color = Color(1, 1, 1, 0.627451)
+grow_begin = 0.0
+grow_end = 0.0
+vertical = true
+
+[resource]
+Label/colors/font_color = Color(1, 1, 1, 0.627451)
+Label/font_sizes/font_size = 14
+Label/styles/focus = SubResource("StyleBoxEmpty_3wlmu")
+Label/styles/normal = SubResource("StyleBoxEmpty_d4hbw")
+VSeparator/styles/separator = SubResource("StyleBoxLine_ux85f")

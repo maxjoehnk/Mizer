@@ -1,0 +1,25 @@
+[[bin]]
+name = "godot-editor"
+path = "src/editor.rs"
+bench = false
+required-features = ["editor"]
+
+[package]
+name = "mizer-godot-ui"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2024"
+
+[features]
+editor = ["libgodot/editor"]
+
+[dependencies]
+libgodot = { git = "https://github.com/maxjoehnk/libgodot-rs" }
+godot = { git = "https://github.com/maxjoehnk/gdext", branch = "feature/libgodot" }
+mizer-api = { path = "../api" }
+anyhow = "1"
+mizer = { path = "../mizer" }
+mizer-util = { path = "../util" }
+mizer-message-bus = { path = "../util/bus" }
+mizer-status-bus = { path = "../runtime/status" }
+jiff = "0.2"

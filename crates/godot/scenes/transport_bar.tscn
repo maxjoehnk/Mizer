@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://cq1uxnmtajfc"]
+
+[ext_resource type="Theme" uid="uid://cftd3nx5t1dlc" path="res://resources/transport_bar_theme.tres" id="1_bj1vv"]
+[ext_resource type="FontFile" uid="uid://ugph4ndnmbc" path="res://assets/fonts/Fira_Mono/FiraMono-Medium.ttf" id="3_bj1vv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_84qho"]
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v2ds7"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="TransportBar" type="MizerTransportBar" unique_id=1148428795]
+custom_minimum_size = Vector2(0, 40)
+custom_maximum_size = Vector2(-1, 40)
+offset_right = 895.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+theme = ExtResource("1_bj1vv")
+
+[node name="TransportBar" type="PanelContainer" parent="." unique_id=211212510]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_84qho")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TransportBar" unique_id=2040052939]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="TransportBar/HBoxContainer" unique_id=2146174266]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="BeatIndicator" type="Control" parent="TransportBar/HBoxContainer/MarginContainer2" unique_id=2123315445]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSeparator7" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=1272604148]
+layout_mode = 2
+
+[node name="Speed" type="LineEdit" parent="TransportBar/HBoxContainer" unique_id=2078147892]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_bj1vv")
+theme_override_font_sizes/font_size = 20
+text = "90.00"
+placeholder_text = "BPM"
+alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=1309514375]
+layout_mode = 2
+
+[node name="Tap" type="Button" parent="TransportBar/HBoxContainer" unique_id=2071595458]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Tap"
+
+[node name="VSeparator2" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=1165580115]
+layout_mode = 2
+
+[node name="Resync" type="Button" parent="TransportBar/HBoxContainer" unique_id=346570014]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Resync"
+
+[node name="VSeparator3" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=1184459065]
+layout_mode = 2
+
+[node name="Timecode" type="Label" parent="TransportBar/HBoxContainer" unique_id=1665902329]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_bj1vv")
+theme_override_font_sizes/font_size = 20
+text = "00:00:10.15"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator4" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=1809701671]
+layout_mode = 2
+
+[node name="VSeparator5" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=1946682146]
+layout_mode = 2
+
+[node name="FPS" type="OptionButton" parent="TransportBar/HBoxContainer" unique_id=1580158751]
+layout_mode = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "30 FPS"
+popup/item_0/id = 0
+popup/item_1/text = "60 FPS"
+popup/item_1/id = 1
+popup/item_2/text = "120 FPS"
+popup/item_2/id = 2
+
+[node name="VSeparator6" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=695972611]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TransportBar/HBoxContainer" unique_id=1493405039]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CommandLine" type="LineEdit" parent="TransportBar/HBoxContainer/MarginContainer" unique_id=1898247213]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_v2ds7")
+placeholder_text = "Command Line"
+alignment = 1
+emoji_menu_enabled = false
+select_all_on_focus = true
+
+[node name="Console" type="Button" parent="." unique_id=1238216495]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Console"
+
+[node name="Selection" type="Button" parent="." unique_id=539936234]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Selection"
+
+[node name="Programmer" type="Button" parent="." unique_id=1443026855]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Programmer"

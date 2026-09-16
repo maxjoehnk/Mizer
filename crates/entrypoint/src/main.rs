@@ -11,7 +11,7 @@ use crate::logger::LoggingGuard;
 mod async_runtime;
 mod logger;
 
-#[cfg(not(feature = "ui"))]
+#[cfg(not(any(feature = "ui", feature = "godot-ui")))]
 fn main() -> anyhow::Result<()> {
     let (flags, _logging_guard, _sentry_guard) = init()?;
     let settings_manager = load_settings()?;
@@ -19,9 +19,8 @@ fn main() -> anyhow::Result<()> {
     run_headless(flags, settings_manager)
 }
 
-#[cfg(feature = "ui")]
+#[cfg(any(feature = "ui", feature = "godot-ui"))]
 fn main() -> anyhow::Result<()> {
-    mizer_ui::init()?;
     let (flags, _logging_guard, _sentry_guard) = init()?;
     let headless = flags.headless;
     let settings_manager = load_settings()?;
@@ -29,7 +28,19 @@ fn main() -> anyhow::Result<()> {
     if headless {
         run_headless(flags, settings_manager)
     } else {
-        ui::run(flags, settings_manager)
+        #[cfg(feature = "godot-ui")]
+        {
+            if flags.experimental_godot_ui {
+                return godot::run(flags, settings_manager);
+            }
+        }
+        #[cfg(feature = "ui")]
+        {
+            mizer_ui::init()?;
+            return ui::run(flags, settings_manager);
+        }
+
+        Ok(())
     }
 }
 
@@ -216,5 +227,43 @@ mod ui {
             .app_reverse_domain("live.mizer")
             .app_name("Mizer")
             .create()
+    }
+}
+
+#[cfg(feature = "godot-ui")]
+mod godot {
+    use std::sync::mpsc;
+    use anyhow::Context;
+    use mizer::{Api, Flags, SettingsStore};
+    use mizer_api::handlers::Handlers;
+
+    pub fn run(flags: Flags, settings_manager: SettingsStore) -> anyhow::Result<()> {
+        let tokio = super::build_tokio_runtime();
+        // keep_screen_awake(settings_manager.clone());
+        let handlers = setup_runtime(tokio.handle(), settings_manager, flags)?;
+
+        let handlers = handlers.recv().context("internal api setup")?;
+
+        mizer_godot_ui::run(handlers)?;
+
+        Ok(())
+    }
+
+    fn setup_runtime(
+        handle: &tokio::runtime::Handle,
+        settings_store: SettingsStore,
+        flags: Flags,
+    ) -> anyhow::Result<mpsc::Receiver<Handlers<Api>>> {
+        let (tx, rx) = mpsc::channel();
+        let handle = handle.clone();
+        std::thread::Builder::new()
+            .name("Pipeline Runtime".into())
+            .spawn(move || {
+                if let Err(err) = super::start_runtime(&handle, settings_store, flags, Some(tx)) {
+                    tracing::error!("{err:?}");
+                    std::process::exit(1);
+                }
+            })?;
+        Ok(rx)
     }
 }

@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://cn5hdkyy2q4d7"]
+
+[ext_resource type="PackedScene" uid="uid://c2frq1t1slnsk" path="res://scenes/menu_bar.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://c1rqxm5npxlbi" path="res://scenes/status_bar.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://lglhotn2f8jm" path="res://scenes/navigation.tscn" id="2_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://cq1uxnmtajfc" path="res://scenes/transport_bar.tscn" id="2_sugp2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sgp6g"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Mizer" type="PanelContainer" unique_id=241552928]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sgp6g")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1687832802]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MenuBar" parent="VBoxContainer" unique_id=1906379778 instance=ExtResource("1_o5qli")]
+layout_mode = 2
+
+[node name="Main" type="HBoxContainer" parent="VBoxContainer" unique_id=1579549147]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Navigation" parent="VBoxContainer/Main" unique_id=1944021543 instance=ExtResource("2_jyhfs")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Main" unique_id=1580299430]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Margin" type="MarginContainer" parent="VBoxContainer/Main/VBoxContainer" unique_id=727045009]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Main/VBoxContainer/Margin" unique_id=707514717]
+layout_mode = 2
+
+[node name="TransportBar" parent="VBoxContainer/Main/VBoxContainer" unique_id=1218628998 instance=ExtResource("2_sugp2")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=1347872771]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+
+[node name="StatusBar" parent="VBoxContainer/MarginContainer" unique_id=1985363282 instance=ExtResource("2_0wfyh")]
+layout_mode = 2

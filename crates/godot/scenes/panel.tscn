@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dt0orn6glcbdq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbd8w"]
+bg_color = Color(0.06666667, 0.06666667, 0.06666667, 1)
+border_width_left = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="Panel" type="PanelContainer" unique_id=1860981428]
+offset_right = 85.0
+offset_bottom = 42.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_xbd8w")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=824225299]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=772471813]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1208259703]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Panel Title"
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer" unique_id=1116817450]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.2, 0.2, 0.2, 1)

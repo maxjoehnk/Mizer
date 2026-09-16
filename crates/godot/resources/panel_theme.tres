@@ -1,0 +1,36 @@
+[gd_resource type="Theme" format=3 uid="uid://bbinqh4lk1iu"]
+
+[ext_resource type="StyleBox" uid="uid://cr4apou6na1cq" path="res://resources/menu_background_normal.tres" id="1_llbab"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1fp5"]
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+border_width_top = 1
+border_color = Color(0.4, 0.4, 0.4, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rriyu"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_top = 1
+border_color = Color(0.4, 0.4, 0.4, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_llbab"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 8
+border_width_right = 8
+border_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7rlo"]
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jxqg"]
+corner_detail = 1
+
+[resource]
+BoxContainer/constants/separation = 2
+Button/styles/disabled = SubResource("StyleBoxFlat_s1fp5")
+Button/styles/normal = SubResource("StyleBoxFlat_rriyu")
+Label/styles/normal = SubResource("StyleBoxFlat_llbab")
+PanelContainer/styles/panel = ExtResource("1_llbab")
+ScrollContainer/constants/scrollbar_h_separation = -8
+VScrollBar/constants/padding_right = -8
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_d7rlo")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_1jxqg")

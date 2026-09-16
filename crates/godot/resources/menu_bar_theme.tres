@@ -1,0 +1,39 @@
+[gd_resource type="Theme" format=3 uid="uid://bnhxg5idw5e2n"]
+
+[ext_resource type="StyleBox" uid="uid://cr4apou6na1cq" path="res://resources/menu_background_normal.tres" id="1_l6ty8"]
+
+[sub_resource type="SystemFont" id="SystemFont_wpg1e"]
+font_names = PackedStringArray("Roboto")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qgrn1"]
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="SystemFont" id="SystemFont_rxg2q"]
+font_names = PackedStringArray("Roboto")
+font_weight = 700
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rxg2q"]
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_r0du0"]
+color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 4
+vertical = true
+
+[resource]
+Button/font_sizes/font_size = 14
+Button/fonts/font = SubResource("SystemFont_wpg1e")
+Button/styles/normal = SubResource("StyleBoxFlat_qgrn1")
+HBoxContainer/constants/separation = 2
+Label/font_sizes/font_size = 14
+Label/fonts/font = SubResource("SystemFont_rxg2q")
+Label/styles/normal = SubResource("StyleBoxFlat_rxg2q")
+LineEdit/styles/normal = ExtResource("1_l6ty8")
+TextEdit/styles/normal = ExtResource("1_l6ty8")
+VSeparator/styles/separator = SubResource("StyleBoxLine_r0du0")

@@ -3,11 +3,6 @@ name = "mizer"
 path = "src/lib.rs"
 bench = false
 
-[[bin]]
-name = "mizer"
-path = "src/main.rs"
-bench = false
-
 [package]
 name = "mizer"
 description = "A node based visualization tool for live scenarios (e.g. concerts and clubs)."
@@ -17,13 +12,8 @@ edition = "2021"
 license = "GNU AGPLv3"
 
 [features]
-default = ["ui", "debug-ui"]
-build-ffmpeg = ["ffmpeg-the-third/build"]
-static-link-ffmpeg = ["ffmpeg-the-third/static"]
-ui = ["mizer-ui", "keepawake"]
 debug-ui = ["mizer-debug-ui-egui", "mizer-debug-ui-impl/active"]
 tracing = ["profiling/profile-with-tracy", "mizer-util/tracing"]
-oslog = ["tracing-oslog"]
 
 [dependencies]
 derive_more = { version = "2.0", features = ["from"] }
@@ -62,7 +52,6 @@ mizer-protocol-osc = { path = "../components/connections/protocols/osc" }
 mizer-surfaces = { path = "../components/surfaces" }
 mizer-processing = { path = "../runtime/processing" }
 mizer-module = { path = "../runtime/module" }
-mizer-ui = { path = "../ui", optional = true }
 mizer-debug-ui-impl = { path = "../runtime/debug-ui/impl" }
 mizer-debug-ui-egui = { path = "../runtime/debug-ui/egui", optional = true }
 mizer-util = { path = "../util" }
@@ -95,16 +84,3 @@ criterion = { version = "0.5", features = ["html_reports"] }
 [[bench]]
 name = "oscillator_nodes"
 harness = false
-
-[target.'cfg(target_os = "macos")'.dependencies]
-tracing-oslog = { version = "0.2", optional = true }
-coremidi-hotplug-notification = "0.1"
-
-[target.'cfg(target_os = "windows")'.build-dependencies]
-winresource = "0.1"
-winapi = { version = "0.3", features = ["winnt"] }
-
-[package.metadata.winresource]
-ProductName = "Mizer"
-FileDescription = "Mizer"
-OriginalFilename = "mizer.exe"

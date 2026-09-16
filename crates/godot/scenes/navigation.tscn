@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://lglhotn2f8jm"]
+
+[ext_resource type="PackedScene" uid="uid://2qjviwxb0abn" path="res://scenes/grid_button.tscn" id="1_5y6w5"]
+
+[node name="Navigation" type="ScrollContainer" unique_id=1944021543]
+custom_minimum_size = Vector2(80, 0)
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2032160120]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Button" parent="VBoxContainer" unique_id=206883497 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button2" parent="VBoxContainer" unique_id=1021770286 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button3" parent="VBoxContainer" unique_id=1127621052 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button4" parent="VBoxContainer" unique_id=1638113507 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button5" parent="VBoxContainer" unique_id=1754093304 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button6" parent="VBoxContainer" unique_id=724837525 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button7" parent="VBoxContainer" unique_id=748971937 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button8" parent="VBoxContainer" unique_id=38453954 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button9" parent="VBoxContainer" unique_id=2058158993 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button10" parent="VBoxContainer" unique_id=349770886 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button11" parent="VBoxContainer" unique_id=555679943 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button12" parent="VBoxContainer" unique_id=26897675 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button13" parent="VBoxContainer" unique_id=2029429072 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true
+
+[node name="Button14" parent="VBoxContainer" unique_id=2128038530 instance=ExtResource("1_5y6w5")]
+layout_mode = 2
+disabled = true

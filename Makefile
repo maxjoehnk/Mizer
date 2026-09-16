@@ -15,18 +15,24 @@ fixtures_benchmarks:
 	cargo bench --no-default-features -p mizer-fixtures --bench fixtures
 
 build-headless:
-	cargo build --release --no-default-features --features build-ffmpeg -p mizer
+	cargo build --release --no-default-features --features build-ffmpeg -p mizer-entrypoint
 
 build:
 	cd crates/ui && make
-	cargo build -p mizer
+	cargo build -p mizer-entrypoint
 
 build-release:
 	cd crates/ui && make release
 	cargo build --no-default-features --features ui --features build-ffmpeg --release -p mizer
 
 run: build
-	cargo run -p mizer
+	cargo run -p mizer-entrypoint
+
+run-godot:
+	cargo run -p mizer-entrypoint --features godot-ui -- --experimental-godot-ui
+
+run-godot-editor:
+	cargo run -p mizer-godot-ui --features editor
 
 clean:
 	rm -rf artifact

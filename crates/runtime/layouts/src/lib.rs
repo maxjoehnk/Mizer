@@ -67,6 +67,90 @@ pub struct ControlConfig {
     pub hotkey: Option<String>,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct ProjectControlConfig {
+    #[serde(default)]
+    pub id: ControlId,
+    #[serde(default)]
+    pub label: Option<String>,
+    #[serde(flatten)]
+    pub control_type: ControlType,
+    pub position: FineControlPosition,
+    pub size: FineControlSize,
+    #[serde(default)]
+    pub decoration: ControlDecorations,
+    #[serde(default)]
+    pub behavior: ControlBehavior,
+    #[serde(default)]
+    pub hotkey: Option<String>,
+}
+
+impl From<ProjectControlConfig> for ControlConfig {
+    fn from(value: ProjectControlConfig) -> Self {
+        Self {
+            id: value.id,
+            label: value.label,
+            control_type: value.control_type,
+            position: value.position.into(),
+            size: value.size.into(),
+            decoration: value.decoration,
+            behavior: value.behavior,
+            hotkey: value.hotkey,
+        }
+    }
+}
+
+impl From<FineControlPosition> for ControlPosition {
+    fn from(value: FineControlPosition) -> Self {
+        Self {
+            x: (value.x * 10.0).floor() as u64,
+            y: (value.y * 10.0).floor() as u64,
+        }
+    }
+}
+
+impl From<FineControlSize> for ControlSize {
+    fn from(value: FineControlSize) -> Self {
+        Self {
+            width: (value.width * 10.0).floor() as u64,
+            height: (value.height * 10.0).floor() as u64,
+        }
+    }
+}
+
+impl From<ControlConfig> for ProjectControlConfig {
+    fn from(value: ControlConfig) -> Self {
+        Self {
+            id: value.id,
+            label: value.label,
+            control_type: value.control_type,
+            position: value.position.into(),
+            size: value.size.into(),
+            decoration: value.decoration,
+            behavior: value.behavior,
+            hotkey: value.hotkey,
+        }
+    }
+}
+
+impl From<ControlPosition> for FineControlPosition {
+    fn from(value: ControlPosition) -> Self {
+        Self {
+            x: value.x as f64 / 10.0,
+            y: value.y as f64 / 10.0,
+        }
+    }
+}
+
+impl From<ControlSize> for FineControlSize {
+    fn from(value: ControlSize) -> Self {
+        Self {
+            width: value.width as f64 / 10.0,
+            height: value.height as f64 / 10.0,
+        }
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum ControlType {
@@ -102,6 +186,27 @@ impl Default for ControlSize {
         Self {
             width: 1,
             height: 1,
+        }
+    }
+}
+
+#[derive(Default, Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+pub struct FineControlPosition {
+    pub x: f64,
+    pub y: f64,
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+pub struct FineControlSize {
+    pub width: f64,
+    pub height: f64,
+}
+
+impl Default for FineControlSize {
+    fn default() -> Self {
+        Self {
+            width: 1.,
+            height: 1.,
         }
     }
 }

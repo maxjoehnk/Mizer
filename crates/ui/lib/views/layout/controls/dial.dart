@@ -54,7 +54,7 @@ class _DialControlState extends State<DialControl> with SingleTickerProviderStat
     NodesApi apiClient = context.read();
 
     return EncoderInput(
-      labelInDial: widget.control.size.width == 1 && widget.control.size.height == 1,
+      labelInDial: widget.control.size.width <= 10 && widget.control.size.height <= 10,
       label: widget.control.label,
       color: widget.color,
       value: value,

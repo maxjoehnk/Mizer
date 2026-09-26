@@ -280,6 +280,17 @@ impl From<mizer_connections::MidiMessage> for monitor_midi_response::Message {
                 })
             }
             Unknown(data) => Self::Unknown(data),
+            Timecode(timecode, frame_rate) => Self::SysEx(monitor_midi_response::SysEx {
+                manufacturer1: 0x7F,
+                manufacturer2: 0x7F,
+                manufacturer3: 0x01,
+                model: 0x01,
+                data: timecode.to_bytes(frame_rate).to_vec(),
+            }),
+            TimecodeQuarterFrame(frame, data) => Self::TimecodeFrame(monitor_midi_response::TimecodeQuarterFrame {
+                frame: frame as u32,
+                data: data as u32,
+            }),
         }
     }
 }

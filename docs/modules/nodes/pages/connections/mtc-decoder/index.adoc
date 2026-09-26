@@ -1,0 +1,12 @@
+= MTC Decoder
+include::description.adoc[]
+
+image:connections/mtc-decoder/node.png[Node Preview]
+
+== Settings
+
+include::setting_device.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_clock.adoc[leveloffset=+2]

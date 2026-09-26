@@ -73,8 +73,9 @@ const MonitorMidiResponse$json = const {
     const {'1': 'note_on', '3': 5, '4': 1, '5': 11, '6': '.mizer.connections.MonitorMidiResponse.NoteMsg', '9': 0, '10': 'noteOn'},
     const {'1': 'sys_ex', '3': 6, '4': 1, '5': 11, '6': '.mizer.connections.MonitorMidiResponse.SysEx', '9': 0, '10': 'sysEx'},
     const {'1': 'unknown', '3': 7, '4': 1, '5': 12, '9': 0, '10': 'unknown'},
+    const {'1': 'timecode_frame', '3': 8, '4': 1, '5': 11, '6': '.mizer.connections.MonitorMidiResponse.TimecodeQuarterFrame', '9': 0, '10': 'timecodeFrame'},
   ],
-  '3': const [MonitorMidiResponse_NoteMsg$json, MonitorMidiResponse_SysEx$json],
+  '3': const [MonitorMidiResponse_NoteMsg$json, MonitorMidiResponse_SysEx$json, MonitorMidiResponse_TimecodeQuarterFrame$json],
   '8': const [
     const {'1': 'message'},
   ],
@@ -102,8 +103,17 @@ const MonitorMidiResponse_SysEx$json = const {
   ],
 };
 
+@$core.Deprecated('Use monitorMidiResponseDescriptor instead')
+const MonitorMidiResponse_TimecodeQuarterFrame$json = const {
+  '1': 'TimecodeQuarterFrame',
+  '2': const [
+    const {'1': 'frame', '3': 1, '4': 1, '5': 13, '10': 'frame'},
+    const {'1': 'data', '3': 2, '4': 1, '5': 13, '10': 'data'},
+  ],
+};
+
 /// Descriptor for `MonitorMidiResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List monitorMidiResponseDescriptor = $convert.base64Decode('ChNNb25pdG9yTWlkaVJlc3BvbnNlEhwKCXRpbWVzdGFtcBgCIAEoBFIJdGltZXN0YW1wEkAKAmNjGAMgASgLMi4ubWl6ZXIuY29ubmVjdGlvbnMuTW9uaXRvck1pZGlSZXNwb25zZS5Ob3RlTXNnSABSAmNjEksKCG5vdGVfb2ZmGAQgASgLMi4ubWl6ZXIuY29ubmVjdGlvbnMuTW9uaXRvck1pZGlSZXNwb25zZS5Ob3RlTXNnSABSB25vdGVPZmYSSQoHbm90ZV9vbhgFIAEoCzIuLm1pemVyLmNvbm5lY3Rpb25zLk1vbml0b3JNaWRpUmVzcG9uc2UuTm90ZU1zZ0gAUgZub3RlT24SRQoGc3lzX2V4GAYgASgLMiwubWl6ZXIuY29ubmVjdGlvbnMuTW9uaXRvck1pZGlSZXNwb25zZS5TeXNFeEgAUgVzeXNFeBIaCgd1bmtub3duGAcgASgMSABSB3Vua25vd24aTQoHTm90ZU1zZxIYCgdjaGFubmVsGAEgASgNUgdjaGFubmVsEhIKBG5vdGUYAiABKA1SBG5vdGUSFAoFdmFsdWUYAyABKA1SBXZhbHVlGqMBCgVTeXNFeBIkCg1tYW51ZmFjdHVyZXIxGAEgASgNUg1tYW51ZmFjdHVyZXIxEiQKDW1hbnVmYWN0dXJlcjIYAiABKA1SDW1hbnVmYWN0dXJlcjISJAoNbWFudWZhY3R1cmVyMxgDIAEoDVINbWFudWZhY3R1cmVyMxIUCgVtb2RlbBgEIAEoDVIFbW9kZWwSEgoEZGF0YRgFIAEoDFIEZGF0YUIJCgdtZXNzYWdl');
+final $typed_data.Uint8List monitorMidiResponseDescriptor = $convert.base64Decode('ChNNb25pdG9yTWlkaVJlc3BvbnNlEhwKCXRpbWVzdGFtcBgCIAEoBFIJdGltZXN0YW1wEkAKAmNjGAMgASgLMi4ubWl6ZXIuY29ubmVjdGlvbnMuTW9uaXRvck1pZGlSZXNwb25zZS5Ob3RlTXNnSABSAmNjEksKCG5vdGVfb2ZmGAQgASgLMi4ubWl6ZXIuY29ubmVjdGlvbnMuTW9uaXRvck1pZGlSZXNwb25zZS5Ob3RlTXNnSABSB25vdGVPZmYSSQoHbm90ZV9vbhgFIAEoCzIuLm1pemVyLmNvbm5lY3Rpb25zLk1vbml0b3JNaWRpUmVzcG9uc2UuTm90ZU1zZ0gAUgZub3RlT24SRQoGc3lzX2V4GAYgASgLMiwubWl6ZXIuY29ubmVjdGlvbnMuTW9uaXRvck1pZGlSZXNwb25zZS5TeXNFeEgAUgVzeXNFeBIaCgd1bmtub3duGAcgASgMSABSB3Vua25vd24SZAoOdGltZWNvZGVfZnJhbWUYCCABKAsyOy5taXplci5jb25uZWN0aW9ucy5Nb25pdG9yTWlkaVJlc3BvbnNlLlRpbWVjb2RlUXVhcnRlckZyYW1lSABSDXRpbWVjb2RlRnJhbWUaTQoHTm90ZU1zZxIYCgdjaGFubmVsGAEgASgNUgdjaGFubmVsEhIKBG5vdGUYAiABKA1SBG5vdGUSFAoFdmFsdWUYAyABKA1SBXZhbHVlGqMBCgVTeXNFeBIkCg1tYW51ZmFjdHVyZXIxGAEgASgNUg1tYW51ZmFjdHVyZXIxEiQKDW1hbnVmYWN0dXJlcjIYAiABKA1SDW1hbnVmYWN0dXJlcjISJAoNbWFudWZhY3R1cmVyMxgDIAEoDVINbWFudWZhY3R1cmVyMxIUCgVtb2RlbBgEIAEoDVIFbW9kZWwSEgoEZGF0YRgFIAEoDFIEZGF0YRpAChRUaW1lY29kZVF1YXJ0ZXJGcmFtZRIUCgVmcmFtZRgBIAEoDVIFZnJhbWUSEgoEZGF0YRgCIAEoDVIEZGF0YUIJCgdtZXNzYWdl');
 @$core.Deprecated('Use monitorOscRequestDescriptor instead')
 const MonitorOscRequest$json = const {
   '1': 'MonitorOscRequest',

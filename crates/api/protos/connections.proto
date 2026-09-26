@@ -31,6 +31,7 @@ message MonitorMidiResponse {
     NoteMsg note_on = 5;
     SysEx sys_ex = 6;
     bytes unknown = 7;
+    TimecodeQuarterFrame timecode_frame = 8;
   }
 
   message NoteMsg {
@@ -45,6 +46,11 @@ message MonitorMidiResponse {
     uint32 manufacturer3 = 3;
     uint32 model = 4;
     bytes data = 5;
+  }
+
+  message TimecodeQuarterFrame {
+    uint32 frame = 1;
+    uint32 data = 2;
   }
 }
 

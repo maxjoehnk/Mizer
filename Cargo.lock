@@ -6397,6 +6397,7 @@ name = "mizer-midi-messages"
 version = "0.1.0"
 dependencies = [
  "serde",
+ "test-case",
  "tracing",
 ]
 
@@ -7212,7 +7213,9 @@ dependencies = [
  "ltc",
  "mizer-audio-nodes",
  "mizer-clock",
+ "mizer-message-bus",
  "mizer-node",
+ "mizer-protocol-midi",
  "mizer-timecode",
  "serde",
  "tracing",

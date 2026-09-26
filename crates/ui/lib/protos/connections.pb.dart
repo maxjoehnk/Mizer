@@ -449,12 +449,74 @@ class MonitorMidiResponse_SysEx extends $pb.GeneratedMessage {
   void clearData() => clearField(5);
 }
 
+class MonitorMidiResponse_TimecodeQuarterFrame extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorMidiResponse.TimecodeQuarterFrame', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frame', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  MonitorMidiResponse_TimecodeQuarterFrame._() : super();
+  factory MonitorMidiResponse_TimecodeQuarterFrame({
+    $core.int? frame,
+    $core.int? data,
+  }) {
+    final _result = create();
+    if (frame != null) {
+      _result.frame = frame;
+    }
+    if (data != null) {
+      _result.data = data;
+    }
+    return _result;
+  }
+  factory MonitorMidiResponse_TimecodeQuarterFrame.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MonitorMidiResponse_TimecodeQuarterFrame.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MonitorMidiResponse_TimecodeQuarterFrame clone() => MonitorMidiResponse_TimecodeQuarterFrame()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MonitorMidiResponse_TimecodeQuarterFrame copyWith(void Function(MonitorMidiResponse_TimecodeQuarterFrame) updates) => super.copyWith((message) => updates(message as MonitorMidiResponse_TimecodeQuarterFrame)) as MonitorMidiResponse_TimecodeQuarterFrame; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MonitorMidiResponse_TimecodeQuarterFrame create() => MonitorMidiResponse_TimecodeQuarterFrame._();
+  MonitorMidiResponse_TimecodeQuarterFrame createEmptyInstance() => create();
+  static $pb.PbList<MonitorMidiResponse_TimecodeQuarterFrame> createRepeated() => $pb.PbList<MonitorMidiResponse_TimecodeQuarterFrame>();
+  @$core.pragma('dart2js:noInline')
+  static MonitorMidiResponse_TimecodeQuarterFrame getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorMidiResponse_TimecodeQuarterFrame>(create);
+  static MonitorMidiResponse_TimecodeQuarterFrame? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get frame => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set frame($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFrame() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFrame() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get data => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set data($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasData() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearData() => clearField(2);
+}
+
 enum MonitorMidiResponse_Message {
   cc, 
   noteOff, 
   noteOn, 
   sysEx, 
   unknown, 
+  timecodeFrame, 
   notSet
 }
 
@@ -465,16 +527,18 @@ class MonitorMidiResponse extends $pb.GeneratedMessage {
     5 : MonitorMidiResponse_Message.noteOn,
     6 : MonitorMidiResponse_Message.sysEx,
     7 : MonitorMidiResponse_Message.unknown,
+    8 : MonitorMidiResponse_Message.timecodeFrame,
     0 : MonitorMidiResponse_Message.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorMidiResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [3, 4, 5, 6, 7])
+    ..oo(0, [3, 4, 5, 6, 7, 8])
     ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..aOM<MonitorMidiResponse_NoteMsg>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cc', subBuilder: MonitorMidiResponse_NoteMsg.create)
     ..aOM<MonitorMidiResponse_NoteMsg>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteOff', subBuilder: MonitorMidiResponse_NoteMsg.create)
     ..aOM<MonitorMidiResponse_NoteMsg>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteOn', subBuilder: MonitorMidiResponse_NoteMsg.create)
     ..aOM<MonitorMidiResponse_SysEx>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sysEx', subBuilder: MonitorMidiResponse_SysEx.create)
     ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unknown', $pb.PbFieldType.OY)
+    ..aOM<MonitorMidiResponse_TimecodeQuarterFrame>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeFrame', subBuilder: MonitorMidiResponse_TimecodeQuarterFrame.create)
     ..hasRequiredFields = false
   ;
 
@@ -486,6 +550,7 @@ class MonitorMidiResponse extends $pb.GeneratedMessage {
     MonitorMidiResponse_NoteMsg? noteOn,
     MonitorMidiResponse_SysEx? sysEx,
     $core.List<$core.int>? unknown,
+    MonitorMidiResponse_TimecodeQuarterFrame? timecodeFrame,
   }) {
     final _result = create();
     if (timestamp != null) {
@@ -505,6 +570,9 @@ class MonitorMidiResponse extends $pb.GeneratedMessage {
     }
     if (unknown != null) {
       _result.unknown = unknown;
+    }
+    if (timecodeFrame != null) {
+      _result.timecodeFrame = timecodeFrame;
     }
     return _result;
   }
@@ -593,6 +661,17 @@ class MonitorMidiResponse extends $pb.GeneratedMessage {
   $core.bool hasUnknown() => $_has(5);
   @$pb.TagNumber(7)
   void clearUnknown() => clearField(7);
+
+  @$pb.TagNumber(8)
+  MonitorMidiResponse_TimecodeQuarterFrame get timecodeFrame => $_getN(6);
+  @$pb.TagNumber(8)
+  set timecodeFrame(MonitorMidiResponse_TimecodeQuarterFrame v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasTimecodeFrame() => $_has(6);
+  @$pb.TagNumber(8)
+  void clearTimecodeFrame() => clearField(8);
+  @$pb.TagNumber(8)
+  MonitorMidiResponse_TimecodeQuarterFrame ensureTimecodeFrame() => $_ensure(6);
 }
 
 class MonitorOscRequest extends $pb.GeneratedMessage {

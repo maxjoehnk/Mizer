@@ -97,6 +97,8 @@ class _MidiMonitorState extends State<MidiMonitor> {
         return "Note Off".i18n;
       case MonitorMidiResponse_Message.sysEx:
         return "SysEx".i18n;
+      case MonitorMidiResponse_Message.timecodeFrame:
+        return "MTC";
       default:
         return "Unknown".i18n;
     }
@@ -147,6 +149,8 @@ class _MidiMonitorState extends State<MidiMonitor> {
         return event.sysEx.data.map((e) => e.toString().padLeft(2, "0")).join(" ");
       case MonitorMidiResponse_Message.unknown:
         return event.unknown.map((e) => e.toString().padLeft(2, "0")).join(" ");
+      case MonitorMidiResponse_Message.timecodeFrame:
+        return "${event.timecodeFrame.frame.toRadixString(2)} ${event.timecodeFrame.data.toRadixString(2)}";
       default:
         return "";
     }

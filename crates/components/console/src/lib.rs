@@ -1,7 +1,7 @@
 pub use history::ConsoleHistory;
 pub use message::*;
 
-use crate::bus::get_bus;
+use crate::bus::{get_bus, init_bus, ConsoleBus};
 pub use module::ConsoleModule;
 
 mod aggregator;
@@ -10,6 +10,13 @@ mod history;
 mod macros;
 mod message;
 mod module;
+
+#[doc(hidden)]
+pub fn __init() {
+    let (tx, rx) = flume::unbounded();
+    init_bus(ConsoleBus::new(tx)).unwrap();
+    std::mem::forget(rx);
+}
 
 pub fn info(category: ConsoleCategory, message: impl Into<String>) {
     let bus = get_bus();

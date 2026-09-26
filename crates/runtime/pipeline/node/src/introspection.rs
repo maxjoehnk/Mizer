@@ -164,6 +164,7 @@ node_type_name! {
         TimecodeOutput,
         TimecodeRecorder,
         LtcDecoder,
+        MtcDecoder,
         AudioFile,
         AudioOutput,
         AudioVolume,

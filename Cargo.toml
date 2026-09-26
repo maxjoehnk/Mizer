@@ -111,6 +111,9 @@ resolver = "2"
 [workspace.dependencies]
 ffmpeg-the-third = "6.0"
 
+[profile.release]
+debug = true
+
 [profile.bench]
 lto = true
 

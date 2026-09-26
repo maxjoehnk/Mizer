@@ -350,7 +350,7 @@ class _ControlsContainer extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           color: Colors.deepOrange.withAlpha(128),
-                          width: 4,
+                          width: 2,
                           style: BorderStyle.solid,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -375,7 +375,7 @@ class _ControlsContainer extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           color: Colors.deepOrange.withAlpha(128),
-                          width: 4,
+                          width: 2,
                           style: BorderStyle.solid,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -411,7 +411,6 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
       positionChild(control.id, controlOffset);
       bool fine = HardwareKeyboard.instance.isShiftPressed;
       if (movingControlId != null && movingControlId == control.id) {
-        print("layout for moving node: $controlSize, $movingControlPosition");
         layoutChild(MovingNodeIndicatorLayoutId, BoxConstraints.tight(controlSize));
         positionChild(MovingNodeIndicatorLayoutId, fine ? movingControlPosition! : (
             alignPositionToGrid(movingControlPosition!) * MULTIPLIER + alignPositionToGrid(movingControlPosition!) * GRID_GAP_SIZE));
@@ -445,7 +444,6 @@ Offset screenToLayoutPosition(Offset offset, { bool fine = false }) {
   if (fine) {
     double x = ((offset.dx * 10) / MULTIPLIER).round().clamp(1, 1000).toDouble();
     double y = ((offset.dy * 10) / MULTIPLIER).round().clamp(1, 1000).toDouble();
-    print("${offset} => ${Offset(x, y)}");
 
     return Offset(x, y);
   }
@@ -467,14 +465,12 @@ Size screenToLayoutSize(Size size, { bool fine = false }) {
   if (fine) {
     double width = ((size.width * 10) / MULTIPLIER).round().clamp(1, 1000).toDouble();
     double height = ((size.height * 10) / MULTIPLIER).round().clamp(1, 1000).toDouble();
-    print("${size} => ${Size(width, height)}");
 
     return Size(width, height);
   }
 
   double width = (size.width / MULTIPLIER).round().clamp(1, 100).toDouble() * 10;
   double height = (size.height / MULTIPLIER).round().clamp(1, 100).toDouble() * 10;
-  print("${size} => ${Size(width, height)}");
 
   return Size(width, height);
 }

@@ -9,8 +9,8 @@ extension SizeExtensions on Size {
   }
 
   Offset toLayoutGaps() {
-    double width = (this.width.toDouble() / 10 - 1) * GRID_GAP_SIZE;
-    double height = (this.height.toDouble() / 10 - 1) * GRID_GAP_SIZE;
+    double width = (this.width.toDouble() / GRID_4_SIZE - 1) * GRID_GAP_SIZE;
+    double height = (this.height.toDouble() / GRID_4_SIZE - 1) * GRID_GAP_SIZE;
 
     return Offset(width, height);
   }

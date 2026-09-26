@@ -412,11 +412,11 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
       bool fine = HardwareKeyboard.instance.isShiftPressed;
       if (movingControlId != null && movingControlId == control.id) {
         layoutChild(MovingNodeIndicatorLayoutId, BoxConstraints.tight(controlSize));
-        positionChild(MovingNodeIndicatorLayoutId, fine ? movingControlPosition! : (
-            alignPositionToGrid(movingControlPosition!) * MULTIPLIER + alignPositionToGrid(movingControlPosition!) * GRID_GAP_SIZE));
+        positionChild(MovingNodeIndicatorLayoutId, (
+            alignPositionToGrid(movingControlPosition!, MULTIPLIER, fine: fine) + alignPositionToGrid(movingControlPosition!, GRID_GAP_SIZE, fine: fine)));
       }
       if (resizingControlId != null && resizingControlId == control.id) {
-        var size = fine ? resizingControlSize! : alignSizeToGrid(resizingControlSize!) * MULTIPLIER;
+        var size = alignSizeToGrid(resizingControlSize!, MULTIPLIER, fine: fine);
         layoutChild(ResizingNodeIndicatorLayoutId, BoxConstraints.tight(size + size.toLayoutGaps()));
         positionChild(ResizingNodeIndicatorLayoutId, controlOffset);
       }
@@ -433,11 +433,19 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
   }
 }
 
-Offset alignPositionToGrid(Offset offset) {
+Offset alignPositionToGrid(Offset offset, double multiplier, { bool fine = false }) {
+  if (fine) {
+    var fineMultiplier = MULTIPLIER / 10;
+    double x = (offset.dx / fineMultiplier).round().clamp(0, 1000).toDouble();
+    double y = (offset.dy / fineMultiplier).round().clamp(0, 1000).toDouble();
+
+    return Offset(x, y) * (multiplier / 10);
+  }
+
   double x = ((offset.dx / MULTIPLIER).round()).clamp(0, 100).toDouble();
   double y = ((offset.dy / MULTIPLIER).round()).clamp(0, 100).toDouble();
 
-  return Offset(x, y);
+  return Offset(x, y) * multiplier;
 }
 
 Offset screenToLayoutPosition(Offset offset, { bool fine = false }) {
@@ -454,11 +462,19 @@ Offset screenToLayoutPosition(Offset offset, { bool fine = false }) {
   return Offset(x, y);
 }
 
-Size alignSizeToGrid(Size size, { bool fine = false}) {
-  double width = (size.width / MULTIPLIER).round().clamp(1, 100).toDouble();
-  double height = (size.height / MULTIPLIER).round().clamp(1, 100).toDouble();
+Size alignSizeToGrid(Size size, double multiplier, { bool fine = false }) {
+  if (fine) {
+    var fineMultiplier = multiplier / 10;
+    double width = (size.width / fineMultiplier).round().clamp(1, 1000).toDouble();
+    double height = (size.height / fineMultiplier).round().clamp(1, 1000).toDouble();
 
-  return Size(width, height);
+    return Size(width, height) * fineMultiplier;
+  }
+
+  double width = (size.width / multiplier).round().clamp(1, 100).toDouble();
+  double height = (size.height / multiplier).round().clamp(1, 100).toDouble();
+
+  return Size(width, height) * multiplier;
 }
 
 Size screenToLayoutSize(Size size, { bool fine = false }) {

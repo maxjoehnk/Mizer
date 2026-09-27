@@ -75,20 +75,20 @@ impl<'a> Command<'a> for AddLayoutControlCommand {
 fn get_default_size_for_node_type(node_type: NodeType) -> ControlSize {
     match node_type {
         NodeType::Fader => ControlSize {
-            height: 4,
-            width: 1,
+            height: 40,
+            width: 10,
         },
         NodeType::Button => ControlSize {
-            height: 1,
-            width: 1,
+            height: 10,
+            width: 10,
         },
         NodeType::Dial => ControlSize {
-            height: 2,
-            width: 2,
+            height: 20,
+            width: 20,
         },
         NodeType::StepSequencer => ControlSize {
-            width: 16,
-            height: 1
+            width: 160,
+            height: 10,
         },
         _ => ControlSize::default(),
     }

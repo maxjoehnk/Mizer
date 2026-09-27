@@ -423,7 +423,8 @@ impl ProjectManagerMut for CoordinatorRuntime {
         self.set_fps(project.playback.fps);
         let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
         pipeline.load(project, injector)?;
-        self.add_layouts(project.layouts.clone());
+        self.add_layouts(project.layouts.iter()
+            .map(|(key, layout)| (key.clone(), layout.iter().cloned().map_into().collect())));
         self.plans.set(project.plans.clone());
         Ok(())
     }
@@ -437,7 +438,7 @@ impl ProjectManagerMut for CoordinatorRuntime {
             .layouts
             .read()
             .into_iter()
-            .map(|layout| (layout.id, layout.controls))
+            .map(|layout| (layout.id, layout.controls.into_iter().map_into().collect()))
             .collect();
         project.plans = self.plans.read();
     }

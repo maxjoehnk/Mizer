@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::fixture::FixtureConfiguration;
 use mizer_fixtures::programmer::Group;
-use mizer_layouts::ControlConfig;
+use mizer_layouts::ProjectControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
 use mizer_plan::Plan;
 use mizer_protocol_mqtt::MqttAddress;
@@ -56,7 +56,7 @@ pub struct Project {
     #[serde(default)]
     pub media: Media,
     #[serde(default)]
-    pub layouts: IndexMap<String, Vec<ControlConfig>>,
+    pub layouts: IndexMap<String, Vec<ProjectControlConfig>>,
     #[serde(default)]
     pub connections: Vec<ConnectionConfig>,
     #[serde(default)]

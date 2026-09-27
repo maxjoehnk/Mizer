@@ -111,7 +111,7 @@ impl FixtureSelection {
     }
 
     pub fn shuffle(&mut self) {
-        self.fixtures.shuffle(&mut thread_rng());
+        self.fixtures.shuffle(&mut rand::rng());
     }
 
     pub fn total_fixtures(&self) -> usize {

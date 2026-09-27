@@ -85,8 +85,8 @@ pub struct NoiseNodeState {
 
 impl Default for NoiseNodeState {
     fn default() -> Self {
-        let mut rng = thread_rng();
-        let value = rng.gen();
+        let mut rng = rand::rng();
+        let value = rng.random();
 
         Self {
             rng,
@@ -114,7 +114,7 @@ impl NoiseNodeState {
         } else {
             let value = self.next_value;
             self.last_value = (self.last_tick, value);
-            self.next_value = self.rng.gen();
+            self.next_value = self.rng.random();
 
             value
         }

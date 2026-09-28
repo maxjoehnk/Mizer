@@ -87,6 +87,7 @@
 **** xref:nodes:standard/delay/index.adoc[]
 **** xref:nodes:standard/encoder/index.adoc[]
 **** xref:nodes:standard/envelope/index.adoc[]
+**** xref:nodes:standard/is-cue-active.adoc[]
 **** xref:nodes:standard/math/index.adoc[]
 **** xref:nodes:standard/merge/index.adoc[]
 **** xref:nodes:standard/noise/index.adoc[]

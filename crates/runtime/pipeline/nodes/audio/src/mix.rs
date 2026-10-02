@@ -35,7 +35,7 @@ impl ProcessingNode for AudioMixNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
-        let ports = context.read_changed_ports::<_, Vec<f64>>(AUDIO_INPUT);
+        let ports = context.read_ports::<_, Vec<f64>>(AUDIO_INPUT);
 
         let ports = ports.into_iter().flatten().collect::<Vec<_>>();
 
@@ -45,8 +45,9 @@ impl ProcessingNode for AudioMixNode {
 
         let mut buffer = Vec::<f64>::new();
 
-        for i in 0..ports[0].len() {
-            buffer.push(ports.iter().map(|frames| frames[i]).sum());
+        let max_frames = ports.iter().map(|port| port.len()).max().unwrap_or_default();
+        for i in 0..max_frames {
+            buffer.push(ports.iter().map(|frames| frames.get(i).unwrap_or(&0.0)).sum());
         }
 
         context.write_port(AUDIO_OUTPUT, buffer);

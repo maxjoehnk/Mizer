@@ -1,5 +1,5 @@
-use dasp::frame::Stereo;
 use dasp::Signal;
+use dasp::frame::Stereo;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
@@ -55,7 +55,7 @@ impl ProcessingNode for AudioVolumeNode {
 
 impl AudioVolumeNode {
     fn process(&self, context: &impl NodeContext) -> Option<impl Signal<Frame = Stereo<f64>>> {
-        let volume = context.read_port::<_, f64>(VOLUME_INPUT)?;
+        let volume = context.read_port::<_, f64>(VOLUME_INPUT).unwrap_or(1.0);
         let input = context.input_signal(AUDIO_INPUT)?;
 
         Some(input.scale_amp(volume))

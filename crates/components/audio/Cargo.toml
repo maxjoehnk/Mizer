@@ -1,0 +1,12 @@
+[package]
+name = "mizer-audio-processing"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+tracing = "0.1"
+rubato = "5"
+dasp = "0.11"
+audioadapter = "5"

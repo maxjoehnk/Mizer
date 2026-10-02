@@ -2,13 +2,13 @@
 name = "mizer-audio-nodes"
 version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 anyhow = "1"
 tracing = "0.1"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
-cpal = "0.15"
+cpal = { version = "0.18", features = ["pipewire", "pulseaudio"] }
 mizer-node = { path = "../../node" }
 serde = { version = "1", features = ["derive"] }
 rb = "0.4"
@@ -17,3 +17,6 @@ num_enum = "0.7"
 mizer-media = { path = "../../../../components/media" }
 dasp = { version = "0.11", features = ["signal", "signal-rms", "interpolate", "interpolate-sinc", "ring_buffer"] }
 flume = "0.11"
+rubato = "5"
+audioadapter = "5"
+audioadapter-buffers = "5.2"

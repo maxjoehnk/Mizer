@@ -11,23 +11,23 @@ use dasp::ring_buffer::Fixed;
 use dasp::signal::equilibrium;
 use dasp::{Frame, Signal};
 use enum_iterator::Sequence;
-use flume::{bounded, Receiver, Sender};
+use flume::{Receiver, Sender, bounded};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 use symphonia::core::audio::SampleBuffer;
-use symphonia::core::codecs::{Decoder, CODEC_TYPE_NULL};
+use symphonia::core::codecs::{CODEC_TYPE_NULL, Decoder};
 use symphonia::core::errors::Error;
 use symphonia::core::formats::FormatReader;
 use symphonia::core::io::MediaSourceStream;
 use symphonia::core::probe::Hint;
 use symphonia::default;
 
-use mizer_media::documents::MediaId;
 use mizer_media::MediaServer;
+use mizer_media::documents::MediaId;
 use mizer_node::edge::Edge;
 use mizer_node::*;
 
-use crate::AudioContext;
+use crate::{AudioContext, SAMPLE_RATE};
 
 const PLAYBACK_INPUT: &str = "Playback";
 const PAUSE_INPUT: &str = "Pause";
@@ -443,7 +443,7 @@ impl AudioDecodeThread {
     #[tracing::instrument(skip(self))]
     fn decode(mut self) -> anyhow::Result<()> {
         tracing::debug!("Decoding file {:?}", self.path);
-        let sample_rate = self.decoder.codec_params().sample_rate.unwrap_or(44_100);
+        let sample_rate = self.decoder.codec_params().sample_rate.unwrap_or(SAMPLE_RATE);
         let mut buffer = Vec::new();
         loop {
             let packet = match self.format.next_packet() {

@@ -1,12 +1,18 @@
 [gd_scene format=3 uid="uid://cq1uxnmtajfc"]
 
 [ext_resource type="Theme" uid="uid://cftd3nx5t1dlc" path="res://resources/transport_bar_theme.tres" id="1_bj1vv"]
+[ext_resource type="Texture2D" uid="uid://bbdurlgcndqmd" path="res://assets/icons/stop.svg" id="3_84qho"]
 [ext_resource type="FontFile" uid="uid://ugph4ndnmbc" path="res://assets/fonts/Fira_Mono/FiraMono-Medium.ttf" id="3_bj1vv"]
+[ext_resource type="Texture2D" uid="uid://djvty4xk6uwo1" path="res://assets/icons/pause.svg" id="4_06p8u"]
+[ext_resource type="Texture2D" uid="uid://bxe0qqmhsm4ln" path="res://assets/icons/play.svg" id="5_mbqbf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_84qho"]
 bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_06p8u"]
+bg_color = Color(1, 0.34117648, 0.13333334, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v2ds7"]
 content_margin_left = 2.0
@@ -64,6 +70,7 @@ layout_mode = 2
 [node name="Tap" type="Button" parent="TransportBar/HBoxContainer" unique_id=2071595458]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Tap"
 
 [node name="VSeparator2" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=1165580115]
@@ -72,6 +79,7 @@ layout_mode = 2
 [node name="Resync" type="Button" parent="TransportBar/HBoxContainer" unique_id=346570014]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Resync"
 
 [node name="VSeparator3" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=1184459065]
@@ -88,6 +96,38 @@ vertical_alignment = 1
 
 [node name="VSeparator4" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=1809701671]
 layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TransportBar/HBoxContainer" unique_id=1660725435]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Stop" type="Button" parent="TransportBar/HBoxContainer/HBoxContainer" unique_id=1314756258]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/pressed = SubResource("StyleBoxFlat_06p8u")
+toggle_mode = true
+icon = ExtResource("3_84qho")
+icon_alignment = 1
+
+[node name="Pause" type="Button" parent="TransportBar/HBoxContainer/HBoxContainer" unique_id=1867558820]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/pressed = SubResource("StyleBoxFlat_06p8u")
+toggle_mode = true
+icon = ExtResource("4_06p8u")
+icon_alignment = 1
+
+[node name="Play" type="Button" parent="TransportBar/HBoxContainer/HBoxContainer" unique_id=1105411841]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/pressed = SubResource("StyleBoxFlat_06p8u")
+toggle_mode = true
+button_pressed = true
+icon = ExtResource("5_mbqbf")
+icon_alignment = 1
 
 [node name="VSeparator5" type="VSeparator" parent="TransportBar/HBoxContainer" unique_id=1946682146]
 layout_mode = 2
@@ -126,14 +166,17 @@ select_all_on_focus = true
 [node name="Console" type="Button" parent="." unique_id=1238216495]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Console"
 
 [node name="Selection" type="Button" parent="." unique_id=539936234]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Selection"
 
 [node name="Programmer" type="Button" parent="." unique_id=1443026855]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Programmer"

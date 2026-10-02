@@ -1,5 +1,35 @@
 [gd_scene format=3 uid="uid://2qjviwxb0abn"]
 
-[node name="Button" type="Button" unique_id=206883497]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gglfi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_romdw"]
+
+[node name="Button" type="GridButton" unique_id=2003654856]
 custom_minimum_size = Vector2(80, 80)
 clip_contents = true
+offset_right = 80.0
+offset_bottom = 80.0
+mouse_default_cursor_shape = 2
+icon_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=309836421]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="VBoxContainer" unique_id=1959580588]
+unique_name_in_owner = true
+layout_mode = 2
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=305191431]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gglfi")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_romdw")
+horizontal_alignment = 1
+vertical_alignment = 1

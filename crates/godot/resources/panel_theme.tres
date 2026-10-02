@@ -3,20 +3,62 @@
 [ext_resource type="StyleBox" uid="uid://cr4apou6na1cq" path="res://resources/menu_background_normal.tres" id="1_llbab"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1fp5"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
 bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
 border_width_top = 1
 border_color = Color(0.4, 0.4, 0.4, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rriyu"]
-bg_color = Color(0.2, 0.2, 0.2, 1)
-border_width_top = 1
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxo74"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.26666668, 0.26666668, 0.26666668, 1)
+border_width_top = 2
 border_color = Color(0.4, 0.4, 0.4, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rriyu"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_top = 2
+border_color = Color(0.4, 0.4, 0.4, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahdjr"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.33333334, 0.33333334, 0.33333334, 1)
+border_width_top = 2
+border_color = Color(1, 0.34117648, 0.13333334, 1)
+corner_detail = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_llbab"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
 border_width_left = 8
 border_width_right = 8
 border_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nj61"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+bg_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmjo6"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+bg_color = Color(0.33333334, 0.33333334, 0.33333334, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v2ds7"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7rlo"]
 corner_detail = 1
@@ -27,10 +69,18 @@ corner_detail = 1
 [resource]
 BoxContainer/constants/separation = 2
 Button/styles/disabled = SubResource("StyleBoxFlat_s1fp5")
+Button/styles/hover = SubResource("StyleBoxFlat_vxo74")
 Button/styles/normal = SubResource("StyleBoxFlat_rriyu")
+Button/styles/pressed = SubResource("StyleBoxFlat_ahdjr")
+FlowContainer/constants/h_separation = 1
+FlowContainer/constants/v_separation = 1
 Label/styles/normal = SubResource("StyleBoxFlat_llbab")
 PanelContainer/styles/panel = ExtResource("1_llbab")
 ScrollContainer/constants/scrollbar_h_separation = -8
+TabBar/constants/tab_separation = 2
+TabBar/styles/tab_hovered = SubResource("StyleBoxFlat_7nj61")
+TabBar/styles/tab_selected = SubResource("StyleBoxFlat_qmjo6")
+TabBar/styles/tab_unselected = SubResource("StyleBoxFlat_v2ds7")
 VScrollBar/constants/padding_right = -8
 VScrollBar/styles/grabber = SubResource("StyleBoxFlat_d7rlo")
 VScrollBar/styles/scroll = SubResource("StyleBoxFlat_1jxqg")

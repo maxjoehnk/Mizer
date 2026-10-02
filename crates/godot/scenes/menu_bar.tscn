@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bmjepbra33o18" path="res://assets/icons/undo.svg" id="2_wjle8"]
 [ext_resource type="Texture2D" uid="uid://b3trn04fqbd84" path="res://assets/icons/redo.svg" id="3_npew6"]
 [ext_resource type="Texture2D" uid="uid://pf52i1elpicg" path="res://assets/icons/cog.svg" id="4_055gy"]
+[ext_resource type="Texture2D" uid="uid://bx4xrjgg3lpgq" path="res://assets/icons/monitor-multiple.svg" id="4_npew6"]
 [ext_resource type="Texture2D" uid="uid://bnwb173s8ls3t" path="res://assets/icons/power.svg" id="5_7j175"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wjle8"]
@@ -36,6 +37,7 @@ layout_mode = 2
 [node name="ProjectMenu" type="MenuButton" parent="." unique_id=1727213593]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Project"
 flat = false
 item_count = 4
@@ -52,17 +54,9 @@ popup/item_3/id = 3
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 text = "Project Name"
 flat = false
-item_count = 4
-popup/item_0/text = "New"
-popup/item_0/id = 0
-popup/item_1/text = "Open"
-popup/item_1/id = 1
-popup/item_2/text = "Save"
-popup/item_2/id = 2
-popup/item_3/text = "Save As"
-popup/item_3/id = 3
 
 [node name="VSeparator2" type="VSeparator" parent="." unique_id=467136070]
 layout_mode = 2
@@ -70,16 +64,28 @@ layout_mode = 2
 [node name="Undo" type="Button" parent="." unique_id=864920235]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 icon = ExtResource("2_wjle8")
 icon_alignment = 1
 
 [node name="Redo" type="Button" parent="." unique_id=1177800646]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 icon = ExtResource("3_npew6")
 icon_alignment = 1
 
 [node name="VSeparator3" type="VSeparator" parent="." unique_id=365432743]
+layout_mode = 2
+
+[node name="NewWindow" type="Button" parent="." unique_id=687887732]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+icon = ExtResource("4_npew6")
+icon_alignment = 1
+
+[node name="VSeparator5" type="VSeparator" parent="." unique_id=873189283]
 layout_mode = 2
 
 [node name="ConfigurationItems" type="HBoxContainer" parent="." unique_id=616305023]
@@ -88,12 +94,44 @@ layout_mode = 2
 [node name="Patch" type="Button" parent="ConfigurationItems" unique_id=422828356]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Patch"
 
-[node name="Patch2" type="Button" parent="ConfigurationItems" unique_id=497993328]
+[node name="Connections" type="Button" parent="ConfigurationItems" unique_id=497993328]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Connections"
+
+[node name="DmxOutput" type="Button" parent="ConfigurationItems" unique_id=1432793806]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "DMX Output"
+
+[node name="History" type="Button" parent="ConfigurationItems" unique_id=1879577665]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "History"
+
+[node name="Session" type="Button" parent="ConfigurationItems" unique_id=323105585]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Session"
+
+[node name="MidiProfiles" type="Button" parent="ConfigurationItems" unique_id=1095681907]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "MIDI Profiles"
+
+[node name="FixtureLibrary" type="Button" parent="ConfigurationItems" unique_id=1906976495]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Fixture Library"
 
 [node name="VSeparator4" type="VSeparator" parent="." unique_id=1555371961]
 layout_mode = 2
@@ -101,12 +139,14 @@ layout_mode = 2
 [node name="Settings" type="Button" parent="." unique_id=516011582]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 icon = ExtResource("4_055gy")
 icon_alignment = 1
 
 [node name="Power" type="Button" parent="." unique_id=8382569]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 icon = ExtResource("5_7j175")
 icon_alignment = 1
 

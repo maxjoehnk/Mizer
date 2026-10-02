@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://d2qpkfqoo3eyt"]
+
+[ext_resource type="PackedScene" uid="uid://cn5hdkyy2q4d7" path="res://scenes/main.tscn" id="1_vhacu"]
+
+[node name="Mizer" unique_id=182370072 instance=ExtResource("1_vhacu")]

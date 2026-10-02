@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dhss150uv24r0"]
+
+[ext_resource type="PackedScene" uid="uid://cn5hdkyy2q4d7" path="res://scenes/main.tscn" id="1_dq1gd"]
+[ext_resource type="PackedScene" uid="uid://kmer3miydmuc" path="res://scenes/panels/sequences_panel.tscn" id="2_f3aao"]
+
+[node name="Mizer" unique_id=182370072 instance=ExtResource("1_dq1gd")]
+
+[node name="SequencesPanel" parent="VBoxContainer/Main/VBoxContainer/Content" parent_id_path=PackedInt32Array(727045009) index="0" unique_id=372997702 instance=ExtResource("2_f3aao")]
+layout_mode = 2
+
+[node name="GridButton" type="GridButton" parent="VBoxContainer/Main/VBoxContainer/Content/SequencesPanel/GridPanel/Panel/VBoxContainer/MarginContainer/ScrollContainer/Content" parent_id_path=PackedInt32Array(372997702, 1823997036, 743322154) index="0" unique_id=1053110085]
+label = "Test"
+layout_mode = 2
+text = "Test"
+
+[editable path="VBoxContainer/Main/VBoxContainer/Content/SequencesPanel"]
+[editable path="VBoxContainer/Main/VBoxContainer/Content/SequencesPanel/GridPanel"]
+[editable path="VBoxContainer/Main/VBoxContainer/Content/SequencesPanel/GridPanel/Panel"]

@@ -5,8 +5,22 @@
 [sub_resource type="SystemFont" id="SystemFont_wpg1e"]
 font_names = PackedStringArray("Roboto")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qgrn1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l6ty8"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ai1xk"]
 bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_erja8"]
+bg_color = Color(0.26666668, 0.26666668, 0.26666668, 1)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
@@ -29,7 +43,9 @@ vertical = true
 [resource]
 Button/font_sizes/font_size = 14
 Button/fonts/font = SubResource("SystemFont_wpg1e")
-Button/styles/normal = SubResource("StyleBoxFlat_qgrn1")
+Button/styles/hover = SubResource("StyleBoxFlat_l6ty8")
+Button/styles/normal = SubResource("StyleBoxFlat_ai1xk")
+Button/styles/pressed = SubResource("StyleBoxFlat_erja8")
 HBoxContainer/constants/separation = 2
 Label/font_sizes/font_size = 14
 Label/fonts/font = SubResource("SystemFont_rxg2q")

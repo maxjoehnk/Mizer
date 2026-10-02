@@ -11,9 +11,12 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[node name="Panel" type="PanelContainer" unique_id=1860981428]
-offset_right = 85.0
-offset_bottom = 42.0
+[node name="Panel" type="MizerPanel" unique_id=821494521]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_xbd8w")
@@ -28,7 +31,8 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1208259703]
+[node name="Title" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1208259703]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 text = "Panel Title"

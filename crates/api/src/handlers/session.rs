@@ -72,7 +72,7 @@ impl<R: RuntimeApi> SessionHandler<R> {
     pub fn redo(&self) -> anyhow::Result<()> {
         self.runtime.redo()
     }
-    
+
     pub fn apply_wal(&self) -> anyhow::Result<()> {
         self.runtime.apply_wal()
     }
@@ -83,6 +83,30 @@ impl<R: RuntimeApi> SessionHandler<R> {
         self.runtime
             .observe_history()
             .into_stream()
+            .map(|(items, cursor)| {
+                let items = items
+                    .into_iter()
+                    .map(|(label, timestamp)| HistoryItem {
+                        label,
+                        timestamp: timestamp as u64,
+                        ..Default::default()
+                    })
+                    .collect();
+
+                History {
+                    items,
+                    pointer: cursor as u64,
+                    ..Default::default()
+                }
+            })
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn get_history(&self) -> Option<History> {
+        self.runtime
+            .observe_history()
+            .read_last()
             .map(|(items, cursor)| {
                 let items = items
                     .into_iter()

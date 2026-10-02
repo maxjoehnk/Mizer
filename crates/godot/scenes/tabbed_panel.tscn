@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://3l64v34mvfvf"]
+
+[ext_resource type="PackedScene" uid="uid://dt0orn6glcbdq" path="res://scenes/panel.tscn" id="1_ukwyh"]
+[ext_resource type="Texture2D" uid="uid://boc1yfor0mxr6" path="res://assets/icons/plus.svg" id="2_1y5o4"]
+
+[node name="Panel" unique_id=1860981428 instance=ExtResource("1_ukwyh")]
+
+[node name="HBoxContainer" parent="VBoxContainer" parent_id_path=PackedInt32Array(824225299) index="0" unique_id=772471813]
+theme_override_constants/separation = 2
+
+[node name="TabBar" type="TabBar" parent="VBoxContainer/HBoxContainer" index="1" unique_id=1010985232]
+layout_mode = 2
+current_tab = 0
+clip_tabs = false
+close_with_middle_mouse = false
+scrolling_enabled = false
+tab_count = 3
+tab_0/title = "Farben"
+tab_1/title = "Sequencen"
+tab_2/icon = ExtResource("2_1y5o4")

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://kmer3miydmuc"]
+
+[ext_resource type="PackedScene" uid="uid://hpo853ebnht2" path="res://grid_panel.tscn" id="1_mvaji"]
+
+[node name="SequencesPanel" type="SequencesPanel" unique_id=372997702]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GridPanel" parent="." unique_id=1823997036 instance=ExtResource("1_mvaji")]
+layout_mode = 1
+
+[node name="Panel" parent="GridPanel" index="0" unique_id=821494521]
+layout_mode = 1
+
+[editable path="GridPanel"]
+[editable path="GridPanel/Panel"]

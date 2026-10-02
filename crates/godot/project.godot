@@ -13,14 +13,17 @@ config_version=5
 config/name="Mizer"
 run/main_scene="uid://cn5hdkyy2q4d7"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://cj0uf88x72m68"
+
+[audio]
+
+driver/driver="Dummy"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/subwindows/embed_subwindows=false
-window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/per_pixel_transparency/allowed=true
 
@@ -35,7 +38,8 @@ theme/custom_font="uid://lf6cteyt84xu"
 
 [physics]
 
-3d/physics_engine="Jolt Physics"
+2d/physics_engine="Dummy"
+3d/physics_engine="Dummy"
 
 [rendering]
 

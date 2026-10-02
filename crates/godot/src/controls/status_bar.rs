@@ -12,10 +12,17 @@ struct MizerStatusBar {
     base: Base<HBoxContainer>,
     fps_subscriber: Option<Subscriber<f64>>,
     message_subscriber: Option<Subscriber<Option<StatusMessage>>>,
+    #[init(node = "Message")]
+    message: OnReady<Gd<Label>>,
+    #[init(node = "FPS")]
+    fps: OnReady<Gd<Label>>,
+    #[init(node = "Time")]
+    time: OnReady<Gd<Label>>,
 }
 
 #[godot_api]
 impl IHBoxContainer for MizerStatusBar {
+    #[cfg(not(feature = "editor"))]
     fn ready(&mut self) {
         let handlers = MizerInterface::singleton();
         let handlers = handlers.bind();
@@ -24,20 +31,18 @@ impl IHBoxContainer for MizerStatusBar {
 
         self.fps_subscriber = Some(fps);
         self.message_subscriber = Some(message);
-        self.message_control().set_text("");
+        self.message.set_text("");
     }
 
 
     fn process(&mut self, _delta: f64) {
         if let Some(fps) = self.fps_subscriber.as_ref().and_then(|s| s.read()) {
-            let mut fps_control = self.fps_control();
-            fps_control.set_text(&format!("FPS {fps:.2}"))
+            self.fps.set_text(&format!("FPS {fps:.2}"))
         }
 
         if let Some(message) = self.message_subscriber.as_ref().and_then(|s| s.read()) {
             if let Some(message) = message {
-                let mut message_control = self.message_control();
-                message_control.set_text(&message.message);
+                self.message.set_text(&message.message);
             }
         }
 
@@ -45,23 +50,7 @@ impl IHBoxContainer for MizerStatusBar {
             let hour = now.hour();
             let minute = now.minute();
 
-            let mut control = self.time_control();
-            control.set_text(&format!("{hour:02}:{minute:02}"))
-
+            self.time.set_text(&format!("{hour:02}:{minute:02}"))
         }
-    }
-}
-
-impl MizerStatusBar {
-    fn message_control(&self) -> Gd<Label> {
-        self.base().get_node_as("Message")
-    }
-
-    fn fps_control(&self) -> Gd<Label> {
-        self.base().get_node_as("FPS")
-    }
-
-    fn time_control(&self) -> Gd<Label> {
-        self.base().get_node_as("Time")
     }
 }

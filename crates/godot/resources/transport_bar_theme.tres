@@ -1,0 +1,55 @@
+[gd_resource type="Theme" format=3 uid="uid://cftd3nx5t1dlc"]
+
+[ext_resource type="StyleBox" uid="uid://cr4apou6na1cq" path="res://resources/menu_background_normal.tres" id="1_gglfi"]
+
+[sub_resource type="SystemFont" id="SystemFont_wpg1e"]
+font_names = PackedStringArray("Roboto")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gglfi"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_romdw"]
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7u26"]
+bg_color = Color(0.26666668, 0.26666668, 0.26666668, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="SystemFont" id="SystemFont_rxg2q"]
+font_names = PackedStringArray("Roboto")
+font_weight = 700
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rxg2q"]
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_r0du0"]
+color = Color(0.2, 0.2, 0.2, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 2
+vertical = true
+
+[resource]
+Button/font_sizes/font_size = 16
+Button/fonts/font = SubResource("SystemFont_wpg1e")
+Button/styles/hover = SubResource("StyleBoxFlat_gglfi")
+Button/styles/normal = SubResource("StyleBoxFlat_romdw")
+Button/styles/pressed = SubResource("StyleBoxFlat_d7u26")
+HBoxContainer/constants/separation = 2
+Label/font_sizes/font_size = 14
+Label/fonts/font = SubResource("SystemFont_rxg2q")
+Label/styles/normal = SubResource("StyleBoxFlat_rxg2q")
+LineEdit/styles/normal = ExtResource("1_gglfi")
+TextEdit/styles/normal = ExtResource("1_gglfi")
+VSeparator/styles/separator = SubResource("StyleBoxLine_r0du0")

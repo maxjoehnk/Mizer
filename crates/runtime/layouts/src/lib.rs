@@ -184,8 +184,8 @@ pub struct ControlSize {
 impl Default for ControlSize {
     fn default() -> Self {
         Self {
-            width: 1,
-            height: 1,
+            width: 10,
+            height: 10,
         }
     }
 }

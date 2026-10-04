@@ -450,8 +450,8 @@ Offset alignPositionToGrid(Offset offset, double multiplier, { bool fine = false
 
 Offset screenToLayoutPosition(Offset offset, { bool fine = false }) {
   if (fine) {
-    double x = ((offset.dx * 10) / MULTIPLIER).round().clamp(1, 1000).toDouble();
-    double y = ((offset.dy * 10) / MULTIPLIER).round().clamp(1, 1000).toDouble();
+    double x = ((offset.dx * 10) / MULTIPLIER).round().clamp(0, 1000).toDouble();
+    double y = ((offset.dy * 10) / MULTIPLIER).round().clamp(0, 1000).toDouble();
 
     return Offset(x, y);
   }

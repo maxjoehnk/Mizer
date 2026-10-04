@@ -211,7 +211,7 @@ impl AudioInputNodeState {
 
     fn read(&mut self, audio_context: &impl AudioContext, channels: (u32, u32)) -> anyhow::Result<Option<Vec<f64>>> {
         let frames = self.resampler.input_frames_next();
-        let mut buffer = vec![0.; frames * 2];
+        let mut buffer = vec![0.; frames * self.channel_count];
         let consumer = self.buffer.consumer();
         let count = consumer.get(&mut buffer).unwrap_or(0);
         if count < buffer.len() {
@@ -222,7 +222,7 @@ impl AudioInputNodeState {
             .skip(count)
             .map_err(|err| anyhow::anyhow!("Unable to skip from Ringbuffer: {err:?}"))?;
 
-        let stereo_buffer = buffer.chunks_exact(CHANNEL_COUNT).flat_map(|chunk| [chunk[channels.0 as usize] as f64, chunk[channels.1 as usize] as f64]).collect::<Vec<_>>();
+        let stereo_buffer = buffer.chunks_exact(self.channel_count).flat_map(|chunk| [chunk[channels.0 as usize] as f64, chunk[channels.1 as usize] as f64]).collect::<Vec<_>>();
         let stereo_buffer = InterleavedOwned::new_from(stereo_buffer, 2, frames)?;
 
         let buffer = self.resampler.process(&stereo_buffer, None)?;

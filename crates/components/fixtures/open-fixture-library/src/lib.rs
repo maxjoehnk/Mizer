@@ -9,14 +9,23 @@ use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
 use mizer_util::{find_path, LerpExt};
 
-const COLOR_RED: &str = "#ff0000";
-const COLOR_GREEN: &str = "#00ff00";
-const COLOR_BLUE: &str = "#0000ff";
-const COLOR_WHITE: &str = "#ffffff";
-const COLOR_AMBER: &str = "#ffbf00";
-const COLOR_CYAN: &str = "#0ff0fe";
-const COLOR_MAGENTA: &str = "#ff00ff";
-const COLOR_YELLOW: &str = "#ffff00";
+const COLOR_RED_HEX: &str = "#ff0000";
+const COLOR_GREEN_HEX: &str = "#00ff00";
+const COLOR_BLUE_HEX: &str = "#0000ff";
+const COLOR_WHITE_HEX: &str = "#ffffff";
+const COLOR_AMBER_HEX: &str = "#ffbf00";
+const COLOR_CYAN_HEX: &str = "#0ff0fe";
+const COLOR_MAGENTA_HEX: &str = "#ff00ff";
+const COLOR_YELLOW_HEX: &str = "#ffff00";
+
+const COLOR_RED: &str = "Red";
+const COLOR_GREEN: &str = "Green";
+const COLOR_BLUE: &str = "Blue";
+const COLOR_WHITE: &str = "White";
+const COLOR_AMBER: &str = "Amber";
+const COLOR_CYAN: &str = "Cyan";
+const COLOR_MAGENTA: &str = "Magenta";
+const COLOR_YELLOW: &str = "Yellow";
 
 const DMX_CHANNEL_RANGE: (u16, u16) = (0, 511);
 const DMX_VALUE_RANGE: (u16, u16) = (0, 255);
@@ -63,7 +72,7 @@ impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
             let files = std::fs::read_dir(&path)?;
             for file in files {
                 let file = file?;
-                if file.metadata()?.is_file() {
+                if file.metadata()?.is_file() && file.file_name().to_string_lossy().ends_with(".json") {
                     tracing::trace!("Loading ofl library from '{:?}'...", file);
                     let mut ag_library_file = std::fs::File::open(&file.path())?;
                     let ag_library: AgLibraryFile =
@@ -655,28 +664,28 @@ fn group_controls(
             Some(Capability::Intensity) => {
                 controls.intensity = Some(name);
             }
-            Some(Capability::ColorIntensity { color }) if color == COLOR_RED => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_RED_HEX || color == COLOR_RED => {
                 color_group.red(name);
             }
-            Some(Capability::ColorIntensity { color }) if color == COLOR_GREEN => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_GREEN_HEX || color == COLOR_GREEN => {
                 color_group.green(name);
             }
-            Some(Capability::ColorIntensity { color }) if color == COLOR_BLUE => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_BLUE_HEX || color == COLOR_BLUE => {
                 color_group.blue(name);
             }
-            Some(Capability::ColorIntensity { color }) if color == COLOR_WHITE => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_WHITE_HEX || color == COLOR_WHITE => {
                 color_group.white(name);
             }
-            Some(Capability::ColorIntensity { color }) if color == COLOR_AMBER => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_AMBER_HEX || color == COLOR_AMBER => {
                 color_group.amber(name);
             }
-            Some(Capability::ColorIntensity { color }) if color == COLOR_CYAN => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_CYAN_HEX || color == COLOR_CYAN => {
                 color_group.cyan(name);
             }
-            Some(Capability::ColorIntensity { color }) if color == COLOR_MAGENTA => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_MAGENTA_HEX || color == COLOR_MAGENTA => {
                 color_group.magenta(name);
             }
-            Some(Capability::ColorIntensity { color }) if color == COLOR_YELLOW => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_YELLOW_HEX || color == COLOR_YELLOW => {
                 color_group.yellow(name);
             }
             Some(Capability::Pan {

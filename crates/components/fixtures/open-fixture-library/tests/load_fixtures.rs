@@ -20,3 +20,15 @@ fn should_map_all_definitions() {
 
     assert!(result.is_ok());
 }
+
+#[test]
+fn should_map_example_fixture() {
+    let mut provider = OpenFixtureLibraryProvider::new("tests".into());
+    provider.load().unwrap();
+
+    dbg!(provider.list_definitions());
+    let result = provider.get_definition("ofl:eurolite:led-bar-3-hcl-bar").unwrap();
+    let mode = result.get_mode("10-channel").unwrap();
+
+    assert!(mode.controls.color_mixer.is_some());
+}

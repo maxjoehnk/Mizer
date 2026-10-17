@@ -155,6 +155,7 @@ message Color {
   double red = 1;
   double green = 2;
   double blue = 3;
+  optional double amber = 4;
 }
 
 message ControlBehavior {

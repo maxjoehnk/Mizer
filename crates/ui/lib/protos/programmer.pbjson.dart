@@ -1,4 +1,5 @@
 ///
+import 'dart:convert' as $convert;
 //  Generated code. Do not modify.
 //  source: programmer.proto
 //
@@ -6,7 +7,6 @@
 // ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
-import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
 @$core.Deprecated('Use presetTargetDescriptor instead')
 const PresetTarget$json = const {
@@ -46,11 +46,32 @@ const ProgrammerState$json = const {
     const {'1': 'wings', '3': 9, '4': 1, '5': 13, '10': 'wings'},
     const {'1': 'effects', '3': 10, '4': 3, '5': 11, '6': '.mizer.programmer.EffectProgrammerState', '10': 'effects'},
     const {'1': 'offline', '3': 11, '4': 1, '5': 8, '10': 'offline'},
+    const {'1': 'fixture_values', '3': 12, '4': 3, '5': 11, '6': '.mizer.programmer.FixtureValue', '10': 'fixtureValues'},
   ],
 };
 
 /// Descriptor for `ProgrammerState`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEkIKD2FjdGl2ZV9maXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIOYWN0aXZlRml4dHVyZXMSIwoNYWN0aXZlX2dyb3VwcxgDIAMoDVIMYWN0aXZlR3JvdXBzEkAKCXNlbGVjdGlvbhgEIAEoCzIiLm1pemVyLnByb2dyYW1tZXIuRml4dHVyZVNlbGVjdGlvblIJc2VsZWN0aW9uEj8KCGNvbnRyb2xzGAUgAygLMiMubWl6ZXIucHJvZ3JhbW1lci5Qcm9ncmFtbWVyQ2hhbm5lbFIIY29udHJvbHMSHAoJaGlnaGxpZ2h0GAYgASgIUgloaWdobGlnaHQSHQoKYmxvY2tfc2l6ZRgHIAEoDVIJYmxvY2tTaXplEhYKBmdyb3VwcxgIIAEoDVIGZ3JvdXBzEhQKBXdpbmdzGAkgASgNUgV3aW5ncxJBCgdlZmZlY3RzGAogAygLMicubWl6ZXIucHJvZ3JhbW1lci5FZmZlY3RQcm9ncmFtbWVyU3RhdGVSB2VmZmVjdHMSGAoHb2ZmbGluZRgLIAEoCFIHb2ZmbGluZQ==');
+final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEkIKD2FjdGl2ZV9maXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIOYWN0aXZlRml4dHVyZXMSIwoNYWN0aXZlX2dyb3VwcxgDIAMoDVIMYWN0aXZlR3JvdXBzEkAKCXNlbGVjdGlvbhgEIAEoCzIiLm1pemVyLnByb2dyYW1tZXIuRml4dHVyZVNlbGVjdGlvblIJc2VsZWN0aW9uEj8KCGNvbnRyb2xzGAUgAygLMiMubWl6ZXIucHJvZ3JhbW1lci5Qcm9ncmFtbWVyQ2hhbm5lbFIIY29udHJvbHMSHAoJaGlnaGxpZ2h0GAYgASgIUgloaWdobGlnaHQSHQoKYmxvY2tfc2l6ZRgHIAEoDVIJYmxvY2tTaXplEhYKBmdyb3VwcxgIIAEoDVIGZ3JvdXBzEhQKBXdpbmdzGAkgASgNUgV3aW5ncxJBCgdlZmZlY3RzGAogAygLMicubWl6ZXIucHJvZ3JhbW1lci5FZmZlY3RQcm9ncmFtbWVyU3RhdGVSB2VmZmVjdHMSGAoHb2ZmbGluZRgLIAEoCFIHb2ZmbGluZRJFCg5maXh0dXJlX3ZhbHVlcxgMIAMoCzIeLm1pemVyLnByb2dyYW1tZXIuRml4dHVyZVZhbHVlUg1maXh0dXJlVmFsdWVz');
+@$core.Deprecated('Use fixtureValueDescriptor instead')
+const FixtureValue$json = const {
+  '1': 'FixtureValue',
+  '2': const [
+    const {'1': 'fixture', '3': 1, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixture'},
+    const {'1': 'intensity', '3': 2, '4': 1, '5': 1, '9': 0, '10': 'intensity', '17': true},
+    const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorMixerChannel', '9': 1, '10': 'color', '17': true},
+    const {'1': 'pan', '3': 4, '4': 1, '5': 1, '9': 2, '10': 'pan', '17': true},
+    const {'1': 'tilt', '3': 5, '4': 1, '5': 1, '9': 3, '10': 'tilt', '17': true},
+  ],
+  '8': const [
+    const {'1': '_intensity'},
+    const {'1': '_color'},
+    const {'1': '_pan'},
+    const {'1': '_tilt'},
+  ],
+};
+
+/// Descriptor for `FixtureValue`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureValueDescriptor = $convert.base64Decode('CgxGaXh0dXJlVmFsdWUSMwoHZml4dHVyZRgBIAEoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIHZml4dHVyZRIhCglpbnRlbnNpdHkYAiABKAFIAFIJaW50ZW5zaXR5iAEBEjwKBWNvbG9yGAMgASgLMiEubWl6ZXIuZml4dHVyZXMuQ29sb3JNaXhlckNoYW5uZWxIAVIFY29sb3KIAQESFQoDcGFuGAQgASgBSAJSA3BhbogBARIXCgR0aWx0GAUgASgBSANSBHRpbHSIAQFCDAoKX2ludGVuc2l0eUIICgZfY29sb3JCBgoEX3BhbkIHCgVfdGlsdA==');
 @$core.Deprecated('Use fixtureSelectionDescriptor instead')
 const FixtureSelection$json = const {
   '1': 'FixtureSelection',
@@ -104,11 +125,12 @@ const ProgrammerChannel_ColorChannel$json = const {
     const {'1': 'RED', '2': 0},
     const {'1': 'GREEN', '2': 1},
     const {'1': 'BLUE', '2': 2},
+    const {'1': 'AMBER', '2': 3},
   ],
 };
 
 /// Descriptor for `ProgrammerChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List programmerChannelDescriptor = $convert.base64Decode('ChFQcm9ncmFtbWVyQ2hhbm5lbBI1CghmaXh0dXJlcxgBIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMSOAoHY29udHJvbBgCIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sUgdjb250cm9sEhYKBWZhZGVyGAMgASgBSABSBWZhZGVyEjkKBWNvbG9yGAQgASgLMiEubWl6ZXIuZml4dHVyZXMuQ29sb3JNaXhlckNoYW5uZWxIAFIFY29sb3ISTAoHZ2VuZXJpYxgFIAEoCzIwLm1pemVyLnByb2dyYW1tZXIuUHJvZ3JhbW1lckNoYW5uZWwuR2VuZXJpY1ZhbHVlSABSB2dlbmVyaWMSNAoGcHJlc2V0GAYgASgLMhoubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXRJZEgAUgZwcmVzZXQaOAoMR2VuZXJpY1ZhbHVlEhIKBG5hbWUYASABKAlSBG5hbWUSFAoFdmFsdWUYAiABKAFSBXZhbHVlIiwKDENvbG9yQ2hhbm5lbBIHCgNSRUQQABIJCgVHUkVFThABEggKBEJMVUUQAkIHCgV2YWx1ZQ==');
+final $typed_data.Uint8List programmerChannelDescriptor = $convert.base64Decode('ChFQcm9ncmFtbWVyQ2hhbm5lbBI1CghmaXh0dXJlcxgBIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMSOAoHY29udHJvbBgCIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sUgdjb250cm9sEhYKBWZhZGVyGAMgASgBSABSBWZhZGVyEjkKBWNvbG9yGAQgASgLMiEubWl6ZXIuZml4dHVyZXMuQ29sb3JNaXhlckNoYW5uZWxIAFIFY29sb3ISTAoHZ2VuZXJpYxgFIAEoCzIwLm1pemVyLnByb2dyYW1tZXIuUHJvZ3JhbW1lckNoYW5uZWwuR2VuZXJpY1ZhbHVlSABSB2dlbmVyaWMSNAoGcHJlc2V0GAYgASgLMhoubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXRJZEgAUgZwcmVzZXQaOAoMR2VuZXJpY1ZhbHVlEhIKBG5hbWUYASABKAlSBG5hbWUSFAoFdmFsdWUYAiABKAFSBXZhbHVlIjcKDENvbG9yQ2hhbm5lbBIHCgNSRUQQABIJCgVHUkVFThABEggKBEJMVUUQAhIJCgVBTUJFUhADQgcKBXZhbHVl');
 @$core.Deprecated('Use effectProgrammerStateDescriptor instead')
 const EffectProgrammerState$json = const {
   '1': 'EffectProgrammerState',
@@ -360,6 +382,10 @@ const Preset_Color$json = const {
     const {'1': 'red', '3': 1, '4': 1, '5': 1, '10': 'red'},
     const {'1': 'green', '3': 2, '4': 1, '5': 1, '10': 'green'},
     const {'1': 'blue', '3': 3, '4': 1, '5': 1, '10': 'blue'},
+    const {'1': 'amber', '3': 4, '4': 1, '5': 1, '9': 0, '10': 'amber', '17': true},
+  ],
+  '8': const [
+    const {'1': '_amber'},
   ],
 };
 
@@ -377,7 +403,7 @@ const Preset_Position$json = const {
 };
 
 /// Descriptor for `Preset`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List presetDescriptor = $convert.base64Decode('CgZQcmVzZXQSKgoCaWQYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkUgJpZBI2CgZ0YXJnZXQYAiABKA4yHi5taXplci5wcm9ncmFtbWVyLlByZXNldFRhcmdldFIGdGFyZ2V0EhkKBWxhYmVsGAMgASgJSAFSBWxhYmVsiAEBEhYKBWZhZGVyGAQgASgBSABSBWZhZGVyEjYKBWNvbG9yGAUgASgLMh4ubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXQuQ29sb3JIAFIFY29sb3ISPwoIcG9zaXRpb24YBiABKAsyIS5taXplci5wcm9ncmFtbWVyLlByZXNldC5Qb3NpdGlvbkgAUghwb3NpdGlvbhpDCgVDb2xvchIQCgNyZWQYASABKAFSA3JlZBIUCgVncmVlbhgCIAEoAVIFZ3JlZW4SEgoEYmx1ZRgDIAEoAVIEYmx1ZRpLCghQb3NpdGlvbhIXCgR0aWx0GAEgASgBSABSBHRpbHSIAQESFQoDcGFuGAIgASgBSAFSA3BhbogBAUIHCgVfdGlsdEIGCgRfcGFuQgcKBXZhbHVlQggKBl9sYWJlbA==');
+final $typed_data.Uint8List presetDescriptor = $convert.base64Decode('CgZQcmVzZXQSKgoCaWQYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkUgJpZBI2CgZ0YXJnZXQYAiABKA4yHi5taXplci5wcm9ncmFtbWVyLlByZXNldFRhcmdldFIGdGFyZ2V0EhkKBWxhYmVsGAMgASgJSAFSBWxhYmVsiAEBEhYKBWZhZGVyGAQgASgBSABSBWZhZGVyEjYKBWNvbG9yGAUgASgLMh4ubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXQuQ29sb3JIAFIFY29sb3ISPwoIcG9zaXRpb24YBiABKAsyIS5taXplci5wcm9ncmFtbWVyLlByZXNldC5Qb3NpdGlvbkgAUghwb3NpdGlvbhpoCgVDb2xvchIQCgNyZWQYASABKAFSA3JlZBIUCgVncmVlbhgCIAEoAVIFZ3JlZW4SEgoEYmx1ZRgDIAEoAVIEYmx1ZRIZCgVhbWJlchgEIAEoAUgAUgVhbWJlcogBAUIICgZfYW1iZXIaSwoIUG9zaXRpb24SFwoEdGlsdBgBIAEoAUgAUgR0aWx0iAEBEhUKA3BhbhgCIAEoAUgBUgNwYW6IAQFCBwoFX3RpbHRCBgoEX3BhbkIHCgV2YWx1ZUIICgZfbGFiZWw=');
 @$core.Deprecated('Use callPresetResponseDescriptor instead')
 const CallPresetResponse$json = const {
   '1': 'CallPresetResponse',

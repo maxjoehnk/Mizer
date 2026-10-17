@@ -7,6 +7,7 @@
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
+
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class PresetTarget extends $pb.ProtobufEnum {
@@ -45,11 +46,13 @@ class ProgrammerChannel_ColorChannel extends $pb.ProtobufEnum {
   static const ProgrammerChannel_ColorChannel RED = ProgrammerChannel_ColorChannel._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RED');
   static const ProgrammerChannel_ColorChannel GREEN = ProgrammerChannel_ColorChannel._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GREEN');
   static const ProgrammerChannel_ColorChannel BLUE = ProgrammerChannel_ColorChannel._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BLUE');
+  static const ProgrammerChannel_ColorChannel AMBER = ProgrammerChannel_ColorChannel._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AMBER');
 
   static const $core.List<ProgrammerChannel_ColorChannel> values = <ProgrammerChannel_ColorChannel> [
     RED,
     GREEN,
     BLUE,
+    AMBER,
   ];
 
   static final $core.Map<$core.int, ProgrammerChannel_ColorChannel> _byValue = $pb.ProtobufEnum.initByValue(values);

@@ -215,6 +215,7 @@ impl From<mizer_fixtures::definition::FixtureFaderControl> for cue_control::Type
             ColorMixer(ColorChannel::Red) => Self::ColorRed,
             ColorMixer(ColorChannel::Green) => Self::ColorGreen,
             ColorMixer(ColorChannel::Blue) => Self::ColorBlue,
+            ColorMixer(ColorChannel::Amber) => Self::ColorAmber,
             ColorWheel => Self::ColorWheel,
             Generic(_) => Self::Generic,
         }

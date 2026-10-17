@@ -362,6 +362,7 @@ impl From<models::FixtureFaderControl> for definition::FixtureFaderControl {
                 Red => definition::ColorChannel::Red,
                 Green => definition::ColorChannel::Green,
                 Blue => definition::ColorChannel::Blue,
+                Amber => definition::ColorChannel::Amber,
             }
         });
 
@@ -415,6 +416,9 @@ impl From<definition::FixtureFaderControl> for models::FixtureFaderControl {
                         }
                         definition::ColorChannel::Blue => {
                             fixture_fader_control::ColorMixerControlChannel::Blue
+                        }
+                        definition::ColorChannel::Amber => {
+                            fixture_fader_control::ColorMixerControlChannel::Amber
                         }
                     }
                     .into(),

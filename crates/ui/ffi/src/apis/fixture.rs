@@ -75,11 +75,12 @@ pub struct FFIFixtureState {
     pub color_red: f64,
     pub color_green: f64,
     pub color_blue: f64,
+    pub color_amber: f64,
 }
 
 impl From<FixtureState> for FFIFixtureState {
     fn from(state: FixtureState) -> Self {
-        let (red, green, blue) = state.color.unwrap_or_default();
+        let (red, green, blue, amber) = state.color.unwrap_or_default();
 
         Self {
             has_brightness: state.brightness.is_some().into(),
@@ -88,6 +89,7 @@ impl From<FixtureState> for FFIFixtureState {
             color_red: red,
             color_green: green,
             color_blue: blue,
+            color_amber: amber.unwrap_or_default(),
         }
     }
 }

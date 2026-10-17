@@ -196,6 +196,7 @@ pub extern "C" fn read_node_color_preview(ptr: *const NodeHistory) -> FFIColorVa
         red: data.red,
         green: data.green,
         blue: data.blue,
+        amber: data.amber.unwrap_or_default(),
     }
 }
 

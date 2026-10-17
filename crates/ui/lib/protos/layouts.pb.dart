@@ -10,9 +10,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'programmer.pb.dart' as $1;
-
 import 'layouts.pbenum.dart';
+import 'programmer.pb.dart' as $1;
 
 export 'layouts.pbenum.dart';
 
@@ -1864,6 +1863,7 @@ class Color extends $pb.GeneratedMessage {
     ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'red', $pb.PbFieldType.OD)
     ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'green', $pb.PbFieldType.OD)
     ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blue', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'amber', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -1872,6 +1872,7 @@ class Color extends $pb.GeneratedMessage {
     $core.double? red,
     $core.double? green,
     $core.double? blue,
+    $core.double? amber,
   }) {
     final _result = create();
     if (red != null) {
@@ -1882,6 +1883,9 @@ class Color extends $pb.GeneratedMessage {
     }
     if (blue != null) {
       _result.blue = blue;
+    }
+    if (amber != null) {
+      _result.amber = amber;
     }
     return _result;
   }
@@ -1932,6 +1936,15 @@ class Color extends $pb.GeneratedMessage {
   $core.bool hasBlue() => $_has(2);
   @$pb.TagNumber(3)
   void clearBlue() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get amber => $_getN(3);
+  @$pb.TagNumber(4)
+  set amber($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasAmber() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAmber() => clearField(4);
 }
 
 class ControlBehavior extends $pb.GeneratedMessage {

@@ -134,6 +134,7 @@ message ColorMixerChannel {
   double red = 1;
   double green = 2;
   double blue = 3;
+  optional double amber = 4;
 }
 
 message ColorWheelChannel {
@@ -242,5 +243,6 @@ message FixtureFaderControl {
     RED = 0;
     GREEN = 1;
     BLUE = 2;
+    AMBER = 3;
   }
 }

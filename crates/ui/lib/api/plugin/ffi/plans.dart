@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart' as widgets;
 import 'package:mizer/api/plugin/ffi/bindings.dart';
 import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
 import 'package:mizer/api/plugin/ffi/programmer.dart';
+import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 
@@ -23,9 +24,9 @@ class FixtureState {
     color.red *= brightness;
     color.green *= brightness;
     color.blue *= brightness;
+    color.amber *= brightness;
 
-    return widgets.Color.fromRGBO(
-        (color.red * 255).toInt(), (color.green * 255).toInt(), (color.blue * 255).toInt(), 1);
+    return mapToColor(color.red, color.green, color.blue, amber: color.amber);
   }
 }
 
@@ -62,7 +63,7 @@ class FixturesRefPointer extends FFIPointer<FixturesRef> {
     return FixtureState(
       brightness: state.has_brightness == 1 ? state.brightness : null,
       color: state.has_color == 1
-          ? Color(red: state.color_red, green: state.color_green, blue: state.color_blue)
+          ? Color(red: state.color_red, green: state.color_green, blue: state.color_blue, amber: state.color_amber)
           : null,
     );
   }
@@ -77,7 +78,7 @@ class FixturesRefPointer extends FFIPointer<FixturesRef> {
       fixtureStates[fixture.fixture_id.toFixtureId()] = FixtureValues(
         intensity: fixture.has_intensity == 1 ? fixture.intensity : null,
         color: fixture.has_color == 1
-            ? Color(red: fixture.color.red, green: fixture.color.green, blue: fixture.color.blue)
+            ? Color(red: fixture.color.red, green: fixture.color.green, blue: fixture.color.blue, amber: fixture.color.amber)
             : null,
         pan: fixture.has_pan == 1 ? fixture.pan : null,
         tilt: fixture.has_tilt == 1 ? fixture.tilt : null

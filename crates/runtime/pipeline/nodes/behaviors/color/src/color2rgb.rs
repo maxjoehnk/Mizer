@@ -1,13 +1,13 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_util::*;
 
 const COLOR_INPUT: &str = "Color";
 
 const RED_OUTPUT: &str = "Red";
 const GREEN_OUTPUT: &str = "Green";
 const BLUE_OUTPUT: &str = "Blue";
+const AMBER_OUTPUT: &str = "Amber";
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct ColorToRgbNode;
@@ -29,6 +29,7 @@ impl PipelineNode for ColorToRgbNode {
             output_port!(RED_OUTPUT, PortType::Single),
             output_port!(GREEN_OUTPUT, PortType::Single),
             output_port!(BLUE_OUTPUT, PortType::Single),
+            output_port!(AMBER_OUTPUT, PortType::Single),
         ]
     }
 
@@ -45,6 +46,9 @@ impl ProcessingNode for ColorToRgbNode {
             context.write_port(RED_OUTPUT, color.red);
             context.write_port(GREEN_OUTPUT, color.green);
             context.write_port(BLUE_OUTPUT, color.blue);
+            if let Some(amber) = color.amber {
+                context.write_port(AMBER_OUTPUT, amber);
+            }
 
             context.write_color_preview(color);
         }

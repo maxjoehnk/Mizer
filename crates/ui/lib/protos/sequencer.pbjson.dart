@@ -1,4 +1,5 @@
 ///
+import 'dart:convert' as $convert;
 //  Generated code. Do not modify.
 //  source: sequencer.proto
 //
@@ -6,7 +7,6 @@
 // ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
-import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
 @$core.Deprecated('Use fixturePriorityDescriptor instead')
 const FixturePriority$json = const {
@@ -340,6 +340,7 @@ const CueControl_Type$json = const {
     const {'1': 'COLOR_RED', '2': 2},
     const {'1': 'COLOR_GREEN', '2': 3},
     const {'1': 'COLOR_BLUE', '2': 4},
+    const {'1': 'COLOR_AMBER', '2': 15},
     const {'1': 'COLOR_WHEEL', '2': 5},
     const {'1': 'PAN', '2': 6},
     const {'1': 'TILT', '2': 7},
@@ -354,7 +355,7 @@ const CueControl_Type$json = const {
 };
 
 /// Descriptor for `CueControl`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List cueControlDescriptor = $convert.base64Decode('CgpDdWVDb250cm9sEjQKBHR5cGUYASABKA4yIC5taXplci5zZXF1ZW5jZXIuQ3VlQ29udHJvbC5UeXBlUgR0eXBlEi8KBXZhbHVlGAIgASgLMhkubWl6ZXIuc2VxdWVuY2VyLkN1ZVZhbHVlUgV2YWx1ZRI1CghmaXh0dXJlcxgDIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMiwgEKBFR5cGUSDQoJSU5URU5TSVRZEAASCwoHU0hVVFRFUhABEg0KCUNPTE9SX1JFRBACEg8KC0NPTE9SX0dSRUVOEAMSDgoKQ09MT1JfQkxVRRAEEg8KC0NPTE9SX1dIRUVMEAUSBwoDUEFOEAYSCAoEVElMVBAHEgkKBUZPQ1VTEAgSCAoEWk9PTRAJEgkKBVBSSVNNEAoSCAoESVJJUxALEgkKBUZST1NUEAwSCAoER09CTxANEgsKB0dFTkVSSUMQDg==');
+final $typed_data.Uint8List cueControlDescriptor = $convert.base64Decode('CgpDdWVDb250cm9sEjQKBHR5cGUYASABKA4yIC5taXplci5zZXF1ZW5jZXIuQ3VlQ29udHJvbC5UeXBlUgR0eXBlEi8KBXZhbHVlGAIgASgLMhkubWl6ZXIuc2VxdWVuY2VyLkN1ZVZhbHVlUgV2YWx1ZRI1CghmaXh0dXJlcxgDIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMi0wEKBFR5cGUSDQoJSU5URU5TSVRZEAASCwoHU0hVVFRFUhABEg0KCUNPTE9SX1JFRBACEg8KC0NPTE9SX0dSRUVOEAMSDgoKQ09MT1JfQkxVRRAEEg8KC0NPTE9SX0FNQkVSEA8SDwoLQ09MT1JfV0hFRUwQBRIHCgNQQU4QBhIICgRUSUxUEAcSCQoFRk9DVVMQCBIICgRaT09NEAkSCQoFUFJJU00QChIICgRJUklTEAsSCQoFRlJPU1QQDBIICgRHT0JPEA0SCwoHR0VORVJJQxAO');
 @$core.Deprecated('Use cueValueDescriptor instead')
 const CueValue$json = const {
   '1': 'CueValue',

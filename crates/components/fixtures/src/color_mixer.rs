@@ -10,6 +10,7 @@ pub struct ColorMixer {
     pub(crate) red: ChannelValues,
     pub(crate) green: ChannelValues,
     pub(crate) blue: ChannelValues,
+    pub(crate) amber: ChannelValues,
     virtual_dimmer: Option<ChannelValues>,
     master: Option<f64>,
 }
@@ -42,6 +43,7 @@ impl ColorMixer {
         self.red.flush();
         self.green.flush();
         self.blue.flush();
+        self.amber.flush();
         if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
             virtual_dimmer.flush();
         }
@@ -51,6 +53,7 @@ impl ColorMixer {
         self.red.clear();
         self.green.clear();
         self.blue.clear();
+        self.amber.clear();
         if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
             virtual_dimmer.clear();
             virtual_dimmer.insert(0.0, FixturePriority::LOWEST, None, Default::default());
@@ -85,6 +88,16 @@ impl ColorMixer {
         fade_timings: FadeTimings,
     ) {
         self.blue.insert(blue, priority, source, fade_timings);
+    }
+
+    pub fn set_amber(
+        &mut self,
+        amber: f64,
+        priority: FixturePriority,
+        source: Option<FixtureValueSource>,
+        fade_timings: FadeTimings,
+    ) {
+        self.amber.insert(amber, priority, source, fade_timings);
     }
 
     pub fn set_virtual_dimmer(
@@ -198,6 +211,7 @@ pub(crate) fn update_color_mixer<TChannel: IChannelType>(
             green,
             blue,
             white,
+            amber,
             ..
         }) = color_group
         {
@@ -221,6 +235,15 @@ pub(crate) fn update_color_mixer<TChannel: IChannelType>(
             }
             if let Some(channel) = blue.to_channel() {
                 write(channel, rgb.blue);
+            }
+            if let Some(channel) = amber.as_ref().and_then(|a| a.to_channel()) {
+                if let Some(value) = color_mixer.amber.get() {
+                    if let Some(dimmer) = color_mixer.virtual_dimmer() {
+                        write(channel, value * dimmer);
+                    }else {
+                        write(channel, value);
+                    }
+                }
             }
         } else if let Some(ColorGroup::Cmy {
             cyan,

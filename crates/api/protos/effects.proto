@@ -57,6 +57,7 @@ enum EffectControl {
   COLOR_MIXER_RED = 2;
   COLOR_MIXER_GREEN = 3;
   COLOR_MIXER_BLUE = 4;
+  COLOR_MIXER_AMBER = 15;
   COLOR_WHEEL = 5;
   PAN = 6;
   TILT = 7;

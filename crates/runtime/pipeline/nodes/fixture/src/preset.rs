@@ -128,8 +128,8 @@ impl ProcessingNode for PresetNode {
             match self.id {
                 PresetId::Color(id) => {
                     if let Some(preset) = fixture_manager.presets.color.get(&id) {
-                        if let PresetValue::Universal((red, green, blue)) = preset.value {
-                            let color = Color::rgb(red, green, blue);
+                        if let PresetValue::Universal((red, green, blue, amber)) = preset.value {
+                            let color = Color::rgb_amber(red, green, blue, amber);
                             context.write_port(COLOR_OUTPUT, color);
                         }
                     }

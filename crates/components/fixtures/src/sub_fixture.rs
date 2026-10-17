@@ -62,6 +62,9 @@ impl<'a> IFixtureMut for SubFixtureMut<'a> {
                                 ColorChannel::Blue => {
                                     color_mixer.set_blue(value, priority, source, fade_timings)
                                 }
+                                ColorChannel::Amber => {
+                                    color_mixer.set_amber(value, priority, source, fade_timings)
+                                }
                             }
                         }
                     } else {
@@ -116,6 +119,7 @@ fn read_control(
             ColorChannel::Red => Some(rgb.red),
             ColorChannel::Green => Some(rgb.green),
             ColorChannel::Blue => Some(rgb.blue),
+            ColorChannel::Amber => color_mixer.amber.get(),
         };
     }
     match definition.controls.get_channel(&control) {

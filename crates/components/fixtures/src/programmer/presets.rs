@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use crate::definition::FixtureControlValue;
 use crate::FixtureId;
 
-pub type Color = (f64, f64, f64);
+pub type Color = (f64, f64, f64, Option<f64>);
 
 #[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq)]
 pub enum Position {
@@ -61,7 +61,7 @@ impl PresetType {
         match self {
             Self::Intensity => matches!(control, &FixtureControlValue::Intensity(_)),
             Self::Shutter => matches!(control, &FixtureControlValue::Shutter(_)),
-            Self::Color => matches!(control, &FixtureControlValue::ColorMixer(_, _, _)),
+            Self::Color => matches!(control, &FixtureControlValue::ColorMixer(_, _, _, _)),
             Self::Position => matches!(
                 control,
                 &FixtureControlValue::Pan(_) | &FixtureControlValue::Tilt(_)
@@ -233,7 +233,7 @@ fn convert_value<TValue: Copy>(
 }
 
 fn color_value(value: Color) -> Vec<FixtureControlValue> {
-    vec![FixtureControlValue::ColorMixer(value.0, value.1, value.2)]
+    vec![FixtureControlValue::ColorMixer(value.0, value.1, value.2, value.3)]
 }
 
 fn position_value(value: Position) -> Vec<FixtureControlValue> {

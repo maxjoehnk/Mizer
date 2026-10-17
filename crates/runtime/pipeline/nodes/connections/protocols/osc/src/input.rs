@@ -147,12 +147,12 @@ impl OscInputNode {
     }
 
     fn write_color(&self, context: &impl NodeContext, color: &OscColor) {
-        let color = Color {
-            red: color.red.to_percentage(),
-            green: color.green.to_percentage(),
-            blue: color.blue.to_percentage(),
-            alpha: color.alpha.to_percentage(),
-        };
+        let color = Color::rgba(
+            color.red.to_percentage(),
+            color.green.to_percentage(),
+            color.blue.to_percentage(),
+            color.alpha.to_percentage(),
+        );
         context.write_color_preview(color);
         context.write_port(self.argument_type.get_port_id(), color);
     }

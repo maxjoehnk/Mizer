@@ -5,6 +5,7 @@ use mizer_node::*;
 const RED_INPUT: &str = "Red";
 const GREEN_INPUT: &str = "Green";
 const BLUE_INPUT: &str = "Blue";
+const AMBER_INPUT: &str = "Amber";
 const COLOR_OUTPUT: &str = "Color";
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
@@ -26,6 +27,7 @@ impl PipelineNode for RgbColorNode {
             input_port!(RED_INPUT, PortType::Single),
             input_port!(GREEN_INPUT, PortType::Single),
             input_port!(BLUE_INPUT, PortType::Single),
+            input_port!(AMBER_INPUT, PortType::Single),
             output_port!(COLOR_OUTPUT, PortType::Color),
         ]
     }
@@ -42,16 +44,11 @@ impl ProcessingNode for RgbColorNode {
         let red = context.read_port(RED_INPUT);
         let green = context.read_port(GREEN_INPUT);
         let blue = context.read_port(BLUE_INPUT);
+        let amber = context.read_port(AMBER_INPUT);
 
-        let rgb = match (red, green, blue) {
-            (Some(red), Some(green), Some(blue)) => Some((red, green, blue)),
-            (Some(red), Some(green), None) => Some((red, green, 0f64)),
-            (Some(red), None, Some(blue)) => Some((red, 0f64, blue)),
-            (None, Some(green), Some(blue)) => Some((0f64, green, blue)),
-            (Some(red), None, None) => Some((red, 0f64, 0f64)),
-            (None, Some(green), None) => Some((0f64, green, 0f64)),
-            (None, None, Some(blue)) => Some((0f64, 0f64, blue)),
-            (None, None, None) => None,
+        let rgb = match (red, green, blue, amber) {
+            (None, None, None, None) => None,
+            (red, green, blue, amber) => Some((red.unwrap_or_default(), green.unwrap_or_default(), blue.unwrap_or_default(), amber)),
         };
 
         if let Some(rgb) = rgb {

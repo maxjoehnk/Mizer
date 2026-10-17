@@ -163,6 +163,7 @@ pub struct Color {
     pub red: f64,
     pub green: f64,
     pub blue: f64,
+    pub amber: Option<f64>,
     pub alpha: f64,
 }
 
@@ -175,6 +176,27 @@ impl Color {
             red,
             green,
             blue,
+            amber: None,
+            alpha: 1f64,
+        }
+    }
+
+    pub const fn rgba(red: f64, green: f64, blue: f64, alpha: f64) -> Self {
+        Self {
+            red,
+            green,
+            blue,
+            amber: None,
+            alpha,
+        }
+    }
+
+    pub const fn rgb_amber(red: f64, green: f64, blue: f64, amber: Option<f64>) -> Self {
+        Self {
+            red,
+            green,
+            blue,
+            amber,
             alpha: 1f64,
         }
     }
@@ -192,9 +214,21 @@ impl From<(f64, f64, f64)> for Color {
     }
 }
 
+impl From<(f64, f64, f64, Option<f64>)> for Color {
+    fn from((r, g, b, amber): (f64, f64, f64, Option<f64>)) -> Self {
+        Self::rgb_amber(r, g, b, amber)
+    }
+}
+
 impl From<Color> for (f64, f64, f64) {
     fn from(color: Color) -> Self {
         (color.red, color.green, color.blue)
+    }
+}
+
+impl From<Color> for (f64, f64, f64, Option<f64>) {
+    fn from(color: Color) -> Self {
+        (color.red, color.green, color.blue, color.amber)
     }
 }
 
@@ -217,6 +251,7 @@ impl Mul<f64> for Color {
             red: self.red * rhs,
             green: self.green * rhs,
             blue: self.blue * rhs,
+            amber: self.amber.map(|a| a * rhs),
             alpha: self.alpha,
         }
     }
@@ -228,6 +263,7 @@ impl Hash for Color {
         self.red.to_bits().hash(state);
         self.green.to_bits().hash(state);
         self.blue.to_bits().hash(state);
+        self.amber.map(|a| a.to_bits()).hash(state);
         self.alpha.to_bits().hash(state);
     }
 }

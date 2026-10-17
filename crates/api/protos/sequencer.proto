@@ -162,6 +162,7 @@ message CueControl {
     COLOR_RED = 2;
     COLOR_GREEN = 3;
     COLOR_BLUE = 4;
+    COLOR_AMBER = 15;
     COLOR_WHEEL = 5;
     PAN = 6;
     TILT = 7;

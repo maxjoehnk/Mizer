@@ -59,6 +59,7 @@ impl From<definition::FixtureFaderControl> for models::EffectControl {
                 Self::ColorMixerGreen
             }
             FixtureFaderControl::ColorMixer(definition::ColorChannel::Blue) => Self::ColorMixerBlue,
+            FixtureFaderControl::ColorMixer(definition::ColorChannel::Amber) => Self::ColorMixerAmber,
             FixtureFaderControl::ColorWheel => Self::ColorWheel,
             FixtureFaderControl::Pan => Self::Pan,
             FixtureFaderControl::Tilt => Self::Tilt,
@@ -84,6 +85,9 @@ impl From<models::EffectControl> for definition::FixtureFaderControl {
             }
             models::EffectControl::ColorMixerBlue => {
                 Self::ColorMixer(definition::ColorChannel::Blue)
+            }
+            models::EffectControl::ColorMixerAmber => {
+                Self::ColorMixer(definition::ColorChannel::Amber)
             }
             models::EffectControl::ColorWheel => Self::ColorWheel,
             models::EffectControl::Pan => Self::Pan,

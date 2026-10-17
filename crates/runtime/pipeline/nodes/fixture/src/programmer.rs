@@ -63,6 +63,7 @@ impl ProcessingNode for ProgrammerNode {
                     color.red,
                     color.green,
                     color.blue,
+                    color.amber,
                 ));
             }
             if let Some(pan) = context.read_port_changes::<_, f64>("Pan") {

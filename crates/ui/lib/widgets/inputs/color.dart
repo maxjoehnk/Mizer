@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
-import 'package:mizer/widgets/tabs.dart';
-
 import 'package:mizer/widgets/inputs/fader.dart';
+import 'package:mizer/widgets/tabs.dart';
 
 enum ColorMode {
   Rgb,
@@ -14,14 +13,16 @@ class ColorValue {
   final double red;
   final double green;
   final double blue;
+  final double? amber;
 
-  ColorValue({required this.red, required this.green, required this.blue});
+  ColorValue({required this.red, required this.green, required this.blue, this.amber});
 
-  ColorValue copyWith({double? red, double? green, double? blue}) {
+  ColorValue copyWith({double? red, double? green, double? blue, double? amber}) {
     return ColorValue(
       red: red ?? this.red,
       green: green ?? this.green,
       blue: blue ?? this.blue,
+      amber: amber ?? this.amber,
     );
   }
 }

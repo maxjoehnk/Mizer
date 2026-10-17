@@ -251,10 +251,11 @@ fn get_aggregated_programmer_channels(programmer: &Programmer) -> Vec<Aggregated
                         red,
                         green,
                         blue,
+                        amber,
                     )) => {
                         channels.push(AggregatedProgrammerChannel {
                             fixtures: fixtures.clone(),
-                            value: AggregatedProgrammerValue::Color((red, green, blue).into()),
+                            value: AggregatedProgrammerValue::Color((red, green, blue, amber).into()),
                         });
                     }
                     _ => continue,
@@ -425,8 +426,8 @@ fn get_universal_value<TValue: Copy>(
             FixtureControlValue::Shutter(shutter) => {
                 values.push(AggregatedProgrammerValue::Shutter(shutter.into()))
             }
-            FixtureControlValue::ColorMixer(red, green, blue) => {
-                values.push(AggregatedProgrammerValue::Color((red, green, blue).into()))
+            FixtureControlValue::ColorMixer(red, green, blue, amber) => {
+                values.push(AggregatedProgrammerValue::Color((red, green, blue, amber).into()))
             }
             _ => continue,
         }

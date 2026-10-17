@@ -65,6 +65,9 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                         MizerFixtureControl::ColorBlue => {
                             fixture_color_builder.blue(FixtureControlChannel::Channel(ch))
                         }
+                        MizerFixtureControl::ColorWhite => {
+                            fixture_color_builder.white(FixtureControlChannel::Channel(ch))
+                        }
                         MizerFixtureControl::ColorAmber => {
                             fixture_color_builder.amber(FixtureControlChannel::Channel(ch))
                         }
@@ -79,6 +82,9 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                                 channel: FixtureControlChannel::Channel(ch),
                                 angle: None,
                             })
+                        }
+                        MizerFixtureControl::Zoom => {
+                            fixture_controls.zoom = Some(FixtureControlChannel::Channel(ch))
                         }
                         MizerFixtureControl::Generic => {
                             fixture_controls.generic.push(GenericControl {
@@ -143,6 +149,9 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                                 MizerFixtureControl::ColorBlue => {
                                     color_builder.blue(SubFixtureControlChannel::Channel(ch))
                                 }
+                                MizerFixtureControl::ColorWhite => {
+                                    color_builder.white(SubFixtureControlChannel::Channel(ch))
+                                }
                                 MizerFixtureControl::ColorAmber => {
                                     color_builder.amber(SubFixtureControlChannel::Channel(ch))
                                 }
@@ -157,6 +166,9 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                                         channel: SubFixtureControlChannel::Channel(ch),
                                         angle: None,
                                     })
+                                }
+                                MizerFixtureControl::Zoom => {
+                                    controls.zoom = Some(SubFixtureControlChannel::Channel(ch))
                                 }
                                 MizerFixtureControl::Generic => {
                                     controls.generic.push(GenericControl {

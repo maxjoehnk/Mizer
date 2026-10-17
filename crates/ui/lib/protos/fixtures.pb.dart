@@ -1,13 +1,9 @@
-//
+///
 //  Generated code. Do not modify.
 //  source: fixtures.proto
 //
 // @dart = 2.12
-
-// ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -18,29 +14,28 @@ import 'fixtures.pbenum.dart';
 export 'fixtures.pbenum.dart';
 
 class AddFixturesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..aOM<AddFixtureRequest>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'request', subBuilder: AddFixtureRequest.create)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'count', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  AddFixturesRequest._() : super();
   factory AddFixturesRequest({
     AddFixtureRequest? request,
     $core.int? count,
   }) {
-    final $result = create();
+    final _result = create();
     if (request != null) {
-      $result.request = request;
+      _result.request = request;
     }
     if (count != null) {
-      $result.count = count;
+      _result.count = count;
     }
-    return $result;
+    return _result;
   }
-  AddFixturesRequest._() : super();
   factory AddFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddFixturesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..aOM<AddFixtureRequest>(1, _omitFieldNames ? '' : 'request', subBuilder: AddFixtureRequest.create)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'count', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -50,10 +45,8 @@ class AddFixturesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddFixturesRequest copyWith(void Function(AddFixturesRequest) updates) => super.copyWith((message) => updates(message as AddFixturesRequest)) as AddFixturesRequest;
-
+  AddFixturesRequest copyWith(void Function(AddFixturesRequest) updates) => super.copyWith((message) => updates(message as AddFixturesRequest)) as AddFixturesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AddFixturesRequest create() => AddFixturesRequest._();
   AddFixturesRequest createEmptyInstance() => create();
@@ -84,6 +77,17 @@ class AddFixturesRequest extends $pb.GeneratedMessage {
 }
 
 class AddFixtureRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFixtureRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'definitionId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  AddFixtureRequest._() : super();
   factory AddFixtureRequest({
     $core.String? definitionId,
     $core.String? mode,
@@ -92,41 +96,29 @@ class AddFixtureRequest extends $pb.GeneratedMessage {
     $core.int? universe,
     $core.String? name,
   }) {
-    final $result = create();
+    final _result = create();
     if (definitionId != null) {
-      $result.definitionId = definitionId;
+      _result.definitionId = definitionId;
     }
     if (mode != null) {
-      $result.mode = mode;
+      _result.mode = mode;
     }
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (channel != null) {
-      $result.channel = channel;
+      _result.channel = channel;
     }
     if (universe != null) {
-      $result.universe = universe;
+      _result.universe = universe;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
-    return $result;
+    return _result;
   }
-  AddFixtureRequest._() : super();
   factory AddFixtureRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddFixtureRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddFixtureRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'definitionId')
-    ..aOS(2, _omitFieldNames ? '' : 'mode')
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, _omitFieldNames ? '' : 'channel', $pb.PbFieldType.OU3)
-    ..a<$core.int>(5, _omitFieldNames ? '' : 'universe', $pb.PbFieldType.OU3)
-    ..aOS(6, _omitFieldNames ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -136,10 +128,8 @@ class AddFixtureRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddFixtureRequest copyWith(void Function(AddFixtureRequest) updates) => super.copyWith((message) => updates(message as AddFixtureRequest)) as AddFixtureRequest;
-
+  AddFixtureRequest copyWith(void Function(AddFixtureRequest) updates) => super.copyWith((message) => updates(message as AddFixtureRequest)) as AddFixtureRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AddFixtureRequest create() => AddFixtureRequest._();
   AddFixtureRequest createEmptyInstance() => create();
@@ -204,15 +194,14 @@ class AddFixtureRequest extends $pb.GeneratedMessage {
 }
 
 class GetFixturesRequest extends $pb.GeneratedMessage {
-  factory GetFixturesRequest() => create();
-  GetFixturesRequest._() : super();
-  factory GetFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetFixturesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
+  GetFixturesRequest._() : super();
+  factory GetFixturesRequest() => create();
+  factory GetFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -222,10 +211,8 @@ class GetFixturesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetFixturesRequest copyWith(void Function(GetFixturesRequest) updates) => super.copyWith((message) => updates(message as GetFixturesRequest)) as GetFixturesRequest;
-
+  GetFixturesRequest copyWith(void Function(GetFixturesRequest) updates) => super.copyWith((message) => updates(message as GetFixturesRequest)) as GetFixturesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static GetFixturesRequest create() => GetFixturesRequest._();
   GetFixturesRequest createEmptyInstance() => create();
@@ -236,24 +223,23 @@ class GetFixturesRequest extends $pb.GeneratedMessage {
 }
 
 class DeleteFixturesRequest extends $pb.GeneratedMessage {
-  factory DeleteFixturesRequest({
-    $core.Iterable<$core.int>? fixtureIds,
-  }) {
-    final $result = create();
-    if (fixtureIds != null) {
-      $result.fixtureIds.addAll(fixtureIds);
-    }
-    return $result;
-  }
-  DeleteFixturesRequest._() : super();
-  factory DeleteFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory DeleteFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DeleteFixturesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..p<$core.int>(1, _omitFieldNames ? '' : 'fixtureIds', $pb.PbFieldType.KU3)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureIds', $pb.PbFieldType.KU3)
     ..hasRequiredFields = false
   ;
 
+  DeleteFixturesRequest._() : super();
+  factory DeleteFixturesRequest({
+    $core.Iterable<$core.int>? fixtureIds,
+  }) {
+    final _result = create();
+    if (fixtureIds != null) {
+      _result.fixtureIds.addAll(fixtureIds);
+    }
+    return _result;
+  }
+  factory DeleteFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DeleteFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -263,10 +249,8 @@ class DeleteFixturesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DeleteFixturesRequest copyWith(void Function(DeleteFixturesRequest) updates) => super.copyWith((message) => updates(message as DeleteFixturesRequest)) as DeleteFixturesRequest;
-
+  DeleteFixturesRequest copyWith(void Function(DeleteFixturesRequest) updates) => super.copyWith((message) => updates(message as DeleteFixturesRequest)) as DeleteFixturesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static DeleteFixturesRequest create() => DeleteFixturesRequest._();
   DeleteFixturesRequest createEmptyInstance() => create();
@@ -280,34 +264,33 @@ class DeleteFixturesRequest extends $pb.GeneratedMessage {
 }
 
 class UpdateFixtureRequest_UpdateFixtureLimit extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateFixtureRequest.UpdateFixtureLimit', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..aOM<FixtureFaderControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', subBuilder: FixtureFaderControl.create)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'min', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'max', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  UpdateFixtureRequest_UpdateFixtureLimit._() : super();
   factory UpdateFixtureRequest_UpdateFixtureLimit({
     FixtureFaderControl? control,
     $core.double? min,
     $core.double? max,
   }) {
-    final $result = create();
+    final _result = create();
     if (control != null) {
-      $result.control = control;
+      _result.control = control;
     }
     if (min != null) {
-      $result.min = min;
+      _result.min = min;
     }
     if (max != null) {
-      $result.max = max;
+      _result.max = max;
     }
-    return $result;
+    return _result;
   }
-  UpdateFixtureRequest_UpdateFixtureLimit._() : super();
   factory UpdateFixtureRequest_UpdateFixtureLimit.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UpdateFixtureRequest_UpdateFixtureLimit.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UpdateFixtureRequest.UpdateFixtureLimit', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..aOM<FixtureFaderControl>(1, _omitFieldNames ? '' : 'control', subBuilder: FixtureFaderControl.create)
-    ..a<$core.double>(2, _omitFieldNames ? '' : 'min', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, _omitFieldNames ? '' : 'max', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -317,10 +300,8 @@ class UpdateFixtureRequest_UpdateFixtureLimit extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UpdateFixtureRequest_UpdateFixtureLimit copyWith(void Function(UpdateFixtureRequest_UpdateFixtureLimit) updates) => super.copyWith((message) => updates(message as UpdateFixtureRequest_UpdateFixtureLimit)) as UpdateFixtureRequest_UpdateFixtureLimit;
-
+  UpdateFixtureRequest_UpdateFixtureLimit copyWith(void Function(UpdateFixtureRequest_UpdateFixtureLimit) updates) => super.copyWith((message) => updates(message as UpdateFixtureRequest_UpdateFixtureLimit)) as UpdateFixtureRequest_UpdateFixtureLimit; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static UpdateFixtureRequest_UpdateFixtureLimit create() => UpdateFixtureRequest_UpdateFixtureLimit._();
   UpdateFixtureRequest_UpdateFixtureLimit createEmptyInstance() => create();
@@ -360,6 +341,18 @@ class UpdateFixtureRequest_UpdateFixtureLimit extends $pb.GeneratedMessage {
 }
 
 class UpdateFixtureRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateFixtureRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureId', $pb.PbFieldType.OU3)
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertPan')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertTilt')
+    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'reversePixelOrder')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOM<FixtureAddress>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address', subBuilder: FixtureAddress.create)
+    ..aOM<UpdateFixtureRequest_UpdateFixtureLimit>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'limit', subBuilder: UpdateFixtureRequest_UpdateFixtureLimit.create)
+    ..hasRequiredFields = false
+  ;
+
+  UpdateFixtureRequest._() : super();
   factory UpdateFixtureRequest({
     $core.int? fixtureId,
     $core.bool? invertPan,
@@ -369,45 +362,32 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
     FixtureAddress? address,
     UpdateFixtureRequest_UpdateFixtureLimit? limit,
   }) {
-    final $result = create();
+    final _result = create();
     if (fixtureId != null) {
-      $result.fixtureId = fixtureId;
+      _result.fixtureId = fixtureId;
     }
     if (invertPan != null) {
-      $result.invertPan = invertPan;
+      _result.invertPan = invertPan;
     }
     if (invertTilt != null) {
-      $result.invertTilt = invertTilt;
+      _result.invertTilt = invertTilt;
     }
     if (reversePixelOrder != null) {
-      $result.reversePixelOrder = reversePixelOrder;
+      _result.reversePixelOrder = reversePixelOrder;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
     if (address != null) {
-      $result.address = address;
+      _result.address = address;
     }
     if (limit != null) {
-      $result.limit = limit;
+      _result.limit = limit;
     }
-    return $result;
+    return _result;
   }
-  UpdateFixtureRequest._() : super();
   factory UpdateFixtureRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UpdateFixtureRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UpdateFixtureRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'fixtureId', $pb.PbFieldType.OU3)
-    ..aOB(2, _omitFieldNames ? '' : 'invertPan')
-    ..aOB(3, _omitFieldNames ? '' : 'invertTilt')
-    ..aOB(4, _omitFieldNames ? '' : 'reversePixelOrder')
-    ..aOS(5, _omitFieldNames ? '' : 'name')
-    ..aOM<FixtureAddress>(6, _omitFieldNames ? '' : 'address', subBuilder: FixtureAddress.create)
-    ..aOM<UpdateFixtureRequest_UpdateFixtureLimit>(7, _omitFieldNames ? '' : 'limit', subBuilder: UpdateFixtureRequest_UpdateFixtureLimit.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -417,10 +397,8 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UpdateFixtureRequest copyWith(void Function(UpdateFixtureRequest) updates) => super.copyWith((message) => updates(message as UpdateFixtureRequest)) as UpdateFixtureRequest;
-
+  UpdateFixtureRequest copyWith(void Function(UpdateFixtureRequest) updates) => super.copyWith((message) => updates(message as UpdateFixtureRequest)) as UpdateFixtureRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static UpdateFixtureRequest create() => UpdateFixtureRequest._();
   UpdateFixtureRequest createEmptyInstance() => create();
@@ -498,29 +476,28 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
 }
 
 class FixtureAddress extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureAddress', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureAddress._() : super();
   factory FixtureAddress({
     $core.int? universe,
     $core.int? channel,
   }) {
-    final $result = create();
+    final _result = create();
     if (universe != null) {
-      $result.universe = universe;
+      _result.universe = universe;
     }
     if (channel != null) {
-      $result.channel = channel;
+      _result.channel = channel;
     }
-    return $result;
+    return _result;
   }
-  FixtureAddress._() : super();
   factory FixtureAddress.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FixtureAddress.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureAddress', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'universe', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'channel', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -530,10 +507,8 @@ class FixtureAddress extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureAddress copyWith(void Function(FixtureAddress) updates) => super.copyWith((message) => updates(message as FixtureAddress)) as FixtureAddress;
-
+  FixtureAddress copyWith(void Function(FixtureAddress) updates) => super.copyWith((message) => updates(message as FixtureAddress)) as FixtureAddress; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureAddress create() => FixtureAddress._();
   FixtureAddress createEmptyInstance() => create();
@@ -568,35 +543,34 @@ enum FixtureId_Id {
 }
 
 class FixtureId extends $pb.GeneratedMessage {
-  factory FixtureId({
-    $core.int? fixture,
-    SubFixtureId? subFixture,
-  }) {
-    final $result = create();
-    if (fixture != null) {
-      $result.fixture = fixture;
-    }
-    if (subFixture != null) {
-      $result.subFixture = subFixture;
-    }
-    return $result;
-  }
-  FixtureId._() : super();
-  factory FixtureId.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FixtureId.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
   static const $core.Map<$core.int, FixtureId_Id> _FixtureId_IdByTag = {
     1 : FixtureId_Id.fixture,
     2 : FixtureId_Id.subFixture,
     0 : FixtureId_Id.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureId', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureId', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'fixture', $pb.PbFieldType.OU3)
-    ..aOM<SubFixtureId>(2, _omitFieldNames ? '' : 'subFixture', subBuilder: SubFixtureId.create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixture', $pb.PbFieldType.OU3)
+    ..aOM<SubFixtureId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'subFixture', subBuilder: SubFixtureId.create)
     ..hasRequiredFields = false
   ;
 
+  FixtureId._() : super();
+  factory FixtureId({
+    $core.int? fixture,
+    SubFixtureId? subFixture,
+  }) {
+    final _result = create();
+    if (fixture != null) {
+      _result.fixture = fixture;
+    }
+    if (subFixture != null) {
+      _result.subFixture = subFixture;
+    }
+    return _result;
+  }
+  factory FixtureId.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureId.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -606,10 +580,8 @@ class FixtureId extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureId copyWith(void Function(FixtureId) updates) => super.copyWith((message) => updates(message as FixtureId)) as FixtureId;
-
+  FixtureId copyWith(void Function(FixtureId) updates) => super.copyWith((message) => updates(message as FixtureId)) as FixtureId; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureId create() => FixtureId._();
   FixtureId createEmptyInstance() => create();
@@ -643,29 +615,28 @@ class FixtureId extends $pb.GeneratedMessage {
 }
 
 class SubFixtureId extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SubFixtureId', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'childId', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  SubFixtureId._() : super();
   factory SubFixtureId({
     $core.int? fixtureId,
     $core.int? childId,
   }) {
-    final $result = create();
+    final _result = create();
     if (fixtureId != null) {
-      $result.fixtureId = fixtureId;
+      _result.fixtureId = fixtureId;
     }
     if (childId != null) {
-      $result.childId = childId;
+      _result.childId = childId;
     }
-    return $result;
+    return _result;
   }
-  SubFixtureId._() : super();
   factory SubFixtureId.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SubFixtureId.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SubFixtureId', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'fixtureId', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'childId', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -675,10 +646,8 @@ class SubFixtureId extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SubFixtureId copyWith(void Function(SubFixtureId) updates) => super.copyWith((message) => updates(message as SubFixtureId)) as SubFixtureId;
-
+  SubFixtureId copyWith(void Function(SubFixtureId) updates) => super.copyWith((message) => updates(message as SubFixtureId)) as SubFixtureId; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SubFixtureId create() => SubFixtureId._();
   SubFixtureId createEmptyInstance() => create();
@@ -707,24 +676,23 @@ class SubFixtureId extends $pb.GeneratedMessage {
 }
 
 class Fixtures extends $pb.GeneratedMessage {
-  factory Fixtures({
-    $core.Iterable<Fixture>? fixtures,
-  }) {
-    final $result = create();
-    if (fixtures != null) {
-      $result.fixtures.addAll(fixtures);
-    }
-    return $result;
-  }
-  Fixtures._() : super();
-  factory Fixtures.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Fixtures.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Fixtures', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..pc<Fixture>(1, _omitFieldNames ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: Fixture.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Fixtures', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..pc<Fixture>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: Fixture.create)
     ..hasRequiredFields = false
   ;
 
+  Fixtures._() : super();
+  factory Fixtures({
+    $core.Iterable<Fixture>? fixtures,
+  }) {
+    final _result = create();
+    if (fixtures != null) {
+      _result.fixtures.addAll(fixtures);
+    }
+    return _result;
+  }
+  factory Fixtures.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Fixtures.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -734,10 +702,8 @@ class Fixtures extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Fixtures copyWith(void Function(Fixtures) updates) => super.copyWith((message) => updates(message as Fixtures)) as Fixtures;
-
+  Fixtures copyWith(void Function(Fixtures) updates) => super.copyWith((message) => updates(message as Fixtures)) as Fixtures; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Fixtures create() => Fixtures._();
   Fixtures createEmptyInstance() => create();
@@ -751,6 +717,22 @@ class Fixtures extends $pb.GeneratedMessage {
 }
 
 class Fixture extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Fixture', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode')
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channelCount', $pb.PbFieldType.OU3)
+    ..pc<FixtureControls>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: FixtureControls.create)
+    ..pc<SubFixture>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'children', $pb.PbFieldType.PM, subBuilder: SubFixture.create)
+    ..aOM<FixtureConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'config', subBuilder: FixtureConfig.create)
+    ..hasRequiredFields = false
+  ;
+
+  Fixture._() : super();
   factory Fixture({
     $core.int? id,
     $core.String? name,
@@ -764,61 +746,44 @@ class Fixture extends $pb.GeneratedMessage {
     $core.Iterable<SubFixture>? children,
     FixtureConfig? config,
   }) {
-    final $result = create();
+    final _result = create();
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
     if (manufacturer != null) {
-      $result.manufacturer = manufacturer;
+      _result.manufacturer = manufacturer;
     }
     if (model != null) {
-      $result.model = model;
+      _result.model = model;
     }
     if (mode != null) {
-      $result.mode = mode;
+      _result.mode = mode;
     }
     if (universe != null) {
-      $result.universe = universe;
+      _result.universe = universe;
     }
     if (channel != null) {
-      $result.channel = channel;
+      _result.channel = channel;
     }
     if (channelCount != null) {
-      $result.channelCount = channelCount;
+      _result.channelCount = channelCount;
     }
     if (controls != null) {
-      $result.controls.addAll(controls);
+      _result.controls.addAll(controls);
     }
     if (children != null) {
-      $result.children.addAll(children);
+      _result.children.addAll(children);
     }
     if (config != null) {
-      $result.config = config;
+      _result.config = config;
     }
-    return $result;
+    return _result;
   }
-  Fixture._() : super();
   factory Fixture.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Fixture.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Fixture', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OU3)
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOS(3, _omitFieldNames ? '' : 'manufacturer')
-    ..aOS(4, _omitFieldNames ? '' : 'model')
-    ..aOS(5, _omitFieldNames ? '' : 'mode')
-    ..a<$core.int>(6, _omitFieldNames ? '' : 'universe', $pb.PbFieldType.OU3)
-    ..a<$core.int>(7, _omitFieldNames ? '' : 'channel', $pb.PbFieldType.OU3)
-    ..a<$core.int>(8, _omitFieldNames ? '' : 'channelCount', $pb.PbFieldType.OU3)
-    ..pc<FixtureControls>(9, _omitFieldNames ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: FixtureControls.create)
-    ..pc<SubFixture>(10, _omitFieldNames ? '' : 'children', $pb.PbFieldType.PM, subBuilder: SubFixture.create)
-    ..aOM<FixtureConfig>(11, _omitFieldNames ? '' : 'config', subBuilder: FixtureConfig.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -828,10 +793,8 @@ class Fixture extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Fixture copyWith(void Function(Fixture) updates) => super.copyWith((message) => updates(message as Fixture)) as Fixture;
-
+  Fixture copyWith(void Function(Fixture) updates) => super.copyWith((message) => updates(message as Fixture)) as Fixture; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Fixture create() => Fixture._();
   Fixture createEmptyInstance() => create();
@@ -931,39 +894,38 @@ class Fixture extends $pb.GeneratedMessage {
 }
 
 class FixtureConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertPan')
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertTilt')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'reversePixelOrder')
+    ..pc<FixtureChannelLimit>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channelLimits', $pb.PbFieldType.PM, subBuilder: FixtureChannelLimit.create)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureConfig._() : super();
   factory FixtureConfig({
     $core.bool? invertPan,
     $core.bool? invertTilt,
     $core.bool? reversePixelOrder,
     $core.Iterable<FixtureChannelLimit>? channelLimits,
   }) {
-    final $result = create();
+    final _result = create();
     if (invertPan != null) {
-      $result.invertPan = invertPan;
+      _result.invertPan = invertPan;
     }
     if (invertTilt != null) {
-      $result.invertTilt = invertTilt;
+      _result.invertTilt = invertTilt;
     }
     if (reversePixelOrder != null) {
-      $result.reversePixelOrder = reversePixelOrder;
+      _result.reversePixelOrder = reversePixelOrder;
     }
     if (channelLimits != null) {
-      $result.channelLimits.addAll(channelLimits);
+      _result.channelLimits.addAll(channelLimits);
     }
-    return $result;
+    return _result;
   }
-  FixtureConfig._() : super();
   factory FixtureConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FixtureConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureConfig', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..aOB(1, _omitFieldNames ? '' : 'invertPan')
-    ..aOB(2, _omitFieldNames ? '' : 'invertTilt')
-    ..aOB(3, _omitFieldNames ? '' : 'reversePixelOrder')
-    ..pc<FixtureChannelLimit>(4, _omitFieldNames ? '' : 'channelLimits', $pb.PbFieldType.PM, subBuilder: FixtureChannelLimit.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -973,10 +935,8 @@ class FixtureConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureConfig copyWith(void Function(FixtureConfig) updates) => super.copyWith((message) => updates(message as FixtureConfig)) as FixtureConfig;
-
+  FixtureConfig copyWith(void Function(FixtureConfig) updates) => super.copyWith((message) => updates(message as FixtureConfig)) as FixtureConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureConfig create() => FixtureConfig._();
   FixtureConfig createEmptyInstance() => create();
@@ -1017,34 +977,33 @@ class FixtureConfig extends $pb.GeneratedMessage {
 }
 
 class FixtureChannelLimit extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannelLimit', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..aOM<FixtureFaderControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', subBuilder: FixtureFaderControl.create)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'min', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'max', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureChannelLimit._() : super();
   factory FixtureChannelLimit({
     FixtureFaderControl? control,
     $core.double? min,
     $core.double? max,
   }) {
-    final $result = create();
+    final _result = create();
     if (control != null) {
-      $result.control = control;
+      _result.control = control;
     }
     if (min != null) {
-      $result.min = min;
+      _result.min = min;
     }
     if (max != null) {
-      $result.max = max;
+      _result.max = max;
     }
-    return $result;
+    return _result;
   }
-  FixtureChannelLimit._() : super();
   factory FixtureChannelLimit.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FixtureChannelLimit.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureChannelLimit', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..aOM<FixtureFaderControl>(1, _omitFieldNames ? '' : 'control', subBuilder: FixtureFaderControl.create)
-    ..a<$core.double>(2, _omitFieldNames ? '' : 'min', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, _omitFieldNames ? '' : 'max', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1054,10 +1013,8 @@ class FixtureChannelLimit extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureChannelLimit copyWith(void Function(FixtureChannelLimit) updates) => super.copyWith((message) => updates(message as FixtureChannelLimit)) as FixtureChannelLimit;
-
+  FixtureChannelLimit copyWith(void Function(FixtureChannelLimit) updates) => super.copyWith((message) => updates(message as FixtureChannelLimit)) as FixtureChannelLimit; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureChannelLimit create() => FixtureChannelLimit._();
   FixtureChannelLimit createEmptyInstance() => create();
@@ -1097,34 +1054,33 @@ class FixtureChannelLimit extends $pb.GeneratedMessage {
 }
 
 class SubFixture extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SubFixture', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..pc<FixtureControls>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: FixtureControls.create)
+    ..hasRequiredFields = false
+  ;
+
+  SubFixture._() : super();
   factory SubFixture({
     $core.int? id,
     $core.String? name,
     $core.Iterable<FixtureControls>? controls,
   }) {
-    final $result = create();
+    final _result = create();
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
     if (controls != null) {
-      $result.controls.addAll(controls);
+      _result.controls.addAll(controls);
     }
-    return $result;
+    return _result;
   }
-  SubFixture._() : super();
   factory SubFixture.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SubFixture.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SubFixture', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OU3)
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..pc<FixtureControls>(3, _omitFieldNames ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: FixtureControls.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1134,10 +1090,8 @@ class SubFixture extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SubFixture copyWith(void Function(SubFixture) updates) => super.copyWith((message) => updates(message as SubFixture)) as SubFixture;
-
+  SubFixture copyWith(void Function(SubFixture) updates) => super.copyWith((message) => updates(message as SubFixture)) as SubFixture; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SubFixture create() => SubFixture._();
   SubFixture createEmptyInstance() => create();
@@ -1179,43 +1133,6 @@ enum FixtureControls_Value {
 }
 
 class FixtureControls extends $pb.GeneratedMessage {
-  factory FixtureControls({
-    FixtureControl? control,
-    FaderChannel? fader,
-    ColorMixerChannel? colorMixer,
-    ColorWheelChannel? colorWheel,
-    AxisChannel? axis,
-    GoboChannel? gobo,
-    GenericChannel? generic,
-  }) {
-    final $result = create();
-    if (control != null) {
-      $result.control = control;
-    }
-    if (fader != null) {
-      $result.fader = fader;
-    }
-    if (colorMixer != null) {
-      $result.colorMixer = colorMixer;
-    }
-    if (colorWheel != null) {
-      $result.colorWheel = colorWheel;
-    }
-    if (axis != null) {
-      $result.axis = axis;
-    }
-    if (gobo != null) {
-      $result.gobo = gobo;
-    }
-    if (generic != null) {
-      $result.generic = generic;
-    }
-    return $result;
-  }
-  FixtureControls._() : super();
-  factory FixtureControls.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FixtureControls.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
   static const $core.Map<$core.int, FixtureControls_Value> _FixtureControls_ValueByTag = {
     2 : FixtureControls_Value.fader,
     3 : FixtureControls_Value.colorMixer,
@@ -1225,18 +1142,54 @@ class FixtureControls extends $pb.GeneratedMessage {
     7 : FixtureControls_Value.generic,
     0 : FixtureControls_Value.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureControls', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureControls', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
     ..oo(0, [2, 3, 4, 5, 6, 7])
-    ..e<FixtureControl>(1, _omitFieldNames ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: FixtureControl.NONE, valueOf: FixtureControl.valueOf, enumValues: FixtureControl.values)
-    ..aOM<FaderChannel>(2, _omitFieldNames ? '' : 'fader', subBuilder: FaderChannel.create)
-    ..aOM<ColorMixerChannel>(3, _omitFieldNames ? '' : 'colorMixer', subBuilder: ColorMixerChannel.create)
-    ..aOM<ColorWheelChannel>(4, _omitFieldNames ? '' : 'colorWheel', subBuilder: ColorWheelChannel.create)
-    ..aOM<AxisChannel>(5, _omitFieldNames ? '' : 'axis', subBuilder: AxisChannel.create)
-    ..aOM<GoboChannel>(6, _omitFieldNames ? '' : 'gobo', subBuilder: GoboChannel.create)
-    ..aOM<GenericChannel>(7, _omitFieldNames ? '' : 'generic', subBuilder: GenericChannel.create)
+    ..e<FixtureControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: FixtureControl.NONE, valueOf: FixtureControl.valueOf, enumValues: FixtureControl.values)
+    ..aOM<FaderChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', subBuilder: FaderChannel.create)
+    ..aOM<ColorMixerChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorMixer', subBuilder: ColorMixerChannel.create)
+    ..aOM<ColorWheelChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorWheel', subBuilder: ColorWheelChannel.create)
+    ..aOM<AxisChannel>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'axis', subBuilder: AxisChannel.create)
+    ..aOM<GoboChannel>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gobo', subBuilder: GoboChannel.create)
+    ..aOM<GenericChannel>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: GenericChannel.create)
     ..hasRequiredFields = false
   ;
 
+  FixtureControls._() : super();
+  factory FixtureControls({
+    FixtureControl? control,
+    FaderChannel? fader,
+    ColorMixerChannel? colorMixer,
+    ColorWheelChannel? colorWheel,
+    AxisChannel? axis,
+    GoboChannel? gobo,
+    GenericChannel? generic,
+  }) {
+    final _result = create();
+    if (control != null) {
+      _result.control = control;
+    }
+    if (fader != null) {
+      _result.fader = fader;
+    }
+    if (colorMixer != null) {
+      _result.colorMixer = colorMixer;
+    }
+    if (colorWheel != null) {
+      _result.colorWheel = colorWheel;
+    }
+    if (axis != null) {
+      _result.axis = axis;
+    }
+    if (gobo != null) {
+      _result.gobo = gobo;
+    }
+    if (generic != null) {
+      _result.generic = generic;
+    }
+    return _result;
+  }
+  factory FixtureControls.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureControls.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1246,10 +1199,8 @@ class FixtureControls extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureControls copyWith(void Function(FixtureControls) updates) => super.copyWith((message) => updates(message as FixtureControls)) as FixtureControls;
-
+  FixtureControls copyWith(void Function(FixtureControls) updates) => super.copyWith((message) => updates(message as FixtureControls)) as FixtureControls; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureControls create() => FixtureControls._();
   FixtureControls createEmptyInstance() => create();
@@ -1338,24 +1289,23 @@ class FixtureControls extends $pb.GeneratedMessage {
 }
 
 class FaderChannel extends $pb.GeneratedMessage {
-  factory FaderChannel({
-    $core.double? value,
-  }) {
-    final $result = create();
-    if (value != null) {
-      $result.value = value;
-    }
-    return $result;
-  }
-  FaderChannel._() : super();
-  factory FaderChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FaderChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FaderChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FaderChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
+  FaderChannel._() : super();
+  factory FaderChannel({
+    $core.double? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory FaderChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FaderChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1365,10 +1315,8 @@ class FaderChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FaderChannel copyWith(void Function(FaderChannel) updates) => super.copyWith((message) => updates(message as FaderChannel)) as FaderChannel;
-
+  FaderChannel copyWith(void Function(FaderChannel) updates) => super.copyWith((message) => updates(message as FaderChannel)) as FaderChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FaderChannel create() => FaderChannel._();
   FaderChannel createEmptyInstance() => create();
@@ -1388,34 +1336,38 @@ class FaderChannel extends $pb.GeneratedMessage {
 }
 
 class ColorMixerChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ColorMixerChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'red', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'green', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blue', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'amber', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  ColorMixerChannel._() : super();
   factory ColorMixerChannel({
     $core.double? red,
     $core.double? green,
     $core.double? blue,
+    $core.double? amber,
   }) {
-    final $result = create();
+    final _result = create();
     if (red != null) {
-      $result.red = red;
+      _result.red = red;
     }
     if (green != null) {
-      $result.green = green;
+      _result.green = green;
     }
     if (blue != null) {
-      $result.blue = blue;
+      _result.blue = blue;
     }
-    return $result;
+    if (amber != null) {
+      _result.amber = amber;
+    }
+    return _result;
   }
-  ColorMixerChannel._() : super();
   factory ColorMixerChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ColorMixerChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ColorMixerChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'red', $pb.PbFieldType.OD)
-    ..a<$core.double>(2, _omitFieldNames ? '' : 'green', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, _omitFieldNames ? '' : 'blue', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1425,10 +1377,8 @@ class ColorMixerChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ColorMixerChannel copyWith(void Function(ColorMixerChannel) updates) => super.copyWith((message) => updates(message as ColorMixerChannel)) as ColorMixerChannel;
-
+  ColorMixerChannel copyWith(void Function(ColorMixerChannel) updates) => super.copyWith((message) => updates(message as ColorMixerChannel)) as ColorMixerChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ColorMixerChannel create() => ColorMixerChannel._();
   ColorMixerChannel createEmptyInstance() => create();
@@ -1463,32 +1413,40 @@ class ColorMixerChannel extends $pb.GeneratedMessage {
   $core.bool hasBlue() => $_has(2);
   @$pb.TagNumber(3)
   void clearBlue() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get amber => $_getN(3);
+  @$pb.TagNumber(4)
+  set amber($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasAmber() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAmber() => clearField(4);
 }
 
 class ColorWheelChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ColorWheelChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..pc<ColorWheelSlot>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colors', $pb.PbFieldType.PM, subBuilder: ColorWheelSlot.create)
+    ..hasRequiredFields = false
+  ;
+
+  ColorWheelChannel._() : super();
   factory ColorWheelChannel({
     $core.double? value,
     $core.Iterable<ColorWheelSlot>? colors,
   }) {
-    final $result = create();
+    final _result = create();
     if (value != null) {
-      $result.value = value;
+      _result.value = value;
     }
     if (colors != null) {
-      $result.colors.addAll(colors);
+      _result.colors.addAll(colors);
     }
-    return $result;
+    return _result;
   }
-  ColorWheelChannel._() : super();
   factory ColorWheelChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ColorWheelChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ColorWheelChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
-    ..pc<ColorWheelSlot>(2, _omitFieldNames ? '' : 'colors', $pb.PbFieldType.PM, subBuilder: ColorWheelSlot.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1498,10 +1456,8 @@ class ColorWheelChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ColorWheelChannel copyWith(void Function(ColorWheelChannel) updates) => super.copyWith((message) => updates(message as ColorWheelChannel)) as ColorWheelChannel;
-
+  ColorWheelChannel copyWith(void Function(ColorWheelChannel) updates) => super.copyWith((message) => updates(message as ColorWheelChannel)) as ColorWheelChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ColorWheelChannel create() => ColorWheelChannel._();
   ColorWheelChannel createEmptyInstance() => create();
@@ -1524,34 +1480,33 @@ class ColorWheelChannel extends $pb.GeneratedMessage {
 }
 
 class ColorWheelSlot extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ColorWheelSlot', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colors')
+    ..hasRequiredFields = false
+  ;
+
+  ColorWheelSlot._() : super();
   factory ColorWheelSlot({
     $core.String? name,
     $core.double? value,
     $core.Iterable<$core.String>? colors,
   }) {
-    final $result = create();
+    final _result = create();
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
     if (value != null) {
-      $result.value = value;
+      _result.value = value;
     }
     if (colors != null) {
-      $result.colors.addAll(colors);
+      _result.colors.addAll(colors);
     }
-    return $result;
+    return _result;
   }
-  ColorWheelSlot._() : super();
   factory ColorWheelSlot.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ColorWheelSlot.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ColorWheelSlot', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..a<$core.double>(2, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
-    ..pPS(3, _omitFieldNames ? '' : 'colors')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1561,10 +1516,8 @@ class ColorWheelSlot extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ColorWheelSlot copyWith(void Function(ColorWheelSlot) updates) => super.copyWith((message) => updates(message as ColorWheelSlot)) as ColorWheelSlot;
-
+  ColorWheelSlot copyWith(void Function(ColorWheelSlot) updates) => super.copyWith((message) => updates(message as ColorWheelSlot)) as ColorWheelSlot; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ColorWheelSlot create() => ColorWheelSlot._();
   ColorWheelSlot createEmptyInstance() => create();
@@ -1596,34 +1549,33 @@ class ColorWheelSlot extends $pb.GeneratedMessage {
 }
 
 class AxisChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AxisChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'angleFrom', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'angleTo', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  AxisChannel._() : super();
   factory AxisChannel({
     $core.double? value,
     $core.double? angleFrom,
     $core.double? angleTo,
   }) {
-    final $result = create();
+    final _result = create();
     if (value != null) {
-      $result.value = value;
+      _result.value = value;
     }
     if (angleFrom != null) {
-      $result.angleFrom = angleFrom;
+      _result.angleFrom = angleFrom;
     }
     if (angleTo != null) {
-      $result.angleTo = angleTo;
+      _result.angleTo = angleTo;
     }
-    return $result;
+    return _result;
   }
-  AxisChannel._() : super();
   factory AxisChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AxisChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AxisChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
-    ..a<$core.double>(2, _omitFieldNames ? '' : 'angleFrom', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, _omitFieldNames ? '' : 'angleTo', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1633,10 +1585,8 @@ class AxisChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AxisChannel copyWith(void Function(AxisChannel) updates) => super.copyWith((message) => updates(message as AxisChannel)) as AxisChannel;
-
+  AxisChannel copyWith(void Function(AxisChannel) updates) => super.copyWith((message) => updates(message as AxisChannel)) as AxisChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AxisChannel create() => AxisChannel._();
   AxisChannel createEmptyInstance() => create();
@@ -1674,29 +1624,28 @@ class AxisChannel extends $pb.GeneratedMessage {
 }
 
 class GoboChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GoboChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..pc<Gobo>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gobos', $pb.PbFieldType.PM, subBuilder: Gobo.create)
+    ..hasRequiredFields = false
+  ;
+
+  GoboChannel._() : super();
   factory GoboChannel({
     $core.double? value,
     $core.Iterable<Gobo>? gobos,
   }) {
-    final $result = create();
+    final _result = create();
     if (value != null) {
-      $result.value = value;
+      _result.value = value;
     }
     if (gobos != null) {
-      $result.gobos.addAll(gobos);
+      _result.gobos.addAll(gobos);
     }
-    return $result;
+    return _result;
   }
-  GoboChannel._() : super();
   factory GoboChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory GoboChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GoboChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
-    ..pc<Gobo>(2, _omitFieldNames ? '' : 'gobos', $pb.PbFieldType.PM, subBuilder: Gobo.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1706,10 +1655,8 @@ class GoboChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GoboChannel copyWith(void Function(GoboChannel) updates) => super.copyWith((message) => updates(message as GoboChannel)) as GoboChannel;
-
+  GoboChannel copyWith(void Function(GoboChannel) updates) => super.copyWith((message) => updates(message as GoboChannel)) as GoboChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static GoboChannel create() => GoboChannel._();
   GoboChannel createEmptyInstance() => create();
@@ -1738,45 +1685,44 @@ enum Gobo_Image {
 }
 
 class Gobo extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, Gobo_Image> _Gobo_ImageByTag = {
+    3 : Gobo_Image.svg,
+    4 : Gobo_Image.raster,
+    0 : Gobo_Image.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Gobo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..oo(0, [3, 4])
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'svg')
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'raster', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  Gobo._() : super();
   factory Gobo({
     $core.String? name,
     $core.double? value,
     $core.String? svg,
     $core.List<$core.int>? raster,
   }) {
-    final $result = create();
+    final _result = create();
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
     if (value != null) {
-      $result.value = value;
+      _result.value = value;
     }
     if (svg != null) {
-      $result.svg = svg;
+      _result.svg = svg;
     }
     if (raster != null) {
-      $result.raster = raster;
+      _result.raster = raster;
     }
-    return $result;
+    return _result;
   }
-  Gobo._() : super();
   factory Gobo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Gobo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static const $core.Map<$core.int, Gobo_Image> _Gobo_ImageByTag = {
-    3 : Gobo_Image.svg,
-    4 : Gobo_Image.raster,
-    0 : Gobo_Image.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Gobo', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..oo(0, [3, 4])
-    ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..a<$core.double>(2, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
-    ..aOS(3, _omitFieldNames ? '' : 'svg')
-    ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'raster', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1786,10 +1732,8 @@ class Gobo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Gobo copyWith(void Function(Gobo) updates) => super.copyWith((message) => updates(message as Gobo)) as Gobo;
-
+  Gobo copyWith(void Function(Gobo) updates) => super.copyWith((message) => updates(message as Gobo)) as Gobo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Gobo create() => Gobo._();
   Gobo createEmptyInstance() => create();
@@ -1839,29 +1783,28 @@ class Gobo extends $pb.GeneratedMessage {
 }
 
 class GenericChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GenericChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  GenericChannel._() : super();
   factory GenericChannel({
     $core.double? value,
     $core.String? name,
   }) {
-    final $result = create();
+    final _result = create();
     if (value != null) {
-      $result.value = value;
+      _result.value = value;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
-    return $result;
+    return _result;
   }
-  GenericChannel._() : super();
   factory GenericChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory GenericChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GenericChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1871,10 +1814,8 @@ class GenericChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GenericChannel copyWith(void Function(GenericChannel) updates) => super.copyWith((message) => updates(message as GenericChannel)) as GenericChannel;
-
+  GenericChannel copyWith(void Function(GenericChannel) updates) => super.copyWith((message) => updates(message as GenericChannel)) as GenericChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static GenericChannel create() => GenericChannel._();
   GenericChannel createEmptyInstance() => create();
@@ -1903,15 +1844,14 @@ class GenericChannel extends $pb.GeneratedMessage {
 }
 
 class GetFixtureDefinitionsRequest extends $pb.GeneratedMessage {
-  factory GetFixtureDefinitionsRequest() => create();
-  GetFixtureDefinitionsRequest._() : super();
-  factory GetFixtureDefinitionsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetFixtureDefinitionsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetFixtureDefinitionsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetFixtureDefinitionsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
+  GetFixtureDefinitionsRequest._() : super();
+  factory GetFixtureDefinitionsRequest() => create();
+  factory GetFixtureDefinitionsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetFixtureDefinitionsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1921,10 +1861,8 @@ class GetFixtureDefinitionsRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetFixtureDefinitionsRequest copyWith(void Function(GetFixtureDefinitionsRequest) updates) => super.copyWith((message) => updates(message as GetFixtureDefinitionsRequest)) as GetFixtureDefinitionsRequest;
-
+  GetFixtureDefinitionsRequest copyWith(void Function(GetFixtureDefinitionsRequest) updates) => super.copyWith((message) => updates(message as GetFixtureDefinitionsRequest)) as GetFixtureDefinitionsRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static GetFixtureDefinitionsRequest create() => GetFixtureDefinitionsRequest._();
   GetFixtureDefinitionsRequest createEmptyInstance() => create();
@@ -1935,24 +1873,23 @@ class GetFixtureDefinitionsRequest extends $pb.GeneratedMessage {
 }
 
 class FixtureDefinitions extends $pb.GeneratedMessage {
-  factory FixtureDefinitions({
-    $core.Iterable<FixtureDefinition>? definitions,
-  }) {
-    final $result = create();
-    if (definitions != null) {
-      $result.definitions.addAll(definitions);
-    }
-    return $result;
-  }
-  FixtureDefinitions._() : super();
-  factory FixtureDefinitions.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FixtureDefinitions.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureDefinitions', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..pc<FixtureDefinition>(1, _omitFieldNames ? '' : 'definitions', $pb.PbFieldType.PM, subBuilder: FixtureDefinition.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureDefinitions', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..pc<FixtureDefinition>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'definitions', $pb.PbFieldType.PM, subBuilder: FixtureDefinition.create)
     ..hasRequiredFields = false
   ;
 
+  FixtureDefinitions._() : super();
+  factory FixtureDefinitions({
+    $core.Iterable<FixtureDefinition>? definitions,
+  }) {
+    final _result = create();
+    if (definitions != null) {
+      _result.definitions.addAll(definitions);
+    }
+    return _result;
+  }
+  factory FixtureDefinitions.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureDefinitions.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1962,10 +1899,8 @@ class FixtureDefinitions extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureDefinitions copyWith(void Function(FixtureDefinitions) updates) => super.copyWith((message) => updates(message as FixtureDefinitions)) as FixtureDefinitions;
-
+  FixtureDefinitions copyWith(void Function(FixtureDefinitions) updates) => super.copyWith((message) => updates(message as FixtureDefinitions)) as FixtureDefinitions; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureDefinitions create() => FixtureDefinitions._();
   FixtureDefinitions createEmptyInstance() => create();
@@ -1979,6 +1914,18 @@ class FixtureDefinitions extends $pb.GeneratedMessage {
 }
 
 class FixtureDefinition extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureDefinition', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer')
+    ..pc<FixtureMode>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'modes', $pb.PbFieldType.PM, subBuilder: FixtureMode.create)
+    ..aOM<FixturePhysicalData>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'physical', subBuilder: FixturePhysicalData.create)
+    ..pPS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'provider')
+    ..hasRequiredFields = false
+  ;
+
+  FixtureDefinition._() : super();
   factory FixtureDefinition({
     $core.String? id,
     $core.String? name,
@@ -1988,45 +1935,32 @@ class FixtureDefinition extends $pb.GeneratedMessage {
     $core.Iterable<$core.String>? tags,
     $core.String? provider,
   }) {
-    final $result = create();
+    final _result = create();
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
     if (manufacturer != null) {
-      $result.manufacturer = manufacturer;
+      _result.manufacturer = manufacturer;
     }
     if (modes != null) {
-      $result.modes.addAll(modes);
+      _result.modes.addAll(modes);
     }
     if (physical != null) {
-      $result.physical = physical;
+      _result.physical = physical;
     }
     if (tags != null) {
-      $result.tags.addAll(tags);
+      _result.tags.addAll(tags);
     }
     if (provider != null) {
-      $result.provider = provider;
+      _result.provider = provider;
     }
-    return $result;
+    return _result;
   }
-  FixtureDefinition._() : super();
   factory FixtureDefinition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FixtureDefinition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureDefinition', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOS(3, _omitFieldNames ? '' : 'manufacturer')
-    ..pc<FixtureMode>(4, _omitFieldNames ? '' : 'modes', $pb.PbFieldType.PM, subBuilder: FixtureMode.create)
-    ..aOM<FixturePhysicalData>(5, _omitFieldNames ? '' : 'physical', subBuilder: FixturePhysicalData.create)
-    ..pPS(6, _omitFieldNames ? '' : 'tags')
-    ..aOS(7, _omitFieldNames ? '' : 'provider')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2036,10 +1970,8 @@ class FixtureDefinition extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureDefinition copyWith(void Function(FixtureDefinition) updates) => super.copyWith((message) => updates(message as FixtureDefinition)) as FixtureDefinition;
-
+  FixtureDefinition copyWith(void Function(FixtureDefinition) updates) => super.copyWith((message) => updates(message as FixtureDefinition)) as FixtureDefinition; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureDefinition create() => FixtureDefinition._();
   FixtureDefinition createEmptyInstance() => create();
@@ -2103,29 +2035,28 @@ class FixtureDefinition extends $pb.GeneratedMessage {
 }
 
 class FixtureMode extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureMode', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..pc<FixtureChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: FixtureChannel.create)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureMode._() : super();
   factory FixtureMode({
     $core.String? name,
     $core.Iterable<FixtureChannel>? channels,
   }) {
-    final $result = create();
+    final _result = create();
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
     if (channels != null) {
-      $result.channels.addAll(channels);
+      _result.channels.addAll(channels);
     }
-    return $result;
+    return _result;
   }
-  FixtureMode._() : super();
   factory FixtureMode.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FixtureMode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureMode', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..pc<FixtureChannel>(2, _omitFieldNames ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: FixtureChannel.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2135,10 +2066,8 @@ class FixtureMode extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureMode copyWith(void Function(FixtureMode) updates) => super.copyWith((message) => updates(message as FixtureMode)) as FixtureMode;
-
+  FixtureMode copyWith(void Function(FixtureMode) updates) => super.copyWith((message) => updates(message as FixtureMode)) as FixtureMode; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureMode create() => FixtureMode._();
   FixtureMode createEmptyInstance() => create();
@@ -2161,24 +2090,23 @@ class FixtureMode extends $pb.GeneratedMessage {
 }
 
 class FixtureChannel_CoarseResolution extends $pb.GeneratedMessage {
-  factory FixtureChannel_CoarseResolution({
-    $core.int? channel,
-  }) {
-    final $result = create();
-    if (channel != null) {
-      $result.channel = channel;
-    }
-    return $result;
-  }
-  FixtureChannel_CoarseResolution._() : super();
-  factory FixtureChannel_CoarseResolution.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FixtureChannel_CoarseResolution.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureChannel.CoarseResolution', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'channel', $pb.PbFieldType.OU3)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannel.CoarseResolution', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
+  FixtureChannel_CoarseResolution._() : super();
+  factory FixtureChannel_CoarseResolution({
+    $core.int? channel,
+  }) {
+    final _result = create();
+    if (channel != null) {
+      _result.channel = channel;
+    }
+    return _result;
+  }
+  factory FixtureChannel_CoarseResolution.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureChannel_CoarseResolution.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2188,10 +2116,8 @@ class FixtureChannel_CoarseResolution extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureChannel_CoarseResolution copyWith(void Function(FixtureChannel_CoarseResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_CoarseResolution)) as FixtureChannel_CoarseResolution;
-
+  FixtureChannel_CoarseResolution copyWith(void Function(FixtureChannel_CoarseResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_CoarseResolution)) as FixtureChannel_CoarseResolution; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureChannel_CoarseResolution create() => FixtureChannel_CoarseResolution._();
   FixtureChannel_CoarseResolution createEmptyInstance() => create();
@@ -2211,29 +2137,28 @@ class FixtureChannel_CoarseResolution extends $pb.GeneratedMessage {
 }
 
 class FixtureChannel_FineResolution extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannel.FineResolution', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fineChannel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coarseChannel', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureChannel_FineResolution._() : super();
   factory FixtureChannel_FineResolution({
     $core.int? fineChannel,
     $core.int? coarseChannel,
   }) {
-    final $result = create();
+    final _result = create();
     if (fineChannel != null) {
-      $result.fineChannel = fineChannel;
+      _result.fineChannel = fineChannel;
     }
     if (coarseChannel != null) {
-      $result.coarseChannel = coarseChannel;
+      _result.coarseChannel = coarseChannel;
     }
-    return $result;
+    return _result;
   }
-  FixtureChannel_FineResolution._() : super();
   factory FixtureChannel_FineResolution.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FixtureChannel_FineResolution.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureChannel.FineResolution', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'fineChannel', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'coarseChannel', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2243,10 +2168,8 @@ class FixtureChannel_FineResolution extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureChannel_FineResolution copyWith(void Function(FixtureChannel_FineResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_FineResolution)) as FixtureChannel_FineResolution;
-
+  FixtureChannel_FineResolution copyWith(void Function(FixtureChannel_FineResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_FineResolution)) as FixtureChannel_FineResolution; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureChannel_FineResolution create() => FixtureChannel_FineResolution._();
   FixtureChannel_FineResolution createEmptyInstance() => create();
@@ -2275,34 +2198,33 @@ class FixtureChannel_FineResolution extends $pb.GeneratedMessage {
 }
 
 class FixtureChannel_FinestResolution extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannel.FinestResolution', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'finestChannel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fineChannel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coarseChannel', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureChannel_FinestResolution._() : super();
   factory FixtureChannel_FinestResolution({
     $core.int? finestChannel,
     $core.int? fineChannel,
     $core.int? coarseChannel,
   }) {
-    final $result = create();
+    final _result = create();
     if (finestChannel != null) {
-      $result.finestChannel = finestChannel;
+      _result.finestChannel = finestChannel;
     }
     if (fineChannel != null) {
-      $result.fineChannel = fineChannel;
+      _result.fineChannel = fineChannel;
     }
     if (coarseChannel != null) {
-      $result.coarseChannel = coarseChannel;
+      _result.coarseChannel = coarseChannel;
     }
-    return $result;
+    return _result;
   }
-  FixtureChannel_FinestResolution._() : super();
   factory FixtureChannel_FinestResolution.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FixtureChannel_FinestResolution.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureChannel.FinestResolution', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'finestChannel', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'fineChannel', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'coarseChannel', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2312,10 +2234,8 @@ class FixtureChannel_FinestResolution extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureChannel_FinestResolution copyWith(void Function(FixtureChannel_FinestResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_FinestResolution)) as FixtureChannel_FinestResolution;
-
+  FixtureChannel_FinestResolution copyWith(void Function(FixtureChannel_FinestResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_FinestResolution)) as FixtureChannel_FinestResolution; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureChannel_FinestResolution create() => FixtureChannel_FinestResolution._();
   FixtureChannel_FinestResolution createEmptyInstance() => create();
@@ -2353,39 +2273,38 @@ class FixtureChannel_FinestResolution extends $pb.GeneratedMessage {
 }
 
 class FixtureChannel_UltraResolution extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannel.UltraResolution', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ultraChannel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'finestChannel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fineChannel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coarseChannel', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureChannel_UltraResolution._() : super();
   factory FixtureChannel_UltraResolution({
     $core.int? ultraChannel,
     $core.int? finestChannel,
     $core.int? fineChannel,
     $core.int? coarseChannel,
   }) {
-    final $result = create();
+    final _result = create();
     if (ultraChannel != null) {
-      $result.ultraChannel = ultraChannel;
+      _result.ultraChannel = ultraChannel;
     }
     if (finestChannel != null) {
-      $result.finestChannel = finestChannel;
+      _result.finestChannel = finestChannel;
     }
     if (fineChannel != null) {
-      $result.fineChannel = fineChannel;
+      _result.fineChannel = fineChannel;
     }
     if (coarseChannel != null) {
-      $result.coarseChannel = coarseChannel;
+      _result.coarseChannel = coarseChannel;
     }
-    return $result;
+    return _result;
   }
-  FixtureChannel_UltraResolution._() : super();
   factory FixtureChannel_UltraResolution.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FixtureChannel_UltraResolution.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureChannel.UltraResolution', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'ultraChannel', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'finestChannel', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'fineChannel', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, _omitFieldNames ? '' : 'coarseChannel', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2395,10 +2314,8 @@ class FixtureChannel_UltraResolution extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureChannel_UltraResolution copyWith(void Function(FixtureChannel_UltraResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_UltraResolution)) as FixtureChannel_UltraResolution;
-
+  FixtureChannel_UltraResolution copyWith(void Function(FixtureChannel_UltraResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_UltraResolution)) as FixtureChannel_UltraResolution; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureChannel_UltraResolution create() => FixtureChannel_UltraResolution._();
   FixtureChannel_UltraResolution createEmptyInstance() => create();
@@ -2453,35 +2370,6 @@ enum FixtureChannel_Resolution {
 }
 
 class FixtureChannel extends $pb.GeneratedMessage {
-  factory FixtureChannel({
-    $core.String? name,
-    FixtureChannel_CoarseResolution? coarse,
-    FixtureChannel_FineResolution? fine,
-    FixtureChannel_FinestResolution? finest,
-    FixtureChannel_UltraResolution? ultra,
-  }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (coarse != null) {
-      $result.coarse = coarse;
-    }
-    if (fine != null) {
-      $result.fine = fine;
-    }
-    if (finest != null) {
-      $result.finest = finest;
-    }
-    if (ultra != null) {
-      $result.ultra = ultra;
-    }
-    return $result;
-  }
-  FixtureChannel._() : super();
-  factory FixtureChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FixtureChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
   static const $core.Map<$core.int, FixtureChannel_Resolution> _FixtureChannel_ResolutionByTag = {
     2 : FixtureChannel_Resolution.coarse,
     3 : FixtureChannel_Resolution.fine,
@@ -2489,16 +2377,44 @@ class FixtureChannel extends $pb.GeneratedMessage {
     5 : FixtureChannel_Resolution.ultra,
     0 : FixtureChannel_Resolution.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
     ..oo(0, [2, 3, 4, 5])
-    ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..aOM<FixtureChannel_CoarseResolution>(2, _omitFieldNames ? '' : 'coarse', subBuilder: FixtureChannel_CoarseResolution.create)
-    ..aOM<FixtureChannel_FineResolution>(3, _omitFieldNames ? '' : 'fine', subBuilder: FixtureChannel_FineResolution.create)
-    ..aOM<FixtureChannel_FinestResolution>(4, _omitFieldNames ? '' : 'finest', subBuilder: FixtureChannel_FinestResolution.create)
-    ..aOM<FixtureChannel_UltraResolution>(5, _omitFieldNames ? '' : 'ultra', subBuilder: FixtureChannel_UltraResolution.create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOM<FixtureChannel_CoarseResolution>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coarse', subBuilder: FixtureChannel_CoarseResolution.create)
+    ..aOM<FixtureChannel_FineResolution>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fine', subBuilder: FixtureChannel_FineResolution.create)
+    ..aOM<FixtureChannel_FinestResolution>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'finest', subBuilder: FixtureChannel_FinestResolution.create)
+    ..aOM<FixtureChannel_UltraResolution>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ultra', subBuilder: FixtureChannel_UltraResolution.create)
     ..hasRequiredFields = false
   ;
 
+  FixtureChannel._() : super();
+  factory FixtureChannel({
+    $core.String? name,
+    FixtureChannel_CoarseResolution? coarse,
+    FixtureChannel_FineResolution? fine,
+    FixtureChannel_FinestResolution? finest,
+    FixtureChannel_UltraResolution? ultra,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (coarse != null) {
+      _result.coarse = coarse;
+    }
+    if (fine != null) {
+      _result.fine = fine;
+    }
+    if (finest != null) {
+      _result.finest = finest;
+    }
+    if (ultra != null) {
+      _result.ultra = ultra;
+    }
+    return _result;
+  }
+  factory FixtureChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2508,10 +2424,8 @@ class FixtureChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureChannel copyWith(void Function(FixtureChannel) updates) => super.copyWith((message) => updates(message as FixtureChannel)) as FixtureChannel;
-
+  FixtureChannel copyWith(void Function(FixtureChannel) updates) => super.copyWith((message) => updates(message as FixtureChannel)) as FixtureChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureChannel create() => FixtureChannel._();
   FixtureChannel createEmptyInstance() => create();
@@ -2578,39 +2492,38 @@ class FixtureChannel extends $pb.GeneratedMessage {
 }
 
 class FixturePhysicalData extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixturePhysicalData', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OF)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OF)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'depth', $pb.PbFieldType.OF)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weight', $pb.PbFieldType.OF)
+    ..hasRequiredFields = false
+  ;
+
+  FixturePhysicalData._() : super();
   factory FixturePhysicalData({
     $core.double? width,
     $core.double? height,
     $core.double? depth,
     $core.double? weight,
   }) {
-    final $result = create();
+    final _result = create();
     if (width != null) {
-      $result.width = width;
+      _result.width = width;
     }
     if (height != null) {
-      $result.height = height;
+      _result.height = height;
     }
     if (depth != null) {
-      $result.depth = depth;
+      _result.depth = depth;
     }
     if (weight != null) {
-      $result.weight = weight;
+      _result.weight = weight;
     }
-    return $result;
+    return _result;
   }
-  FixturePhysicalData._() : super();
   factory FixturePhysicalData.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FixturePhysicalData.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixturePhysicalData', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OF)
-    ..a<$core.double>(2, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OF)
-    ..a<$core.double>(3, _omitFieldNames ? '' : 'depth', $pb.PbFieldType.OF)
-    ..a<$core.double>(4, _omitFieldNames ? '' : 'weight', $pb.PbFieldType.OF)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2620,10 +2533,8 @@ class FixturePhysicalData extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixturePhysicalData copyWith(void Function(FixturePhysicalData) updates) => super.copyWith((message) => updates(message as FixturePhysicalData)) as FixturePhysicalData;
-
+  FixturePhysicalData copyWith(void Function(FixturePhysicalData) updates) => super.copyWith((message) => updates(message as FixturePhysicalData)) as FixturePhysicalData; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixturePhysicalData create() => FixturePhysicalData._();
   FixturePhysicalData createEmptyInstance() => create();
@@ -2670,34 +2581,33 @@ class FixturePhysicalData extends $pb.GeneratedMessage {
 }
 
 class FixtureFaderControl extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureFaderControl', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..e<FixtureControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: FixtureControl.NONE, valueOf: FixtureControl.valueOf, enumValues: FixtureControl.values)
+    ..e<FixtureFaderControl_ColorMixerControlChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorMixerChannel', $pb.PbFieldType.OE, defaultOrMaker: FixtureFaderControl_ColorMixerControlChannel.RED, valueOf: FixtureFaderControl_ColorMixerControlChannel.valueOf, enumValues: FixtureFaderControl_ColorMixerControlChannel.values)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'genericChannel')
+    ..hasRequiredFields = false
+  ;
+
+  FixtureFaderControl._() : super();
   factory FixtureFaderControl({
     FixtureControl? control,
     FixtureFaderControl_ColorMixerControlChannel? colorMixerChannel,
     $core.String? genericChannel,
   }) {
-    final $result = create();
+    final _result = create();
     if (control != null) {
-      $result.control = control;
+      _result.control = control;
     }
     if (colorMixerChannel != null) {
-      $result.colorMixerChannel = colorMixerChannel;
+      _result.colorMixerChannel = colorMixerChannel;
     }
     if (genericChannel != null) {
-      $result.genericChannel = genericChannel;
+      _result.genericChannel = genericChannel;
     }
-    return $result;
+    return _result;
   }
-  FixtureFaderControl._() : super();
   factory FixtureFaderControl.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FixtureFaderControl.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureFaderControl', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..e<FixtureControl>(1, _omitFieldNames ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: FixtureControl.NONE, valueOf: FixtureControl.valueOf, enumValues: FixtureControl.values)
-    ..e<FixtureFaderControl_ColorMixerControlChannel>(2, _omitFieldNames ? '' : 'colorMixerChannel', $pb.PbFieldType.OE, defaultOrMaker: FixtureFaderControl_ColorMixerControlChannel.RED, valueOf: FixtureFaderControl_ColorMixerControlChannel.valueOf, enumValues: FixtureFaderControl_ColorMixerControlChannel.values)
-    ..aOS(3, _omitFieldNames ? '' : 'genericChannel')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2707,10 +2617,8 @@ class FixtureFaderControl extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureFaderControl copyWith(void Function(FixtureFaderControl) updates) => super.copyWith((message) => updates(message as FixtureFaderControl)) as FixtureFaderControl;
-
+  FixtureFaderControl copyWith(void Function(FixtureFaderControl) updates) => super.copyWith((message) => updates(message as FixtureFaderControl)) as FixtureFaderControl; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FixtureFaderControl create() => FixtureFaderControl._();
   FixtureFaderControl createEmptyInstance() => create();
@@ -2747,6 +2655,3 @@ class FixtureFaderControl extends $pb.GeneratedMessage {
   void clearGenericChannel() => clearField(3);
 }
 
-
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

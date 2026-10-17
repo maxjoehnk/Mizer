@@ -1,11 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/panes/programmer/sheets/fixture_group_control.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/inputs/color.dart';
-
-import 'package:mizer/panes/programmer/sheets/fixture_group_control.dart';
 
 const CONTROLS = [
   FixtureControl.COLOR_MIXER,
@@ -45,7 +44,7 @@ class ColorSheet extends StatelessWidget {
           ColorValue value = v;
           return WriteControlRequest(
             control: control.control,
-            color: ColorMixerChannel(red: value.red, green: value.green, blue: value.blue),
+            color: ColorMixerChannel(red: value.red, green: value.green, blue: value.blue, amber: value.amber),
           );
         });
       }

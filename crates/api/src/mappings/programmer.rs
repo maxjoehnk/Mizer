@@ -37,7 +37,7 @@ impl WriteControlRequest {
                 FixtureControlValue::Tilt(value)
             }
             (ColorMixer, Some(write_control_request::Value::Color(value))) => {
-                FixtureControlValue::ColorMixer(value.red, value.green, value.blue)
+                FixtureControlValue::ColorMixer(value.red, value.green, value.blue, value.amber)
             }
             (ColorWheel, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::ColorWheel(value)
@@ -162,8 +162,8 @@ impl
 }
 
 impl From<mizer_fixtures::programmer::Color> for preset::Color {
-    fn from((red, green, blue): mizer_fixtures::programmer::Color) -> Self {
-        Self { red, green, blue }
+    fn from((red, green, blue, amber): mizer_fixtures::programmer::Color) -> Self {
+        Self { red, green, blue, amber }
     }
 }
 
@@ -272,12 +272,13 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
                 FixtureControl::Frost,
                 programmer_channel::Value::Fader(value),
             ),
-            Control(ColorMixer(red, green, blue)) => (
+            Control(ColorMixer(red, green, blue, amber)) => (
                 FixtureControl::ColorMixer,
                 programmer_channel::Value::Color(crate::proto::fixtures::ColorMixerChannel {
                     red,
                     green,
                     blue,
+                    amber,
                     ..Default::default()
                 }),
             ),

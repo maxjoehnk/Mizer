@@ -60,6 +60,7 @@ message ProgrammerChannel {
     RED = 0;
     GREEN = 1;
     BLUE = 2;
+    AMBER = 3;
   }
 
   message GenericValue {
@@ -188,6 +189,7 @@ message Preset {
     double red = 1;
     double green = 2;
     double blue = 3;
+    optional double amber = 4;
   }
 
   message Position {

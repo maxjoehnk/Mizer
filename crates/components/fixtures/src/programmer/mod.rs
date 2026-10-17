@@ -124,7 +124,7 @@ impl FixtureProgrammer {
         let color_mixer = self
             .color_mixer
             .iter()
-            .map(|value| FixtureControlValue::ColorMixer(value.red, value.green, value.blue));
+            .map(|value| FixtureControlValue::ColorMixer(value.red, value.green, value.blue, value.amber));
         let color_wheel = self
             .color_wheel
             .iter()
@@ -191,7 +191,7 @@ impl FixtureProgrammer {
             .iter()
             .map(|value| (FixtureFaderControl::Shutter, *value));
         let color_mixer = self.color_mixer.iter().flat_map(|value| {
-            vec![
+            let mut values = vec![
                 (
                     FixtureFaderControl::ColorMixer(ColorChannel::Red),
                     value.red,
@@ -204,7 +204,16 @@ impl FixtureProgrammer {
                     FixtureFaderControl::ColorMixer(ColorChannel::Blue),
                     value.blue,
                 ),
-            ]
+            ];
+            if let Some(amber) = value.amber {
+                values.push(
+                (
+                    FixtureFaderControl::ColorMixer(ColorChannel::Amber),
+                    amber,
+                ));
+            }
+
+            values
         });
         let color_wheel = self
             .color_wheel
@@ -572,8 +581,8 @@ impl Programmer {
         match value {
             FixtureControlValue::Intensity(value) => programmer.intensity = Some(value),
             FixtureControlValue::Shutter(value) => programmer.shutter = Some(value),
-            FixtureControlValue::ColorMixer(red, green, blue) => {
-                programmer.color_mixer = Some(RgbColor { red, green, blue })
+            FixtureControlValue::ColorMixer(red, green, blue, amber) => {
+                programmer.color_mixer = Some(RgbColor { red, green, blue, amber })
             }
             FixtureControlValue::ColorWheel(value) => programmer.color_wheel = Some(value),
             FixtureControlValue::Pan(value) => programmer.pan = Some(value),

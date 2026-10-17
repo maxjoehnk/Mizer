@@ -80,11 +80,12 @@ fn get_state(fixture: &impl IFixture) -> FixtureState {
     let red = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Red));
     let green = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Green));
     let blue = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Blue));
+    let amber = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Amber));
 
     fixture_state.color = red
         .zip(green)
         .zip(blue)
-        .map(|((red, green), blue)| (red, green, blue));
+        .map(|((red, green), blue)| (red, green, blue, amber));
 
     fixture_state
 }

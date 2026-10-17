@@ -761,6 +761,7 @@ impl FixtureControl {
                 FixtureFaderControl::ColorMixer(ColorChannel::Red),
                 FixtureFaderControl::ColorMixer(ColorChannel::Green),
                 FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+                FixtureFaderControl::ColorMixer(ColorChannel::Amber),
             ],
             ColorWheel => vec![FixtureFaderControl::ColorWheel],
             Pan => vec![FixtureFaderControl::Pan],
@@ -785,13 +786,14 @@ pub enum ColorChannel {
     Red,
     Green,
     Blue,
+    Amber,
 }
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
 pub enum FixtureControlValue {
     Intensity(f64),
     Shutter(f64),
-    ColorMixer(f64, f64, f64),
+    ColorMixer(f64, f64, f64, Option<f64>),
     ColorWheel(f64),
     Pan(f64),
     Tilt(f64),
@@ -815,11 +817,15 @@ impl Hash for FixtureControlValue {
                 state.write_u8(1);
                 value.to_bits().hash(state);
             }
-            Self::ColorMixer(r, g, b) => {
+            Self::ColorMixer(r, g, b, amber) => {
                 state.write_u8(2);
                 r.to_bits().hash(state);
                 g.to_bits().hash(state);
                 b.to_bits().hash(state);
+                amber.is_some().hash(state);
+                if let Some(amber) = amber {
+                    amber.to_bits().hash(state);
+                }
             }
             Self::ColorWheel(value) => {
                 state.write_u8(3);
@@ -872,7 +878,7 @@ impl From<FixtureControlValue> for FixtureControl {
         match value {
             Intensity(_) => Self::Intensity,
             Shutter(_) => Self::Shutter,
-            ColorMixer(_, _, _) => Self::ColorMixer,
+            ColorMixer(_, _, _, _) => Self::ColorMixer,
             ColorWheel(_) => Self::ColorWheel,
             Pan(_) => Self::Pan,
             Tilt(_) => Self::Tilt,
@@ -893,11 +899,18 @@ impl FixtureControlValue {
         match self {
             Intensity(value) => vec![(FixtureFaderControl::Intensity, value)],
             Shutter(value) => vec![(FixtureFaderControl::Shutter, value)],
-            ColorMixer(r, g, b) => vec![
-                (FixtureFaderControl::ColorMixer(ColorChannel::Red), r),
-                (FixtureFaderControl::ColorMixer(ColorChannel::Green), g),
-                (FixtureFaderControl::ColorMixer(ColorChannel::Blue), b),
-            ],
+            ColorMixer(r, g, b, amber) => {
+                let mut channels = vec![
+                    (FixtureFaderControl::ColorMixer(ColorChannel::Red), r),
+                    (FixtureFaderControl::ColorMixer(ColorChannel::Green), g),
+                    (FixtureFaderControl::ColorMixer(ColorChannel::Blue), b),
+                ];
+                if let Some(amber) = amber {
+                    channels.push((FixtureFaderControl::ColorMixer(ColorChannel::Amber), amber));
+                }
+
+                channels
+            },
             ColorWheel(value) => vec![(FixtureFaderControl::ColorWheel, value)],
             Pan(value) => vec![(FixtureFaderControl::Pan, value)],
             Tilt(value) => vec![(FixtureFaderControl::Tilt, value)],

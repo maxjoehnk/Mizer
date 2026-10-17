@@ -2,11 +2,10 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 import 'package:mizer/api/contracts/programmer.dart' show IProgrammerStatePointer;
-import 'package:mizer/protos/fixtures.pb.dart';
-import 'package:mizer/protos/programmer.pb.dart';
-
 import 'package:mizer/api/plugin/ffi/bindings.dart';
 import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/protos/programmer.pb.dart';
 
 Map<int, FixtureControl> controlMappings = {
   FFIFixtureFaderControl.Intensity: FixtureControl.INTENSITY,
@@ -94,6 +93,7 @@ class ProgrammerStatePointer extends FFIPointer<Programmer> implements IProgramm
           red: channel.value.color.red,
           green: channel.value.color.green,
           blue: channel.value.color.blue,
+          amber: channel.value.color.amber,
         );
       } else if (channel.control == FFIFixtureFaderControl.Generic) {
         result.generic = ProgrammerChannel_GenericValue(

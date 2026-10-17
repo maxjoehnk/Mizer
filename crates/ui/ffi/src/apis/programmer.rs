@@ -201,10 +201,10 @@ impl FFIProgrammerChannel {
                 FFIFixtureFaderControl::Gobo,
                 ProgrammerChannelValue { fader: value },
             ),
-            Control(ColorMixer(red, green, blue)) => (
+            Control(ColorMixer(red, green, blue, amber)) => (
                 FFIFixtureFaderControl::ColorMixer,
                 ProgrammerChannelValue {
-                    color: FFIColorValue { red, green, blue },
+                    color: FFIColorValue { red, green, blue, amber: amber.unwrap_or_default() },
                 },
             ),
             Control(ColorWheel(value)) => (
@@ -277,11 +277,12 @@ pub struct FFIColorValue {
     pub red: f64,
     pub green: f64,
     pub blue: f64,
+    pub amber: f64
 }
 
 impl From<Color> for FFIColorValue {
-    fn from((red, green, blue): Color) -> Self {
-        Self { red, green, blue }
+    fn from((red, green, blue, amber): Color) -> Self {
+        Self { red, green, blue, amber: amber.unwrap_or_default() }
     }
 }
 

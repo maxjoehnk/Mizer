@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 
 class PresetValueIndicator extends StatelessWidget {
@@ -33,8 +34,7 @@ class ColorPresetIndicator extends StatelessWidget {
       width: GRID_3_SIZE,
       height: GRID_3_SIZE,
       decoration: BoxDecoration(
-          color: Color.fromARGB(255, (preset.color.red * 255).toInt(),
-              (preset.color.green * 255).toInt(), (preset.color.blue * 255).toInt()),
+          color: mapToColor(preset.color.red, preset.color.green, preset.color.blue, amber: preset.color.hasAmber() ? preset.color.amber : null),
           borderRadius: BorderRadius.circular(GRID_3_SIZE)),
     );
   }

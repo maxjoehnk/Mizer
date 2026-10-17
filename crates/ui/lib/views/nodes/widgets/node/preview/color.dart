@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mizer/api/plugin/nodes.dart';
+import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/widgets/inputs/color.dart';
 
 class ColorRenderer extends StatefulWidget {
@@ -84,7 +85,6 @@ class _ColorPreviewState extends State<ColorPreview> with SingleTickerProviderSt
   }
 
   Color get _color {
-    return Color.fromARGB(
-        255, (color!.red * 255).toInt(), (color!.green * 255).toInt(), (color!.blue * 255).toInt());
+    return mapToColor(color!.red, color!.green, color!.blue, amber: color!.amber);
   }
 }

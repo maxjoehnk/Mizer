@@ -7,6 +7,7 @@
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
+
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class FixturePriority extends $pb.ProtobufEnum {
@@ -59,6 +60,7 @@ class CueControl_Type extends $pb.ProtobufEnum {
   static const CueControl_Type COLOR_RED = CueControl_Type._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_RED');
   static const CueControl_Type COLOR_GREEN = CueControl_Type._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_GREEN');
   static const CueControl_Type COLOR_BLUE = CueControl_Type._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_BLUE');
+  static const CueControl_Type COLOR_AMBER = CueControl_Type._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_AMBER');
   static const CueControl_Type COLOR_WHEEL = CueControl_Type._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_WHEEL');
   static const CueControl_Type PAN = CueControl_Type._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAN');
   static const CueControl_Type TILT = CueControl_Type._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TILT');
@@ -76,6 +78,7 @@ class CueControl_Type extends $pb.ProtobufEnum {
     COLOR_RED,
     COLOR_GREEN,
     COLOR_BLUE,
+    COLOR_AMBER,
     COLOR_WHEEL,
     PAN,
     TILT,

@@ -423,6 +423,9 @@ impl IFixtureMut for Fixture {
                             ColorChannel::Blue => {
                                 color_mixer.set_blue(value, priority, source, fade_timings)
                             }
+                            ColorChannel::Amber => {
+                                color_mixer.set_amber(value, priority, source, fade_timings)
+                            }
                         }
                     }
                 } else {
@@ -475,6 +478,7 @@ impl IFixture for Fixture {
                 ColorChannel::Red => Some(rgb.red),
                 ColorChannel::Green => Some(rgb.green),
                 ColorChannel::Blue => Some(rgb.blue),
+                ColorChannel::Amber => color_mixer.amber.get(),
             };
         }
         match self.current_mode.controls.get_channel(&control) {
@@ -621,6 +625,12 @@ impl<TChannel> FixtureControls<TChannel> {
                 match self.color_mixer.as_ref() {
                     Some(ColorGroup::Rgb { blue, .. }) => Some(blue),
                     Some(ColorGroup::Cmy { yellow, .. }) => Some(yellow),
+                    _ => None,
+                }
+            }
+            FixtureFaderControl::ColorMixer(ColorChannel::Amber) => {
+                match self.color_mixer.as_ref() {
+                    Some(ColorGroup::Rgb { amber, .. }) => amber.as_ref(),
                     _ => None,
                 }
             }

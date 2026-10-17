@@ -119,7 +119,7 @@ class FixtureGroupControl extends StatelessWidget {
                 controlPresets: control.presets,
                 value: color?.red ?? 0,
                 onValue: (v) => api.writeControl(control.update(
-                    ColorValue(red: v, green: color?.green ?? 0, blue: color?.blue ?? 0))))),
+                    ColorValue(red: v, green: color?.green ?? 0, blue: color?.blue ?? 0, amber: color?.amber ?? 0))))),
         Container(
             width: 150,
             margin: const EdgeInsets.only(right: 8),
@@ -129,7 +129,7 @@ class FixtureGroupControl extends StatelessWidget {
                 controlPresets: control.presets,
                 value: color?.green ?? 0,
                 onValue: (v) => api.writeControl(control
-                    .update(ColorValue(red: color?.red ?? 0, green: v, blue: color?.blue ?? 0))))),
+                    .update(ColorValue(red: color?.red ?? 0, green: v, blue: color?.blue ?? 0, amber: color?.amber ?? 0))))),
         Container(
             width: 150,
             margin: const EdgeInsets.only(right: 8),
@@ -139,7 +139,20 @@ class FixtureGroupControl extends StatelessWidget {
                 controlPresets: control.presets,
                 value: color?.blue ?? 0,
                 onValue: (v) => api.writeControl(control
-                    .update(ColorValue(red: color?.red ?? 0, green: color?.green ?? 0, blue: v))))),
+                    .update(ColorValue(red: color?.red ?? 0, green: color?.green ?? 0, blue: v, amber: color?.amber ?? 0))))),
+        Container(
+            width: 150,
+            margin: const EdgeInsets.only(right: 8),
+            child: EncoderInput(
+                label: "Amber",
+                globalPresets: presets,
+                controlPresets: control.presets,
+                value: color?.amber ?? 0,
+                onValue: (v) => api.writeControl(control.update(ColorValue(
+                    red: color?.red ?? 0,
+                    green: color?.green ?? 0,
+                    blue: color?.blue ?? 0,
+                    amber: v))))),
       ]);
     }
     return Padding(

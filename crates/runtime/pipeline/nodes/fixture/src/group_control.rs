@@ -243,6 +243,14 @@ impl ProcessingNode for GroupControlNode {
                     phase,
                     fan,
                 );
+                self.write(
+                    context,
+                    manager,
+                    buffer.iter().map(|c| c.amber.unwrap_or_default()),
+                    FixtureFaderControl::ColorMixer(ColorChannel::Amber),
+                    phase,
+                    fan,
+                );
             }
         } else {
             if !matches!(&buffer, ControlBuffer::Single(_)) {

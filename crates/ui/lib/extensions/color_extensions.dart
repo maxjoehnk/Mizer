@@ -4,8 +4,7 @@ import 'package:mizer/protos/layouts.pb.dart' as layouts;
 
 extension ColorExtensions on layouts.Color {
   Color get asFlutterColor {
-    return Color.fromARGB(
-        255, (this.red * 255).toInt(), (this.green * 255).toInt(), (this.blue * 255).toInt());
+    return mapToColor(red, green, blue, amber: hasAmber() ? amber : null);
   }
 }
 
@@ -25,4 +24,18 @@ extension FlutterColorExtensions on Color {
 
 int _dim(double value, { double modifier = 0.5 }) {
   return ((value * modifier) * 255).toInt();
+}
+
+Color mapToColor(double red, double green, double blue, { double? amber }) {
+    if (amber != null) {
+      red   += amber * 1;
+      green += amber * 0.75;
+      blue  += amber * 0;
+
+      red /= 1 + amber;
+      green /= 1 + amber;
+      blue /= 1 + amber;
+    }
+
+    return Color.fromARGB(255, (red.clamp(0, 1) * 255).toInt(), (green.clamp(0, 1) * 255).toInt(), (blue.clamp(0, 1) * 255).toInt());
 }

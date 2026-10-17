@@ -7,13 +7,12 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/presets_bloc.dart';
+import 'package:mizer/views/fixtures/color_indicator.dart';
+import 'package:mizer/views/fixtures/fader_indicator.dart';
 import 'package:mizer/views/fixtures/position_indicator.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
-
-import 'package:mizer/views/fixtures/color_indicator.dart';
-import 'package:mizer/views/fixtures/fader_indicator.dart';
 
 class FixturesTable extends StatelessWidget {
   final List<Fixture> fixtures;
@@ -56,10 +55,11 @@ class FixturesTable extends StatelessWidget {
           6: FixedColumnWidth(128),
           7: FixedColumnWidth(128),
           8: FixedColumnWidth(128),
-          9: FixedColumnWidth(40),
-          10: FixedColumnWidth(128),
+          9: FixedColumnWidth(128),
+          10: FixedColumnWidth(40),
           11: FixedColumnWidth(128),
           12: FixedColumnWidth(128),
+          13: FixedColumnWidth(128),
         },
         headerAlignment: AlignmentDirectional.center,
         columns: [
@@ -72,6 +72,7 @@ class FixturesTable extends StatelessWidget {
           Text("Red".i18n),
           Text("Green".i18n),
           Text("Blue".i18n),
+          Text("Amber".i18n),
           Container(),
           Text("Pan".i18n),
           Text("Tilt".i18n),
@@ -148,6 +149,7 @@ class FixturesTable extends StatelessWidget {
         Text(_colorState(context, fixtureState, (color) => color.red), style: textStyle),
         Text(_colorState(context, fixtureState, (color) => color.green), style: textStyle),
         Text(_colorState(context, fixtureState, (color) => color.blue), style: textStyle),
+        Text(_colorState(context, fixtureState, (color) => color.amber), style: textStyle),
         PositionIndicator(pan: fixtureValues[id]?.pan, tilt: fixtureValues[id]?.tilt),
         Text(_faderState(context, fixtureState, FixtureControl.PAN), style: textStyle),
         Text(_faderState(context, fixtureState, FixtureControl.TILT, presetControl: FixtureControl.PAN), style: textStyle),

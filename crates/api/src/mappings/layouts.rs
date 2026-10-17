@@ -120,6 +120,7 @@ impl From<mizer_node::Color> for Color {
             red: color.red,
             green: color.green,
             blue: color.blue,
+            amber: color.amber,
         }
     }
 }

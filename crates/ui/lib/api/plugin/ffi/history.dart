@@ -64,7 +64,7 @@ class NodeHistoryPointer extends FFIPointer<NodeHistory> implements TimecodeRead
   ColorValue? readColor() {
     var result = this._bindings.read_node_color_preview(ptr);
 
-    return ColorValue(red: result.red, green: result.green, blue: result.blue);
+    return ColorValue(red: result.red, green: result.green, blue: result.blue, amber: result.amber);
   }
 
   Timecode readTimecode() {

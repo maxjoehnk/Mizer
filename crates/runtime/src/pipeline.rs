@@ -1,10 +1,14 @@
 use crate::commands::StaticNodeDescriptor;
 use crate::context::CoordinatorRuntimeContext;
+use crate::execution_engine::ExecutionEngine;
 use anyhow::Context;
 use indexmap::IndexMap;
 use mizer_clock::{BoxedClock, Clock, ClockFrame};
 use mizer_debug_ui_impl::{Injector, NodeStateAccess};
-use mizer_node::{NodeDesigner, NodeLink, NodeMetadata, NodePath, NodePosition, NodeSetting, NodeType, PipelineNode, PortDirection, PortMetadata, ProcessingNode};
+use mizer_node::{
+    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodePosition, NodeSetting, NodeType,
+    PipelineNode, PortDirection, PortMetadata, ProcessingNode,
+};
 use mizer_nodes::{ContainerNode, Node, NodeDowncast, NodeExt};
 use mizer_pipeline::{NodePortReader, NodePreviewRef, PipelineWorker, ProcessingNodeExt};
 use mizer_ports::PortId;
@@ -16,7 +20,6 @@ use std::collections::HashMap;
 use std::io::Write;
 use std::ops::DerefMut;
 use std::sync::Arc;
-use crate::execution_engine::ExecutionEngine;
 
 pub struct Pipeline {
     nodes: IndexMap<NodePath, NodeState>,
@@ -121,7 +124,11 @@ impl Pipeline {
         registration.handle_dyn(node)
     }
 
-    pub(crate) fn duplicate_node(&mut self, path: &NodePath, parent: Option<&NodePath>) -> anyhow::Result<NodePath> {
+    pub(crate) fn duplicate_node(
+        &mut self,
+        path: &NodePath,
+        parent: Option<&NodePath>,
+    ) -> anyhow::Result<NodePath> {
         let state = self
             .nodes
             .get(path)
@@ -173,7 +180,12 @@ impl Pipeline {
         Ok(())
     }
 
-    fn new_node_path(&self, node_type: NodeType, parent: Option<&NodePath>, old_path: Option<&NodePath>) -> NodePath {
+    fn new_node_path(
+        &self,
+        node_type: NodeType,
+        parent: Option<&NodePath>,
+        old_path: Option<&NodePath>,
+    ) -> NodePath {
         if let Some((old_path, parent)) = old_path.zip(parent) {
             if !old_path.starts_with(parent) {
                 if let Some(without_parent) = old_path.split("/").last() {
@@ -188,7 +200,7 @@ impl Pipeline {
 
         if let Some(parent) = parent {
             parent.join(&node_name)
-        }else {
+        } else {
             node_name
         }
     }
@@ -490,8 +502,15 @@ impl Pipeline {
     }
 
     #[profiling::function]
-    fn pre_process(&mut self, injector: &mut Injector, clock: &mut dyn Clock, frame: ClockFrame, fps: f64) {
-        let nodes = self.execution_engine
+    fn pre_process(
+        &mut self,
+        injector: &mut Injector,
+        clock: &mut dyn Clock,
+        frame: ClockFrame,
+        fps: f64,
+    ) {
+        let nodes = self
+            .execution_engine
             .get_execution_order()
             .flat_map(|path| self.nodes.get(path).map(|state| (path, &state.node)))
             .collect::<Vec<_>>();
@@ -500,17 +519,14 @@ impl Pipeline {
             fps,
             master_clock: frame,
         };
-        self.worker.pre_process(
-            nodes,
-            &context,
-            clock,
-            &NodeStatePortReader(&self.nodes),
-        );
+        self.worker
+            .pre_process(nodes, &context, clock, &NodeStatePortReader(&self.nodes));
     }
 
     #[profiling::function]
     fn process(&mut self, injector: &mut Injector, clock: &mut dyn Clock, frame: ClockFrame) {
-        let nodes = self.execution_engine
+        let nodes = self
+            .execution_engine
             .get_execution_order()
             .flat_map(|path| self.nodes.get(path).map(|state| (path, &state.node)))
             .collect::<Vec<_>>();
@@ -519,17 +535,14 @@ impl Pipeline {
             fps: 60.,
             master_clock: frame,
         };
-        self.worker.process(
-            nodes,
-            &context,
-            clock,
-            &NodeStatePortReader(&self.nodes),
-        );
+        self.worker
+            .process(nodes, &context, clock, &NodeStatePortReader(&self.nodes));
     }
 
     #[profiling::function]
     fn post_process(&mut self, injector: &mut Injector, clock: &mut dyn Clock, frame: ClockFrame) {
-        let nodes = self.execution_engine
+        let nodes = self
+            .execution_engine
             .get_execution_order()
             .flat_map(|path| self.nodes.get(path).map(|state| (path, &state.node)))
             .collect::<Vec<_>>();
@@ -538,12 +551,8 @@ impl Pipeline {
             fps: 60.,
             master_clock: frame,
         };
-        self.worker.post_process(
-            nodes,
-            &context,
-            clock,
-            &NodeStatePortReader(&self.nodes),
-        );
+        self.worker
+            .post_process(nodes, &context, clock, &NodeStatePortReader(&self.nodes));
     }
 
     #[profiling::function]
@@ -626,7 +635,8 @@ impl Pipeline {
     }
 
     pub fn get_positions(&self, paths: &[NodePath]) -> Vec<NodePosition> {
-        paths.iter()
+        paths
+            .iter()
             .filter_map(|path| self.nodes.get(path).map(|state| state.designer.position))
             .collect()
     }
@@ -797,18 +807,21 @@ impl<'a> NodePortReader for NodeStatePortReader<'a> {
 
 #[cfg(test)]
 mod tests {
-    use std::sync::{Arc, Mutex};
-    use std::time::Instant;
-    use itertools::Itertools;
     use crate::Pipeline;
-    use mizer_node::{ConfigurableNode, NodeContext, NodeDetails, NodeLink, NodePath, NodeSetting, NodeType, PipelineNode, PortMetadata, PreviewType, ProcessingNode};
+    use itertools::Itertools;
+    use mizer_node::{
+        ConfigurableNode, NodeContext, NodeDetails, NodeLink, NodePath, NodeSetting, NodeType,
+        PipelineNode, PortMetadata, ProcessingNode,
+    };
     use mizer_ports::{PortId, PortType};
     use mizer_processing::Injector;
+    use std::sync::{Arc, Mutex};
+    use std::time::Instant;
 
     use assertables::*;
-    use proptest::prelude::*;
     use mizer_clock::{ClockFrame, SystemClock};
     use mizer_nodes::FaderNode;
+    use proptest::prelude::*;
 
     #[test_case::test_case(NodeType::Oscillator, "/oscillator-0")]
     #[test_case::test_case(NodeType::Fader, "/fader-0")]
@@ -824,7 +837,11 @@ mod tests {
     fn new_node_path_in_container_should_add_prefix() {
         let pipeline = Pipeline::new();
 
-        let path = pipeline.new_node_path(NodeType::Oscillator, Some(&NodePath::from("/container")), None);
+        let path = pipeline.new_node_path(
+            NodeType::Oscillator,
+            Some(&NodePath::from("/container")),
+            None,
+        );
 
         assert_eq!(path, NodePath::from("/container/oscillator-0"));
     }
@@ -833,7 +850,11 @@ mod tests {
     fn new_node_path_in_new_container_should_keep_own_name() {
         let pipeline = Pipeline::new();
 
-        let path = pipeline.new_node_path(NodeType::Oscillator, Some(&NodePath::from("/container-1")), Some(&NodePath::from("/container-0/sine-wave")));
+        let path = pipeline.new_node_path(
+            NodeType::Oscillator,
+            Some(&NodePath::from("/container-1")),
+            Some(&NodePath::from("/container-0/sine-wave")),
+        );
 
         assert_eq!(path, NodePath::from("/container-1/sine-wave"));
     }
@@ -868,11 +889,24 @@ mod tests {
         }
     }
 
+    proptest! {
+        #[test]
+        fn process_should_run_unconnected_nodes_in_insertion_order(count in 1..100) {
+            let mut context = TestExecutionContext::default();
+            let nodes = (0..count).map(|_| context.add_node()).collect::<Vec<_>>();
+
+            context.process();
+
+            let order = context.get_order();
+            assert_iter_eq!(order, nodes);
+        }
+    }
+
     #[test]
-    fn source_should_run_before_target() {
+    fn process_should_run_source_before_target() {
         let mut context = TestExecutionContext::default();
-        let source = context.add_node();
         let target = context.add_node();
+        let source = context.add_node();
         context.add_link(&source, &target);
 
         context.process();
@@ -881,9 +915,39 @@ mod tests {
         assert_iter_eq!(order, vec![source, target]);
     }
 
+    #[test]
+    fn process_should_not_reorder_non_linked_nodes() {
+        let mut context = TestExecutionContext::default();
+        let a = context.add_node();
+        let b = context.add_node();
+        let c = context.add_node();
+        let d = context.add_node();
+        context.add_link(&d, &a);
+
+        context.process();
+
+        let order = context.get_order();
+        assert_iter_eq!(order, vec![b, c, d, a]);
+    }
+
+    #[test]
+    fn process_should_move_later_connected_nodes_before_non_linked_nodes() {
+        let mut context = TestExecutionContext::default();
+        let a = context.add_node();
+        let b = context.add_node();
+        let c = context.add_node();
+        let d = context.add_node();
+        context.add_link(&b, &a);
+
+        context.process();
+
+        let order = context.get_order();
+        assert_iter_eq!(order, vec![b, a, c, d]);
+    }
+
     proptest! {
         #[test]
-        fn chain_should_run_in_link_order(count in 2..50) {
+        fn process_should_run_multiple_nodes_in_link_order(count in 2..50) {
             let mut context = TestExecutionContext::default();
             let nodes = (0..count)
                 .map(|_| context.add_node())
@@ -899,7 +963,7 @@ mod tests {
         }
 
         #[test]
-        fn reversed_chain_should_run_in_link_order(count in 2..50) {
+        fn process_should_run_multiple_reversed_nodes_in_link_order(count in 2..50) {
             let mut context = TestExecutionContext::default();
             let nodes = (0..count)
                 .map(|_| context.add_node())
@@ -917,7 +981,7 @@ mod tests {
     }
 
     #[test]
-    fn diamond_should_run_source_first_and_sink_last() {
+    fn process_should_run_diamond_graph_source_first_and_sink_last() {
         let mut context = TestExecutionContext::default();
         let sink = context.add_node();
         let left = context.add_node();
@@ -930,9 +994,45 @@ mod tests {
 
         context.process();
 
-        dbg!(&context.pipeline.execution_engine);
         let order = context.get_order();
         assert_iter_eq!(order, vec![source, left, right, sink]);
+    }
+
+    #[test]
+    fn add_link_should_not_move_target_node_before_source_when_they_are_already_linked_transitive()
+    {
+        let mut context = TestExecutionContext::default();
+        let c = context.add_node();
+        let b = context.add_node();
+        let a = context.add_node();
+        context.add_link(&a, &b);
+        context.add_link(&b, &c);
+
+        context.add_link(&a, &c);
+
+        context.process();
+        let order = context.get_order();
+        assert_iter_eq!(order, vec![a, b, c]);
+    }
+
+    proptest! {
+        #[test]
+        fn process_should_run_two_graphs_in_correct_order_after_they_where_linked(size_a in 2..100, size_b in 2..100) {
+            let mut context = TestExecutionContext::default();
+            let graph_b = (0..size_a).map(|_| context.add_node()).collect::<Vec<_>>();
+            let graph_a = (0..size_b).map(|_| context.add_node()).collect::<Vec<_>>();
+            for graph in [&graph_a, &graph_b] {
+                for window in graph.windows(2) {
+                    context.add_link(&window[0], &window[1]);
+                }
+            }
+            context.add_link(graph_a.last().unwrap(), &graph_b[0]);
+
+            context.process();
+
+            let order = context.get_order();
+            assert_iter_eq!(order, [graph_a, graph_b].concat());
+        }
     }
 
     #[derive(Default)]
@@ -944,7 +1044,16 @@ mod tests {
 
     impl TestExecutionContext {
         fn add_node(&mut self) -> NodePath {
-            let descriptor = self.pipeline.add_node(&self.injector, NodeType::Fader, Default::default(), Default::default(), Default::default()).unwrap();
+            let descriptor = self
+                .pipeline
+                .add_node(
+                    &self.injector,
+                    NodeType::Fader,
+                    Default::default(),
+                    Default::default(),
+                    Default::default(),
+                )
+                .unwrap();
             let node = MockFaderNode::default();
             self.pipeline.nodes[&descriptor.path].node = Box::new(node);
 
@@ -952,22 +1061,27 @@ mod tests {
         }
 
         fn add_link(&mut self, from: &NodePath, to: &NodePath) {
-            self.pipeline.add_link(NodeLink {
-                source: from.clone(),
-                source_port: "Output".into(),
-                target: to.clone(),
-                target_port: "Input".into(),
-                port_type: PortType::Single,
-                local: true,
-            }).unwrap();
+            self.pipeline
+                .add_link(NodeLink {
+                    source: from.clone(),
+                    source_port: "Output".into(),
+                    target: to.clone(),
+                    target_port: "Input".into(),
+                    port_type: PortType::Single,
+                    local: true,
+                })
+                .unwrap();
         }
 
         fn process(&mut self) {
-            self.pipeline.process(&mut self.injector, &mut self.clock, ClockFrame::default());
+            self.pipeline
+                .process(&mut self.injector, &mut self.clock, ClockFrame::default());
         }
 
         fn get_order(self) -> Vec<NodePath> {
-            self.pipeline.nodes.into_iter()
+            self.pipeline
+                .nodes
+                .into_iter()
                 .map(|(path, state)| (path, state.node.downcast::<MockFaderNode>().unwrap()))
                 .filter_map(|(path, node)| {
                     let node = *node;
@@ -1015,7 +1129,11 @@ mod tests {
     impl ProcessingNode for MockFaderNode {
         type State = Option<f64>;
 
-        fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        fn process(
+            &self,
+            context: &impl NodeContext,
+            state: &mut Self::State,
+        ) -> anyhow::Result<()> {
             self.processing_time.lock().unwrap().replace(Instant::now());
 
             Ok(())

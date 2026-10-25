@@ -19,3 +19,4 @@ mod node_metadata;
 mod pipeline;
 pub mod queries;
 mod views;
+mod execution_engine;

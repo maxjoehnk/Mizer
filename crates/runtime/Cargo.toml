@@ -41,3 +41,5 @@ regex = "1.12"
 insta = "1.38"
 test-case = "3.3"
 mizer-util = { path = "../util", features = ["test"] }
+assertables = "10"
+proptest = "1.12"

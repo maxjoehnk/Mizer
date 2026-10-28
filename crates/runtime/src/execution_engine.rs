@@ -1,4 +1,4 @@
-use indexmap::{IndexMap, IndexSet};
+use indexmap::{indexset, IndexMap, IndexSet};
 use mizer_node::{NodeLink, NodePath};
 use mizer_ports::PortId;
 use mizer_util::HashMapExtension;
@@ -24,13 +24,6 @@ struct SubGraph {
 }
 
 impl SubGraph {
-    fn new(path: NodePath) -> Self {
-        Self {
-            nodes: IndexSet::from_iter([path]),
-            ..Default::default()
-        }
-    }
-
     /// L ← Empty list that will contain the sorted elements
     /// S ← Set of all nodes with no incoming edge
     ///
@@ -57,7 +50,7 @@ impl SubGraph {
         let mut nodes_without_incoming = self
             .nodes
             .iter()
-            .filter(|node| !incoming_links.contains_key(node))
+            .filter(|node| incoming_links.get(node).is_none_or(|links| links.is_empty()))
             .collect::<VecDeque<_>>();
 
         while !nodes_without_incoming.is_empty() {
@@ -95,9 +88,6 @@ impl SubGraph {
 
     /// Remove the given link from the graph, returning a new subgraph in case this frees any nodes
     fn remove_link(&mut self, link: &NodeLink) -> Option<SubGraph> {
-        let has_incoming_links_before = self.has_incoming_links(link);
-        let has_outgoing_links_before = self.has_outgoing_links(link);
-
         self.links.shift_remove(link);
 
         if let Some(incoming) = self.incoming_links.get_mut(&link.target) {
@@ -106,95 +96,75 @@ impl SubGraph {
 
         if let Some(outgoing) = self.outgoing_edges.get_mut(&link.source) {
             if let Some(outgoing) = outgoing.get_mut(&link.source_port) {
-                tracing::debug!("removing outgoing connection");
                 outgoing.shift_remove(link);
             }
         }
 
-        let has_incoming_links = self.has_incoming_links(link);
-        let has_outgoing_links = self.has_outgoing_links(link);
+        let source_nodes = self.walk_nodes(&link.source);
+        let target_nodes = self.walk_nodes(&link.target);
 
-        if !has_incoming_links && !has_outgoing_links {
-            if let Some(node) = self.nodes.shift_take(&link.source) {
-                return Some(SubGraph::new(node));
-            }
+        if !source_nodes.is_disjoint(&target_nodes) {
+            return None;
         }
 
-        // TODO: support splitting out bigger graphs
-        if has_outgoing_links != has_outgoing_links_before {
-            tracing::debug!("splitting graph at output");
-            let mut graph = SubGraph::default();
+        let nodes_to_remove = source_nodes;
 
-            let mut to_be_split = [link.source.clone()].into_iter().collect::<VecDeque<_>>();
+        let mut graph = SubGraph::default();
+        let mut to_be_split = nodes_to_remove.into_iter().cloned().collect::<VecDeque<_>>();
 
-            while !to_be_split.is_empty() {
-                let node = to_be_split.pop_front().unwrap();
-                if let Some(incoming) = self.incoming_links.remove(&node) {
-                    to_be_split.extend(incoming.iter().map(|incoming| incoming.source.clone()));
-                    graph.links.extend(incoming.clone());
-                    graph.incoming_links.insert(node.clone(), incoming);
-                }
-                if let Some(outgoing) = self.outgoing_edges.remove(&node) {
-                    for (port, links) in outgoing {
-                        to_be_split.extend(links.iter().map(|incoming| incoming.source.clone()));
-                        graph.links.extend(links.clone());
-                        graph.outgoing_edges.insert(node.clone(), port);
-                    }
-                }
-                graph.nodes.insert(node);
-            }
-
-            if let Some(incoming) = self.incoming_links.remove(&link.source) {
-                graph
-                    .nodes
-                    .extend(incoming.iter().map(|incoming| incoming.source.clone()));
+        while !to_be_split.is_empty() {
+            let node = to_be_split.pop_front().unwrap();
+            if let Some(incoming) = self.incoming_links.remove(&node) {
+                to_be_split.extend(incoming.iter().map(|incoming| incoming.source.clone()));
                 graph.links.extend(incoming.clone());
-                graph.incoming_links.insert(link.source.clone(), incoming);
+                graph.incoming_links.insert(node.clone(), incoming);
             }
-            graph.nodes.insert(link.source.clone());
-
-            for node in &graph.nodes {
-                self.nodes.shift_remove(node);
-            }
-            for link in &graph.links {
-                self.links.shift_remove(link);
-            }
-
-            return Some(graph);
-        }
-
-        // TODO: support splitting out bigger graphs
-        if has_incoming_links != has_incoming_links_before {
-            tracing::debug!("splitting graph at input");
-            let mut graph = SubGraph::default();
-            graph.nodes.insert(link.target.clone());
-            if let Some(outgoing) = self.outgoing_edges.remove(&link.target) {
-                for (port, links) in outgoing {
-                    graph
-                        .nodes
-                        .extend(links.iter().map(|outgoing| outgoing.target.clone()));
+            if let Some(outgoing) = self.outgoing_edges.remove(&node) {
+                for (_, links) in &outgoing {
+                    to_be_split.extend(links.iter().map(|outgoing| outgoing.target.clone()));
                     graph.links.extend(links.clone());
-                    graph
-                        .outgoing_edges
-                        .entry(link.target.clone())
-                        .or_default()
-                        .entry(port.clone())
-                        .or_default()
-                        .extend(links);
                 }
+                graph.outgoing_edges.insert(node.clone(), outgoing);
             }
-
-            for node in &graph.nodes {
-                self.nodes.shift_remove(node);
-            }
-            for link in &graph.links {
-                self.links.shift_remove(link);
-            }
-
-            return Some(graph);
+            graph.nodes.insert(node);
         }
 
-        None
+        if graph.nodes.is_empty() {
+            return None;
+        }
+
+        for node in &graph.nodes {
+            self.nodes.shift_remove(node);
+        }
+        for link in &graph.links {
+            self.links.shift_remove(link);
+        }
+
+        graph.sort();
+
+        Some(graph)
+    }
+
+    fn walk_nodes<'a>(&'a self, node: &'a NodePath) -> IndexSet<&'a NodePath> {
+        let mut nodes = indexset![];
+
+        let mut to_walk = vec![node];
+
+        while !to_walk.is_empty() {
+            let current = to_walk.pop().unwrap();
+            if nodes.contains(current) {
+                continue;
+            }
+            if let Some(incoming) = self.incoming_links.get(current) {
+                to_walk.extend(incoming.iter().map(|l| &l.source));
+            }
+            if let Some(outgoing) = self.outgoing_edges.get(current) {
+                to_walk.extend(outgoing.iter().flat_map(|(_, links)| links).map(|l| &l.target));
+            }
+            nodes.insert(current);
+        }
+
+        nodes
     }
 
     fn has_incoming_links(&self, link: &NodeLink) -> bool {
@@ -517,8 +487,8 @@ mod tests {
             let graphs = engine.sub_graphs.values().collect::<Vec<_>>();
             let mut expected = right_paths.clone();
             expected.insert(0, source);
-            assert_iter_eq!(graphs[0].nodes, expected);
-            assert_iter_eq!(graphs[1].nodes, left_paths);
+            assert_iter_eq!(graphs[0].nodes, left_paths);
+            assert_iter_eq!(graphs[1].nodes, expected);
         }
     }
 
@@ -538,10 +508,10 @@ mod tests {
             }
             let sum = NodePath::from("/sum");
             add_nodes(&mut engine, [&sum]);
-            link_node(&mut engine, &left_paths[0], &sum);
-            link_node(&mut engine, &right_paths[0], &sum);
+            link_node(&mut engine, left_paths.last().unwrap(), &sum);
+            link_node(&mut engine, right_paths.last().unwrap(), &sum);
 
-            remove_link(&mut engine, &left_paths[0], &sum);
+            remove_link(&mut engine, left_paths.last().unwrap(), &sum);
 
             assert_eq!(engine.sub_graphs.len(), 2);
             let graphs = engine.sub_graphs.values().collect::<Vec<_>>();
@@ -550,6 +520,47 @@ mod tests {
             assert_iter_eq!(graphs[0].nodes, expected);
             assert_iter_eq!(graphs[1].nodes, left_paths);
         }
+    }
+
+    #[test]
+    fn remove_link_should_split_two_complex_graphs() {
+        let mut engine = ExecutionEngine::default();
+        let left_1 = NodePath::from("/left-1");
+        let left_2 = NodePath::from("/left-2");
+        let left_3 = NodePath::from("/left-3");
+        let right_1 = NodePath::from("/right-1");
+        let right_2 = NodePath::from("/right-2");
+        let right_3 = NodePath::from("/right-3");
+        let sum = NodePath::from("/sum");
+        add_nodes(&mut engine, vec![&left_1, &left_2, &left_3, &right_1, &right_2, &right_3, &sum]);
+        link_node(&mut engine, &left_1, &left_2);
+        link_node(&mut engine, &left_2, &left_3);
+        link_node(&mut engine, &left_2, &sum);
+        link_node(&mut engine, &right_1, &right_2);
+        link_node(&mut engine, &right_2, &right_3);
+        link_node(&mut engine, &right_2, &sum);
+
+        remove_link(&mut engine, &left_2, &sum);
+
+        assert_eq!(engine.sub_graphs.len(), 2);
+        let graphs = engine.sub_graphs.values().collect::<Vec<_>>();
+        assert_iter_eq!(graphs[0].nodes, [right_1, right_2, right_3, sum]);
+        assert_iter_eq!(graphs[1].nodes, [left_1, left_2, left_3]);
+    }
+
+    #[test]
+    fn walk_nodes_should_return_all_linked_nodes() {
+        let mut engine = ExecutionEngine::default();
+        let left = NodePath::from("/left");
+        let middle = NodePath::from("/middle");
+        let right = NodePath::from("/right");
+        add_nodes(&mut engine, [&left, &middle, &right]);
+        link_node(&mut engine, &left, &middle);
+        link_node(&mut engine, &middle, &right);
+
+        let paths = engine.sub_graphs[0].walk_nodes(&middle);
+
+        assert_iter_eq!(paths, [&middle, &right, &left]);
     }
 
     fn add_nodes<'a>(engine: &mut ExecutionEngine, nodes: impl IntoIterator<Item = &'a NodePath>) {

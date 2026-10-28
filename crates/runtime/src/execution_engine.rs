@@ -124,6 +124,26 @@ impl SubGraph {
         if has_outgoing_links != has_outgoing_links_before {
             tracing::debug!("splitting graph at output");
             let mut graph = SubGraph::default();
+
+            let mut to_be_split = [link.source.clone()].into_iter().collect::<VecDeque<_>>();
+
+            while !to_be_split.is_empty() {
+                let node = to_be_split.pop_front().unwrap();
+                if let Some(incoming) = self.incoming_links.remove(&node) {
+                    to_be_split.extend(incoming.iter().map(|incoming| incoming.source.clone()));
+                    graph.links.extend(incoming.clone());
+                    graph.incoming_links.insert(node.clone(), incoming);
+                }
+                if let Some(outgoing) = self.outgoing_edges.remove(&node) {
+                    for (port, links) in outgoing {
+                        to_be_split.extend(links.iter().map(|incoming| incoming.source.clone()));
+                        graph.links.extend(links.clone());
+                        graph.outgoing_edges.insert(node.clone(), port);
+                    }
+                }
+                graph.nodes.insert(node);
+            }
+
             if let Some(incoming) = self.incoming_links.remove(&link.source) {
                 graph
                     .nodes
@@ -472,48 +492,64 @@ mod tests {
         assert_iter_eq!(graphs[1].nodes, [left]);
     }
 
-    #[test]
-    fn remove_link_should_split_two_sub_graphs_from_target() {
-        let left = NodePath::from("/left-1");
-        let middle1 = NodePath::from("/middle-1");
-        let right = NodePath::from("/right-1");
-        let middle2 = NodePath::from("/middle-2");
-        let sum = NodePath::from("/sum");
-        let mut engine = ExecutionEngine::default();
-        add_nodes(&mut engine, [&left, &middle1, &right, &middle2, &sum]);
-        link_node(&mut engine, &left, &middle1);
-        link_node(&mut engine, &middle1, &sum);
-        link_node(&mut engine, &right, &middle2);
-        link_node(&mut engine, &middle2, &sum);
+    proptest! {
+        #[test]
+        fn remove_link_should_split_two_sub_graphs_from_source(left_count in 1..100, right_count in 1..100) {
+            let mut engine = ExecutionEngine::default();
+            let left_paths = (0..left_count).map(|i| NodePath::from(format!("/left-{}", i))).collect::<Vec<_>>();
+            add_nodes(&mut engine, left_paths.iter());
+            let right_paths = (0..right_count).map(|i| NodePath::from(format!("/right-{}", i))).collect::<Vec<_>>();
+            add_nodes(&mut engine, right_paths.iter());
+            for window in left_paths.windows(2) {
+                link_node(&mut engine, &window[0], &window[1]);
+            }
+            for window in right_paths.windows(2) {
+                link_node(&mut engine, &window[0], &window[1]);
+            }
+            let source = NodePath::from("/source");
+            add_nodes(&mut engine, [&source]);
+            link_node(&mut engine, &source, &left_paths[0]);
+            link_node(&mut engine, &source, &right_paths[0]);
 
-        remove_link(&mut engine, &middle1, &sum);
+            remove_link(&mut engine, &source, &left_paths[0]);
 
-        assert_eq!(engine.sub_graphs.len(), 2);
-        let graphs = engine.sub_graphs.values().collect::<Vec<_>>();
-        assert_iter_eq!(graphs[0].nodes, [right, middle2, sum]);
-        assert_iter_eq!(graphs[1].nodes, [left, middle1]);
+            assert_eq!(engine.sub_graphs.len(), 2);
+            let graphs = engine.sub_graphs.values().collect::<Vec<_>>();
+            let mut expected = right_paths.clone();
+            expected.insert(0, source);
+            assert_iter_eq!(graphs[0].nodes, expected);
+            assert_iter_eq!(graphs[1].nodes, left_paths);
+        }
     }
 
-    #[test]
-    fn remove_link_should_split_two_sub_graphs_from_source() {
-        let source = NodePath::from("/source");
-        let left = NodePath::from("/left-1");
-        let middle1 = NodePath::from("/middle-1");
-        let right = NodePath::from("/right-1");
-        let middle2 = NodePath::from("/middle-2");
-        let mut engine = ExecutionEngine::default();
-        add_nodes(&mut engine, [&left, &middle1, &right, &middle2, &source]);
-        link_node(&mut engine, &left, &middle1);
-        link_node(&mut engine, &source, &left);
-        link_node(&mut engine, &right, &middle2);
-        link_node(&mut engine, &source, &right);
+    proptest! {
+        #[test]
+        fn remove_link_should_split_two_sub_graphs_from_target(left_count in 1..100, right_count in 1..100) {
+            let mut engine = ExecutionEngine::default();
+            let left_paths = (0..left_count).map(|i| NodePath::from(format!("/left-{}", i))).collect::<Vec<_>>();
+            add_nodes(&mut engine, left_paths.iter());
+            let right_paths = (0..right_count).map(|i| NodePath::from(format!("/right-{}", i))).collect::<Vec<_>>();
+            add_nodes(&mut engine, right_paths.iter());
+            for window in left_paths.windows(2) {
+                link_node(&mut engine, &window[0], &window[1]);
+            }
+            for window in right_paths.windows(2) {
+                link_node(&mut engine, &window[0], &window[1]);
+            }
+            let sum = NodePath::from("/sum");
+            add_nodes(&mut engine, [&sum]);
+            link_node(&mut engine, &left_paths[0], &sum);
+            link_node(&mut engine, &right_paths[0], &sum);
 
-        remove_link(&mut engine, &source, &left);
+            remove_link(&mut engine, &left_paths[0], &sum);
 
-        assert_eq!(engine.sub_graphs.len(), 2);
-        let graphs = engine.sub_graphs.values().collect::<Vec<_>>();
-        assert_iter_eq!(graphs[0].nodes, [source, right, middle2]);
-        assert_iter_eq!(graphs[1].nodes, [left, middle1]);
+            assert_eq!(engine.sub_graphs.len(), 2);
+            let graphs = engine.sub_graphs.values().collect::<Vec<_>>();
+            let mut expected = right_paths.clone();
+            expected.push(sum);
+            assert_iter_eq!(graphs[0].nodes, expected);
+            assert_iter_eq!(graphs[1].nodes, left_paths);
+        }
     }
 
     fn add_nodes<'a>(engine: &mut ExecutionEngine, nodes: impl IntoIterator<Item = &'a NodePath>) {

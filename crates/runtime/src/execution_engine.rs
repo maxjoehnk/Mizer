@@ -166,22 +166,6 @@ impl SubGraph {
 
         nodes
     }
-
-    fn has_incoming_links(&self, link: &NodeLink) -> bool {
-        self.incoming_links
-            .get(&link.target)
-            .map_or(false, |incoming| !incoming.is_empty())
-    }
-
-    fn has_outgoing_links(&self, link: &NodeLink) -> bool {
-        self.outgoing_edges
-            .get(&link.source)
-            .map_or(false, |ports| {
-                ports
-                    .get(&link.source_port)
-                    .map_or(false, |outgoing| !outgoing.is_empty())
-            })
-    }
 }
 
 impl ExecutionEngine {
